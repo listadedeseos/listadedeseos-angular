@@ -1,0 +1,39 @@
+<section>
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <h1 class="flex items-center mb-6 text-2xl font-semibold text-white">LISTA DE DESEOS</h1>
+        <div class="w-full bg-gray-800 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl">
+                    Entra en tu cuenta
+                </h1>
+                <form class="space-y-4 md:space-y-6" [formGroup]="login" (submit)="onSubmit()">
+                    <label class="block mb-2 text-sm font-medium text-white">Email
+                        <input formControlName="email" type="email" placeholder="name@company.com"
+                            class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-gray-700 text-white"
+                            required>
+                    </label>
+
+                    <label class="block mb-2 text-sm font-medium text-white">Contraseña
+                        <input formControlName="password" type="password" placeholder="••••••••"
+                            class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-gray-700  text-white"
+                            required>
+                    </label>
+
+                    @if (error) {
+                    <div class="flex">
+                        <p class="text-sm text-[#b31f1f]">Wrong email or password</p>
+                        <a href="#"
+                            class="ml-auto text-sm font-medium text-primary-600 hover:underline text-primary-500">Forgot
+                            password?</a>
+                    </div>
+                    }
+
+                    <button type="submit"
+                        class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800 border border-gray-700">Sign
+                        in</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
