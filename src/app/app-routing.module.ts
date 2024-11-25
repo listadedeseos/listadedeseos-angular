@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../apiConnection/AuthGuard';
-import { LoginComponent } from '../pages/login/login.component';
-import { UserComponent } from '../pages/user/user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from '../components/header/header.component';
 import { PageLoggedComponent } from '../components/page-logged/page-logged.component';
@@ -12,8 +10,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { LoginComponent } from '../pages/login/login.component';
+import { UserComponent } from '../pages/user/user.component';
+import { RegisterComponent } from '../pages/register/register.component';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   {
     path: '',
     canActivate: [AuthGuard],
@@ -32,6 +37,8 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
 
+    LoginComponent,
+    RegisterComponent,
     UserComponent,
   ],
   imports: [
@@ -42,6 +49,8 @@ const routes: Routes = [
     MatPaginatorModule,
     MatSortModule,
     DatePipe,
+
+    FormsModule, ReactiveFormsModule,
 
   ],
   exports: [RouterModule]

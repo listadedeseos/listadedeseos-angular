@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
@@ -9,8 +7,6 @@ import { Utils } from '../../utils/utils';
 @Component({
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule]
 })
 export class LoginComponent {
   login = new FormGroup({
