@@ -1,10 +1,11 @@
-export namespace Utils{
-    export const base = 'http://localhost:8000/api/';
+import { environment } from "../environments/environment";
 
-    export enum urls {
-        base = Utils.base,
-        login = Utils.base + 'login',
-        user = Utils.base + 'user',
+export namespace Utils {
+    export const base = environment.apiUrlBase
+
+    export const urls = {
+        login: Utils.base + 'login',
+        user: Utils.base + 'user',
     }
 
 }
