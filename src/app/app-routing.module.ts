@@ -9,6 +9,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -49,6 +50,7 @@ const routes: Routes = [
     MatPaginatorModule,
     MatSortModule,
     DatePipe,
+    CommonModule,
 
     FormsModule, ReactiveFormsModule,
 

@@ -1,46 +1,65 @@
 <section>
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <h1 class="flex items-center mb-6 text-2xl font-semibold text-white">LISTA DE DESEOS</h1>
-        <div class="w-full bg-gray-800 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+        <div class="w-full bg-gray-800 rounded-lg shadow md:mt-0 sm:max-w-xl xl:p-0">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl">
                     Regístrate
                 </h1>
 
-                <form class="space-y-4 md:space-y-6" [formGroup]="saveForm" (submit)="onSubmit()">
+                <form class="space-y-4" [formGroup]="saveForm" (submit)="onSubmit()">
 
-                    <label class="block mb-2 text-sm font-medium text-white">Username
-                        <input formControlName="username" type="text" placeholder="Username"
+                    @if(errors){
+                    <div class="bg-red-400 rounded p-2 text-sm text-red-950">
+                        An error has occurred
+                    </div>
+                    }
+
+                    <div class="flex gap-4">
+                        <label class="w-full text-sm font-medium text-white">Nombre
+                            <input formControlName="name" type="text" placeholder="Nombre"
+                                class="sm:text-sm rounded-lg focus:ring-primary-600 w-full mt-2 p-2.5 bg-gray-700 text-white"
+                                required>
+                        </label>
+
+                        <label class="w-full text-sm font-medium text-white">Apellido/s
+                            <input formControlName="surname" type="text" placeholder="Apellido"
+                                class="sm:text-sm rounded-lg focus:ring-primary-600 w-full mt-2 p-2.5 bg-gray-700 text-white"
+                                required>
+                        </label>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <label class="w-full text-sm font-medium text-white">Username
+                            <input formControlName="username" type="text" placeholder="Username"
+                                class="sm:text-sm rounded-lg focus:ring-primary-600 w-full mt-2 p-2.5 bg-gray-700 text-white"
+                                required>
+                        </label>
+
+                        <label class="w-full text-sm font-medium text-white">Email
+                            <input formControlName="email" type="email" placeholder="email@domain.com"
+                                class="sm:text-sm rounded-lg focus:ring-primary-600 w-full mt-2 p-2.5 bg-gray-700 text-white"
+                                required>
+                        </label>
+                    </div>
+
+                    <label class="block text-sm font-medium text-white">Contraseña
+                        <input formControlName="password" type="password" placeholder="*****"
                             class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-gray-700 text-white"
                             required>
                     </label>
 
-                    <label class="block mb-2 text-sm font-medium text-white">Nombre
-                        <input formControlName="name" type="text" placeholder="Nombre"
+                    <label class="block text-sm font-medium text-white">Confirmar contraseña
+                        <input formControlName="repassword" type="password" placeholder="*****"
                             class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-gray-700 text-white"
-                            required>
-                    </label>
-                    <label class="block mb-2 text-sm font-medium text-white">Email
-                        <input formControlName="email" type="email" placeholder=""
-                            class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-gray-700 text-white"
-                            required>
-                    </label>
-
-                    <label class="block mb-2 text-sm font-medium text-white">Contraseña
-                        <input formControlName="password" type="password" placeholder=""
-                            class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-gray-700  text-white"
-                            required>
-                    </label>
-
-                    <label class="block mb-2 text-sm font-medium text-white">Confirmar contraseña
-                        <input formControlName="password" type="password" placeholder=""
-                            class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-gray-700  text-white"
                             required>
                     </label>
 
                     <button type="submit"
-                        class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800 border border-gray-700">Registrarse</button>
-
+                        class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800 border border-gray-700">
+                        Registrarse
+                    </button>
+                    <p class="text-sm text-gray-500">Si ya tienes cuenta, <a class="font-bold underline" routerLink="/login">Inicia sesión</a></p>
                 </form>
             </div>
         </div>
