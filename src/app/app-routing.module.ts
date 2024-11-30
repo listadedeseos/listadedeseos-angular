@@ -16,10 +16,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from '../pages/login/login.component';
 import { UserComponent } from '../pages/user/user.component';
 import { RegisterComponent } from '../pages/register/register.component';
+import { WishListComponent } from '../pages/wish-list/wish-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: ':username', component: WishListComponent },
+  { path: ':username/:wishListName', component: WishListComponent },
   {
     path: '',
     canActivate: [AuthGuard],
@@ -41,6 +44,7 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     UserComponent,
+    WishListComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

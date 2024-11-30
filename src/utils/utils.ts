@@ -6,6 +6,7 @@ export namespace Utils {
     export const urls = {
         login: Utils.base + 'login',
         user: Utils.base + 'user',
+        wishlist: Utils.base + 'wishlist'
     }
 
 }

@@ -13,7 +13,7 @@ export class ApiService {
         return this.http.post(url, body)
     }
 
-    getPetition(url: string, params: string): Observable<Object> {
+    getPetition(url: string, params: string = ''): Observable<Object> {
         return this.http.get(url + params)
     }
 
