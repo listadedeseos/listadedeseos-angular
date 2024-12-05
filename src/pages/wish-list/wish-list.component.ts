@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
+import { AuthenticationService } from '../../apiConnection/authentication.service';
 
 @Component({
   templateUrl: './wish-list.component.html',
@@ -10,21 +10,39 @@ import { Utils } from '../../utils/utils';
 })
 export class WishListComponent {
 
-  private username = ''
+  public username = ''
   private wishListName = ''
+  public isLogged = false
+  public allWishList:any = []
   public wishlist:any = []
 
   constructor(
-    private router: Router,
     private apiService: ApiService,
     private activateRoute: ActivatedRoute,
+    private authenticationService: AuthenticationService
     ) {
-      this.username = this.activateRoute.snapshot.params['username']
+      
+      this.username = this.activateRoute.snapshot.params['username']??null
       this.wishListName = this.activateRoute.snapshot.params['wishListName']??null
+      this.isLogged = this.authenticationService.isLogged
+
+      if(this.isLogged && this.username == null){
+        this.username = this.authenticationService.currentUserValue.username        
+      }
+      
     }
 
     ngOnInit(){
+      this.isLogged && this.getAllWishList()
       this.getWishList()
+    }
+
+    getAllWishList(){
+      this.apiService.getPetition(Utils.urls.wishlist).subscribe({
+        next: (value: any) => {
+          this.allWishList = value.wishlists
+        },
+      })
     }
 
     getWishList(){

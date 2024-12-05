@@ -20,7 +20,7 @@ export class LoginComponent {
     private router: Router,
     private apiService: ApiService
     ) {
-      if(localStorage.getItem('user')){
+      if(localStorage.getItem('currentUser')){
         // return to home if user is logged
         this.router.navigate(['/']);
       }
@@ -32,7 +32,7 @@ export class LoginComponent {
       this.apiService.postPetition(Utils.urls.login, this.login.value).subscribe({
         next: (data: any)=>{
           data.user.token = data.token;
-          localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('currentUser', JSON.stringify(data.user));
           this.router.navigate([sessionStorage.getItem('returnUrl')??'/']);
         },
         error: ()=>{

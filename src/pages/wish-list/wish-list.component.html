@@ -1,25 +1,49 @@
 <main class="p-2">
-    <section>
-        <h1>{{wishlist.name}}</h1>
-    </section>
+
+    @if(isLogged){
+    <header class="flex gap-2">
+        <button class="bg-gray-700 p-2 rounded">Añadir +</button>
+
+        @for(item of allWishList; track $index){
+        <a [routerLink]="['/list', username, item.name]" class="bg-gray-700 p-2 rounded">
+            {{item.name??'Principal'}}
+        </a>
+        }
+
+    </header>
+    }
+
+    <h1>{{wishlist.name}}</h1>
+
     <section class="grid gap-2 grid-cols-1 md:grid-cols-4">
+
+        @if(isLogged){
+        <button class="bg-gray-700 p-2 rounded">Añadir +</button>
+        }
+
         @for(item of wishlist.products; track $index){
         <div class="bg-gray-800 text-white border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
+
             <a [href]="item.url_product" target="_blank" class="flex justify-center">
                 <img class="rounded" [src]="item.url_preview" loading="lazy" alt="product image">
             </a>
+
             <a [href]="item.url_product">
                 <h5 class="text-xl font-semibold tracking-tight text-white h-[3.5rem] overflow-hidden"
                     [title]="item.name">{{item.name}}</h5>
             </a>
+
             <div>{{item.price}}</div>
+
             <a [href]="item.url_product" target="_blank" class="
                 bg-gray-700 font-medium rounded-lg text-center p-2 mt-auto
                 flex flex-col align-center justify-center
                 text-white text-xs
                 hover:bg-blue-700 hover:text-white
             ">{{item.type}}</a>
+
         </div>
         }
+
     </section>
 </main>

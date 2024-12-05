@@ -19,22 +19,27 @@ import { RegisterComponent } from '../pages/register/register.component';
 import { WishListComponent } from '../pages/wish-list/wish-list.component';
 
 const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'list' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-
-  { path: 'list/:username', component: WishListComponent },
-  { path: 'list/:username/:wishListName', component: WishListComponent },
-  
+  {
+    path: '',
+    component: PageLoggedComponent,
+    children: [
+      { path: 'list/:username', component: WishListComponent },
+      { path: 'list/:username/:wishListName', component: WishListComponent },
+    ]
+  },
   {
     path: '',
     canActivate: [AuthGuard],
     component: PageLoggedComponent,
     children: [
+      { path: 'list', component: WishListComponent },
       { path: 'user', component: UserComponent },
-      { path: '**', redirectTo: 'user' }
+      { path: '**', redirectTo: 'list' }
     ]
   },
-  
   { path: '**', redirectTo: 'login' }
 ];
 

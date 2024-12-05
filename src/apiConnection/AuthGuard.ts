@@ -10,7 +10,7 @@ export class AuthGuard {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (typeof window !== 'undefined') {
-            const currentUser = JSON.parse(localStorage.getItem('user')??'{}');
+            const currentUser = JSON.parse(localStorage.getItem('currentUser')??'{}');
             
             if (currentUser && currentUser.token) {
                 // if logged return true

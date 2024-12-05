@@ -49,7 +49,7 @@ export class RegisterComponent {
       this.apiService.postPetition(Utils.urls.user, this.saveForm.value).subscribe({
         next: (data: any) => {
           data.user.token = data.token;
-          localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('currentUser', JSON.stringify(data.user));
           this.router.navigate([sessionStorage.getItem('returnUrl') ?? '/']);
 
           // Utils.showSuccessMessage('Producto guardado correctamente');

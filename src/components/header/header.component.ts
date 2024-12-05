@@ -11,7 +11,7 @@ export class HeaderComponent {
   constructor(private router: Router) { }
 
   logout(){
-    localStorage.removeItem('user')
+    localStorage.removeItem('currentUser')
     this.router.navigate(['/login'])
   }
 }
