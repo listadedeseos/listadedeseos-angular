@@ -39,6 +39,14 @@ export class WishListComponent {
       this.getWishList()
     }
 
+    getwishListUrl() {
+      let wishListName = ''
+      if(this.wishListName && this.wishListName != 'null'){
+        wishListName = '/' + this.wishListName
+      }
+      return 'listadedeseos.es/' + this.username + wishListName
+    }
+
     getAllWishList(){
       this.apiService.getPetition(Utils.urls.wishlist).subscribe({
         next: (value: any) => {

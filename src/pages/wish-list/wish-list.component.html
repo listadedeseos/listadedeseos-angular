@@ -13,12 +13,13 @@
     </header>
     }
 
-    <h1>{{wishlist.name}}</h1>
+    <h1>{{wishlist.name}} <a class="underline" [href]="'https://'+getwishListUrl()">{{getwishListUrl()}}</a> </h1>
 
     <section class="grid gap-2 grid-cols-1 md:grid-cols-4">
 
         @if(isLogged){
-        <button class="bg-gray-800 border border-gray-700 p-2 rounded" (click)="toggleModalProduct()">Añadir producto</button>
+        <button class="bg-gray-800 border border-gray-700 p-2 rounded" (click)="toggleModalProduct()">Añadir
+            producto</button>
         }
 
         @for(item of wishlist.products; track $index){
