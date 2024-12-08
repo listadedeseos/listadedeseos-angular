@@ -13,6 +13,9 @@ import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { CustomModalComponent } from '../components/customModal/customModal.component';
+import { ProductFormComponent } from '../components/product-form/product-form.component';
+
 import { LoginComponent } from '../pages/login/login.component';
 import { UserComponent } from '../pages/user/user.component';
 import { RegisterComponent } from '../pages/register/register.component';
@@ -48,6 +51,9 @@ const routes: Routes = [
     PageLoggedComponent,
     HeaderComponent,
     FooterComponent,
+
+    CustomModalComponent,
+    ProductFormComponent,
 
     LoginComponent,
     RegisterComponent,

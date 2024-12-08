@@ -1,0 +1,52 @@
+<app-custom-modal customTitle="Nuevo producto" (closeFunction)="closeFormFunction()" (acceptFunction)="acceptFormFunction()">
+    <form [formGroup]="saveForm" (ngSubmit)="saveEntity()">
+
+        <section>
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="icon">
+                Nombre
+            </label>
+            <input
+                class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                id="icon" type="text" formControlName="name">
+        </section>
+
+        <section>
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
+                URL de la imagen
+            </label>
+            <input
+                class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                id="name" type="text" formControlName="url_preview">
+        </section>
+
+        <section>
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
+                URL del producto
+            </label>
+            <input
+                class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                id="name" type="text" formControlName="url_product">
+        </section>
+
+        <section>
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
+                Precio
+            </label>
+            <input
+                class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                id="name" type="text" formControlName="price">
+        </section>
+
+        <section>
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
+                Visible
+            </label>
+            <input
+                class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                id="name" type="boolean" formControlName="is_active">
+        </section>
+
+
+    </form>
+
+</app-custom-modal>

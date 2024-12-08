@@ -15,11 +15,13 @@ export class WishListComponent {
   public isLogged = false
   public allWishList:any = []
   public wishlist:any = []
+  public wishListId = 0
+  public modalProductOpen = false
 
   constructor(
     private apiService: ApiService,
     private activateRoute: ActivatedRoute,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
     ) {
       
       this.username = this.activateRoute.snapshot.params['username']??null
@@ -49,8 +51,13 @@ export class WishListComponent {
       let url = Utils.urls.wishlist + '/' + this.username + '/' + this.wishListName
       this.apiService.getPetition(url).subscribe({
         next: (value: any) => {
+          this.wishListId = value.wishList[0].id
           this.wishlist = value.wishList[0]
         },
       })
+    }
+
+    toggleModalProduct() {    
+      this.modalProductOpen = !this.modalProductOpen
     }
 }
