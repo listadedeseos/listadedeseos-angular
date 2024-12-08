@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../../apiConnection/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,14 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-  constructor(private router: Router) { }
+  public isLogged = false
+
+  constructor(
+    private router: Router,
+    private	authenticationService: AuthenticationService
+  ) {
+    this.isLogged = this.authenticationService.isLogged
+  }
 
   logout(){
     localStorage.removeItem('currentUser')
