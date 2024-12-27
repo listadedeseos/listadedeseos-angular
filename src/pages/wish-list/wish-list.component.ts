@@ -70,6 +70,10 @@ export class WishListComponent {
       this.modalProductOpen = !this.modalProductOpen
     }
 
+    productUpdate(response: any){
+      this.wishlist.products.push(response.product)
+    }
+
     toggleModalWishList() {
       this.modalWishListOpen = !this.modalWishListOpen
     }

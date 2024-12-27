@@ -77,7 +77,7 @@ export class ProductFormComponent {
 
       this.apiService.postPetition(Utils.urls.product, this.saveForm.value).subscribe({
         next: (response: any) => {
-          this.acceptFunction.emit();
+          this.acceptFunction.emit(response);
           this.closeFormFunction()
           // Utils.showSuccessMessage('Producto guardado correctamente');
         },

@@ -50,7 +50,7 @@
 </main>
 
 @if(modalProductOpen && wishListId){
-<app-product-form [wishListId]="wishListId" (closeFunction)="toggleModalProduct()"></app-product-form>
+<app-product-form [wishListId]="wishListId" (closeFunction)="toggleModalProduct()" (acceptFunction)="productUpdate($event)"></app-product-form>
 }
 
 @if(modalWishListOpen && wishListId){
