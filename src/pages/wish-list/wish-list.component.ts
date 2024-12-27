@@ -17,6 +17,7 @@ export class WishListComponent {
   public wishlist:any = []
   public wishListId = 0
   public modalProductOpen = false
+  public modalWishListOpen = false
 
   constructor(
     private apiService: ApiService,
@@ -67,5 +68,13 @@ export class WishListComponent {
 
     toggleModalProduct() {    
       this.modalProductOpen = !this.modalProductOpen
+    }
+
+    toggleModalWishList() {
+      this.modalWishListOpen = !this.modalWishListOpen
+    }
+
+    wishlistUpdate(response: any){
+      this.allWishList.push(response.wishList)
     }
 }

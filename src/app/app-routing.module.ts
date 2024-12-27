@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CustomModalComponent } from '../components/customModal/customModal.component';
+import { WishlistFormComponent } from '../components/wishlist-form/wishlist-form.component';
 import { ProductFormComponent } from '../components/product-form/product-form.component';
 
 import { LoginComponent } from '../pages/login/login.component';
@@ -53,6 +54,7 @@ const routes: Routes = [
     FooterComponent,
 
     CustomModalComponent,
+    WishlistFormComponent,
     ProductFormComponent,
 
     LoginComponent,
