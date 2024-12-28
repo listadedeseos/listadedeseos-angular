@@ -18,13 +18,18 @@ export class WishListComponent {
   public wishListId = 0
   public modalProductOpen = false
   public modalWishListOpen = false
+  public routeSubsrciption: any
 
   constructor(
     private apiService: ApiService,
     private activateRoute: ActivatedRoute,
     private authenticationService: AuthenticationService,
+    private route: ActivatedRoute,
     ) {
-      
+      this.refreshData()
+    }
+
+    refreshData(){
       this.username = this.activateRoute.snapshot.params['username']??null
       this.wishListName = this.activateRoute.snapshot.params['wishListName']??null
       this.isLogged = this.authenticationService.isLogged
@@ -32,12 +37,19 @@ export class WishListComponent {
       if(this.isLogged && this.username == null){
         this.username = this.authenticationService.currentUserValue.username        
       }
-      
     }
 
-    ngOnInit(){
-      this.isLogged && this.getAllWishList()
-      this.getWishList()
+    ngOnInit() {
+      this.routeSubsrciption = this.route.params.subscribe(params => {
+        this.refreshData()
+
+        this.isLogged && this.getAllWishList()
+        this.getWishList()
+      });
+    }
+
+    ngOnDestroy() {
+      this.routeSubsrciption.unsubscribe()
     }
 
     getwishListUrl() {
