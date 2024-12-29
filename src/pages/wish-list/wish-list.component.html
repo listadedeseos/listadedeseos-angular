@@ -1,26 +1,31 @@
 <main class="p-2">
 
     @if(isLogged){
-    <header class="grid grid-cols-3 md:grid-cols-6 gap-2 mb-3">
-        <button class="bg-gray-800 border border-gray-600 p-2 rounded col-span-3 md:col-span-6" (click)="toggleModalWishList()">Añadir +</button>
 
-        @for(item of allWishList; track $index){
-        <a [routerLink]="['/list', username, item.name]" class="bg-gray-700 p-2 rounded">
-            {{item.name??'Principal'}}
-        </a>
-        }
+    <header class="flex flex-col gap-2 mb-2">
+
+        <button class="ml-auto bg-gray-800 border border-gray-600 p-2 rounded col-span-3 md:col-span-6"
+            (click)="toggleModalWishList()">Añadir nueva lista</button>
+
+        <section class="grid grid-cols-3 md:grid-cols-6 gap-2">
+            @for(item of allWishList; track $index){
+            <a [routerLink]="['/list', username, item.name]" class="bg-gray-700 p-2 rounded">
+                {{item.name??'Principal'}}
+            </a>
+            }
+        </section>
 
     </header>
+
+    <section class="flex justify-between items-center mb-2">
+        <h1>{{wishlist.name}} <a class="underline" [href]="'https://'+getwishListUrl()">{{getwishListUrl()}}</a> </h1>
+
+        <button class="bg-gray-800 border border-gray-700 p-2 rounded" (click)="toggleModalProduct()">Añadir
+            nuevo producto</button>
+    </section>
     }
 
-    <h1 class="mb-3">{{wishlist.name}} <a class="underline" [href]="'https://'+getwishListUrl()">{{getwishListUrl()}}</a> </h1>
-
-    <section class="grid gap-2 grid-cols-1 md:grid-cols-4">
-
-        @if(isLogged){
-        <button class="bg-gray-800 border border-gray-700 p-2 rounded" (click)="toggleModalProduct()">Añadir
-            producto</button>
-        }
+    <section class="grid gap-2 grid-cols-3 md:grid-cols-6">
 
         @for(item of wishlist.products; track $index){
         <div class="bg-gray-800 text-white border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
@@ -30,7 +35,7 @@
             </a>
 
             <a [href]="item.url_product">
-                <h5 class="text-xl font-semibold tracking-tight text-white h-[3.5rem] overflow-hidden"
+                <h5 class="text-xl font-semibold tracking-tight text-white max-h-[3.5rem] overflow-hidden"
                     [title]="item.name">{{item.name}}</h5>
             </a>
 
@@ -50,9 +55,11 @@
 </main>
 
 @if(modalProductOpen && wishListId){
-<app-product-form [wishListId]="wishListId" (closeFunction)="toggleModalProduct()" (acceptFunction)="productUpdate($event)"></app-product-form>
+<app-product-form [wishListId]="wishListId" (closeFunction)="toggleModalProduct()"
+    (acceptFunction)="productUpdate($event)"></app-product-form>
 }
 
 @if(modalWishListOpen && wishListId){
-<app-wishlist-form [wishListId]="wishListId" (closeFunction)="toggleModalWishList()" (acceptFunction)="wishlistUpdate($event)"></app-wishlist-form>
+<app-wishlist-form [wishListId]="wishListId" (closeFunction)="toggleModalWishList()"
+    (acceptFunction)="wishlistUpdate($event)"></app-wishlist-form>
 }
