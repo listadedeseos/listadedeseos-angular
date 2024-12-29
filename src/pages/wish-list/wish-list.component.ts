@@ -10,6 +10,7 @@ import { AuthenticationService } from '../../apiConnection/authentication.servic
 })
 export class WishListComponent {
 
+  public loading = true
   public username = ''
   private wishListName = ''
   public isLogged = false
@@ -40,10 +41,10 @@ export class WishListComponent {
     }
 
     ngOnInit() {
+      this.isLogged && this.getAllWishList()
+
       this.routeSubsrciption = this.route.params.subscribe(params => {
         this.refreshData()
-
-        this.isLogged && this.getAllWishList()
         this.getWishList()
       });
     }
@@ -69,12 +70,16 @@ export class WishListComponent {
     }
 
     getWishList(){
+      this.loading = true
       let url = Utils.urls.wishlist + '/' + this.username + '/' + this.wishListName
       this.apiService.getPetition(url).subscribe({
         next: (value: any) => {
-          this.wishListId = value.wishList[0].id
-          this.wishlist = value.wishList[0]
+          this.wishListId = value.wishList[0]?.id
+          this.wishlist = value.wishList[0]??[]
         },
+        complete: () => {
+          this.loading = false
+        }
       })
     }
 
