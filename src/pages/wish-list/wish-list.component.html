@@ -1,9 +1,9 @@
 <app-loading *ngIf="loading"></app-loading>
-<main class="p-2">
+<main class="flex flex-col gap-2 p-2">
 
     @if(isLogged){
 
-    <header class="flex flex-col gap-2 mb-2">
+    <header class="flex flex-col gap-2">
 
         <button class="ml-auto bg-gray-800 border border-gray-600 p-2 rounded col-span-3 md:col-span-6"
             (click)="toggleModalWishList()">Añadir nueva lista</button>
@@ -18,13 +18,20 @@
 
     </header>
 
-    <section class="flex justify-between items-center mb-2">
-        <h1>{{wishlist.name}} <a class="underline" [href]="'https://'+getwishListUrl()">{{getwishListUrl()}}</a> </h1>
+    <hr>
 
-        <button class="bg-gray-800 border border-gray-700 p-2 rounded" (click)="toggleModalProduct()">Añadir
-            nuevo producto</button>
-    </section>
     }
+
+    <section class="flex items-center gap-2">
+        <h1 class="text-xl">{{wishlist.name??'Principal'}}</h1>
+        <a class="text-xs underline" [href]="'https://'+getwishListUrl()">{{getwishListUrl()}}</a>
+
+
+        @if(isLogged){
+        <button class="ml-auto bg-gray-800 border border-gray-700 p-2 rounded" (click)="toggleModalProduct()">Añadir
+            nuevo producto</button>
+        }
+    </section>
 
     <section class="grid gap-2 grid-cols-3 md:grid-cols-6">
 
