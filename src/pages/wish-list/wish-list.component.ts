@@ -53,6 +53,11 @@ export class WishListComponent {
     this.routeSubsrciption.unsubscribe()
   }
 
+  onImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = '/assets/img/empty.webp';
+  }
+
   getwishListUrl() {
     let wishListName = ''
     if (this.wishListName && this.wishListName != 'null') {

@@ -38,8 +38,10 @@
         @for(item of wishlist.products; track $index){
         <div class="bg-gray-800 text-white border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
 
-            <a [href]="item.url_product" target="_blank" class="flex justify-center">
-                <img class="rounded" [src]="item.url_preview" loading="lazy" alt="product image">
+            <a [href]="item.url_product" target="_blank"
+                class="flex justify-center aspect-video overflow-hidden rounded">
+                <img class="w-full h-full object-cover" [src]="item.url_preview" (error)="onImageError($event)"
+                    loading="lazy" alt="product image">
             </a>
 
             <a [href]="item.url_product">
