@@ -17,6 +17,7 @@ import { LoadingComponent } from '../components/loading/loading.component';
 import { CustomModalComponent } from '../components/customModal/customModal.component';
 import { WishlistFormComponent } from '../components/wishlist-form/wishlist-form.component';
 import { ProductFormComponent } from '../components/product-form/product-form.component';
+import { SteamComponent } from '../components/steam/steam.component';
 
 import { LoginComponent } from '../pages/login/login.component';
 import { UserComponent } from '../pages/user/user.component';
@@ -58,6 +59,7 @@ const routes: Routes = [
     CustomModalComponent,
     WishlistFormComponent,
     ProductFormComponent,
+    SteamComponent,
 
     LoginComponent,
     RegisterComponent,
