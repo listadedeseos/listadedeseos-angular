@@ -1,4 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { Utils } from '../../utils/utils';
 import { ApiService } from '../../apiConnection/ApiService';
 
@@ -10,24 +11,32 @@ import { ApiService } from '../../apiConnection/ApiService';
 export class SteamComponent {
 
   @Input() username: string = ''
+
+  public loading = true
   public list: any = []
 
   constructor(
     private apiService: ApiService,
-  ) {
-  }
+  ) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.username) {
+    let production = environment.production
+
+    if (production && this.username) {
       this.getSteam()
     }
   }
 
   getSteam() {
+    this.loading = true
     let url = Utils.urls.steam + '/' + this.username
     this.apiService.getPetition(url).subscribe({
       next: (value: any) => {
         this.list = value.list ?? []
+        this.loading = false
+      },
+      error: () => {
+        this.loading = false
       }
     })
   }
