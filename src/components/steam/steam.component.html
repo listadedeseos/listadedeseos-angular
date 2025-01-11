@@ -2,6 +2,20 @@
 <h2 class="text-xl my-2">Steam</h2>
 <section class="grid gap-2 grid-cols-3 md:grid-cols-6">
 
+    @if(loading){
+    @for(item of [1,2,3,4,5,6]; track $index){
+    <div class="animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
+
+        <div class="aspect-video bg-gray-700 rounded"></div>
+
+        <div class="h-2 rounded w-20 bg-gray-700"></div>
+
+        <div class="h-5 rounded bg-gray-700"></div>
+        <div class="h-5 rounded bg-gray-700"></div>
+
+    </div>
+    }
+    } @else {
     @for(item of list; track $index){
     <div class="bg-gray-800 text-white border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
 
@@ -31,24 +45,8 @@
             hover:bg-orange-700 hover:text-white
         ">Instant gaming</a>
 
-
-    </div>
-    }
-
-    @if(loading){
-    @for(item of [1,2,3,4,5,6]; track $index){
-    <div class="animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
-
-        <div class="aspect-video bg-gray-700 rounded"></div>
-
-        <div class="h-2 rounded w-20 bg-gray-700"></div>
-
-        <div class="h-5 rounded bg-gray-700"></div>
-        <div class="h-5 rounded bg-gray-700"></div>
-
     </div>
     }
     }
-
 </section>
 }
