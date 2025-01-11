@@ -46,7 +46,7 @@ export class RegisterComponent {
     if (this.saveForm.valid) {
       this.loading = true;
 
-      this.apiService.postPetition(Utils.urls.user, this.saveForm.value).subscribe({
+      this.apiService.save(Utils.urls.user, this.saveForm.value).subscribe({
         next: (data: any) => {
           data.user.token = data.token;
           localStorage.setItem('currentUser', JSON.stringify(data.user));

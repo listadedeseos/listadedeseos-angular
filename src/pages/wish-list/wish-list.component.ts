@@ -102,7 +102,9 @@ export class WishListComponent {
     this.modalWishListOpen = !this.modalWishListOpen
   }
 
-  wishlistUpdate(response: any) {
-    this.allWishList.push(response.wishList)
+  wishlistUpdate(id: number, response: any) {
+    if (id == 0) {
+      this.allWishList.push(response.wishList)
+    }
   }
 }

@@ -75,5 +75,5 @@
 
 @if(modalWishListOpen){
 <app-wishlist-form [id]="wishListFormId" (closeFunction)="toggleModalWishList()"
-    (acceptFunction)="wishlistUpdate($event)"></app-wishlist-form>
+    (acceptFunction)="wishlistUpdate(wishListFormId, $event)"></app-wishlist-form>
 }

@@ -75,7 +75,7 @@ export class ProductFormComponent {
     if (this.saveForm.valid) {
       this.loading = true;
 
-      this.apiService.postPetition(Utils.urls.product, this.saveForm.value).subscribe({
+      this.apiService.save(Utils.urls.product, this.saveForm.value).subscribe({
         next: (response: any) => {
           this.acceptFunction.emit(response);
           this.closeFormFunction()

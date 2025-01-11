@@ -70,7 +70,7 @@ export class WishlistFormComponent {
     if (this.saveForm.valid) {
       this.loading = true;
 
-      this.apiService.postPetition(Utils.urls.wishlist, this.saveForm.value).subscribe({
+      this.apiService.save(Utils.urls.wishlist, this.saveForm.value, this.id).subscribe({
         next: (response: any) => {
           this.acceptFunction.emit(response);
           this.closeFormFunction()

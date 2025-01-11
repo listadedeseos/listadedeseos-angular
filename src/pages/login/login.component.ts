@@ -29,7 +29,7 @@ export class LoginComponent {
   onSubmit() {
     if(this.login.valid){
 
-      this.apiService.postPetition(Utils.urls.login, this.login.value).subscribe({
+      this.apiService.save(Utils.urls.login, this.login.value).subscribe({
         next: (data: any)=>{
           data.user.token = data.token;
           localStorage.setItem('currentUser', JSON.stringify(data.user));

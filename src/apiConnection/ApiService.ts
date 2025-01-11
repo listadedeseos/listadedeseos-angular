@@ -9,7 +9,10 @@ export class ApiService {
 
     constructor(private http: HttpClient) { }
 
-    postPetition(url: string, body: any): Observable<Object> {
+    save(url: string, body: any, id: number = 0): Observable<Object> {
+        if (id != 0) {
+            return this.http.put(url + '/' + id, body)
+        }
         return this.http.post(url, body)
     }
 
