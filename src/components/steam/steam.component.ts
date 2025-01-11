@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Utils } from '../../utils/utils';
 import { ApiService } from '../../apiConnection/ApiService';
 
@@ -17,8 +17,10 @@ export class SteamComponent {
   ) {
   }
 
-  ngOnInit() {
-    this.getSteam()
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.username) {
+      this.getSteam()
+    }
   }
 
   getSteam() {

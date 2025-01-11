@@ -19,6 +19,7 @@ export class WishListComponent {
   public wishListId = 0
   public modalProductOpen = false
   public modalWishListOpen = false
+  public wishListFormId = 0
   public routeSubsrciption: any
 
   constructor(
@@ -96,7 +97,8 @@ export class WishListComponent {
     this.wishlist.products.push(response.product)
   }
 
-  toggleModalWishList() {
+  toggleModalWishList(wishListFormId = 0) {
+    this.wishListFormId = wishListFormId    
     this.modalWishListOpen = !this.modalWishListOpen
   }
 

@@ -10,7 +10,6 @@ import { Utils } from '../../utils/utils';
 })
 export class WishlistFormComponent {
   @Input() id = 0;
-  @Input() wishListId: number|null = null;
   @Output() closeFunction = new EventEmitter<any>();
   @Output() acceptFunction = new EventEmitter<any>();
 
@@ -30,9 +29,9 @@ export class WishlistFormComponent {
     this.createForm();
     // this.apiService.getSelector(this.dropdowns);
 
-    // if (this.id != 0) {
-    //   this.getById(this.id);
-    // }
+    if (this.id != 0) {
+      this.getById(this.id);
+    }
   }
 
   acceptFormFunction() {
@@ -47,24 +46,25 @@ export class WishlistFormComponent {
     this.saveForm = new FormGroup({
 
       name: new FormControl('', [Validators.required]),
+      steam_username: new FormControl('', []),
 
     })
   }
 
-  // getById(id: number) {
-  //   this.loading = true;
-  //   this.apiService.getPetition(this.apiService.urls.category, id).subscribe({
-  //     next: (data: any) => {
-  //       this.saveForm.patchValue(data.category);
-  //     },
-  //     error: (error: any) => {
-  //       console.error('ERROR obtener productos. ' + error);
-  //     },
-  //     complete: () => {
-  //       this.loading = false;
-  //     },
-  //   });
-  // }
+  getById(id: number) {   
+    this.loading = true;
+    this.apiService.getById(Utils.urls.wishlist, id).subscribe({
+      next: (data: any) => {
+        this.saveForm.patchValue(data.wishlist);
+      },
+      error: (error: any) => {
+        console.error('ERROR obtener productos. ' + error);
+      },
+      complete: () => {
+        this.loading = false;
+      },
+    });
+  }
 
   saveEntity() {
     if (this.saveForm.valid) {

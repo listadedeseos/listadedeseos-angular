@@ -1,15 +1,27 @@
-<app-custom-modal customTitle="Nueva lista de deseos" (closeFunction)="closeFormFunction()" (acceptFunction)="acceptFormFunction()">
+@if(loading){
+<app-loading></app-loading>
+}
+<app-custom-modal customTitle="Nueva lista de deseos" (closeFunction)="closeFormFunction()"
+    (acceptFunction)="acceptFormFunction()">
     <form [formGroup]="saveForm" (ngSubmit)="saveEntity()">
 
         <section>
-            <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="icon">
+            <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="name">
                 Nombre
             </label>
             <input
                 class="appearance-none block w-full text-white border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-transparent"
-                id="icon" type="text" formControlName="name">
+                id="name" type="text" formControlName="name">
+        </section>
+
+        <section>
+            <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="steam_username">
+                Nombre de usuario Steam
+            </label>
+            <input
+                class="appearance-none block w-full text-white border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-transparent"
+                id="steam_username" type="text" formControlName="steam_username">
         </section>
 
     </form>
-
 </app-custom-modal>

@@ -24,6 +24,7 @@
 
     <section class="flex items-center gap-2">
         <h1 class="text-xl">{{wishlist.name??'Principal'}}</h1>
+        <button (click)="toggleModalWishList(wishListId)">Ajustes</button>
         <a class="text-xs underline" [href]="'https://'+getwishListUrl()">{{getwishListUrl()}}</a>
 
 
@@ -63,7 +64,7 @@
 
     </section>
 
-    <app-steam username="josedlsr"></app-steam>
+    <app-steam [username]="wishlist.steam_username"></app-steam>
 
 </main>
 
@@ -72,7 +73,7 @@
     (acceptFunction)="productUpdate($event)"></app-product-form>
 }
 
-@if(modalWishListOpen && wishListId){
-<app-wishlist-form [wishListId]="wishListId" (closeFunction)="toggleModalWishList()"
+@if(modalWishListOpen){
+<app-wishlist-form [id]="wishListFormId" (closeFunction)="toggleModalWishList()"
     (acceptFunction)="wishlistUpdate($event)"></app-wishlist-form>
 }
