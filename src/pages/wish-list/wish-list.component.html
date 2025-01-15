@@ -24,7 +24,9 @@
 
     <section class="flex items-center gap-2">
         <h1 class="text-xl">{{wishlist.name??'Principal'}}</h1>
-        <button (click)="toggleModalWishList(wishListId)">Ajustes</button>
+        <button (click)="toggleModalWishList(wishListId)" class="transition hover:rotate-45">
+            <img src="/assets/icon/gear.svg" alt="Ajustes" class="h-4">
+        </button>
         <a class="text-xs underline" [href]="'https://'+getwishListUrl()">{{getwishListUrl()}}</a>
 
 
