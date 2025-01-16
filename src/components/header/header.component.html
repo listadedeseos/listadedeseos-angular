@@ -3,7 +3,9 @@
     <a routerLink="/" class="me-auto ">Lista de deseos</a>
 
     @if(isLogged){
-    <div (click)="logout()" class="text-gray-600 hover:text-red-600 transition-colors" role="button">Cerrar sesión</div>
+    <div (click)="logout()" class="text-gray-600 hover:text-red-600 transition-colors" role="button" title="Cerrar sesión">
+        <fa-icon [icon]="['fas', 'arrow-right-from-bracket']"></fa-icon>
+    </div>
     }@else{
     <a routerLink="/login" class="text-gray-600">Iniciar sesión</a>
     }

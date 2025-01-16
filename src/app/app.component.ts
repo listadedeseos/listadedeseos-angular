@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'listadedeseos-angular';
+
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas);
+  }
 }

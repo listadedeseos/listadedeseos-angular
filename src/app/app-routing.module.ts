@@ -5,6 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from '../components/header/header.component';
 import { PageLoggedComponent } from '../components/page-logged/page-logged.component';
 import { FooterComponent } from '../components/footer/footer.component';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -69,6 +72,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes),
     HttpClientModule,
+
+    FontAwesomeModule,
 
     MatTableModule,
     MatPaginatorModule,

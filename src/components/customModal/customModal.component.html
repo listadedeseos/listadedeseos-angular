@@ -9,10 +9,9 @@
                     {{customTitle}}
                 </h3>
                 <button type="button"
-                    class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 border border-gray-600 hover:bg-gray-800 hover:text-gray-900"
+                    class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 border border-gray-600 hover:bg-gray-600 hover:text-gray-900"
                     (click)="closeModal()">
-                    <i class="fa-solid fa-xmark h-5 w-5"></i>
-                    <span class="sr-only">Close modal</span>
+                    <fa-icon [icon]="['fas', 'xmark']"></fa-icon>
                 </button>
             </div>
             <!-- Modal body -->
