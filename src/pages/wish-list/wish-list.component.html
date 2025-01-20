@@ -24,9 +24,13 @@
 
     <section class="flex items-center gap-2">
         <h1 class="text-xl">{{wishlist.name??'Principal'}}</h1>
+
+        @if(isLogged){
         <button (click)="toggleModalWishList(wishListId)" class="transition hover:rotate-45" title="Ajustes">
             <fa-icon [icon]="['fas', 'gear']"></fa-icon>
         </button>
+        }
+
         <a class="text-xs underline" [href]="'https://'+getwishListUrl()">{{getwishListUrl()}}</a>
 
 
