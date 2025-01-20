@@ -64,7 +64,7 @@ export class WishListComponent {
     if (this.wishListName && this.wishListName != 'null') {
       wishListName = '/' + this.wishListName
     }
-    return 'listadedeseos.es/' + this.username + wishListName
+    return 'https://listadedeseos.es/' + this.username + wishListName
   }
 
   getAllWishList() {

@@ -8,6 +8,8 @@ import { FooterComponent } from '../components/footer/footer.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import { ClipboardModule } from '@angular/cdk/clipboard';
+
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -74,6 +76,8 @@ const routes: Routes = [
     HttpClientModule,
 
     FontAwesomeModule,
+
+    ClipboardModule,
 
     MatTableModule,
     MatPaginatorModule,

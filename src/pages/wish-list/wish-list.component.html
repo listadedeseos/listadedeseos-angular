@@ -31,8 +31,16 @@
         </button>
         }
 
-        <a class="text-xs underline" [href]="'https://'+getwishListUrl()">{{getwishListUrl()}}</a>
+        <section [cdkCopyToClipboard]="getwishListUrl()" title="Copiar al portapapeles" role="button"
+            class="fixed bottom-10 right-10 text-gray-800 bg-gray-500 rounded py-1 px-3 group">
+            
+            <p class="hidden group-hover:inline-block">
+                {{getwishListUrl()}}
+                <fa-icon [icon]="['fas', 'copy']" class="ps-2"></fa-icon>
+            </p>
 
+            <fa-icon class="group-hover:hidden" [icon]="['fas', 'share-nodes']"></fa-icon>
+        </section>
 
         @if(isLogged){
         <button class="ml-auto bg-gray-800 border border-gray-700 p-2 rounded" (click)="toggleModalProduct()">Añadir
