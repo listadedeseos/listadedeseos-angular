@@ -9,6 +9,7 @@ export namespace Utils {
         wishlist: Utils.base + 'wishlist',
         product: Utils.base + 'product',
         steam: Utils.base + 'steam',
+        amazon: Utils.base + 'amazon',
     }
 
 }
