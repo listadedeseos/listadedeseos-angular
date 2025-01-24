@@ -6,6 +6,8 @@ import { HeaderComponent } from '../components/header/header.component';
 import { PageLoggedComponent } from '../components/page-logged/page-logged.component';
 import { FooterComponent } from '../components/footer/footer.component';
 
+import { CustomTableComponent } from '../components/customTable/customTable.component';
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -61,6 +63,8 @@ const routes: Routes = [
     PageLoggedComponent,
     HeaderComponent,
     FooterComponent,
+
+    CustomTableComponent,
 
     LoadingComponent,
     CustomModalComponent,

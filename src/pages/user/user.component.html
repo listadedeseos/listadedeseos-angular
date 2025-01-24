@@ -1,32 +1,3 @@
-
-
-<div class="example-container mat-elevation-z8">
-  
-    <div class="example-table-container w-full">
-
-        <table mat-table [dataSource]="dataSource" matSort>
-            @for (item of displayedItems; track $index) {
-                <ng-container [matColumnDef]="item" >
-                    <th mat-header-cell *matHeaderCellDef>{{item}}</th>
-                    <td mat-cell *matCellDef="let row">{{row[item]}}</td>
-                </ng-container>
-            }
-
-            <ng-container matColumnDef="created_at" >
-                <th mat-header-cell *matHeaderCellDef>created at</th>
-                <td mat-cell *matCellDef="let row">{{row["created_at"] | date: "dd-MM-yyyy hh:mm"}}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="updated_at" >
-                <th mat-header-cell *matHeaderCellDef>updated at</th>
-                <td mat-cell *matCellDef="let row">{{row["updated_at"] | date: "dd-MM-yyyy hh:mm"}}</td>
-            </ng-container>
-       
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <mat-paginator [length]="resultsLength" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
-        aria-label="Select page of GitHub search results"></mat-paginator>
-    </div>
-
-</div>
+<main class="p-2">
+    <app-custom-table #customTable [url]="url" [headers]="headers"></app-custom-table>
+</main>
