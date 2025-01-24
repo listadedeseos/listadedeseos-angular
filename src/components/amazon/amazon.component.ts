@@ -10,7 +10,7 @@ import { ApiService } from '../../apiConnection/ApiService';
 })
 export class AmazonComponent {
 
-  @Input() username: string = ''
+  @Input() wishlistId: string = ''
 
   public loading = true
   public list: any = []
@@ -22,14 +22,14 @@ export class AmazonComponent {
   ngOnChanges(changes: SimpleChanges) {
     let production = environment.production
 
-    if (production && this.username) {
+    if (production && this.wishlistId) {
       this.getAmazon()
     }
   }
 
   getAmazon() {
     this.loading = true
-    let url = Utils.urls.amazon + '/' + this.username
+    let url = Utils.urls.amazon + '/' + this.wishlistId
     this.apiService.getPetition(url).subscribe({
       next: (value: any) => {
         this.list = value.list ?? []

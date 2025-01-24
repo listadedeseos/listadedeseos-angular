@@ -19,7 +19,7 @@ export class WishlistFormComponent {
 
   public showModalImage = false
 
-  public dropdowns: any = { }
+  public dropdowns: any = {}
 
   constructor(
     private apiService: ApiService,
@@ -47,11 +47,12 @@ export class WishlistFormComponent {
 
       name: new FormControl('', [Validators.required]),
       steam_username: new FormControl('', []),
+      amazon_wishlist_id: new FormControl('', []),
 
     })
   }
 
-  getById(id: number) {   
+  getById(id: number) {
     this.loading = true;
     this.apiService.getById(Utils.urls.wishlist, id).subscribe({
       next: (data: any) => {
