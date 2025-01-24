@@ -10,8 +10,10 @@
 
         <div class="h-2 rounded w-20 bg-gray-700"></div>
 
-        <div class="h-5 rounded bg-gray-700"></div>
-        <div class="h-5 rounded bg-gray-700"></div>
+        <div class="flex gap-1">
+            <div class="h-5 w-full rounded bg-gray-700"></div>
+            <div class="h-5 w-full rounded bg-gray-700"></div>
+        </div>
 
     </div>
     }
@@ -31,19 +33,21 @@
 
         <div>{{item.price}}</div>
 
-        <a [href]="item.steam_url" target="_blank" class="
-            bg-gray-700 font-medium rounded-lg text-center p-2 mt-auto
-            flex flex-col align-center justify-center
+        <div class="flex gap-1">
+            <a [href]="item.steam_url" target="_blank" class="
+            bg-gray-700 font-medium rounded-lg text-center p-2
+            flex flex-col align-center justify-center w-full
             text-white text-xs
             hover:bg-blue-700 hover:text-white
         ">Steam</a>
 
-        <a [href]="item.instant_gaming_url" target="_blank" class="
+            <a [href]="item.instant_gaming_url" target="_blank" class="
             bg-gray-700 font-medium rounded-lg text-center p-2
-            flex flex-col align-center justify-center
+            flex flex-col align-center justify-center w-full
             text-white text-xs
             hover:bg-orange-700 hover:text-white
         ">Instant gaming</a>
+        </div>
 
     </div>
     }
