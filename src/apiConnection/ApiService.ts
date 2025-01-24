@@ -24,4 +24,8 @@ export class ApiService {
         return this.http.get(url + '/' + id)
     }
 
+    deleteById(url: string, id: number): Observable<Object> {
+        return this.http.delete(url + '/' + id)
+    }
+
 }

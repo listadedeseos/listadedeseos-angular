@@ -7,6 +7,7 @@ import { PageLoggedComponent } from '../components/page-logged/page-logged.compo
 import { FooterComponent } from '../components/footer/footer.component';
 
 import { CustomTableComponent } from '../components/customTable/customTable.component';
+import { CustomDeleteComponent } from '../components/customDelete/customDelete.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -65,6 +66,7 @@ const routes: Routes = [
     FooterComponent,
 
     CustomTableComponent,
+    CustomDeleteComponent,
 
     LoadingComponent,
     CustomModalComponent,

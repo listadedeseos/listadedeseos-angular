@@ -21,6 +21,13 @@ export class UserComponent {
         { name: 'ACTUALIZADO', key: 'updated_at', type: 'dateTime' },
     ]
 
+    public id = 0
+    public deleteProduct = false
+
     constructor(private apiService: ApiService) { }
 
+    toogleDeleteForm(id = 0) {
+        this.id = id
+        this.deleteProduct = !this.deleteProduct
+    }
 }

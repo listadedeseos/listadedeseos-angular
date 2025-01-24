@@ -1,3 +1,9 @@
 <main class="p-2">
-    <app-custom-table #customTable [url]="url" [headers]="headers"></app-custom-table>
+    <app-custom-table #customTable [url]="url" [headers]="headers"
+        (deleteEvent)="toogleDeleteForm($event)"></app-custom-table>
+
+    @if (deleteProduct) {
+    <app-custom-delete [url]="url" [id]="id" (closeFunction)="toogleDeleteForm()"
+        (acceptFunction)="customTable.getItems()"></app-custom-delete>
+    }
 </main>
