@@ -9,6 +9,8 @@ import { Utils } from '../../utils/utils';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  loading = false;
+
   login = new FormGroup({
     email: new FormControl('',[Validators.required, Validators.email]),
     password: new FormControl('',[Validators.required])
@@ -28,7 +30,7 @@ export class LoginComponent {
 
   onSubmit() {
     if(this.login.valid){
-
+      this.loading = true;
       this.apiService.save(Utils.urls.login, this.login.value).subscribe({
         next: (data: any)=>{
           data.user.token = data.token;
@@ -36,6 +38,7 @@ export class LoginComponent {
           this.router.navigate([sessionStorage.getItem('returnUrl')??'/']);
         },
         error: ()=>{
+          this.loading = false;
           this.error = true
         }
       })
