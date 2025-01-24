@@ -11,11 +11,14 @@ export class HeaderComponent {
 
   public isLogged = false
 
+  public isAdmin = false
+
   constructor(
     private router: Router,
     private	authenticationService: AuthenticationService
   ) {
     this.isLogged = this.authenticationService.isLogged
+    this.isAdmin = this.authenticationService.isAdmin
   }
 
   logout(){

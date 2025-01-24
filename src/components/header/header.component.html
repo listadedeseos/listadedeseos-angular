@@ -1,6 +1,6 @@
-<header class="flex items-center p-3 gap-3 border-b">
-    <!-- <a routerLink="/" class="font-celestina text-4xl -mb-2 me-auto">Celestina</a> -->
-    <a routerLink="/" class="me-auto ">Lista de deseos</a>
+<header class="flex flex-wrap items-center p-3 gap-3 border-b bg-gray-900">
+
+    <a routerLink="/" class="mr-auto">Lista de deseos</a>
 
     <a href="https://github.com/listadedeseos/listadedeseos-angular" class="text-gray-600 hover:text-white"
         target="_blank" rel="noopener noreferrer" title="Aporta código a nuestra comunidad">
@@ -17,4 +17,20 @@
         <fa-icon [icon]="['fas', 'right-to-bracket']"></fa-icon>
     </a>
     }
+
+    @if(isAdmin){
+    <section class="w-full flex gap-3">
+
+        <a routerLink="/" class="mr-auto text-gray-600">
+            <fa-icon [icon]="['fas', 'crown']"></fa-icon>
+            Admin mode
+        </a>
+
+        <a routerLink="/user" class="text-gray-600 hover:text-blue-600" title="User">
+            <fa-icon [icon]="['fas', 'user']"></fa-icon>
+        </a>
+
+    </section>
+    }
+
 </header>
