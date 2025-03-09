@@ -33,7 +33,7 @@
 
         <section [cdkCopyToClipboard]="getwishListUrl()" title="Copiar al portapapeles" role="button"
             class="fixed bottom-10 right-10 text-gray-800 bg-gray-500 rounded py-1 px-3 group">
-            
+
             <p class="hidden group-hover:inline-block">
                 {{getwishListUrl()}}
                 <fa-icon [icon]="['fas', 'copy']" class="ps-2"></fa-icon>
@@ -78,7 +78,7 @@
 
     </section>
 
-    <app-steam [username]="wishlist.steam_username"></app-steam>
+    <app-steam [username]="wishlist.steam_username" [wishlistId]="wishlist.id"></app-steam>
 
     <app-amazon [wishlistId]="wishlist.amazon_wishlist_id"></app-amazon>
 

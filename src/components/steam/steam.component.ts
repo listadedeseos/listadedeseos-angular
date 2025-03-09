@@ -10,6 +10,7 @@ import { ApiService } from '../../apiConnection/ApiService';
 })
 export class SteamComponent {
 
+  @Input() wishlistId: number = 0
   @Input() username: string = ''
 
   public loading = true
@@ -29,7 +30,7 @@ export class SteamComponent {
 
   getSteam() {
     this.loading = true
-    let url = Utils.urls.steam + '/' + this.username
+    let url = Utils.urls.steam + '/' + this.wishlistId
     this.apiService.getPetition(url).subscribe({
       next: (value: any) => {
         this.list = value.list ?? []
