@@ -42,8 +42,9 @@ const routes: Routes = [
     path: '',
     component: PageLoggedComponent,
     children: [
-      { path: 'list/:username', component: WishListComponent },
-      { path: 'list/:username/:wishListName', component: WishListComponent },
+      { path: 'list/:uuid', component: WishListComponent },
+      { path: 'list/user/:username', component: WishListComponent },
+      { path: 'list/user/:username/:wishListName', component: WishListComponent },
     ]
   },
   {

@@ -10,8 +10,9 @@
 
         <section class="grid grid-cols-3 md:grid-cols-6 gap-2">
             @for(item of allWishList; track $index){
-            <a [routerLink]="['/list', username, item.name]" class="bg-gray-700 p-2 rounded">
-                {{item.name??'Principal'}}
+            <a [routerLink]="['/list', item.uuid]"
+                [class]="'bg-gray-700 p-2 rounded border' + (item.id === wishListId ? '' : ' border-transparent')">
+                {{item.name}}
             </a>
             }
         </section>
@@ -23,7 +24,7 @@
     }
 
     <section class="flex items-center gap-2">
-        <h1 class="text-xl">{{wishlist.name??'Principal'}}</h1>
+        <h1 class="text-xl">{{wishlist.name}}</h1>
 
         @if(isLogged){
         <button (click)="toggleModalWishList(wishListId)" class="transition hover:rotate-45" title="Ajustes">
@@ -43,8 +44,9 @@
         </section>
 
         @if(isLogged){
-        <button class="ml-auto bg-gray-800 border border-gray-700 p-2 rounded" (click)="toggleModalProduct()">Añadir
-            nuevo producto</button>
+        <button class="ml-auto bg-gray-800 border border-gray-700 p-2 rounded" (click)="toggleModalProduct()">
+            Añadir nuevo producto
+        </button>
         }
     </section>
 
