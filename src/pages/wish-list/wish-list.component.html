@@ -14,6 +14,10 @@
                 [class]="'bg-gray-700 p-2 rounded border' + (item.id === wishListId ? '' : ' border-transparent')">
                 {{item.name}}
             </a>
+            } @empty {
+            @for(item of [1,2,3,4,5,6]; track $index){
+            <div class="animate-pulse bg-gray-700 p-2 rounded border border-transparent h-10"></div>
+            }
             }
         </section>
 
@@ -76,6 +80,21 @@
             ">Comprar</a>
 
         </div>
+        } @empty {
+        @for(item of [1,2,3,4,5,6,7,8,9,10,11,12]; track $index){
+        <div class="animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
+
+            <div class="aspect-video bg-gray-700 rounded"></div>
+
+            <div class="h-2 rounded w-20 bg-gray-700"></div>
+
+            <div class="flex gap-1">
+                <div class="h-5 w-full rounded bg-gray-700"></div>
+                <div class="h-5 w-full rounded bg-gray-700"></div>
+            </div>
+
+        </div>
+        }
         }
 
     </section>
