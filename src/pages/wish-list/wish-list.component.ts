@@ -74,8 +74,11 @@ export class WishListComponent {
       next: (value: any) => {
         this.allWishList = value.wishlists
 
-        this.uuid = this.allWishList[0]?.uuid
-        this.getWishList()
+        if (this.uuid == null) {
+          this.uuid = this.allWishList[0]?.uuid
+          this.getWishList()
+        }
+
       },
     })
   }
