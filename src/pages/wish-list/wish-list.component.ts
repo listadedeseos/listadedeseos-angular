@@ -92,10 +92,24 @@ export class WishListComponent {
 
     this.apiService.getPetition(url).subscribe({
       next: (value: any) => {
-        this.wishListId = value.wishlist.id
-        this.wishlist = value.wishlist
+
+        if (value.wishlist) {
+          this.wishListId = value.wishlist.id
+          this.wishlist = value.wishlist
+        }
+
       },
       complete: () => {
+        this.loading = false
+      }
+    })
+  }
+
+  deleteWishList(id: number) {
+    this.loading = true
+    this.apiService.deleteById(Utils.urls.wishlist, id).subscribe({
+      next: (value: any) => {
+        this.allWishList = this.allWishList.filter((wishList: any) => wishList.id != id)
         this.loading = false
       }
     })
