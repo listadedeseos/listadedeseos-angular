@@ -38,8 +38,9 @@
         <h1 class="text-xl">{{wishlist.name}}</h1>
 
         @if(isLogged){
-        <button (click)="toggleModalWishList(wishListId)" class="transition hover:rotate-45" title="Ajustes">
-            <fa-icon [icon]="['fas', 'gear']"></fa-icon>
+        <button class="group/wishlist_settings" (click)="toggleModalWishList(wishListId)" title="Ajustes">
+            <fa-icon [icon]="['fas', 'gear']"
+                [classes]="['duration-300 group-hover/wishlist_settings:rotate-45']"></fa-icon>
         </button>
         }
 
