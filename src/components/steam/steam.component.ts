@@ -2,6 +2,7 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Utils } from '../../utils/utils';
 import { ApiService } from '../../apiConnection/ApiService';
+import { AuthenticationService } from '../../apiConnection/authentication.service';
 
 @Component({
   selector: 'app-steam',
@@ -14,11 +15,15 @@ export class SteamComponent {
   @Input() username: string = ''
 
   public loading = true
+  public isLogged = false
   public list: any = []
 
   constructor(
+    private authenticationService: AuthenticationService,
     private apiService: ApiService,
-  ) { }
+  ) {
+    this.isLogged = this.authenticationService.isLogged
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     let production = environment.production
@@ -28,9 +33,10 @@ export class SteamComponent {
     }
   }
 
-  getSteam() {
+  getSteam(refresh = false) {
     this.loading = true
-    let url = Utils.urls.steam + '/' + this.wishlistId
+    let refreshUrl = refresh ? '/refresh/' : '/'
+    let url = Utils.urls.steam + refreshUrl + this.wishlistId
     this.apiService.getPetition(url).subscribe({
       next: (value: any) => {
         this.list = value.list ?? []
@@ -40,6 +46,10 @@ export class SteamComponent {
         this.loading = false
       }
     })
+  }
+
+  refresh() {
+    this.getSteam(true)
   }
 
   onImageError(event: Event) {
