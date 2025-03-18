@@ -15,11 +15,13 @@
                 <a [routerLink]="['/list', item.uuid]" class="w-full p-2">
                     {{item.name}}
                 </a>
+                @if(allWishList.length > 1 && item.id != wishListId){
                 <small (click)="deleteWishList(item.id)"
                     class="h-full p-3 flex items-center border-l-4 border-dashed border-gray-800 hover:text-red-700 transition"
                     role="button">
                     <fa-icon [icon]="['fas', 'trash-can']"></fa-icon>
                 </small>
+                }
             </div>
             } @empty {
             @for(item of [1,2,3,4,5,6]; track $index){
@@ -38,8 +40,9 @@
         <h1 class="text-xl">{{wishlist.name}}</h1>
 
         @if(isLogged){
-        <button (click)="toggleModalWishList(wishListId)" class="transition hover:rotate-45" title="Ajustes">
-            <fa-icon [icon]="['fas', 'gear']"></fa-icon>
+        <button class="group/wishlist_settings" (click)="toggleModalWishList(wishListId)" title="Ajustes">
+            <fa-icon [icon]="['fas', 'gear']"
+                [classes]="['duration-300 group-hover/wishlist_settings:rotate-45']"></fa-icon>
         </button>
         }
 
@@ -89,7 +92,7 @@
         </div>
         } @empty {
         @for(item of [1,2,3,4,5,6,7,8,9,10,11,12]; track $index){
-        <div class="animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
+        <div class="-z-10 animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
 
             <div class="aspect-video bg-gray-700 rounded"></div>
 
