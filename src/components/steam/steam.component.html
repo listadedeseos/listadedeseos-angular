@@ -1,7 +1,11 @@
 @if(username){
 <section class="flex mb-2">
 
-    <h2 class="text-xl my-2">Steam</h2>
+    <a class="text-xl my-2" [href]="'https://store.steampowered.com/wishlist/id/'+username" target="_blank"
+        rel="noopener noreferrer">
+        <fa-icon [icon]="['fab', 'steam']"></fa-icon>
+        Steam
+    </a>
 
     @if(isLogged){
     <button class="group/steam ml-auto bg-gray-800 border border-gray-700 p-2 rounded" (click)="refresh()">
@@ -15,7 +19,7 @@
 <section class="grid gap-2 grid-cols-3 md:grid-cols-6">
 
     @if(loading){
-    @for(item of [1,2,3,4,5,6]; track $index){
+    @for(item of [].constructor(6); track $index){
     <div class="-z-10 animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
 
         <div class="aspect-video bg-gray-700 rounded"></div>
