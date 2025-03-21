@@ -1,7 +1,7 @@
 @if(loading){
 <app-loading></app-loading>
 }
-<app-custom-modal customTitle="Nueva lista de deseos" (closeFunction)="closeFormFunction()"
+<app-custom-modal [customTitle]="(id?'Editar':'Nueva') + ' lista de deseos'" (closeFunction)="closeFormFunction()"
     (acceptFunction)="acceptFormFunction()">
     <form [formGroup]="saveForm" (ngSubmit)="saveEntity()">
 
@@ -10,26 +10,33 @@
                 Nombre
             </label>
             <input
-                class="appearance-none block w-full text-white border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-transparent"
+                class="appearance-none block w-full text-white border border-gray-500 rounded py-3 px-4 mb-4 leading-tight focus:outline-none bg-transparent"
                 id="name" type="text" formControlName="name">
         </section>
 
-        <section>
-            <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="steam_username">
-                Nombre de usuario Steam
-            </label>
-            <input
-                class="appearance-none block w-full text-white border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-transparent"
-                id="steam_username" type="text" formControlName="steam_username">
-        </section>
+        <section class="grid grid-cols-3 gap-2 uppercase text-white text-xs font-bold">
 
-        <section>
-            <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="amazon_wishlist_id">
-                ID de la lista de deseos de Amazon
+            <label class="flex flex-col items-center border border-gray-500 rounded p-2 gap-2">
+                <fa-icon [icon]="['fab', 'steam']" [classes]="['w-7 h-7']"></fa-icon>
+
+                <span class="mt-auto">Nombre de usuario Steam</span>
+
+                <input
+                    class="appearance-none w-full border border-gray-500 rounded py-3 px-4 leading-tight focus:outline-none bg-transparent"
+                    type="text" formControlName="steam_username">
             </label>
-            <input
-                class="appearance-none block w-full text-white border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-transparent"
-                id="amazon_wishlist_id" type="text" formControlName="amazon_wishlist_id">
+
+            <label class="flex flex-col items-center border border-gray-500 rounded p-2 gap-2">
+                <fa-icon [icon]="['fab', 'amazon']" [classes]="['w-7 h-7']"></fa-icon>
+
+                <span class="mt-auto">ID de la lista de deseos de Amazon</span>
+
+                <input
+                    class="appearance-none block w-full text-white border border-gray-500 rounded py-3 px-4 leading-tight focus:outline-none bg-transparent"
+                    type="text" formControlName="amazon_wishlist_id">
+
+            </label>
+
         </section>
 
     </form>
