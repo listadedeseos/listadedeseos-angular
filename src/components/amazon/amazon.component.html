@@ -1,5 +1,10 @@
 @if(wishlistId){
-<h2 class="text-xl my-2">Amazon</h2>
+
+<a class="text-xl my-2" [href]="'https://www.amazon.es/hz/wishlist/ls/'+wishlistId" target="_blank"
+    rel="noopener noreferrer">
+    Amazon
+</a>
+
 <section class="grid gap-2 grid-cols-3 md:grid-cols-6">
 
     @if(loading){

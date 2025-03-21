@@ -1,7 +1,10 @@
 @if(username){
 <section class="flex mb-2">
 
-    <h2 class="text-xl my-2">Steam</h2>
+    <a class="text-xl my-2" [href]="'https://store.steampowered.com/wishlist/id/'+username" target="_blank"
+        rel="noopener noreferrer">
+        Steam
+    </a>
 
     @if(isLogged){
     <button class="group/steam ml-auto bg-gray-800 border border-gray-700 p-2 rounded" (click)="refresh()">
