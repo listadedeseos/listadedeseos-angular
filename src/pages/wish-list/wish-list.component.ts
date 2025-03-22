@@ -123,6 +123,17 @@ export class WishListComponent {
     this.wishlist.products.push(response.product)
   }
 
+  reserveProduct(id: number) {
+    this.apiService.save(Utils.urls.product, '', id + '/reserve').subscribe({
+      next: (value: any) => {
+
+        this.wishlist.products
+          .find((product: any) => product.id == id).is_reserved = value.product.is_reserved
+
+      }
+    })
+  }
+
   toggleModalWishList(wishListFormId = 0) {
     this.wishListFormId = wishListFormId
     this.modalWishListOpen = !this.modalWishListOpen

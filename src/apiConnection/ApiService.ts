@@ -9,7 +9,7 @@ export class ApiService {
 
     constructor(private http: HttpClient) { }
 
-    save(url: string, body: any, id: number = 0): Observable<Object> {
+    save(url: string, body: any, id: number | string = 0): Observable<Object> {
         if (id != 0) {
             return this.http.put(url + '/' + id, body)
         }
