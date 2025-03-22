@@ -8,10 +8,24 @@ module.exports = {
   ],
   theme: {
     extend: {
+
       fontFamily: {
         celestina: ['Herr Von Muellerhoff'],
         roboto: ['Roboto'],
       },
+
+      animation: {
+        scaleadd: 'scaleadd 0.5s ease-in-out',
+      },
+
+      keyframes: {
+        scaleadd: {
+          '0%': { transform: 'scale(0)' },
+          '80%': { transform: 'scale(1.1)' },
+          '100%': { transform: 'scale(1)' },
+        },
+      },
+
     },
   },
 

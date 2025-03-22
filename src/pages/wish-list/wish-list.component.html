@@ -11,7 +11,7 @@
         <section class="grid grid-cols-3 md:grid-cols-6 gap-2">
             @for(item of allWishList; track $index){
             <div
-                [class]="'flex items-center bg-gray-700 rounded border' + (item.id === wishListId ? ' border-gray-400' : ' border-transparent')">
+                [class]="(item.is_new?'animate-scaleadd':'') +' flex items-center bg-gray-700 rounded border' + (item.id === wishListId ? ' border-gray-400' : ' border-transparent')">
                 <a [routerLink]="['/list', item.uuid]" class="w-full p-2">
                     {{item.name}}
                 </a>
@@ -67,7 +67,25 @@
     <section class="grid gap-2 grid-cols-3 md:grid-cols-6">
 
         @for(item of wishlist.products; track $index){
-        <div class="bg-gray-800 text-white border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
+        <div class="relative bg-gray-800 text-white border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
+
+            @if(item.is_reserved){
+            <div class="absolute top-0 left-0 h-full w-full flex flex-col p-2">
+                <div class="bg-green-600 mt-auto rounded h-24 flex flex-col justify-center items-center p-2">
+
+                    @if(!isLogged){
+                    <fa-icon [icon]="['fas', 'circle-check']" [classes]="['text-2xl']"></fa-icon>
+                    <p>Reservado</p>
+                    }@else {
+                    <button (click)="reserveProduct(item.id)"
+                        class="bg-green-700 p-1 rounded w-full hover:bg-green-800">
+                        Eliminar reserva
+                    </button>
+                    }
+                </div>
+            </div>
+            }
+
 
             <a [href]="item.url_product" target="_blank"
                 class="flex justify-center aspect-video overflow-hidden rounded">
@@ -89,10 +107,19 @@
                 hover:bg-blue-700 hover:text-white
             ">Comprar</a>
 
+            <a role="button" (click)="reserveProduct(item.id)" class="
+            bg-gray-700 font-medium rounded-lg text-center p-2 mt-auto
+            flex gap-2 align-center justify-center
+            text-white text-xs
+            hover:bg-black hover:text-white">
+                <fa-icon [icon]="['fas', 'basket-shopping']"></fa-icon>
+                Reservar
+            </a>
+
         </div>
         } @empty {
         @for(item of [].constructor(12); track $index){
-        <div class="-z-10 animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
+        <div class="animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
 
             <div class="aspect-video bg-gray-700 rounded"></div>
 
