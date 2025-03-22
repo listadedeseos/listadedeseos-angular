@@ -130,6 +130,7 @@ export class WishListComponent {
 
   wishlistUpdate(id: number, response: any) {
     if (id == 0) {
+      response.wishList.is_new = true // To show animation
       this.allWishList.push(response.wishList)
     }
   }
