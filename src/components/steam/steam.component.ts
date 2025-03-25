@@ -52,6 +52,17 @@ export class SteamComponent {
     this.getSteam(true)
   }
 
+  reserveGame(id: number) {
+    this.apiService.save(Utils.urls.steam, '', id + '/reserve').subscribe({
+      next: (value: any) => {
+
+        this.list
+          .find((game: any) => game.id == id).is_reserved = value.product.is_reserved
+
+      }
+    })
+  }
+
   onImageError(event: Event) {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = '/assets/img/empty.webp';
