@@ -14,7 +14,9 @@ export class UserComponent {
     public url = Utils.urls.user
     public headers = [
         { name: 'ID', key: 'id' },
+        { name: 'NOMBRE DE USUARIO', key: 'username' },
         { name: 'NOMBRE', key: 'name' },
+        { name: 'APELLIDO', key: 'surname' },
         { name: 'CORREO ELECTRÓNICO', key: 'email' },
         { name: 'ROL', key: 'role' },
         { name: 'CREADO', key: 'created_at', type: 'dateTime' },
