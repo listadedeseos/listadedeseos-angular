@@ -35,23 +35,7 @@
     }
     } @else {
     @for(item of list; track $index){
-    <div class="relative bg-gray-800 text-white border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
-
-        @if(item.is_reserved){
-        <div class="absolute top-0 left-0 h-full w-full flex flex-col p-2">
-            <div class="bg-green-600 mt-auto rounded h-24 flex flex-col justify-center items-center p-2">
-
-                @if(!isLogged){
-                <fa-icon [icon]="['fas', 'circle-check']" [classes]="['text-2xl']"></fa-icon>
-                <p>Reservado</p>
-                }@else {
-                <button (click)="reserveGame(item.id)" class="bg-green-700 p-1 rounded w-full hover:bg-green-800">
-                    Eliminar reserva
-                </button>
-                }
-            </div>
-        </div>
-        }
+    <div class="relative bg-gray-800 text-white border border-gray-700 rounded shadow p-2 flex flex-col gap-1">
 
         <a [href]="item.steam_url" target="_blank" class="flex justify-center aspect-video overflow-hidden rounded">
             <img class="w-full h-full object-cover" [src]="item.img" (error)="onImageError($event)" loading="lazy"
@@ -63,7 +47,7 @@
                 [title]="item.name">{{item.name}}</h5>
         </a>
 
-        <div>{{item.price}}</div>
+        <div class="mb-auto">{{item.price}}</div>
 
         <div class="flex gap-1">
             <a [href]="item.steam_url" target="_blank" class="
@@ -81,14 +65,33 @@
         ">Instant gaming</a>
         </div>
 
+        @if(item.is_reserved){
+
+        @if(!isLogged){
+        <div class="bg-green-600 font-medium rounded-lg text-center p-2
+                    flex gap-2 align-center justify-center
+                    text-white text-xs">
+            <fa-icon [icon]="['fas', 'circle-check']"></fa-icon>
+            <p>Reservado</p>
+        </div>
+        } @else {
+        <button (click)="reserveGame(item.id)" class="bg-green-600 font-medium rounded-lg text-center p-2
+                    flex gap-2 align-center justify-center
+                    text-white text-xs hover:bg-green-700">
+            <p>Eliminar reserva</p>
+        </button>
+        }
+
+        } @else {
         <a role="button" (click)="reserveGame(item.id)" class="
-        bg-gray-700 font-medium rounded-lg text-center p-2 mt-auto
+        bg-gray-700 font-medium rounded-lg text-center p-2
         flex gap-2 align-center justify-center
         text-white text-xs
         hover:bg-black hover:text-white">
             <fa-icon [icon]="['fas', 'basket-shopping']"></fa-icon>
             Reservar
         </a>
+        }
 
     </div>
     }
