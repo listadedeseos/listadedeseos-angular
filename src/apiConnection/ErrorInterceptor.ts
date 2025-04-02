@@ -17,9 +17,10 @@ export class ErrorInterceptor implements HttpInterceptor {
 
                 // auto logout if 401 response returned from api
                 localStorage.removeItem('currentUser');
-                sessionStorage.setItem('returnUrl', this.router.url);
+                // sessionStorage.setItem('returnUrl', this.router.url);
                 
-                this.router.navigate(['/login']);
+                // reload the page to clear the cache
+                location.reload();
             }
 
             const error = err.error.message || err.error || err.statusText;
