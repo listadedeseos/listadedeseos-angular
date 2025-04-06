@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
+import { catchError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   templateUrl: './login.component.html',
@@ -37,10 +39,17 @@ export class LoginComponent {
           localStorage.setItem('currentUser', JSON.stringify(data.user));
           this.router.navigate([sessionStorage.getItem('returnUrl')??'/']);
         },
-        error: ()=>{
+        error: (error: any)=>{
+          console.log(error.user.id);
+          
+          if(error.user.id){
+            this.router.navigate(['/', 'verify', error.user.id]);
+          }
+
           this.loading = false;
           this.error = true
-        }
+        },
+       
       })
       // .then((data) => {
       //   data.user.token = data.token;
