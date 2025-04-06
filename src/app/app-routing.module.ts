@@ -32,12 +32,14 @@ import { AmazonComponent } from '../components/amazon/amazon.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { UserComponent } from '../pages/user/user.component';
 import { RegisterComponent } from '../pages/register/register.component';
+import { VerifyComponent } from '../pages/verify/verify.component';
 import { WishListComponent } from '../pages/wish-list/wish-list.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'list' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'verify/:userId', component: VerifyComponent },
   {
     path: '',
     component: PageLoggedComponent,
@@ -79,6 +81,7 @@ const routes: Routes = [
 
     LoginComponent,
     RegisterComponent,
+    VerifyComponent,
     UserComponent,
     WishListComponent,
   ],

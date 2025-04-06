@@ -35,7 +35,7 @@ export class WishListComponent {
   refreshData() {
     this.uuid = this.activateRoute.snapshot.params['uuid'] ?? null
     this.username = this.activateRoute.snapshot.params['username'] ?? null
-    this.wishListName = this.activateRoute.snapshot.params['wishListName'] ?? null
+    this.wishListName = this.activateRoute.snapshot.params['wishListName'] ?? 'principal'
     this.isLogged = this.authenticationService.isLogged
 
     if (this.isLogged && this.username == null) {
@@ -63,7 +63,7 @@ export class WishListComponent {
 
   getwishListUrl() {
     let wishListName = ''
-    if (this.wishListName && this.wishListName != 'null') {
+    if (this.wishListName && this.wishListName != 'principal') {
       wishListName = '/' + this.wishListName
     }
     return 'https://listadedeseos.es/' + this.username + wishListName

@@ -1,4 +1,4 @@
-<app-loading *ngIf="loading"></app-loading>
+<!-- <app-loading *ngIf="loading"></app-loading> -->
 <main class="flex flex-col gap-2 p-2">
 
     @if(isLogged){
@@ -66,6 +66,25 @@
 
     <section class="grid gap-2 grid-cols-3 md:grid-cols-6">
 
+        @if(loading){
+
+        @for(item of [].constructor(12); track $index){
+        <div class="animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
+
+            <div class="aspect-video bg-gray-700 rounded"></div>
+
+            <div class="h-2 rounded w-20 bg-gray-700"></div>
+
+            <div class="flex gap-1">
+                <div class="h-5 w-full rounded bg-gray-700"></div>
+                <div class="h-5 w-full rounded bg-gray-700"></div>
+            </div>
+
+        </div>
+        }
+
+        } @else {
+
         @for(item of wishlist.products; track $index){
         <div class="relative bg-gray-800 text-white border border-gray-700 rounded shadow p-2 flex flex-col gap-1">
 
@@ -120,22 +139,12 @@
 
         </div>
         } @empty {
-        @for(item of [].constructor(12); track $index){
-        <div class="animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
-
-            <div class="aspect-video bg-gray-700 rounded"></div>
-
-            <div class="h-2 rounded w-20 bg-gray-700"></div>
-
-            <div class="flex gap-1">
-                <div class="h-5 w-full rounded bg-gray-700"></div>
-                <div class="h-5 w-full rounded bg-gray-700"></div>
-            </div>
-
+        <div class="flex flex-col items-center justify-center gap-2 h-full col-span-3 md:col-span-6">
+            <fa-icon [icon]="['far', 'face-frown']" [classes]="['text-3xl text-gray-500']"></fa-icon>
+            <p class="text-gray-500">No tienes productos</p>
         </div>
         }
         }
-
     </section>
 
     <app-steam [username]="wishlist.steam_username" [wishlistId]="wishlist.id"></app-steam>
