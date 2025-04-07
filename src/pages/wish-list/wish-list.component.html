@@ -139,10 +139,29 @@
 
         </div>
         } @empty {
+
+        @if(isLogged || !(wishlist.steam_username || wishlist.amazon_wishlist_id)){
         <div class="flex flex-col items-center justify-center gap-2 h-full col-span-3 md:col-span-6">
             <fa-icon [icon]="['far', 'face-frown']" [classes]="['text-3xl text-gray-500']"></fa-icon>
-            <p class="text-gray-500">No tienes productos</p>
+            <p class="text-gray-500">No hay productos</p>
+
+            @if(isLogged){
+
+            <section class="border-t-2 border-b-2 p-4 m-4 border-gray-700 w-full flex flex-col items-center gap-2">
+                <button class="text-gray-500 transition hover:text-gray-400" (click)="toggleModalProduct()">
+                    Añade productos personalizados a tu lista de deseos haciendo clic aquí
+                </button>
+                <button class="text-gray-500 transition hover:text-gray-400" (click)="toggleModalWishList(wishListId)">
+                    También puedes añadir productos de páginas externas haciendo clic en el engranaje
+                    (<fa-icon [icon]="['fas', 'gear']"></fa-icon>)
+                </button>
+            </section>
+
+            }
+
         </div>
+        }
+
         }
         }
     </section>
