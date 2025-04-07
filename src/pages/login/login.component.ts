@@ -40,9 +40,8 @@ export class LoginComponent {
           this.router.navigate([sessionStorage.getItem('returnUrl')??'/']);
         },
         error: (error: any)=>{
-          console.log(error.user.id);
           
-          if(error.user.id){
+          if(error.user && error.user.id){
             this.router.navigate(['/', 'verify', error.user.id]);
           }
 
