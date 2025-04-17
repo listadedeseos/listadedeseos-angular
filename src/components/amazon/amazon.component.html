@@ -23,7 +23,7 @@
     @for(item of [].constructor(6); track $index){
     <div class="animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
 
-        <div class="aspect-video bg-gray-700 rounded"></div>
+        <div class="aspect-square bg-gray-700 rounded"></div>
 
         <div class="h-2 rounded w-20 bg-gray-700"></div>
 
@@ -36,7 +36,7 @@
     @for(item of list; track $index){
     <div class="bg-gray-800 text-white border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
 
-        <a [href]="item.amazon_url" target="_blank" class="flex justify-center aspect-video overflow-hidden rounded">
+        <a [href]="item.amazon_url" target="_blank" class="flex justify-center aspect-square overflow-hidden rounded">
             <img class="w-full h-full object-cover" [src]="item.img" (error)="onImageError($event)" loading="lazy"
                 alt="product image">
         </a>

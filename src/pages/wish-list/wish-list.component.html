@@ -47,7 +47,10 @@
         }
 
         <section [cdkCopyToClipboard]="getwishListUrl()" title="Copiar al portapapeles" role="button"
-            class="fixed bottom-10 right-10 text-gray-800 bg-gray-500 rounded py-1 px-3 group">
+            class="z-50 fixed bottom-10 right-10 text-gray-500 bg-gray-200 rounded py-1 px-3 group border-2 border-gray-400 group">
+
+            <span
+                class="-z-10 absolute top-0 left-0 rounded w-full h-full bg-gray-200 bg-opacity-50 animate-ping group-hover:animate-none"></span>
 
             <p class="hidden group-hover:inline-block">
                 {{getwishListUrl()}}
@@ -71,7 +74,7 @@
         @for(item of [].constructor(12); track $index){
         <div class="animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
 
-            <div class="aspect-video bg-gray-700 rounded"></div>
+            <div class="aspect-square bg-gray-700 rounded"></div>
 
             <div class="h-2 rounded w-20 bg-gray-700"></div>
 
@@ -89,7 +92,7 @@
         <div class="relative bg-gray-800 text-white border border-gray-700 rounded shadow p-2 flex flex-col gap-1">
 
             <a [href]="item.url_product" target="_blank"
-                class="flex justify-center aspect-video overflow-hidden rounded">
+                class="flex justify-center aspect-square overflow-hidden rounded">
                 <img class="w-full h-full object-cover" [src]="item.url_preview" (error)="onImageError($event)"
                     loading="lazy" alt="product image">
             </a>
