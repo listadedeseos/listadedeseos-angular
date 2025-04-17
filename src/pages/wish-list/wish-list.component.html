@@ -47,7 +47,10 @@
         }
 
         <section [cdkCopyToClipboard]="getwishListUrl()" title="Copiar al portapapeles" role="button"
-            class="z-50 fixed bottom-10 right-10 text-gray-500 bg-gray-200 rounded py-1 px-3 group border-2 border-gray-400 animate-bounce animate-scaleadd hover:animate-none">
+            class="z-50 fixed bottom-10 right-10 text-gray-500 bg-gray-200 rounded py-1 px-3 group border-2 border-gray-400 group">
+
+            <span
+                class="-z-10 absolute top-0 left-0 rounded w-full h-full bg-gray-200 bg-opacity-50 animate-ping group-hover:animate-none"></span>
 
             <p class="hidden group-hover:inline-block">
                 {{getwishListUrl()}}
