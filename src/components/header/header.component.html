@@ -7,6 +7,10 @@
         <fa-icon [icon]="['fab', 'github']"></fa-icon>
     </a>
 
+    <a routerLink="/contact" routerLinkActive="text-white" class="text-gray-600 hover:text-white" title="Contáctanos">
+        <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
+    </a>
+
     @if(isLogged){
     <div (click)="logout()" class="text-gray-600 hover:text-red-600 transition-colors" role="button"
         title="Cerrar sesión">
