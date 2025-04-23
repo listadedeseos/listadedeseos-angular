@@ -33,11 +33,30 @@
                     </div>
                     }
 
-                    <label class="block text-sm font-medium text-white">Correo electrónico
-                        <input formControlName="email" type="email" placeholder="xxxxx@xxxx.xxx"
-                            class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-gray-700 text-white"
+                    <label>Tipo de mensaje
+                        <select formControlName="type" class="bg-gray-700 text-white rounded-lg p-2.5 mt-2 w-full"
                             required>
+                            <option value="" disabled selected>Selecciona un tipo de mensaje</option>
+                            <option value="suggestion">Sugerencia</option>
+                            <option value="complaint">Error/queja</option>
+                            <option value="question">Consulta</option>
+
+                        </select>
                     </label>
+
+                    <div class="flex flex-col gap-4 md:flex-row">
+                        <label class="w-full text-sm font-medium text-white">Nombre
+                            <input formControlName="name" type="text" placeholder="Nombre"
+                                class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-gray-700 text-white"
+                                required>
+                        </label>
+
+                        <label class="w-full text-sm font-medium text-white">Correo electrónico
+                            <input formControlName="email" type="email" placeholder="xxxxx@xxxx.xxx"
+                                class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-gray-700 text-white"
+                                required>
+                        </label>
+                    </div>
 
                     <label class="block text-sm font-medium text-white"> Título
                         <input formControlName="title" type="text" placeholder="Mi sugerencia es..."

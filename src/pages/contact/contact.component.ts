@@ -24,6 +24,8 @@ export class ContactComponent {
 
   createForm() {
     this.saveForm = new FormGroup({
+      type: new FormControl('question', [Validators.required]),
+      name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       title: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
       body: new FormControl('', [Validators.required]),
