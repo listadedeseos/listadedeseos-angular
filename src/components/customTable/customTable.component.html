@@ -16,7 +16,7 @@
                         <tbody>
 
                             @for (header of headers; track $index) {
-                            @if (getValue(item, header.key)) {
+                            @if (getValue(item, header.key) || getValue(item, header.key) == false) {
                             <tr [class]="$index%2==0?'bg-gray-50':''">
 
                                 @if(header.type == 'table'){
@@ -36,6 +36,14 @@
                                     <span [innerHTML]="getValue(item, header.key)"></span>
                                     } @else {
                                     @switch (header.type) {
+
+                                    @case ('boolean') {
+                                    @if(getValue(item, header.key)){
+                                    <fa-icon [classes]="['text-green-500']" [icon]="['fas', 'check']"></fa-icon>
+                                    } @else {
+                                    <fa-icon [classes]="['text-red-500']" [icon]="['fas', 'xmark']"></fa-icon>
+                                    }
+                                    }
 
                                     @case ('currency'){
                                     <!-- {{formatEuro(getValue(item, header.key))}} -->
@@ -125,6 +133,14 @@
                     <span [innerHTML]="getValue(item, header.key)"></span>
                     } @else {
                     @switch (header.type) {
+
+                    @case ('boolean') {
+                    @if(getValue(item, header.key)){
+                    <fa-icon [classes]="['text-green-500']" [icon]="['fas', 'check']"></fa-icon>
+                    } @else {
+                    <fa-icon [classes]="['text-red-500']" [icon]="['fas', 'xmark']"></fa-icon>
+                    }
+                    }
 
                     @case ('table'){
                     <app-custom-table [headers]="header.headers" [items]="item[header.key]"></app-custom-table>

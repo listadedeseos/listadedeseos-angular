@@ -18,7 +18,7 @@ export class ContactListComponent {
         { name: 'CORREO ELECTRÓNICO', key: 'email' },
         { name: 'TÍTULO', key: 'title' },
         { name: 'CUERPO', key: 'body' },
-        { name: 'HECHO', key: 'is_done'},
+        { name: 'HECHO', key: 'is_done', type: 'boolean' },
     ]
 
     public id = 0
