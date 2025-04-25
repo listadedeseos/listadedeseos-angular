@@ -13,12 +13,12 @@ export class ContactListComponent {
 
     public url = Utils.urls.contact
     public headers = [
+        { name: 'ID', key: 'id' },
         { name: 'TIPO', key: 'type' },
         { name: 'NOMBRE', key: 'name' },
-        { name: 'CORREO ELECTRÓNICO', key: 'email' },
         { name: 'TÍTULO', key: 'title' },
-        { name: 'CUERPO', key: 'body' },
         { name: 'HECHO', key: 'is_done', type: 'boolean' },
+        { name: 'FECHA', key: 'created_at', type: 'dateTime' },
     ]
 
     public id = 0
