@@ -11,6 +11,7 @@ export namespace Utils {
         product: Utils.base + 'product',
         steam: Utils.base + 'steam',
         amazon: Utils.base + 'amazon',
+        contact: Utils.base + 'contact',
     }
 
 }

@@ -34,6 +34,8 @@ import { UserComponent } from '../pages/user/user.component';
 import { RegisterComponent } from '../pages/register/register.component';
 import { VerifyComponent } from '../pages/verify/verify.component';
 import { WishListComponent } from '../pages/wish-list/wish-list.component';
+import { ContactComponent } from '../pages/contact/contact.component';
+import { ContactListComponent } from '../pages/contact/contact-list/contact-list.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'list' },
@@ -44,6 +46,7 @@ const routes: Routes = [
     path: '',
     component: PageLoggedComponent,
     children: [
+      { path: 'contact', component: ContactComponent },
       { path: 'list/:uuid', component: WishListComponent },
       { path: 'list/user/:username', component: WishListComponent },
       { path: 'list/user/:username/:wishListName', component: WishListComponent },
@@ -56,6 +59,7 @@ const routes: Routes = [
     children: [
       { path: 'list', component: WishListComponent },
       { path: 'user', component: UserComponent },
+      { path: 'contact/list', component: ContactListComponent },
       { path: '**', redirectTo: 'list' }
     ]
   },
@@ -84,6 +88,8 @@ const routes: Routes = [
     VerifyComponent,
     UserComponent,
     WishListComponent,
+    ContactComponent,
+    ContactListComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

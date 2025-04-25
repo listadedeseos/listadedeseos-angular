@@ -1,7 +1,24 @@
-<footer class="bg-gray-950 border-t border-gray-800 p-1 text-center text-gray-500">
-    Lista de deseos
-    <small>
+<footer class="bg-gray-950 border-t border-gray-800 p-5 grid grid-cols-1 gap-5 text-center text-gray-500 text-sm">
+
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <a href="https://github.com/listadedeseos/listadedeseos-angular" class="hover:text-white" target="_blank"
+            rel="noopener noreferrer" title="Aporta código a nuestra comunidad">
+            <fa-icon [icon]="['fab', 'github']"></fa-icon>
+            Edita esta página en Github
+        </a>
+
+        <a routerLink="/contact" class="hover:text-white" title="Contáctanos">
+            <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
+            Haz una sugerencia
+        </a>
+
+    </section>
+
+    <section class="text-gray-700">
+        Lista de deseos
         <fa-icon [icon]="['far', 'copyright']"></fa-icon>
-    </small>
-    {{year}}
+        {{year}}
+    </section>
+
 </footer>
