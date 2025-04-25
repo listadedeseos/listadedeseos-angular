@@ -2,22 +2,21 @@
 <app-loading />
 }
 
-<div class="overflow-x-auto border-2 border-gray-300 sm:rounded-lg rounded w-full">
+<div class="overflow-x-auto border-2 border-gray-800 sm:rounded-lg rounded w-full">
 
     <!-- Table mobile -->
 
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 md:hidden">
         <tbody>
             @for (item of items; track $index) {
-            <tr class="bg-white border-b-4 hover:bg-gray-100 ">
+            <tr class="border-2 border-gray-600">
 
                 <td>
                     <table class="w-full">
                         <tbody>
 
                             @for (header of headers; track $index) {
-                            @if (getValue(item, header.key) || getValue(item, header.key) == false) {
-                            <tr [class]="$index%2==0?'bg-gray-50':''">
+                            <tr [class]="$index%2==0?'bg-gray-500 bg-opacity-10':''">
 
                                 @if(header.type == 'table'){
                                 <td scope="col" colspan="2" class="px-6">
@@ -26,7 +25,6 @@
                                         [items]="item[header.key]"></app-custom-table>
                                 </td>
                                 }@else{
-
 
                                 <th scope="col" class="px-6 py-2">
                                     {{header.name}}
@@ -67,12 +65,11 @@
                                 }
                             </tr>
                             }
-                            }
 
                             @if(this.url){
-                            <tr>
+                            <tr class="border-t-2 border-gray-800">
                                 <td colspan="2">
-                                    <div class="flex justify-around items-center w-full">
+                                    <div class="flex justify-around items-center w-full p-2">
                                         @if(editEvent.observers.length > 0){
 
                                         <span class="flex items-center" role="button"
@@ -105,7 +102,7 @@
     <!-- Table desktop -->
 
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 hidden md:table">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-2">
+        <thead class="text-xs text-gray-300 uppercase bg-gray-950 bg-opacity-60">
             <tr>
 
                 @for (header of headers; track $index) {
@@ -125,7 +122,7 @@
         </thead>
         <tbody>
             @for (item of items; track $index) {
-            <tr [class]="'border-b  hover:bg-gray-100 ' + ($index%2==0?'bg-gray-50':'bg-white')">
+            <tr [class]="'hover:bg-gray-500 hover:bg-opacity-20 ' + ($index%2==0?'bg-gray-500 bg-opacity-10':'')">
 
                 @for (header of headers; track $index) {
                 <td class="px-6 py-4">
@@ -210,7 +207,7 @@
             @for (item of total; track $index) {
 
             <button (click)="changePage(item)"
-                [class]="'relative h-8 max-h-[32px] w-8 max-w-[32px] select-none rounded-lg border text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none' + (item == page ? ' bg-primary text-secondary border-secondary' : ' bg-white')"
+                [class]="'relative h-8 max-h-[32px] w-8 max-w-[32px] select-none rounded-lg border text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none' + (item == page ? ' bg-primary text-secondary border-secondary' : ' ')"
                 type="button">
                 <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                     {{item}}
