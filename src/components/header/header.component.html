@@ -1,37 +1,41 @@
-<header class="flex flex-wrap items-center p-3 gap-3 border-b bg-gray-900">
+<header class="flex flex-wrap items-center p-3 gap-5 border-b bg-gray-900 text-gray-600">
 
-    <a routerLink="/" class="mr-auto">Lista de deseos</a>
+    <a routerLink="/" class="mr-auto text-white">Lista de deseos</a>
 
-    <a routerLink="/contact" routerLinkActive="text-white" class="text-gray-600 hover:text-white" title="Contáctanos">
+    <a routerLink="/contact" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="text-white"
+        class="hover:text-white" title="Contáctanos">
         <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
+        <p class="hidden md:inline-block ml-1">Contacto</p>
     </a>
 
     @if(isLogged){
-    <div (click)="logout()" class="text-gray-600 hover:text-red-600 transition-colors" role="button"
-        title="Cerrar sesión">
+    <div (click)="logout()" class="hover:text-red-600 transition-colors" role="button" title="Cerrar sesión">
         <fa-icon [icon]="['fas', 'arrow-right-from-bracket']"></fa-icon>
+        <p class="hidden md:inline-block ml-1">Cerrar sesión</p>
     </div>
     }@else{
-    <a routerLink="/login" class="text-gray-600 hover:text-green-600" title="Iniciar sesión">
+    <a routerLink="/login" class="hover:text-green-600" title="Iniciar sesión">
         <fa-icon [icon]="['fas', 'right-to-bracket']"></fa-icon>
+        <p class="hidden md:inline-block ml-1">Iniciar sesión</p>
     </a>
     }
 
     @if(isAdmin){
-    <section class="w-full flex gap-3">
+    <section class="w-full flex gap-5">
 
-        <a routerLink="/" class="mr-auto text-gray-600">
+        <a routerLink="/" class="mr-auto">
             <fa-icon [icon]="['fas', 'crown']"></fa-icon>
             Admin mode
         </a>
 
-        <a routerLink="/contact/list" class="text-gray-600 hover:text-blue-600" routerLinkActive="text-blue-600"
-            title="Contacts">
+        <a routerLink="/contact/list" routerLinkActive="text-blue-600" class="hover:text-blue-600" title="Contacts">
             <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
+            <p class="hidden md:inline-block ml-1">Contactos</p>
         </a>
 
-        <a routerLink="/user" class="text-gray-600 hover:text-blue-600" routerLinkActive="text-blue-600" title="User">
+        <a routerLink="/user" routerLinkActive="text-blue-600" class="hover:text-blue-600" title="User">
             <fa-icon [icon]="['fas', 'user']"></fa-icon>
+            <p class="hidden md:inline-block ml-1">Usuarios</p>
         </a>
 
     </section>
