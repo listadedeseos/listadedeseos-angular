@@ -29,6 +29,7 @@ import { ProductFormComponent } from '../components/product-form/product-form.co
 import { SteamComponent } from '../components/steam/steam.component';
 import { AmazonComponent } from '../components/amazon/amazon.component';
 
+import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { UserComponent } from '../pages/user/user.component';
 import { RegisterComponent } from '../pages/register/register.component';
@@ -38,7 +39,7 @@ import { ContactComponent } from '../pages/contact/contact.component';
 import { ContactListComponent } from '../pages/contact/contact-list/contact-list.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'list' },
+  { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'verify/:userId', component: VerifyComponent },
@@ -46,6 +47,7 @@ const routes: Routes = [
     path: '',
     component: PageLoggedComponent,
     children: [
+      { path: 'dashboard', pathMatch: 'full', component: DashboardComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'list/:uuid', component: WishListComponent },
       { path: 'list/user/:username', component: WishListComponent },
@@ -60,10 +62,10 @@ const routes: Routes = [
       { path: 'list', component: WishListComponent },
       { path: 'user', component: UserComponent },
       { path: 'contact/list', component: ContactListComponent },
-      { path: '**', redirectTo: 'list' }
+      { path: '**', redirectTo: 'dashboard' }
     ]
   },
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: 'dashboard' }
 ];
 
 @NgModule({
@@ -83,6 +85,7 @@ const routes: Routes = [
     SteamComponent,
     AmazonComponent,
 
+    DashboardComponent,
     LoginComponent,
     RegisterComponent,
     VerifyComponent,
