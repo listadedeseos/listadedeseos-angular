@@ -10,6 +10,8 @@ import { AuthenticationService } from '../../apiConnection/authentication.servic
 export class HeaderComponent {
 
   public isLogged = false
+  public username = ''
+  public fullname = ''
 
   public isAdmin = false
 
@@ -19,6 +21,13 @@ export class HeaderComponent {
   ) {
     this.isLogged = this.authenticationService.isLogged
     this.isAdmin = this.authenticationService.isAdmin
+
+    let currentUser = this.authenticationService.currentUserValue
+    if (currentUser) {
+      this.username = currentUser.username
+      this.fullname = currentUser.fullName
+    }
+    
   }
 
   logout(){
