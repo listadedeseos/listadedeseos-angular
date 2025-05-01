@@ -12,10 +12,39 @@
     </a>
 
     @if(isLogged){
-    <div (click)="logout()" class="hover:text-red-600 transition-colors" role="button" title="Cerrar sesión">
-        <fa-icon [icon]="['fas', 'arrow-right-from-bracket']"></fa-icon>
-        <p class="hidden md:inline-block ml-1">Cerrar sesión</p>
-    </div>
+
+    <label class="flex items-center gap-2 relative">
+
+        <input type="checkbox" class="peer hidden" />
+
+        <span role="button" class="hover:text-white peer-checked:text-white">
+            <fa-icon [icon]="['fas', 'user']"></fa-icon>
+            <p class="hidden md:inline-block ml-1 capitalize">{{username}}</p>
+        </span>
+
+        <div class="peer-checked:block hidden fixed w-full h-full top-0 left-0"></div>
+
+        <div
+            class="peer-checked:block text-sm hidden absolute overflow-hidden top-7 right-0 z-10 w-56 divide-y divide-gray-500 rounded-md bg-gray-700 text-gray-300 ring-1 ring-gray-500">
+
+            <div class="py-2 px-4 text-xs text-gray-400 bg-gray-800">
+                <p>{{fullname}}</p>
+                <small>({{username}})</small>
+            </div>
+
+            <div class="flex flex-col py-3 gap-3">
+                <a routerLink="/list" class="block px-4 hover:underline">Mis listas</a>
+            </div>
+
+            <div (click)="logout()" class="px-4 py-2 hover:text-red-600 transition-colors" role="button"
+                title="Cerrar sesión">
+                <fa-icon [icon]="['fas', 'arrow-right-from-bracket']"></fa-icon>
+                <p class="inline-block ml-1">Cerrar sesión</p>
+            </div>
+
+        </div>
+    </label>
+
     }@else{
     <a routerLink="/login" class="hover:text-green-600" title="Iniciar sesión">
         <fa-icon [icon]="['fas', 'right-to-bracket']"></fa-icon>
