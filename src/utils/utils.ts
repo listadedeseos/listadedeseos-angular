@@ -5,6 +5,7 @@ export namespace Utils {
 
     export const urls = {
         login: Utils.base + 'login',
+        loginGoogle: Utils.base + 'login-google',
         user: Utils.base + 'user',
         userVerify: Utils.base + 'user/verify',
         wishlist: Utils.base + 'wishlist',
