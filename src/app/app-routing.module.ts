@@ -30,6 +30,8 @@ import { ProductFormComponent } from '../components/product-form/product-form.co
 import { SteamComponent } from '../components/steam/steam.component';
 import { AmazonComponent } from '../components/amazon/amazon.component';
 
+import { SocialNetworkGoogleCallbackComponent } from '../pages/social-network/google-callback/social-network.google-callback.component';
+
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { UserComponent } from '../pages/user/user.component';
@@ -44,6 +46,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'verify/:userId', component: VerifyComponent },
+  
+  { path: 'login-google/callback', component: SocialNetworkGoogleCallbackComponent },
+
   {
     path: '',
     component: PageLoggedComponent,
@@ -86,6 +91,8 @@ const routes: Routes = [
 
     SteamComponent,
     AmazonComponent,
+
+    SocialNetworkGoogleCallbackComponent,
 
     DashboardComponent,
     LoginComponent,
