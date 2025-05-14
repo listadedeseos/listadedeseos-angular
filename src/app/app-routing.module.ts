@@ -22,12 +22,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoadingComponent } from '../components/loading/loading.component';
+import { SocialNetworkAccessComponent } from '../components/socialNetworkAccess/socialNetworkAccess.component';
 import { CustomModalComponent } from '../components/customModal/customModal.component';
 import { WishlistFormComponent } from '../components/wishlist-form/wishlist-form.component';
 import { ProductFormComponent } from '../components/product-form/product-form.component';
 
 import { SteamComponent } from '../components/steam/steam.component';
 import { AmazonComponent } from '../components/amazon/amazon.component';
+
+import { SocialNetworkGoogleCallbackComponent } from '../pages/social-network/google-callback/social-network.google-callback.component';
 
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { LoginComponent } from '../pages/login/login.component';
@@ -43,6 +46,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'verify/:userId', component: VerifyComponent },
+  
+  { path: 'login-google/callback', component: SocialNetworkGoogleCallbackComponent },
+
   {
     path: '',
     component: PageLoggedComponent,
@@ -78,12 +84,15 @@ const routes: Routes = [
     CustomDeleteComponent,
 
     LoadingComponent,
+    SocialNetworkAccessComponent,
     CustomModalComponent,
     WishlistFormComponent,
     ProductFormComponent,
 
     SteamComponent,
     AmazonComponent,
+
+    SocialNetworkGoogleCallbackComponent,
 
     DashboardComponent,
     LoginComponent,
