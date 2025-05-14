@@ -18,6 +18,7 @@ export class UserComponent {
         { name: 'NOMBRE', key: 'name' },
         { name: 'APELLIDO', key: 'surname' },
         { name: 'CORREO ELECTRÓNICO', key: 'email' },
+        { name: 'GOOGLE ID', key: 'google_id' },
         { name: 'ROL', key: 'role' },
         { name: 'CREADO', key: 'created_at', type: 'dateTime' },
         { name: 'ACTUALIZADO', key: 'updated_at', type: 'dateTime' },
