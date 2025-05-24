@@ -3,8 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
-import { catchError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   templateUrl: './login.component.html',
