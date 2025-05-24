@@ -6,6 +6,8 @@ import { HeaderComponent } from '../components/header/header.component';
 import { PageLoggedComponent } from '../components/page-logged/page-logged.component';
 import { FooterComponent } from '../components/footer/footer.component';
 
+import { CardComponent } from '../components/card/card.component';
+
 import { CustomTableComponent } from '../components/customTable/customTable.component';
 import { CustomDeleteComponent } from '../components/customDelete/customDelete.component';
 
@@ -79,6 +81,8 @@ const routes: Routes = [
     PageLoggedComponent,
     HeaderComponent,
     FooterComponent,
+
+    CardComponent,
 
     CustomTableComponent,
     CustomDeleteComponent,

@@ -30,11 +30,4 @@ export class DashboardComponent {
     })
   }
 
-  ////////////////////////////////////////////
-
-  onImageError(event: Event) {
-    const imgElement = event.target as HTMLImageElement;
-    imgElement.src = '/assets/img/empty.webp';
-  }
-
 }

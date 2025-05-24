@@ -1,46 +1,15 @@
 <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-2">
 
-    <h1 class="col-span-full text-center uppercase text-xl">Los mejores productos en la lista de deseos</h1>
+    <h1 class="col-span-full text-center uppercase text-xl font-bold">
+        Los productos más deseados
+    </h1>
 
     <section class="grid grid-cols-2 gap-2">
         <h2 class="uppercase text-center col-span-full">Steam</h2>
         @for(item of steamList; track $index){
-        <div class="relative bg-gray-800 text-white border border-gray-700 rounded shadow p-2 flex flex-col gap-1">
-            <span class="p-1 bg-blue-500 rounded text-center">
-                {{$index + 1}}
-            </span>
-
-            <a [href]="item.steam_url" target="_blank" class="flex justify-center aspect-video overflow-hidden rounded">
-                <img class="w-full h-full object-cover" [src]="item.img" (error)="onImageError($event)" loading="lazy"
-                    alt="product image">
-            </a>
-
-            <a [href]="item.steam_url" target="_blank">
-                <h5 class="text-xl font-semibold tracking-tight text-white max-h-[3.5rem] overflow-hidden"
-                    [title]="item.name">{{item.name}}</h5>
-            </a>
-
-            <div class="mb-auto">{{item.price}}</div>
-
-            <div class="flex gap-1 flex-col lg:flex-row">
-                <a [href]="item.steam_url" target="_blank" class="
-                    bg-gray-700 font-medium rounded-lg text-center p-2
-                    flex flex-col align-center justify-center w-full
-                    text-white text-xs
-                    hover:bg-blue-700 hover:text-white
-                ">Steam</a>
-
-                <a [href]="item.instant_gaming_url" target="_blank" class="
-                    bg-gray-700 font-medium rounded-lg text-center p-2
-                    flex flex-col align-center justify-center w-full
-                    text-white text-xs
-                    hover:bg-orange-700 hover:text-white
-                ">Instant gaming</a>
-            </div>
-
-            <p>{{item.count}} veces</p>
-
-        </div>
+        <app-card [index]="$index+1" [principalUrl]="item.steam_url" [img]="item.img" [name]="item.name"
+            [price]="item.price" [count]="item.count" principalLabelString="Steam"
+            [secondaryUrl]="item.instant_gaming_url" secondaryLabelString="Instant Gaming"></app-card>
         }
     </section>
 
