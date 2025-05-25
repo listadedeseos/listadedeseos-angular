@@ -1,8 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { Utils } from '../../utils/utils';
-import { ApiService } from '../../apiConnection/ApiService';
-import { AuthenticationService } from '../../apiConnection/authentication.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -13,6 +9,7 @@ export class CardComponent {
 
   @Input() public index: number | undefined;
   @Input() public img: string = '';
+  @Input() public aspect: string = 'square';
   @Input() public name: string = '';
   @Input() public price: string = '';
   @Input() public count: number | undefined;
@@ -22,6 +19,12 @@ export class CardComponent {
 
   @Input() public secondaryUrl: string = '';
   @Input() public secondaryLabelString: string = '';
+
+  @Input() public isLogged: boolean = false;
+
+  @Input() public isReserved: boolean | undefined;
+
+  @Output() public toggleReserve = new EventEmitter<number>()
 
   onImageError(event: Event) {
     const imgElement = event.target as HTMLImageElement;
