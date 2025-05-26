@@ -37,7 +37,7 @@
     } @else {
     @for(item of list; track $index){
 
-    <app-card aspect="video" [principalUrl]="item.url_product" [img]="item.img" [name]="item.name" [price]="item.price"
+    <app-card aspect="video" [principalUrl]="item.steam_url" [img]="item.img" [name]="item.name" [price]="item.price"
         [count]="item.count" principalLabelString="Steam" secondaryLabelString="Instant gaming"
         [secondaryUrl]="item.instant_gaming_url" [isReserved]="item.is_reserved" [isLogged]="isLogged"
         (toggleReserve)="reserveGame(item.id)" [id]="item.id"></app-card>

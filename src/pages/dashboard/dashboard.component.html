@@ -7,7 +7,7 @@
     <section class="grid grid-cols-2 gap-2">
         <h2 class="uppercase text-center col-span-full">Steam</h2>
         @for(item of steamList; track $index){
-        <app-card [index]="$index+1" [principalUrl]="item.steam_url" [img]="item.img" [name]="item.name"
+        <app-card aspect="video" [index]="$index+1" [principalUrl]="item.steam_url" [img]="item.img" [name]="item.name"
             [price]="item.price" [count]="item.count" principalLabelString="Steam"
             [secondaryUrl]="item.instant_gaming_url" secondaryLabelString="Instant Gaming"></app-card>
         }
