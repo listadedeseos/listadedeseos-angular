@@ -91,7 +91,8 @@
         @for(item of wishlist.products; track $index){
 
         <app-card [principalUrl]="item.url_product" [img]="item.url_preview" [name]="item.name" [price]="item.price"
-            [count]="item.count" principalLabelString="Comprar" [isReserved]="item.is_reserved" [isLogged]="isLogged" (toggleReserve)="reserveProduct(item.id)"></app-card>
+            [count]="item.count" principalLabelString="Comprar" [isReserved]="item.is_reserved" [isLogged]="isLogged"
+            (toggleReserve)="reserveProduct(item.id)"></app-card>
 
         <!-- <div class="relative bg-gray-800 text-white border border-gray-700 rounded shadow p-2 flex flex-col gap-1">
 
@@ -173,9 +174,18 @@
         }
     </section>
 
-    <app-steam [username]="wishlist.steam_username" [wishlistId]="wishlist.id"></app-steam>
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="relative bg-gray-800 text-white rounded p-2">
+            <div>
+                <app-steam [size]="5" [itemsPerRow]="3" [showMore]="true" [username]="wishlist.steam_username"
+            [wishlistId]="wishlist.id"></app-steam>
+            </div>
 
-    <app-amazon [amazonWishlistId]="wishlist.amazon_wishlist_id" [wishlistId]="wishlist.id"></app-amazon>
+            <fa-icon [icon]="['fab', 'steam']" [classes]="['absolute bottom-0 right-0 w-[50%] h-[50%] -z-10 opacity-50 text-white']"></fa-icon>
+        </div>
+
+        <app-amazon [amazonWishlistId]="wishlist.amazon_wishlist_id" [wishlistId]="wishlist.id"></app-amazon>
+    </section>
 
 </main>
 

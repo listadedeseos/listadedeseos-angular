@@ -1,0 +1,10 @@
+<section class="p-2">
+
+    <a [routerLink]="['/list' ,  wishlist.uuid]">
+        <fa-icon [icon]="['fas', 'arrow-left']"></fa-icon>
+        Volver atrás
+    </a>
+
+    <app-steam [username]="wishlist.steam_username" [wishlistId]="wishlist.id"></app-steam>
+
+</section>
