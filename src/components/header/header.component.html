@@ -13,6 +13,12 @@
 
     @if(isLogged){
 
+    <a routerLink="/list" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="text-white"
+        class="hover:text-white" title="Contáctanos">
+        <fa-icon [icon]="['fas', 'list']"></fa-icon>
+        <p class="hidden md:inline-block ml-1">Mis listas</p>
+    </a>
+
     <label class="flex items-center gap-2 relative">
 
         <input type="checkbox" class="peer hidden" />
