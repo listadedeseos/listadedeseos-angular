@@ -18,7 +18,7 @@
 
 </section>
 
-<section class="grid gap-2 grid-cols-3 md:grid-cols-6">
+<section class="grid gap-2 grid-cols-3 md:grid-cols-{{itemsPerRow}} text-black">
 
     @if(loading){
     @for(item of [].constructor(6); track $index){
@@ -65,5 +65,14 @@
     </div> -->
     }
     }
+
+    @if(showMore){
+    <a [routerLink]="['/list', uuidList, 'amazon']"
+        class="animation-scale flex flex-col gap-2 items-center justify-center bg-white bg-opacity-50 border border-white rounded shadow">
+        <fa-icon [icon]="['fas', 'arrow-right']" [classes]="['w-10 h-10']"></fa-icon>
+        mostrar más
+    </a>
+    }
+
 </section>
 }

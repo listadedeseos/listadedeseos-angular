@@ -43,13 +43,14 @@ import { WishListComponent } from '../pages/wish-list/wish-list.component';
 import { ContactComponent } from '../pages/contact/contact.component';
 import { ContactListComponent } from '../pages/contact/contact-list/contact-list.component';
 import { SteamPage } from '../pages/steam/steam.component';
+import { AmazonPage } from '../pages/amazon/amazon.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'verify/:userId', component: VerifyComponent },
-  
+
   { path: 'login-google/callback', component: SocialNetworkGoogleCallbackComponent },
 
   {
@@ -60,6 +61,7 @@ const routes: Routes = [
       { path: 'contact', component: ContactComponent },
       { path: 'list/:uuid', component: WishListComponent },
       { path: 'list/:uuid/steam', component: SteamPage },
+      { path: 'list/:uuid/amazon', component: AmazonPage },
       { path: 'list/user/:username', component: WishListComponent },
       { path: 'list/user/:username/:wishListName', component: WishListComponent },
     ]
@@ -109,6 +111,7 @@ const routes: Routes = [
     ContactComponent,
     ContactListComponent,
     SteamPage,
+    AmazonPage,
   ],
   imports: [
     RouterModule.forRoot(routes),
