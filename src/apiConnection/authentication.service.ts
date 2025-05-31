@@ -35,12 +35,12 @@ export class AuthenticationService {
 
   private setRoles() {
     this.isLogged = this.currentUserSubject.value !== null;
-    this.isAdmin = this.currentUserSubject.value?.role?.includes('ROLE_ADMIN');    
+    this.isAdmin = this.currentUserSubject.value?.role?.includes('ROLE_ADMIN');
   }
 
-  login(email: string, password: string) {
+  login(email: string | null | undefined, password: string | null | undefined) {
     // body to sent
-    let entity = {email,password};
+    let entity = { email, password };
 
     // set headers of login petition
     const headers = new HttpHeaders()

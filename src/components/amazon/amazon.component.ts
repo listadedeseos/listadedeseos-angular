@@ -13,9 +13,13 @@ export class AmazonComponent {
 
   @Input() amazonWishlistId: string = ''
   @Input() wishlistId: string = ''
+  @Input() size: number = 0
+  @Input() itemsPerRow: number = 6
+  @Input() showMore: boolean = false
 
   public loading = true
   public isLogged = false
+  public uuidList: string = ''
   public list: any = []
 
   constructor(
@@ -35,10 +39,14 @@ export class AmazonComponent {
   getAmazon(refresh = false) {
     this.loading = true
     let refreshUrl = refresh ? '/refresh/' : '/'
-    let url = Utils.urls.amazon + refreshUrl + this.wishlistId
+    let filters = this.size > 0 ? '?size=' + this.size : ''
+
+    let url = Utils.urls.amazon + refreshUrl + this.wishlistId + filters
+
     this.apiService.getPetition(url).subscribe({
       next: (value: any) => {
         this.list = value.list ?? []
+        this.uuidList = value.uuid
         this.loading = false
       },
       error: () => {

@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.animation-scale {
+    view-timeline: --subjectReveal block;
+    animation-timeline: --subjectReveal;
+
+    animation-name: appear;
+    animation-range: entry 10% contain 25%;
+    animation-fill-mode: both;
+    animation-duration: 1ms; /* Firefox requires this to apply the animation */
+  }
+
+  @keyframes appear {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1);
+    }
+  }

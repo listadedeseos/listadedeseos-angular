@@ -8,15 +8,16 @@
     </a>
 
     @if(isLogged){
-    <button class="group/steam ml-auto bg-gray-800 border border-gray-700 p-2 rounded" (click)="refresh()">
+    <button class="group/steam ml-auto border border-gray-700 p-2 rounded" (click)="refresh()">
         <fa-icon [icon]="['fas', 'rotate']"
-            [classes]="['group-hover/steam:duration-500 group-hover/steam:rotate-180']"></fa-icon> Refrescar Juegos
+            [classes]="['group-hover/steam:duration-500 group-hover/steam:rotate-180']"></fa-icon>
+        Refrescar Juegos
     </button>
     }
 
 </section>
 
-<section class="grid gap-2 grid-cols-3 md:grid-cols-6">
+<section class="grid gap-2 grid-cols-3 md:grid-cols-{{itemsPerRow}} text-black">
 
     @if(loading){
     @for(item of [].constructor(6); track $index){
@@ -35,66 +36,22 @@
     }
     } @else {
     @for(item of list; track $index){
-    <div class="relative bg-gray-800 text-white border border-gray-700 rounded shadow p-2 flex flex-col gap-1">
 
-        <a [href]="item.steam_url" target="_blank" class="flex justify-center aspect-video overflow-hidden rounded">
-            <img class="w-full h-full object-cover" [src]="item.img" (error)="onImageError($event)" loading="lazy"
-                alt="product image">
-        </a>
+    <app-card aspect="video" [principalUrl]="item.steam_url" [img]="item.img" [name]="item.name" [price]="item.price"
+        [count]="item.count" principalLabelString="Steam" secondaryLabelString="Instant gaming"
+        [secondaryUrl]="item.instant_gaming_url" [isReserved]="item.is_reserved" [isLogged]="isLogged"
+        (toggleReserve)="reserveGame(item.id)" [id]="item.id"></app-card>
 
-        <a [href]="item.steam_url" target="_blank">
-            <h5 class="text-xl font-semibold tracking-tight text-white max-h-[3.5rem] overflow-hidden"
-                [title]="item.name">{{item.name}}</h5>
-        </a>
-
-        <div class="mb-auto">{{item.price}}</div>
-
-        <div class="flex gap-1">
-            <a [href]="item.steam_url" target="_blank" class="
-            bg-gray-700 font-medium rounded-lg text-center p-2
-            flex flex-col align-center justify-center w-full
-            text-white text-xs
-            hover:bg-blue-700 hover:text-white
-        ">Steam</a>
-
-            <a [href]="item.instant_gaming_url" target="_blank" class="
-            bg-gray-700 font-medium rounded-lg text-center p-2
-            flex flex-col align-center justify-center w-full
-            text-white text-xs
-            hover:bg-orange-700 hover:text-white
-        ">Instant gaming</a>
-        </div>
-
-        @if(item.is_reserved){
-
-        @if(!isLogged){
-        <div class="bg-green-600 font-medium rounded-lg text-center p-2
-                    flex gap-2 align-center justify-center
-                    text-white text-xs">
-            <fa-icon [icon]="['fas', 'circle-check']"></fa-icon>
-            <p>Reservado</p>
-        </div>
-        } @else {
-        <button (click)="reserveGame(item.id)" class="bg-green-600 font-medium rounded-lg text-center p-2
-                    flex gap-2 align-center justify-center
-                    text-white text-xs hover:bg-green-700">
-            <p>Eliminar reserva</p>
-        </button>
-        }
-
-        } @else {
-        <a role="button" (click)="reserveGame(item.id)" class="
-        bg-gray-700 font-medium rounded-lg text-center p-2
-        flex gap-2 align-center justify-center
-        text-white text-xs
-        hover:bg-black hover:text-white">
-            <fa-icon [icon]="['fas', 'basket-shopping']"></fa-icon>
-            Reservar
-        </a>
-        }
-
-    </div>
     }
     }
+
+    @if(showMore){
+    <a [routerLink]="['/list', uuidList, 'steam']"
+        class="animation-scale flex flex-col gap-2 items-center justify-center bg-white bg-opacity-50 border border-white rounded shadow">
+        <fa-icon [icon]="['fas', 'arrow-right']" [classes]="['w-10 h-10']"></fa-icon>
+        mostrar más
+    </a>
+    }
+
 </section>
 }

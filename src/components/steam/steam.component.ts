@@ -13,10 +13,14 @@ export class SteamComponent {
 
   @Input() wishlistId: number = 0
   @Input() username: string = ''
+  @Input() size: number = 0
+  @Input() showMore: boolean = false
+  @Input() itemsPerRow: number = 6
 
   public loading = true
   public isLogged = false
   public list: any = []
+  public uuidList: string = ''
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -35,11 +39,16 @@ export class SteamComponent {
 
   getSteam(refresh = false) {
     this.loading = true
+
     let refreshUrl = refresh ? '/refresh/' : '/'
-    let url = Utils.urls.steam + refreshUrl + this.wishlistId
+    let filters = this.size > 0 ? '?size=' + this.size : ''
+
+    let url = Utils.urls.steam + refreshUrl + this.wishlistId + filters
+
     this.apiService.getPetition(url).subscribe({
       next: (value: any) => {
         this.list = value.list ?? []
+        this.uuidList = value.uuid ?? ''
         this.loading = false
       },
       error: () => {

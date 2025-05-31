@@ -6,6 +6,8 @@ import { HeaderComponent } from '../components/header/header.component';
 import { PageLoggedComponent } from '../components/page-logged/page-logged.component';
 import { FooterComponent } from '../components/footer/footer.component';
 
+import { CardComponent } from '../components/card/card.component';
+
 import { CustomTableComponent } from '../components/customTable/customTable.component';
 import { CustomDeleteComponent } from '../components/customDelete/customDelete.component';
 
@@ -40,13 +42,15 @@ import { VerifyComponent } from '../pages/verify/verify.component';
 import { WishListComponent } from '../pages/wish-list/wish-list.component';
 import { ContactComponent } from '../pages/contact/contact.component';
 import { ContactListComponent } from '../pages/contact/contact-list/contact-list.component';
+import { SteamPage } from '../pages/steam/steam.component';
+import { AmazonPage } from '../pages/amazon/amazon.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'verify/:userId', component: VerifyComponent },
-  
+
   { path: 'login-google/callback', component: SocialNetworkGoogleCallbackComponent },
 
   {
@@ -56,6 +60,8 @@ const routes: Routes = [
       { path: 'dashboard', pathMatch: 'full', component: DashboardComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'list/:uuid', component: WishListComponent },
+      { path: 'list/:uuid/steam', component: SteamPage },
+      { path: 'list/:uuid/amazon', component: AmazonPage },
       { path: 'list/user/:username', component: WishListComponent },
       { path: 'list/user/:username/:wishListName', component: WishListComponent },
     ]
@@ -80,6 +86,8 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
 
+    CardComponent,
+
     CustomTableComponent,
     CustomDeleteComponent,
 
@@ -102,6 +110,8 @@ const routes: Routes = [
     WishListComponent,
     ContactComponent,
     ContactListComponent,
+    SteamPage,
+    AmazonPage,
   ],
   imports: [
     RouterModule.forRoot(routes),

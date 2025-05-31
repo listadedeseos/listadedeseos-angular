@@ -5,13 +5,13 @@
 
     <header class="flex flex-col gap-2">
 
-        <button class="ml-auto bg-gray-800 border border-gray-600 p-2 rounded col-span-3 md:col-span-6"
+        <button class="ml-auto bg-gray-100 border border-gray-600 p-2 rounded col-span-3 md:col-span-6"
             (click)="toggleModalWishList()">Añadir nueva lista</button>
 
         <section class="grid grid-cols-3 md:grid-cols-6 gap-2">
             @for(item of allWishList; track $index){
             <div
-                [class]="(item.is_new?'animate-scaleadd':'') +' flex items-center bg-gray-700 rounded border' + (item.id === wishListId ? ' border-gray-400' : ' border-transparent')">
+                [class]="(item.is_new?'animate-scaleadd':'') +' flex items-center bg-gray-100 rounded border' + (item.id === wishListId ? ' border-gray-400' : ' border-transparent')">
                 <a [routerLink]="['/list', item.uuid]" class="w-full p-2">
                     {{item.name}}
                 </a>
@@ -25,7 +25,7 @@
             </div>
             } @empty {
             @for(item of [].constructor(6); track $index){
-            <div class="animate-pulse bg-gray-700 p-2 rounded border border-transparent h-10"></div>
+            <div class="animate-pulse bg-gray-100 p-2 rounded border border-transparent h-10"></div>
             }
             }
         </section>
@@ -61,7 +61,7 @@
         </section>
 
         @if(isLogged){
-        <button class="ml-auto bg-gray-800 border border-gray-700 p-2 rounded" (click)="toggleModalProduct()">
+        <button class="ml-auto border border-gray-700 p-2 rounded" (click)="toggleModalProduct()">
             Añadir nuevo producto
         </button>
         }
@@ -89,7 +89,12 @@
         } @else {
 
         @for(item of wishlist.products; track $index){
-        <div class="relative bg-gray-800 text-white border border-gray-700 rounded shadow p-2 flex flex-col gap-1">
+
+        <app-card [principalUrl]="item.url_product" [img]="item.url_preview" [name]="item.name" [price]="item.price"
+            [count]="item.count" principalLabelString="Comprar" [isReserved]="item.is_reserved" [isLogged]="isLogged"
+            (toggleReserve)="reserveProduct(item.id)"></app-card>
+
+        <!-- <div class="relative bg-gray-800 text-white border border-gray-700 rounded shadow p-2 flex flex-col gap-1">
 
             <a [href]="item.url_product" target="_blank"
                 class="flex justify-center aspect-square overflow-hidden rounded">
@@ -140,7 +145,7 @@
             </a>
             }
 
-        </div>
+        </div> -->
         } @empty {
 
         @if(isLogged || !(wishlist.steam_username || wishlist.amazon_wishlist_id)){
@@ -169,9 +174,27 @@
         }
     </section>
 
-    <app-steam [username]="wishlist.steam_username" [wishlistId]="wishlist.id"></app-steam>
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="relative bg-gray-800 text-white rounded p-2">
+            <div class="relative z-20">
+                <app-steam [size]="5" [itemsPerRow]="3" [showMore]="true" [username]="wishlist.steam_username"
+                    [wishlistId]="wishlist.id"></app-steam>
+            </div>
 
-    <app-amazon [amazonWishlistId]="wishlist.amazon_wishlist_id" [wishlistId]="wishlist.id"></app-amazon>
+            <fa-icon [icon]="['fab', 'steam']"
+                [classes]="['absolute bottom-0 right-0 w-[50%] h-[50%] z-10 opacity-50 text-white']"></fa-icon>
+        </div>
+
+        <div class="relative bg-orange-700 text-white rounded p-2">
+            <div class="relative z-20">
+                <app-amazon [size]="5" [itemsPerRow]="3" [showMore]="true"
+                    [amazonWishlistId]="wishlist.amazon_wishlist_id" [wishlistId]="wishlist.id"></app-amazon>
+            </div>
+
+            <fa-icon [icon]="['fab', 'amazon']"
+                [classes]="['absolute bottom-0 right-0 w-[50%] h-[50%] z-10 opacity-50 text-white']"></fa-icon>
+        </div>
+    </section>
 
 </main>
 

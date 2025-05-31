@@ -9,15 +9,16 @@
     </a>
 
     @if(isLogged){
-    <button class="group/steam ml-auto bg-gray-800 border border-gray-700 p-2 rounded" (click)="refresh()">
+    <button class="group/steam ml-auto border border-gray-700 p-2 rounded" (click)="refresh()">
         <fa-icon [icon]="['fas', 'rotate']"
-            [classes]="['group-hover/steam:duration-500 group-hover/steam:rotate-180']"></fa-icon> Refrescar Productos
+            [classes]="['group-hover/steam:duration-500 group-hover/steam:rotate-180']"></fa-icon>
+        Refrescar Productos
     </button>
     }
 
 </section>
 
-<section class="grid gap-2 grid-cols-3 md:grid-cols-6">
+<section class="grid gap-2 grid-cols-3 md:grid-cols-{{itemsPerRow}} text-black">
 
     @if(loading){
     @for(item of [].constructor(6); track $index){
@@ -34,7 +35,11 @@
     }
     } @else {
     @for(item of list; track $index){
-    <div class="bg-gray-800 text-white border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
+
+    <app-card [principalUrl]="item.amazon_url" [img]="item.img" [name]="item.name" [price]="item.price"
+        [count]="item.count" principalLabelString="Amazon"></app-card>
+
+    <!-- <div class="bg-gray-800 text-white border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
 
         <a [href]="item.amazon_url" target="_blank" class="flex justify-center aspect-square overflow-hidden rounded">
             <img class="w-full h-full object-cover" [src]="item.img" (error)="onImageError($event)" loading="lazy"
@@ -57,8 +62,17 @@
             hover:bg-orange-700 hover:text-white
         ">Amazon</a>
 
-    </div>
+    </div> -->
     }
     }
+
+    @if(showMore){
+    <a [routerLink]="['/list', uuidList, 'amazon']"
+        class="animation-scale flex flex-col gap-2 items-center justify-center bg-white bg-opacity-50 border border-white rounded shadow">
+        <fa-icon [icon]="['fas', 'arrow-right']" [classes]="['w-10 h-10']"></fa-icon>
+        mostrar más
+    </a>
+    }
+
 </section>
 }
