@@ -1,0 +1,17 @@
+  @keyframes header-animation {
+    from {
+      max-width: 100%;
+    }
+    to {
+      width: calc(100% - 1rem);
+      border-radius: 1.5rem;
+      border-width: 0.15rem;
+      max-width: 80rem; /* max-w-7xl */
+      margin-top: 0.5rem
+    }
+  }
+  header {
+    animation: header-animation linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 200px;
+  }
