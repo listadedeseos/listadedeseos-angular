@@ -1,3 +1,34 @@
-<section class="fixed top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-sm z-[100]">
-    <div class="loader text-white"></div>
+<section class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-white/80 backdrop-blur-lg z-[100]">
+    <div class="text-center">
+        <!-- Loader moderno -->
+        <div class="relative">
+            <div class="w-20 h-20 mx-auto mb-6">
+                <div class="absolute inset-0 rounded-full border-4 border-purple-200"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-purple-500 animate-spin"></div>
+                <div class="absolute inset-2 rounded-full border-4 border-transparent border-t-pink-500 animate-spin animate-reverse" style="animation-duration: 1.5s;"></div>
+            </div>
+            
+            <!-- Icono central -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-lg animate-pulse">
+                ✨
+            </div>
+        </div>
+        
+        <!-- Texto de carga -->
+        <div class="space-y-2">
+            <h3 class="text-xl font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                Cargando...
+            </h3>
+            <p class="text-neutral-500 text-sm">
+                Preparando tu experiencia
+            </p>
+        </div>
+        
+        <!-- Puntos animados -->
+        <div class="flex justify-center gap-1 mt-4">
+            <div class="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+            <div class="w-2 h-2 bg-pink-400 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+            <div class="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+        </div>
+    </div>
 </section>

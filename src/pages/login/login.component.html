@@ -1,66 +1,125 @@
 @if(loading){ <app-loading></app-loading> }
-<section class="overflow-hidden relative h-screen">
-    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
-        <h1 class="flex items-center mb-6 text-2xl font-semibold">LISTA DE DESEOS</h1>
-        <div class="w-full bg-white bg-opacity-25 backdrop-blur-lg rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+<section class="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 overflow-hidden relative">
+    <!-- Elementos decorativos flotantes -->
+    <div class="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full opacity-30 animate-bounce"></div>
+    <div class="absolute top-40 right-16 w-16 h-16 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full opacity-20 animate-pulse"></div>
+    <div class="absolute bottom-32 left-1/4 w-12 h-12 bg-gradient-to-br from-purple-300 to-pink-300 rounded-full opacity-25 animate-bounce" style="animation-delay: 1s;"></div>
+    
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0 relative z-10">
+        <!-- Logo y título -->
+        <div class="flex items-center mb-8 gap-3">
+            <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                ✨
+            </div>
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                LISTA DE DESEOS
+            </h1>
+        </div>
+        
+        <!-- Formulario de login -->
+        <div class="w-full glass-enhanced backdrop-blur-lg border border-white/20 shadow-soft rounded-3xl md:mt-0 sm:max-w-md xl:p-0">
+            <div class="p-8 space-y-6">
                 <app-social-network-access></app-social-network-access>
 
-                <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl">
-                    Entra en tu cuenta
-                </h1>
-                <form class="space-y-4 md:space-y-6" [formGroup]="login" (submit)="onSubmit()">
-                    <label class="block mb-2 text-sm font-medium">Email
-                        <input formControlName="email" type="email" placeholder="name@company.com"
-                            class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-white bg-opacity-50"
-                            required>
-                    </label>
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold text-neutral-800 mb-2">
+                        ¡Bienvenido de vuelta! 👋
+                    </h2>
+                    <p class="text-neutral-600 text-sm">
+                        Inicia sesión para acceder a tus listas de deseos
+                    </p>
+                </div>
+                
+                <form class="space-y-5" [formGroup]="login" (submit)="onSubmit()">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-neutral-700">
+                                📧 Correo electrónico
+                            </label>
+                            <input formControlName="email" 
+                                   type="email" 
+                                   placeholder="tu@email.com"
+                                   class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                                   required>
+                        </div>
 
-                    <label class="block mb-2 text-sm font-medium">Contraseña
-                        <input formControlName="password" type="password" placeholder="••••••••"
-                            class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-white bg-opacity-50"
-                            required>
-                    </label>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-neutral-700">
+                                🔐 Contraseña
+                            </label>
+                            <input formControlName="password" 
+                                   type="password" 
+                                   placeholder="••••••••"
+                                   class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                                   required>
+                        </div>
+                    </div>
 
                     @if (error) {
-                    <div class="flex">
-                        <p class="text-sm text-[#b31f1f]">
-                            Error con el correo electrónico o contraseña.
-                        </p>
-                        <a href="#"
-                            class="ml-auto text-sm font-medium text-primary-600 hover:underline text-primary-500">
-                            ¿Olvidaste la contraseña?
-                        </a>
+                    <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="text-rose-500">❌</span>
+                                <p class="text-sm text-rose-700 font-medium">
+                                    Error con el correo electrónico o contraseña
+                                </p>
+                            </div>
+                            <a href="#" class="text-sm font-medium text-rose-600 hover:text-rose-800 underline transition-colors">
+                                ¿Olvidaste tu contraseña?
+                            </a>
+                        </div>
                     </div>
                     }
 
                     <button type="submit"
-                        class="w-full bg-primary-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 border border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white transition">
-                        Iniciar sesión
+                            class="w-full py-3 px-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-purple-600 hover:to-pink-600 transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2">
+                        <span>✨</span>
+                        <span>Iniciar Sesión</span>
                     </button>
-                    <p class="text-sm text-gray-500">
-                        ¿No tienes cuenta?
-                        <a class="font-bold underline" routerLink="/register">Regístrate</a>
-                    </p>
+                    
+                    <div class="text-center">
+                        <p class="text-sm text-neutral-600">
+                            ¿No tienes cuenta? 
+                            <a class="font-semibold text-purple-600 hover:text-purple-800 underline transition-colors ml-1" 
+                               routerLink="/register">
+                                Regístrate aquí
+                            </a>
+                        </p>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <svg class="absolute bottom-0 left-0 h-2/3 -z-10 w-screen" xmlns="http://www.w3.org/2000/svg" version="1.1"
-        xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" preserveAspectRatio="none"
-        viewBox="0 0 1024 200">
+    <!-- Ondas decorativas de fondo -->
+    <svg class="absolute bottom-0 left-0 w-full h-1/3 -z-10" 
+         xmlns="http://www.w3.org/2000/svg" 
+         viewBox="0 0 1024 200" 
+         preserveAspectRatio="none">
+        <defs>
+            <linearGradient id="wave1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:rgb(196, 181, 253);stop-opacity:0.3" />
+                <stop offset="100%" style="stop-color:rgb(251, 207, 232);stop-opacity:0.3" />
+            </linearGradient>
+            <linearGradient id="wave2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:rgb(167, 139, 250);stop-opacity:0.4" />
+                <stop offset="100%" style="stop-color:rgb(244, 114, 182);stop-opacity:0.4" />
+            </linearGradient>
+            <linearGradient id="wave3" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:rgb(139, 92, 246);stop-opacity:0.5" />
+                <stop offset="100%" style="stop-color:rgb(236, 72, 153);stop-opacity:0.5" />
+            </linearGradient>
+        </defs>
         <g fill="none">
-            <path class="fill-blue-200"
-                d="M 0,13 C 68.4,23.4 205.2,65 342,65 C 478.8,65 547.6,15.6 684,13 C 820.4,10.4 956,44.2 1024,52L1024 200L0 200z">
+            <path fill="url(#wave1)"
+                  d="M 0,13 C 68.4,23.4 205.2,65 342,65 C 478.8,65 547.6,15.6 684,13 C 820.4,10.4 956,44.2 1024,52L1024 200L0 200z">
             </path>
-            <path class="fill-blue-300"
-                d="M 0,107 C 68.4,101.8 205.2,76 342,81 C 478.8,86 547.6,131.6 684,132 C 820.4,132.4 956,92.8 1024,83L1024 200L0 200z">
+            <path fill="url(#wave2)"
+                  d="M 0,107 C 68.4,101.8 205.2,76 342,81 C 478.8,86 547.6,131.6 684,132 C 820.4,132.4 956,92.8 1024,83L1024 200L0 200z">
             </path>
-            <path class="fill-blue-400"
-                d="M 0,198 C 68.4,187.2 205.2,147.6 342,144 C 478.8,140.4 547.6,182 684,180 C 820.4,178 956,143.2 1024,134L1024 200L0 200z">
+            <path fill="url(#wave3)"
+                  d="M 0,198 C 68.4,187.2 205.2,147.6 342,144 C 478.8,140.4 547.6,182 684,180 C 820.4,178 956,143.2 1024,134L1024 200L0 200z">
             </path>
         </g>
     </svg>
-
 </section>

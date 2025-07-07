@@ -1,39 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../apiConnection/AuthGuard';
-import { HttpClientModule } from '@angular/common/http';
-import { HeaderComponent } from '../components/header/header.component';
+
 import { PageLoggedComponent } from '../components/page-logged/page-logged.component';
-import { FooterComponent } from '../components/footer/footer.component';
-
-import { CardComponent } from '../components/card/card.component';
-
-import { CustomTableComponent } from '../components/customTable/customTable.component';
-import { CustomDeleteComponent } from '../components/customDelete/customDelete.component';
-
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
-import { ClipboardModule } from '@angular/cdk/clipboard';
-
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
-import { DatePipe } from '@angular/common';
-import { CommonModule } from '@angular/common';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { LoadingComponent } from '../components/loading/loading.component';
-import { SocialNetworkAccessComponent } from '../components/socialNetworkAccess/socialNetworkAccess.component';
-import { CustomModalComponent } from '../components/customModal/customModal.component';
-import { WishlistFormComponent } from '../components/wishlist-form/wishlist-form.component';
-import { ProductFormComponent } from '../components/product-form/product-form.component';
-
-import { SteamComponent } from '../components/steam/steam.component';
-import { AmazonComponent } from '../components/amazon/amazon.component';
-
 import { SocialNetworkGoogleCallbackComponent } from '../pages/social-network/google-callback/social-network.google-callback.component';
-
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { UserComponent } from '../pages/user/user.component';
@@ -81,55 +51,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    PageLoggedComponent,
-    HeaderComponent,
-    FooterComponent,
-
-    CardComponent,
-
-    CustomTableComponent,
-    CustomDeleteComponent,
-
-    LoadingComponent,
-    SocialNetworkAccessComponent,
-    CustomModalComponent,
-    WishlistFormComponent,
-    ProductFormComponent,
-
-    SteamComponent,
-    AmazonComponent,
-
-    SocialNetworkGoogleCallbackComponent,
-
-    DashboardComponent,
-    LoginComponent,
-    RegisterComponent,
-    VerifyComponent,
-    UserComponent,
-    WishListComponent,
-    ContactComponent,
-    ContactListComponent,
-    SteamPage,
-    AmazonPage,
-  ],
-  imports: [
-    RouterModule.forRoot(routes),
-    HttpClientModule,
-
-    FontAwesomeModule,
-
-    ClipboardModule,
-
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    DatePipe,
-    CommonModule,
-
-    FormsModule, ReactiveFormsModule,
-
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

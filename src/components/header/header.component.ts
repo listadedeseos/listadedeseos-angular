@@ -12,7 +12,6 @@ export class HeaderComponent {
   public isLogged = false
   public username = ''
   public fullname = ''
-
   public isAdmin = false
 
   constructor(
@@ -27,7 +26,15 @@ export class HeaderComponent {
       this.username = currentUser.username
       this.fullname = currentUser.fullName
     }
-    
+  }
+
+  getFirstLetter(): string {
+    if (this.fullname && this.fullname.length > 0) {
+      return this.fullname.charAt(0).toUpperCase();
+    } else if (this.username && this.username.length > 0) {
+      return this.username.charAt(0).toUpperCase();
+    }
+    return 'U'; // Default fallback
   }
 
   logout(){

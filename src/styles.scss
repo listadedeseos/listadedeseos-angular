@@ -1,22 +1,310 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #fef7f0 0%, #f0f9ff 50%, #fdf4ff 100%);
+  min-height: 100vh;
+  color: #374151;
+  line-height: 1.6;
+}
+
+/* Additional utilities for better UX */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Custom animations */
+@keyframes animate-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-reverse {
+  animation: animate-reverse 1s linear infinite;
+}
+
+/* Smooth transitions for all interactive elements */
+a, button, input, textarea, select {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(147, 51, 234, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #9333ea, #db2777);
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+}
+
+/* Loading animation for images */
+img {
+  transition: opacity 0.3s ease;
+}
+
+img[src=""], img:not([src]) {
+  opacity: 0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #f08944, #e2732c);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #e2732c, #bc5c22);
+}
+
+/* Glass effect utility */
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Enhanced glass effect */
+.glass-enhanced {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+/* Error field styling */
+.error-field {
+  @apply border-error-500 bg-error-50 text-error-700;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Tooltip styles */
+.tooltip {
+  @apply relative;
+}
+
+.tooltip:before {
+  content: attr(data-tooltip);
+  @apply absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 text-sm text-white bg-neutral-800 rounded-lg opacity-0 pointer-events-none transition-opacity duration-300;
+  white-space: nowrap;
+}
+
+.tooltip:hover:before {
+  @apply opacity-100;
+}
+
+/* Button styles */
+.btn {
+  @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.btn-primary {
+  @apply bg-gradient-primary text-white hover:shadow-glow focus:ring-primary-500;
+}
+
+.btn-secondary {
+  @apply bg-gradient-secondary text-white hover:shadow-glow-secondary focus:ring-secondary-500;
+}
+
+.btn-accent {
+  @apply bg-gradient-accent text-white hover:shadow-glow-accent focus:ring-accent-500;
+}
+
+.btn-outline {
+  @apply border-2 border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white;
+}
+
+.btn-ghost {
+  @apply text-primary-500 hover:bg-primary-50;
+}
+
+/* Card styles */
+.card {
+  @apply bg-gradient-card rounded-2xl shadow-soft border border-white/50 p-6 transition-all duration-300;
+}
+
+.card:hover {
+  @apply shadow-medium transform -translate-y-1;
+}
+
+/* Form styles */
+.form-input {
+  @apply w-full px-4 py-3 text-sm border border-neutral-200 rounded-xl bg-white/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-neutral-700 mb-2;
+}
+
+/* Loading animation */
+.loading-spinner {
+  @apply inline-block w-6 h-6 border-2 border-current border-r-transparent rounded-full animate-spin;
+}
+
+/* Gradient text */
+.text-gradient-primary {
+  background: linear-gradient(135deg, #f08944 0%, #e2732c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-secondary {
+  background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-accent {
+  background: linear-gradient(135deg, #e879f9 0%, #d946ef 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animation utilities */
 .animation-scale {
-    view-timeline: --subjectReveal block;
-    animation-timeline: --subjectReveal;
+  view-timeline: --subjectReveal block;
+  animation-timeline: --subjectReveal;
+  animation-name: appear;
+  animation-range: entry 10% contain 25%;
+  animation-fill-mode: both;
+  animation-duration: 1ms;
+}
 
-    animation-name: appear;
-    animation-range: entry 10% contain 25%;
-    animation-fill-mode: both;
-    animation-duration: 1ms; /* Firefox requires this to apply the animation */
+@keyframes appear {
+  0% {
+    transform: scale(0);
   }
+  50% {
+    transform: scale(1);
+  }
+}
 
-  @keyframes appear {
-    0% {
-      transform: scale(0);
-    }
-    50% {
-      transform: scale(1);
-    }
+/* Utility classes */
+.container-custom {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.section-padding {
+  @apply py-16 lg:py-24;
+}
+
+/* Animation classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive font sizes */
+.text-responsive-sm {
+  @apply text-sm sm:text-base;
+}
+
+.text-responsive-base {
+  @apply text-base sm:text-lg;
+}
+
+.text-responsive-lg {
+  @apply text-lg sm:text-xl lg:text-2xl;
+}
+
+.text-responsive-xl {
+  @apply text-xl sm:text-2xl lg:text-3xl;
+}
+
+.text-responsive-2xl {
+  @apply text-2xl sm:text-3xl lg:text-4xl;
+}
+
+.text-responsive-3xl {
+  @apply text-3xl sm:text-4xl lg:text-5xl;
+}
