@@ -6,22 +6,19 @@
     <div class="flex items-center justify-between">
       
       <!-- Logo y nombre -->
-      <a routerLink="/" class="flex items-center gap-3 group">
+      <a routerLink="/" class="flex items-center gap-3">
         <div class="relative">
           <img src="/assets/icon/logo.svg" 
-               class="w-10 h-10 transform group-hover:scale-110 transition-transform duration-300" 
+               class="w-10 h-10" 
                alt="Logo" 
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
           <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full items-center justify-center text-white font-bold text-lg hidden">
             ✨
           </div>
-          <span class="absolute -top-1 -right-1 bg-gradient-to-r from-pink-400 to-purple-500 text-white text-xs px-2 py-0.5 rounded-full font-medium animate-pulse text-[10px]">
-            BETA
-          </span>
         </div>
         <div class="flex flex-col">
           <span class="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-bold text-xl">Lista de Deseos</span>
-          <span class="text-neutral-500 text-xs font-medium -mt-1">Tu wishlist personal</span>
+          <span class="text-[0.6rem] bg-blue-100 text-blue-600 px-2 py-0 rounded-full font-medium mr-auto">BETA</span>
         </div>
       </a>
 
