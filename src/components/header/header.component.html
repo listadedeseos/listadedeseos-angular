@@ -88,11 +88,6 @@
 
           <!-- Opciones del menú -->
           <div class="py-2">
-            <a routerLink="/user" 
-               class="flex items-center gap-3 px-4 py-3 text-neutral-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200">
-              <fa-icon [icon]="['fas', 'user']" class="w-4 h-4"></fa-icon>
-              <span class="font-medium">Mi Perfil</span>
-            </a>
             
             <a routerLink="/list" 
                class="flex items-center gap-3 px-4 py-3 text-neutral-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200">
@@ -166,12 +161,6 @@
                class="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-600 hover:text-purple-600 hover:bg-purple-50 transition-all duration-200">
               <fa-icon [icon]="['fas', 'list']" class="w-4 h-4"></fa-icon>
               <span class="font-medium">Mis Listas</span>
-            </a>
-            
-            <a routerLink="/user" 
-               class="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-600 hover:text-purple-600 hover:bg-purple-50 transition-all duration-200">
-              <fa-icon [icon]="['fas', 'user']" class="w-4 h-4"></fa-icon>
-              <span class="font-medium">Mi Perfil</span>
             </a>
 
             <ng-container *ngIf="isAdmin">
