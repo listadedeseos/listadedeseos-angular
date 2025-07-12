@@ -1,4 +1,4 @@
-<div class="group relative bg-white/80 backdrop-blur-sm border border-white/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-4 flex flex-col gap-4 h-full hover:scale-[1.02]">
+<div class="group relative bg-white/80 backdrop-blur-sm border border-white/50 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-2 flex flex-col gap-4 h-full hover:scale-[1.02]">
 
     <!-- Badge de posición y contador -->
     <ng-container *ngIf="index">
@@ -13,29 +13,29 @@
     </ng-container>
 
     <!-- Imagen del producto -->
-    <div class="relative group/image">
+    <div>
         <ng-container [ngSwitch]="aspect">
-            <a *ngSwitchCase="'video'" [href]="principalUrl" target="_blank" 
+            <a *ngSwitchCase="'video'" [href]="secondaryUrl??principalUrl" target="_blank" 
                class="block aspect-video overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-pink-50">
-                <img class="w-full h-full object-cover group-hover/image:scale-110 transition-transform duration-300" 
+                <img class="w-full h-full object-cover transition-transform duration-300" 
                      [src]="img" 
                      (error)="onImageError($event)" 
                      loading="lazy"
                      alt="product image">
             </a>
             
-            <a *ngSwitchCase="'square'" [href]="principalUrl" target="_blank" 
+            <a *ngSwitchCase="'square'" [href]="secondaryUrl??principalUrl" target="_blank" 
                class="block aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-pink-50">
-                <img class="w-full h-full object-cover group-hover/image:scale-110 transition-transform duration-300" 
+                <img class="w-full h-full object-cover transition-transform duration-300" 
                      [src]="img" 
                      (error)="onImageError($event)" 
                      loading="lazy"
                      alt="product image">
             </a>
             
-            <a *ngSwitchDefault [href]="principalUrl" target="_blank" 
+            <a *ngSwitchDefault [href]="secondaryUrl??principalUrl" target="_blank" 
                class="block aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-pink-50">
-                <img class="w-full h-full object-cover group-hover/image:scale-110 transition-transform duration-300" 
+                <img class="w-full h-full object-cover transition-transform duration-300" 
                      [src]="img" 
                      (error)="onImageError($event)" 
                      loading="lazy"
@@ -43,17 +43,13 @@
             </a>
         </ng-container>
         
-        <!-- Overlay con efecto hover -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 rounded-xl flex items-end p-4">
-            <span class="text-white font-medium text-sm">Ver producto</span>
-        </div>
     </div>
 
     <!-- Contenido del producto -->
-    <div class="flex-1 flex flex-col gap-3">
+    <div class="flex-1 flex flex-col gap-1">
         <!-- Nombre del producto -->
-        <a [href]="principalUrl" target="_blank" class="group/title">
-            <h3 class="text-lg font-semibold text-neutral-800 group-hover/title:text-purple-600 transition-colors duration-200 line-clamp-2 leading-tight" 
+        <a [href]="secondaryUrl??principalUrl" target="_blank" class="group/title">
+            <h3 class="text-lg font-semibold text-neutral-800 transition-colors duration-200 line-clamp-2 leading-tight" 
                 [title]="name">
                 {{name}}
             </h3>
@@ -61,23 +57,23 @@
 
         <!-- Precio -->
         <div class="flex items-center gap-2">
-            <span class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <a [href]="secondaryUrl??principalUrl" target="_blank" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 {{price}}
-            </span>
+            </a>
         </div>
 
         <!-- Botones de acción -->
-        <div class="flex gap-2 mt-auto">
+        <div class="flex flex-col gap-2 mt-auto">
             <a [href]="principalUrl" 
                target="_blank" 
-               class="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium py-2 px-4 rounded-xl text-center text-sm transition-all duration-200 shadow-md hover:shadow-lg">
+               [class]="getClasses(this.principalLabelString)">
                 {{principalLabelString}}
             </a>
 
             <a *ngIf="secondaryUrl" 
                [href]="secondaryUrl" 
                target="_blank" 
-               class="flex-1 bg-white hover:bg-orange-50 border-2 border-orange-200 hover:border-orange-400 text-orange-600 font-medium py-2 px-4 rounded-xl text-center text-sm transition-all duration-200">
+               [class]="getClasses(this.secondaryLabelString)">
                 {{secondaryLabelString}}
             </a>
         </div>
@@ -86,21 +82,21 @@
         <ng-container *ngIf="isReserved !== undefined">
             <div *ngIf="isReserved" class="mt-2">
                 <div *ngIf="!isLogged" 
-                     class="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium py-2 px-4 rounded-xl text-center text-sm flex items-center justify-center gap-2 shadow-md">
+                     class="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium py-2 px-4 rounded-lg text-center text-sm flex items-center justify-center gap-2 shadow-md overflow-hidden">
                     <fa-icon [icon]="['fas', 'circle-check']"></fa-icon>
                     <span>Reservado</span>
                 </div>
                 
                 <button *ngIf="isLogged" 
                         (click)="toggleReserve.emit()"
-                        class="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-medium py-2 px-4 rounded-xl text-center text-sm transition-all duration-200 shadow-md hover:shadow-lg">
+                        class="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-medium py-2 px-4 rounded-lg text-center text-sm transition-all duration-200 shadow-md hover:shadow-lg overflow-hidden">
                     Eliminar reserva
                 </button>
             </div>
             
             <button *ngIf="!isReserved"
                     (click)="toggleReserve.emit()"
-                    class="mt-2 w-full bg-white hover:bg-purple-50 border-2 border-purple-200 hover:border-purple-400 text-purple-600 font-medium py-2 px-4 rounded-xl text-center text-sm transition-all duration-200 flex items-center justify-center gap-2">
+                    class="mt-2 w-full bg-white hover:bg-purple-50 border-2 border-purple-200 hover:border-purple-400 text-purple-600 font-medium py-2 px-4 rounded-lg text-center text-sm transition-all duration-200 flex items-center justify-center gap-2 overflow-hidden">
                 <fa-icon [icon]="['fas', 'basket-shopping']"></fa-icon>
                 <span>Reservar</span>
             </button>
