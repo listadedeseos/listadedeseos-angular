@@ -11,7 +11,7 @@
       
       <div class="relative z-10">
         <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 bg-clip-text text-transparent text-center">
-          📝 {{wishlist.name || 'Mi Lista de Deseos'}}
+          {{wishlist.name || 'Mi Lista de Deseos'}}
         </h1>
       </div>
     </div>
@@ -19,7 +19,7 @@
 
   <main class="container mx-auto py-8 px-4">
 
-    @if(isLogged){
+    @if(isLogged && isMyWishList){
     <!-- Admin Section -->
     <section class="bg-white rounded-2xl shadow-lg p-6 mb-8">
       <div class="flex flex-col gap-4">
@@ -70,7 +70,7 @@
           <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-xl flex items-center justify-center text-white">
             🎯
           </div>
-          <h2 class="text-2xl font-bold text-neutral-800">Productos</h2>
+          <h2 class="text-2xl font-bold text-neutral-800">Productos personalizados</h2>
         </div>
 
         <div class="flex items-center gap-3">
