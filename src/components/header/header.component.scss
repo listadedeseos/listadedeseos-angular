@@ -1,17 +1,132 @@
-  @keyframes header-animation {
-    from {
-      max-width: 100%;
-    }
-    to {
-      width: calc(100% - 1rem);
-      border-radius: 1.5rem;
-      border-width: 0.15rem;
-      max-width: 80rem; /* max-w-7xl */
-      margin-top: 0.5rem
+@keyframes logo-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+header {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(147, 51, 234, 0.1);
+  
+  .logo-container {
+    &:hover img {
+      animation: logo-pulse 0.6s ease-in-out;
     }
   }
+  
+  // Dropdown menu animations
+  .dropdown-menu {
+    transform: translateY(-10px) scale(0.95);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &.show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  // Avatar glow effect
+  .avatar {
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+    transition: box-shadow 0.3s ease;
+    
+    &:hover {
+      box-shadow: 0 0 30px rgba(147, 51, 234, 0.5);
+    }
+  }
+  
+  // Mobile menu animation
+  .mobile-nav {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    
+    &.open {
+      max-height: 500px;
+    }
+  }
+}
+
+// Estilos para el menú hamburguesa CSS-only
+#mobile-menu-toggle {
+  display: none;
+}
+
+// Estilos para las líneas del hamburguesa
+.hamburger-line {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+// Cuando el checkbox está checked, transformar las líneas en X
+#mobile-menu-toggle:checked ~ nav label .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(0, 0.5rem);
+}
+
+#mobile-menu-toggle:checked ~ nav label .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scale(0);
+}
+
+#mobile-menu-toggle:checked ~ nav label .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(0, -0.5rem);
+}
+
+// Menú móvil - oculto por defecto
+.mobile-menu {
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  // Cuando el checkbox está checked, mostrar el menú
+  #mobile-menu-toggle:checked ~ nav & {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// Asegurar que en desktop el menú móvil esté oculto independientemente del estado del checkbox
+@media (min-width: 768px) {
+  .mobile-menu {
+    display: none !important;
+  }
+  
+  // Reset del checkbox en desktop
+  #mobile-menu-toggle:checked ~ nav .mobile-menu {
+    display: none !important;
+  }
+}
+
+// Responsive improvements
+@media (max-width: 768px) {
   header {
-    animation: header-animation linear both;
-    animation-timeline: scroll(root);
-    animation-range: 0 200px;
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .logo-text {
+      font-size: 1.125rem;
+    }
   }
+  
+  // En móvil, asegurar que los elementos desktop estén ocultos
+  .hidden-mobile {
+    display: none !important;
+  }
+  
+  // Mejorar la animación del backdrop
+  #mobile-menu-toggle:checked ~ nav .mobile-menu {
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.98);
+  }
+}

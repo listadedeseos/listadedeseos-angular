@@ -1,16 +1,151 @@
-<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-2">
+<div class="min-h-screen">
+  
+  <!-- Hero Section -->
+  <section class="relative py-20 px-4">
+    <div class="container mx-auto text-center">
+      
+      <!-- Floating elements for decoration -->
+      <div class="absolute top-10 left-10 w-20 h-20 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full opacity-30 animate-bounce"></div>
+      <div class="absolute top-32 right-16 w-16 h-16 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full opacity-20 animate-pulse"></div>
+      <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-gradient-to-br from-purple-300 to-pink-300 rounded-full opacity-25 animate-bounce" style="animation-delay: 1s;"></div>
+      
+      <div class="relative z-10">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 bg-clip-text text-transparent animate-pulse">
+          ✨ Lista de Deseos ✨
+        </h1>
+        
+        <p class="text-xl md:text-2xl text-neutral-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+          Descubre los productos más deseados y crea tus propias listas de deseos de forma sencilla y divertida
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a routerLink="/list" 
+             class="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3">
+            <fa-icon [icon]="['fas', 'list-ul']"></fa-icon>
+            <span>Crear Mi Lista</span>
+          </a>
+          
+          <a routerLink="/contact" 
+             class="px-8 py-4 bg-white/80 backdrop-blur-sm text-purple-600 font-semibold rounded-2xl border-2 border-purple-200 hover:border-purple-400 hover:bg-white transition-all duration-300 flex items-center gap-3">
+            <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
+            <span>Contáctanos</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <h1 class="col-span-full text-center uppercase text-xl font-bold">
-        Los productos más deseados
-    </h1>
+  <!-- Popular Products Section -->
+  <section class="py-16 px-4">
+    <div class="container mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-neutral-800 mb-4">
+          🏆 Los Más Deseados
+        </h2>
+        <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
+          Descubre los productos que más personas han añadido a sus listas de deseos
+        </p>
+      </div>
 
-    <section class="grid grid-cols-2 gap-2">
-        <h2 class="uppercase text-center col-span-full">Steam</h2>
-        @for(item of steamList; track $index){
-        <app-card aspect="video" [index]="$index+1" [principalUrl]="item.steam_url" [img]="item.img" [name]="item.name"
-            [price]="item.price" [count]="item.count" principalLabelString="Steam"
-            [secondaryUrl]="item.instant_gaming_url" secondaryLabelString="Instant Gaming"></app-card>
-        }
-    </section>
+      <!-- Steam Products -->
+      <div class="mb-16">
+        <div class="flex items-center justify-center gap-3 mb-8">
+          <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-800 rounded-xl flex items-center justify-center text-white text-xl">
+            <fa-icon [icon]="['fab', 'steam']"
+            [classes]="['h-7 w-7']" class="h-7"></fa-icon>
 
-</section>
+          </div>
+          <h3 class="text-2xl font-bold text-neutral-800">Steam Games</h3>
+          <div class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">
+            Videojuegos
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <ng-container *ngFor="let item of steamList; let i = index; trackBy: trackByIndex">
+            <app-card 
+              aspect="video" 
+              [index]="i+1" 
+              [principalUrl]="item.steam_url" 
+              [img]="item.img" 
+              [name]="item.name"
+              [price]="item.price" 
+              [count]="item.count" 
+              principalLabelString="Steam"
+              [secondaryUrl]="item.instant_gaming_url" 
+              secondaryLabelString="Instant Gaming"
+              class="transform hover:scale-105 transition-transform duration-300">
+            </app-card>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- Amazon Products (if available) -->
+      <div *ngIf="amazonList && amazonList.length > 0" class="mb-16">
+        <div class="flex items-center justify-center gap-3 mb-8">
+          <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-yellow-500 rounded-xl flex items-center justify-center text-white text-xl">
+            📦
+          </div>
+          <h3 class="text-2xl font-bold text-neutral-800">Amazon Products</h3>
+          <div class="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-sm font-medium">
+            Productos
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <ng-container *ngFor="let item of amazonList; let i = index; trackBy: trackByIndex">
+            <app-card 
+              aspect="square" 
+              [index]="i+1" 
+              [principalUrl]="item.amazon_url" 
+              [img]="item.img" 
+              [name]="item.name"
+              [price]="item.price" 
+              [count]="item.count" 
+              principalLabelString="Amazon"
+              class="transform hover:scale-105 transition-transform duration-300">
+            </app-card>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="!steamList || steamList.length === 0" class="text-center py-16">
+        <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4 animate-spin">
+          ⭐
+        </div>
+        <p class="text-neutral-600 text-lg">Cargando productos populares...</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="py-16 px-4 bg-gradient-to-r from-purple-100 to-pink-100">
+    <div class="container mx-auto text-center">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl font-bold text-neutral-800 mb-6">
+          🚀 ¿Listo para empezar?
+        </h2>
+        <p class="text-lg text-neutral-600 mb-8">
+          Únete a miles de usuarios que ya están creando y compartiendo sus listas de deseos
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a *ngIf="!isLogged" routerLink="/register" 
+             class="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+            Registrarse Gratis
+          </a>
+          
+          <a routerLink="/list" 
+             class="px-8 py-4 bg-white text-purple-600 font-semibold rounded-2xl border-2 border-purple-200 hover:border-purple-400 transition-all duration-300">
+            Ver Todas las Listas
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

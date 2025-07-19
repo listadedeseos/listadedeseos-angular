@@ -1,209 +1,214 @@
 <!-- <app-loading *ngIf="loading"></app-loading> -->
-<main class="flex flex-col gap-2 p-2">
+<div class="min-h-screen bg-gray-50">
 
-    @if(isLogged){
+  <!-- Hero Section -->
+  <section class="relative py-12 px-4 bg-gradient-to-br from-purple-100 to-pink-100">
+    <div class="container mx-auto">
+      
+      <!-- Floating elements for decoration -->
+      <div class="absolute top-10 left-10 w-16 h-16 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full opacity-30 animate-bounce"></div>
+      <div class="absolute top-20 right-16 w-12 h-12 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full opacity-20 animate-pulse"></div>
+      
+      <div class="relative z-10">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 bg-clip-text text-transparent text-center">
+          {{wishlist.name || 'Mi Lista de Deseos'}}
+        </h1>
+      </div>
+    </div>
+  </section>
 
-    <header class="flex flex-col gap-2">
+  <main class="container mx-auto py-8 px-4">
 
-        <button class="ml-auto bg-gray-100 border border-gray-600 p-2 rounded col-span-3 md:col-span-6"
-            (click)="toggleModalWishList()">Añadir nueva lista</button>
-
-        <section class="grid grid-cols-3 md:grid-cols-6 gap-2">
-            @for(item of allWishList; track $index){
-            <div
-                [class]="(item.is_new?'animate-scaleadd':'') +' flex items-center bg-gray-100 rounded border' + (item.id === wishListId ? ' border-gray-400' : ' border-transparent')">
-                <a [routerLink]="['/list', item.uuid]" class="w-full p-2">
-                    {{item.name}}
-                </a>
-                @if(allWishList.length > 1 && item.id != wishListId){
-                <small (click)="deleteWishList(item.id)"
-                    class="h-full p-3 flex items-center border-l-4 border-dashed border-gray-800 hover:text-red-700 transition"
-                    role="button">
-                    <fa-icon [icon]="['fas', 'trash-can']"></fa-icon>
-                </small>
-                }
-            </div>
-            } @empty {
-            @for(item of [].constructor(6); track $index){
-            <div class="animate-pulse bg-gray-100 p-2 rounded border border-transparent h-10"></div>
-            }
-            }
-        </section>
-
-    </header>
-
-    <hr>
-
-    }
-
-    <section class="flex items-center gap-2">
-        <h1 class="text-xl">{{wishlist.name}}</h1>
-
-        @if(isLogged){
-        <button class="group/wishlist_settings" (click)="toggleModalWishList(wishListId)" title="Ajustes">
-            <fa-icon [icon]="['fas', 'gear']"
-                [classes]="['duration-300 group-hover/wishlist_settings:rotate-45']"></fa-icon>
-        </button>
-        }
-
-        <section [cdkCopyToClipboard]="getwishListUrl()" title="Copiar al portapapeles" role="button"
-            class="z-50 fixed bottom-10 right-10 text-gray-500 bg-gray-200 rounded py-1 px-3 group border-2 border-gray-400 group">
-
-            <span
-                class="-z-10 absolute top-0 left-0 rounded w-full h-full bg-gray-200 bg-opacity-50 animate-ping group-hover:animate-none"></span>
-
-            <p class="hidden group-hover:inline-block">
-                {{getwishListUrl()}}
-                <fa-icon [icon]="['fas', 'copy']" class="ps-2"></fa-icon>
-            </p>
-
-            <fa-icon class="group-hover:hidden" [icon]="['fas', 'share-nodes']"></fa-icon>
-        </section>
-
-        @if(isLogged){
-        <button class="ml-auto border border-gray-700 p-2 rounded" (click)="toggleModalProduct()">
-            Añadir nuevo producto
-        </button>
-        }
-    </section>
-
-    <section class="grid gap-2 grid-cols-3 md:grid-cols-6">
-
-        @if(loading){
-
-        @for(item of [].constructor(12); track $index){
-        <div class="animate-pulse bg-gray-800 border border-gray-700 rounded shadow p-2 grid gap-1 grid-cols-1">
-
-            <div class="aspect-square bg-gray-700 rounded"></div>
-
-            <div class="h-2 rounded w-20 bg-gray-700"></div>
-
-            <div class="flex gap-1">
-                <div class="h-5 w-full rounded bg-gray-700"></div>
-                <div class="h-5 w-full rounded bg-gray-700"></div>
-            </div>
-
+    @if(isLogged && isMyWishList){
+    <!-- Admin Section -->
+    <section class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+      <div class="flex flex-col gap-4">
+        
+        <div class="flex justify-between items-center">
+          <h2 class="text-2xl font-bold text-neutral-800">Mis Listas</h2>
+          <button class="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                  (click)="toggleModalWishList()">
+            ✨ Nueva Lista
+          </button>
         </div>
-        }
 
-        } @else {
-
-        @for(item of wishlist.products; track $index){
-
-        <app-card [principalUrl]="item.url_product" [img]="item.url_preview" [name]="item.name" [price]="item.price"
-            [count]="item.count" principalLabelString="Comprar" [isReserved]="item.is_reserved" [isLogged]="isLogged"
-            (toggleReserve)="reserveProduct(item.id)"></app-card>
-
-        <!-- <div class="relative bg-gray-800 text-white border border-gray-700 rounded shadow p-2 flex flex-col gap-1">
-
-            <a [href]="item.url_product" target="_blank"
-                class="flex justify-center aspect-square overflow-hidden rounded">
-                <img class="w-full h-full object-cover" [src]="item.url_preview" (error)="onImageError($event)"
-                    loading="lazy" alt="product image">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          @for(item of allWishList; track $index){
+          <div [class]="(item.is_new?'animate-scaleadd':'') + ' bg-white border-2 rounded-xl shadow-sm hover:shadow-md transition-all duration-300' + (item.id === wishListId ? ' border-purple-400 bg-gradient-to-br from-purple-50 to-pink-50' : ' border-gray-200 hover:border-purple-200')">
+            <a [routerLink]="['/list', item.uuid]" class="block p-4">
+              <div class="text-center">
+                <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-sm mx-auto mb-2">
+                  📝
+                </div>
+                <span class="text-sm font-medium text-neutral-700">{{item.name}}</span>
+              </div>
             </a>
-
-            <a [href]="item.url_product">
-                <h5 class="text-xl font-semibold tracking-tight text-white max-h-[3.5rem] overflow-hidden"
-                    [title]="item.name">{{item.name}}</h5>
-            </a>
-
-            <div class="mb-auto">{{item.price}}</div>
-
-            <a [href]="item.url_product" target="_blank" class="
-                bg-gray-700 font-medium rounded-lg text-center p-2
-                flex flex-col align-center justify-center
-                text-white text-xs
-                hover:bg-blue-700 hover:text-white
-            ">Comprar</a>
-
-
-            @if(item.is_reserved){
-
-            @if(!isLogged){
-            <div class="bg-green-600 font-medium rounded-lg text-center p-2
-                flex gap-2 align-center justify-center
-                text-white text-xs">
-                <fa-icon [icon]="['fas', 'circle-check']"></fa-icon>
-                <p>Reservado</p>
-            </div>
-            } @else {
-            <button (click)="reserveProduct(item.id)" class="bg-green-600 font-medium rounded-lg text-center p-2 mt-auto
-                flex gap-2 align-center justify-center
-                text-white text-xs hover:bg-green-700">
-                <p>Eliminar reserva</p>
+            @if(allWishList.length > 1 && item.id != wishListId){
+            <button (click)="deleteWishList(item.id)"
+                    class="absolute top-2 right-2 w-6 h-6 bg-red-100 hover:bg-red-200 text-red-600 rounded-full flex items-center justify-center transition-colors duration-200"
+                    title="Eliminar lista">
+              <fa-icon [icon]="['fas', 'trash-can']" class="text-xs"></fa-icon>
             </button>
             }
+          </div>
+          } @empty {
+          @for(item of [].constructor(6); track $index){
+          <div class="animate-pulse bg-gray-100 p-4 rounded-xl border border-gray-200 h-20"></div>
+          }
+          }
+        </div>
+      </div>
+    </section>
+    }
 
-            } @else {
-            <a role="button" (click)="reserveProduct(item.id)" class="
-            bg-gray-700 font-medium rounded-lg text-center p-2
-            flex gap-2 align-center justify-center
-            text-white text-xs
-            hover:bg-black hover:text-white">
-                <fa-icon [icon]="['fas', 'basket-shopping']"></fa-icon>
-                <p>Reservar</p>
-            </a>
-            }
+    <!-- Main Content -->
+    <section class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+      
+      <!-- Header Controls -->
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-xl flex items-center justify-center text-white">
+            🎯
+          </div>
+          <h2 class="text-2xl font-bold text-neutral-800">Productos personalizados</h2>
+        </div>
 
-        </div> -->
+        <div class="flex items-center gap-3">
+          <!-- Share Button -->
+          <button [cdkCopyToClipboard]="getwishListUrl()" 
+                  title="Copiar enlace para compartir"
+                  class="px-4 py-2 bg-blue-100 text-blue-600 rounded-xl hover:bg-blue-200 transition-colors duration-200 flex items-center gap-2">
+            <fa-icon [icon]="['fas', 'share-nodes']"></fa-icon>
+            <span class="hidden md:inline">Compartir</span>
+          </button>
+          
+          @if(isLogged){
+          <!-- Settings Button -->
+          <button (click)="toggleModalWishList(wishListId)" 
+                  title="Configurar lista"
+                  class="px-4 py-2 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200 transition-colors duration-200">
+            <fa-icon [icon]="['fas', 'gear']"></fa-icon>
+          </button>
+          
+          <!-- Add Product Button -->
+          <button (click)="toggleModalProduct()"
+                  class="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
+            <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+            <span class="hidden md:inline">Añadir Producto</span>
+          </button>
+          }
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+
+        @if(loading){
+        <!-- Loading Cards -->
+        @for(item of [].constructor(12); track $index){
+        <div class="animate-pulse bg-white border border-gray-200 rounded-xl shadow-sm p-4">
+          <div class="aspect-square bg-gray-200 rounded-lg mb-3"></div>
+          <div class="h-3 bg-gray-200 rounded w-3/4 mb-2"></div>
+          <div class="space-y-2">
+            <div class="h-4 bg-gray-200 rounded w-full"></div>
+            <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+          </div>
+        </div>
+        }
+        } @else {
+        <!-- Product Cards -->
+        @for(item of wishlist.products; track $index){
+        <app-card [principalUrl]="item.url_product" 
+                  [img]="item.url_preview" 
+                  [name]="item.name" 
+                  [price]="item.price"
+                  [count]="item.count" 
+                  principalLabelString="Comprar" 
+                  [isReserved]="item.is_reserved" 
+                  [isLogged]="isLogged"
+                  (toggleReserve)="reserveProduct(item.id)"
+                  class="transform hover:scale-105 transition-transform duration-300">
+        </app-card>
         } @empty {
-
+        <!-- Empty State -->
         @if(isLogged || !(wishlist.steam_username || wishlist.amazon_wishlist_id)){
-        <div class="flex flex-col items-center justify-center gap-2 h-full col-span-3 md:col-span-6">
-            <fa-icon [icon]="['far', 'face-frown']" [classes]="['text-3xl text-gray-500']"></fa-icon>
-            <p class="text-gray-500">No hay productos</p>
+        <div class="col-span-full flex flex-col items-center justify-center py-16">
+          <div class="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-gray-400 text-3xl mb-4">
+            😔
+          </div>
+          <h3 class="text-xl font-semibold text-neutral-700 mb-2">No hay productos</h3>
+          <p class="text-neutral-500 text-center max-w-md mb-6">
+            Comienza añadiendo productos a tu lista de deseos para compartir con otros
+          </p>
 
-            @if(isLogged){
-
-            <section class="border-t-2 border-b-2 p-4 m-4 border-gray-700 w-full flex flex-col items-center gap-2">
-                <button class="text-gray-500 transition hover:text-gray-400" (click)="toggleModalProduct()">
-                    Añade productos personalizados a tu lista de deseos haciendo clic aquí
-                </button>
-                <button class="text-gray-500 transition hover:text-gray-400" (click)="toggleModalWishList(wishListId)">
-                    También puedes añadir productos de páginas externas haciendo clic en el engranaje
-                    (<fa-icon [icon]="['fas', 'gear']"></fa-icon>)
-                </button>
-            </section>
-
-            }
-
+          @if(isLogged){
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button (click)="toggleModalProduct()"
+                    class="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+              ✨ Añadir Producto
+            </button>
+            <button (click)="toggleModalWishList(wishListId)"
+                    class="px-6 py-3 bg-white text-purple-600 font-semibold rounded-xl border-2 border-purple-200 hover:border-purple-400 transition-all duration-300">
+              ⚙️ Configurar Lista
+            </button>
+          </div>
+          }
         </div>
         }
-
         }
         }
+      </div>
     </section>
 
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="relative bg-gray-800 text-white rounded p-2">
-            <div class="relative z-20">
-                <app-steam [size]="5" [itemsPerRow]="3" [showMore]="true" [username]="wishlist.steam_username"
-                    [wishlistId]="wishlist.id"></app-steam>
-            </div>
-
-            <fa-icon [icon]="['fab', 'steam']"
-                [classes]="['absolute bottom-0 right-0 w-[50%] h-[50%] z-10 opacity-50 text-white']"></fa-icon>
+    <!-- External Sources Section -->
+    @if(wishlist.steam_username || wishlist.amazon_wishlist_id){
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      @if(wishlist.steam_username){
+      <div class="bg-gradient-to-br from-blue-800 to-blue-500 rounded-2xl p-6 text-white relative overflow-hidden">
+        <div class="relative z-20">
+          <app-steam [size]="5" [itemsPerRow]="3" [showMore]="true" 
+                     [username]="wishlist.steam_username" [wishlistId]="wishlist.id">
+          </app-steam>
         </div>
+        <fa-icon [icon]="['fab', 'steam']"
+                 class="absolute bottom-4 right-4 text-6xl opacity-20"></fa-icon>
+      </div>
+      }
 
-        <div class="relative bg-orange-700 text-white rounded p-2">
-            <div class="relative z-20">
-                <app-amazon [size]="5" [itemsPerRow]="3" [showMore]="true"
-                    [amazonWishlistId]="wishlist.amazon_wishlist_id" [wishlistId]="wishlist.id"></app-amazon>
-            </div>
-
-            <fa-icon [icon]="['fab', 'amazon']"
-                [classes]="['absolute bottom-0 right-0 w-[50%] h-[50%] z-10 opacity-50 text-white']"></fa-icon>
+      @if(wishlist.amazon_wishlist_id){
+      <div class="bg-gradient-to-br from-orange-600 to-yellow-600 rounded-2xl p-6 text-white relative overflow-hidden">
+        <div class="relative z-20">
+          <app-amazon [size]="5" [itemsPerRow]="3" [showMore]="true"
+                      [amazonWishlistId]="wishlist.amazon_wishlist_id" [wishlistId]="wishlist.id">
+          </app-amazon>
         </div>
+        <fa-icon [icon]="['fab', 'amazon']"
+                 class="absolute bottom-4 right-4 text-6xl opacity-20"></fa-icon>
+      </div>
+      }
+      
     </section>
+    }
 
-</main>
+  </main>
 
+  <!-- Floating Share Button -->
+  <button [cdkCopyToClipboard]="getwishListUrl()" 
+          title="Copiar enlace para compartir"
+          class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-full shadow-xl hover:shadow-2xl transform hover:scale-110 transition-all duration-300 flex items-center justify-center z-50">
+    <fa-icon [icon]="['fas', 'share-nodes']" class="text-lg"></fa-icon>
+  </button>
+
+</div>
+
+<!-- Modals -->
 @if(modalProductOpen && wishListId){
 <app-product-form [wishListId]="wishListId" (closeFunction)="toggleModalProduct()"
-    (acceptFunction)="productUpdate($event)"></app-product-form>
+                  (acceptFunction)="productUpdate($event)"></app-product-form>
 }
 
 @if(modalWishListOpen){
 <app-wishlist-form [id]="wishListFormId" (closeFunction)="toggleModalWishList()"
-    (acceptFunction)="wishlistUpdate(wishListFormId, $event)"></app-wishlist-form>
+                   (acceptFunction)="wishlistUpdate(wishListFormId, $event)"></app-wishlist-form>
 }

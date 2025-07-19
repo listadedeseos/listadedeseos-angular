@@ -16,6 +16,7 @@ export class WishListComponent {
   private wishListName = ''
   public isLogged = false
   public allWishList: any = []
+  public isMyWishList = false
   public wishlist: any = []
   public wishListId = 0
   public modalProductOpen = false
@@ -29,7 +30,6 @@ export class WishListComponent {
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
   ) {
-    this.refreshData()
   }
 
   refreshData() {
@@ -40,12 +40,12 @@ export class WishListComponent {
 
     if (this.isLogged && this.username == null) {
       this.username = this.authenticationService.currentUserValue.username
+      this.isMyWishList = true
+      this.getAllWishList()
     }
   }
 
   ngOnInit() {
-    this.isLogged && this.getAllWishList()
-
     this.routeSubsrciption = this.route.params.subscribe(params => {
       this.refreshData()
       this.getWishList()

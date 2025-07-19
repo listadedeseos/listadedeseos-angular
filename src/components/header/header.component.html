@@ -1,85 +1,202 @@
-<header class="w-full flex flex-wrap items-center p-3 gap-5 border-b bg-gray-100 bg-opacity-75 text-black">
-
-    <a routerLink="/" class="mr-auto text-black flex justify-center gap-2">
-        <img src="\assets\icon\logo.svg" class="w-6 h-6" alt="Logo de la web, lista de deseos" />
-        Lista de deseos
-        <span class="max-h-max bg-blue-500 text-white text-xs px-2 py-1 rounded-lg rotate-45 -translate-x-3 -translate-y-1 scale-75">
-            BETA
-        </span>
-    </a>
-
-    <a routerLink="/contact" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="text-white"
-        class="hover:text-white" title="Contáctanos">
-        <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
-        <p class="hidden md:inline-block ml-1">Contacto</p>
-    </a>
-
-    @if(isLogged){
-
-    <a routerLink="/list" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="text-white"
-        class="hover:text-white" title="Contáctanos">
-        <fa-icon [icon]="['fas', 'list']"></fa-icon>
-        <p class="hidden md:inline-block ml-1">Mis listas</p>
-    </a>
-
-    <label class="flex items-center gap-2 relative">
-
-        <input type="checkbox" class="peer hidden" />
-
-        <span role="button" class="hover:text-white peer-checked:text-white">
-            <fa-icon [icon]="['fas', 'user']"></fa-icon>
-            <p class="hidden md:inline-block ml-1 capitalize">{{username}}</p>
-        </span>
-
-        <div class="peer-checked:block hidden fixed w-full h-full top-0 left-0"></div>
-
-        <div
-            class="peer-checked:block text-sm hidden absolute overflow-hidden top-7 right-0 z-10 w-56 divide-y divide-gray-500 rounded-md bg-gray-700 text-gray-300 ring-1 ring-gray-500">
-
-            <div class="py-2 px-4 text-xs text-gray-400 bg-gray-800">
-                <p>{{fullname}}</p>
-                <small>({{username}})</small>
-            </div>
-
-            <div class="flex flex-col py-3 gap-3">
-                <a routerLink="/list" class="block px-4 hover:underline">Mis listas</a>
-            </div>
-
-            <div (click)="logout()" class="px-4 py-2 hover:text-red-600 transition-colors" role="button"
-                title="Cerrar sesión">
-                <fa-icon [icon]="['fas', 'arrow-right-from-bracket']"></fa-icon>
-                <p class="inline-block ml-1">Cerrar sesión</p>
-            </div>
-
+<header class="w-full glass-enhanced backdrop-blur-lg border-b border-white/20 shadow-soft sticky top-0 z-50">
+  <!-- Checkbox para controlar el menú móvil -->
+  <input type="checkbox" id="mobile-menu-toggle" class="hidden">
+  
+  <nav class="container mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      
+      <!-- Logo y nombre -->
+      <a routerLink="/" class="flex items-center gap-3">
+        <div class="relative">
+          <img src="/assets/icon/logo.svg" 
+               class="w-10 h-10" 
+               alt="Logo" 
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full items-center justify-center text-white font-bold text-lg hidden">
+            ✨
+          </div>
         </div>
-    </label>
+        <div class="flex flex-col">
+          <span class="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-bold text-xl">Lista de Deseos</span>
+          <span class="text-[0.6rem] bg-blue-100 text-blue-600 px-2 py-0 rounded-full font-medium mr-auto">BETA</span>
+        </div>
+      </a>
 
-    }@else{
-    <a routerLink="/login" class="hover:text-green-600" title="Iniciar sesión">
-        <fa-icon [icon]="['fas', 'right-to-bracket']"></fa-icon>
-        <p class="hidden md:inline-block ml-1">Iniciar sesión</p>
-    </a>
-    }
+      <!-- Botón hamburguesa (solo visible en móvil) -->
+      <label for="mobile-menu-toggle" class="md:hidden cursor-pointer flex flex-col gap-1 p-2 rounded-lg hover:bg-white/20 transition-colors duration-200">
+        <span class="hamburger-line w-6 h-0.5 bg-neutral-600 rounded transition-all duration-300"></span>
+        <span class="hamburger-line w-6 h-0.5 bg-neutral-600 rounded transition-all duration-300"></span>
+        <span class="hamburger-line w-6 h-0.5 bg-neutral-600 rounded transition-all duration-300"></span>
+      </label>
 
-    @if(isAdmin){
-    <section class="w-full flex gap-5">
-
-        <a routerLink="/" class="mr-auto text-yellow-500">
-            <fa-icon [icon]="['fas', 'crown']"></fa-icon>
-            Admin mode
+      <!-- Navegación principal -->
+      <div class="hidden md:flex items-center gap-6">
+        <a routerLink="/contact" 
+           routerLinkActive="text-purple-600 bg-purple-50"
+           class="flex items-center gap-2 px-4 py-2 rounded-xl text-neutral-600 hover:text-purple-600 hover:bg-purple-50 transition-all duration-200 font-medium">
+          <fa-icon [icon]="['fas', 'envelope']" class="w-4 h-4"></fa-icon>
+          <span>Contacto</span>
         </a>
 
-        <a routerLink="/contact/list" routerLinkActive="text-blue-600" class="hover:text-blue-600" title="Contacts">
-            <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
-            <p class="hidden md:inline-block ml-1">Contactos</p>
+        <ng-container *ngIf="isLogged">
+          <a routerLink="/list" 
+             routerLinkActive="text-purple-600 bg-purple-50"
+             class="flex items-center gap-2 px-4 py-2 rounded-xl text-neutral-600 hover:text-purple-600 hover:bg-purple-50 transition-all duration-200 font-medium">
+            <fa-icon [icon]="['fas', 'list']" class="w-4 h-4"></fa-icon>
+            <span>Mis Listas</span>
+          </a>
+        </ng-container>
+
+        <ng-container *ngIf="isAdmin">
+          <a routerLink="/user" 
+             routerLinkActive="text-amber-600 bg-amber-50"
+             class="flex items-center gap-2 px-4 py-2 rounded-xl text-amber-600 hover:bg-amber-50 transition-all duration-200 font-medium">
+            <fa-icon [icon]="['fas', 'crown']" class="w-4 h-4"></fa-icon>
+            <span>Admin</span>
+          </a>
+          <a routerLink="/contact/list" 
+             routerLinkActive="text-amber-600 bg-amber-50"
+             class="flex items-center gap-2 px-4 py-2 rounded-xl text-neutral-600 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200 font-medium">
+            <fa-icon [icon]="['fas', 'users']" class="w-4 h-4"></fa-icon>
+            <span>Contactos</span>
+          </a>
+        </ng-container>
+      </div>
+
+      <!-- Usuario autenticado (desktop) -->
+      <div *ngIf="isLogged" class="hidden md:block relative group">
+        <!-- Avatar y nombre -->
+        <button class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/50 transition-all duration-200">
+          <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md">
+            {{getFirstLetter()}}
+          </div>
+          <div class="hidden lg:flex flex-col items-start">
+            <span class="text-neutral-800 font-semibold text-sm">{{fullname || 'Usuario'}}</span>
+            <span class="text-neutral-500 text-xs">{{username}}</span>
+          </div>
+          <fa-icon [icon]="['fas', 'chevron-down']" class="text-neutral-400 text-xs transition-transform group-hover:rotate-180"></fa-icon>
+        </button>
+
+        <!-- Dropdown menu -->
+        <div class="absolute right-0 top-full mt-2 w-64 bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-white/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2">
+          
+          <!-- Header del dropdown -->
+          <div class="px-4 py-3 border-b border-neutral-100 bg-gradient-to-r from-purple-50 to-pink-50 rounded-t-2xl">
+            <p class="font-semibold text-neutral-800">{{fullname || 'Usuario'}}</p>
+            <p class="text-sm text-neutral-500">{{username}}</p>
+          </div>
+
+          <!-- Opciones del menú -->
+          <div class="py-2">
+            
+            <a routerLink="/list" 
+               class="flex items-center gap-3 px-4 py-3 text-neutral-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200">
+              <fa-icon [icon]="['fas', 'list']" class="w-4 h-4"></fa-icon>
+              <span class="font-medium">Mis Listas</span>
+            </a>
+            
+            <a *ngIf="isAdmin" routerLink="/contact/list" 
+               class="flex items-center gap-3 px-4 py-3 text-neutral-700 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200">
+              <fa-icon [icon]="['fas', 'envelope']" class="w-4 h-4"></fa-icon>
+              <span class="font-medium">Mensajes</span>
+            </a>
+          </div>
+
+          <!-- Logout -->
+          <div class="border-t border-neutral-100 p-2">
+            <button (click)="logout()" 
+                    class="w-full flex items-center gap-3 px-4 py-3 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors duration-200 font-medium">
+              <fa-icon [icon]="['fas', 'sign-out-alt']" class="w-4 h-4"></fa-icon>
+              <span>Cerrar Sesión</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Usuario no autenticado (desktop) -->
+      <div *ngIf="!isLogged" class="hidden md:flex items-center gap-3">
+        <a routerLink="/login" 
+           class="flex items-center gap-2 px-4 py-2 rounded-xl text-neutral-600 hover:text-purple-600 hover:bg-purple-50 transition-all duration-200 font-medium">
+          <fa-icon [icon]="['fas', 'sign-in-alt']" class="w-4 h-4"></fa-icon>
+          <span>Iniciar Sesión</span>
         </a>
-
-        <a routerLink="/user" routerLinkActive="text-blue-600" class="hover:text-blue-600" title="User">
-            <fa-icon [icon]="['fas', 'user']"></fa-icon>
-            <p class="hidden md:inline-block ml-1">Usuarios</p>
+        <a routerLink="/register" 
+           class="flex items-center gap-2 px-6 py-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all duration-200 font-medium shadow-lg hover:shadow-xl">
+          <fa-icon [icon]="['fas', 'star']" class="w-4 h-4"></fa-icon>
+          <span>Registrarse</span>
         </a>
+      </div>
 
-    </section>
-    }
+    </div>
 
+    <!-- Menú móvil -->
+    <div class="mobile-menu md:hidden absolute left-0 right-0 top-full bg-white/95 backdrop-blur-lg border-b border-white/20 shadow-lg transform -translate-y-full opacity-0 invisible transition-all duration-300 ease-in-out">
+      <div class="container mx-auto px-4 py-4">
+        <div class="flex flex-col gap-2">
+          
+          <!-- Links de navegación -->
+          <a routerLink="/contact" 
+             routerLinkActive="text-purple-600 bg-purple-50"
+             class="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-600 hover:text-purple-600 hover:bg-purple-50 transition-all duration-200">
+            <fa-icon [icon]="['fas', 'envelope']" class="w-4 h-4"></fa-icon>
+            <span class="font-medium">Contacto</span>
+          </a>
+
+          <!-- Si está logueado -->
+          <ng-container *ngIf="isLogged">
+            <div class="border-t border-neutral-200 pt-3 mt-2">
+              <div class="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl mb-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                  {{getFirstLetter()}}
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-neutral-800 font-semibold text-sm">{{fullname || 'Usuario'}}</span>
+                  <span class="text-neutral-500 text-xs">{{username}}</span>
+                </div>
+              </div>
+            </div>
+            
+            <a routerLink="/list" 
+               routerLinkActive="text-purple-600 bg-purple-50"
+               class="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-600 hover:text-purple-600 hover:bg-purple-50 transition-all duration-200">
+              <fa-icon [icon]="['fas', 'list']" class="w-4 h-4"></fa-icon>
+              <span class="font-medium">Mis Listas</span>
+            </a>
+
+            <ng-container *ngIf="isAdmin">
+              <a routerLink="/contact/list" 
+                 class="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-600 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200">
+                <fa-icon [icon]="['fas', 'users']" class="w-4 h-4"></fa-icon>
+                <span class="font-medium">Contactos Admin</span>
+              </a>
+            </ng-container>
+
+            <div class="border-t border-neutral-200 pt-3 mt-3">
+              <button (click)="logout()" 
+                      class="w-full flex items-center gap-3 px-4 py-3 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors duration-200 font-medium">
+                <fa-icon [icon]="['fas', 'sign-out-alt']" class="w-4 h-4"></fa-icon>
+                <span>Cerrar Sesión</span>
+              </button>
+            </div>
+          </ng-container>
+
+          <!-- Si no está logueado -->
+          <ng-container *ngIf="!isLogged">
+            <div class="border-t border-neutral-200 pt-3 mt-2 flex flex-col gap-2">
+              <a routerLink="/login" 
+                 class="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-600 hover:text-purple-600 hover:bg-purple-50 transition-all duration-200 font-medium">
+                <fa-icon [icon]="['fas', 'sign-in-alt']" class="w-4 h-4"></fa-icon>
+                <span>Iniciar Sesión</span>
+              </a>
+              <a routerLink="/register" 
+                 class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all duration-200 font-medium shadow-lg">
+                <fa-icon [icon]="['fas', 'star']" class="w-4 h-4"></fa-icon>
+                <span>Registrarse</span>
+              </a>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </nav>
 </header>

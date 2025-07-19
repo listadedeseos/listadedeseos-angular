@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../../apiConnection/ApiService';
+import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { Utils } from '../../utils/utils';
 
 @Component({
@@ -9,13 +10,19 @@ import { Utils } from '../../utils/utils';
 export class DashboardComponent {
 
   public steamList: any = []
+  public amazonList: any = []
+  public isLogged = false
 
   constructor(
-    private apiService: ApiService
-  ) { }
+    private apiService: ApiService,
+    private authenticationService: AuthenticationService
+  ) { 
+    this.isLogged = this.authenticationService.isLogged
+  }
 
   ngOnInit() {
     this.getSteam()
+    this.getAmazon()
   }
 
   getSteam() {
@@ -30,4 +37,20 @@ export class DashboardComponent {
     })
   }
 
+  getAmazon() {
+    // Si hay endpoint para Amazon, descomenta esto:
+    // let url = Utils.urls.amazon + '/top'
+    // this.apiService.getPetition(url).subscribe({
+    //   next: (value: any) => {
+    //     this.amazonList = value.list ?? []
+    //   },
+    //   error: () => {
+    //     this.amazonList = []
+    //   }
+    // })
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
+  }
 }

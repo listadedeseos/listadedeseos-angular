@@ -1,0 +1,51 @@
+// Estilos para el botón de Google auténtico
+.google-btn {
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  border-radius: 8px;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+
+  // Efecto de enfoque para accesibilidad
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.3);
+  }
+
+  // Efecto de ondas al hacer clic
+  &:active {
+    transform: scale(0.98);
+  }
+
+  // Hover effect más sutil
+  &:hover {
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 
+                0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  }
+
+  // Texto específico para Google
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.25px;
+  }
+}
+
+// Animación sutil para el icono de Google
+.google-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.google-btn:hover svg {
+  transform: scale(1.05);
+}
+
+// Mejoras responsive
+@media (max-width: 640px) {
+  .google-btn {
+    padding: 12px 16px;
+    
+    span {
+      font-size: 16px;
+    }
+  }
+}

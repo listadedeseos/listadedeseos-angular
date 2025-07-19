@@ -1,34 +1,87 @@
-<footer class="bg-gray-950 border-t border-gray-800 p-5 grid grid-cols-1 gap-5 text-center text-gray-500 text-sm">
+<footer class="mt-auto bg-gradient-to-br from-purple-50 to-pink-50 border-t border-purple-100/50 backdrop-blur-lg">
+  <div class="container mx-auto px-4 py-12">
+    
+    <!-- Contenido principal del footer -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      
+      <!-- Logo y descripción -->
+      <div class="text-center md:text-left">
+        <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
+          <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-sm">
+            ✨
+          </div>
+          <h3 class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            Lista de Deseos
+          </h3>
+        </div>
+        <p class="text-neutral-600 text-sm leading-relaxed">
+          Crea y gestiona tus listas de deseos de forma sencilla y compártelas con quien quieras.
+        </p>
+      </div>
 
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- Enlaces útiles -->
+      <div class="text-center">
+        <h4 class="font-semibold text-neutral-800 mb-4">Enlaces Útiles</h4>
+        <div class="space-y-3">
+          <a routerLink="/contact" 
+             class="flex items-center justify-center gap-2 text-neutral-600 hover:text-purple-600 transition-colors duration-200 group">
+            <fa-icon [icon]="['fas', 'envelope']" class="w-4 h-4 group-hover:scale-110 transition-transform duration-200"></fa-icon>
+            <span>Contáctanos</span>
+          </a>
+          
+          <a href="https://github.com/listadedeseos/listadedeseos-angular" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="flex items-center justify-center gap-2 text-neutral-600 hover:text-purple-600 transition-colors duration-200 group">
+            <fa-icon [icon]="['fab', 'github']" class="w-4 h-4 group-hover:scale-110 transition-transform duration-200"></fa-icon>
+            <span>Contribuir en GitHub</span>
+          </a>
+        </div>
+      </div>
 
-        <a href="https://github.com/listadedeseos/listadedeseos-angular" class="hover:text-white" target="_blank"
-            rel="noopener noreferrer" title="Aporta código a nuestra comunidad">
-            <fa-icon [icon]="['fab', 'github']"></fa-icon>
-            Edita esta página en Github
+      <!-- Información del desarrollador -->
+      <div class="text-center">
+        <h4 class="font-semibold text-neutral-800 mb-4">Desarrollado con 💜</h4>
+        <a href="https://jose-web.github.io" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="group">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/50 hover:bg-white/80 transition-all duration-200 shadow-sm hover:shadow-md">
+            <img class="h-8 w-8 rounded-full object-cover" 
+                 src="https://jose-web.github.io/logo.svg" 
+                 alt="Logo desarrollador"
+                 onerror="this.style.display='none'">
+          </div>
         </a>
+      </div>
+    </div>
 
-        <a routerLink="/contact" class="hover:text-white" title="Contáctanos">
-            <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
-            Haz una sugerencia
-        </a>
-
-    </section>
-
-    <section class="text-gray-700">
-        Lista de deseos
-        <fa-icon [icon]="['far', 'copyright']"></fa-icon>
-        {{year}}
-    </section>
-
-    <section class="flex justify-center">
-        <a href="https://jose-web.github.io" target="_blank" rel="noopener noreferrer"
-            class="flex items-center opacity-50 hover:opacity-100 transition">
-            <p>Desarrollado por</p>
-            <img class="invert h-16" src="https://jose-web.github.io/logo.svg" alt="Logo desarrollador">
-            <p>con mucho</p>
-            <fa-icon [icon]="['fas', 'heart']" [classes]="['ml-2']"></fa-icon>
-        </a>
-    </section>
-
+    <!-- Separador -->
+    <div class="border-t border-purple-100/50 pt-6">
+      
+      <!-- Copyright y año -->
+      <div class="flex flex-col md:flex-row items-center justify-between text-sm text-neutral-500">
+        <div class="flex items-center gap-2 mb-2 md:mb-0">
+          <fa-icon [icon]="['far', 'copyright']"></fa-icon>
+          <span>{{year}} Lista de Deseos</span>
+          <span class="hidden md:inline">•</span>
+          <span class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full font-medium">
+            BETA
+          </span>
+        </div>
+        
+        <!-- Versión y tecnología -->
+        <div class="flex items-center gap-4 text-xs">
+          <span class="flex items-center gap-1">
+            <fa-icon [icon]="['fab', 'angular']" class="text-red-500"></fa-icon>
+            Angular
+          </span>
+          <span class="flex items-center gap-1">
+            <fa-icon [icon]="['fas', 'palette']" class="text-purple-500"></fa-icon>
+            Tailwind CSS
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 </footer>
