@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, UrlMatcher, UrlSegment } from '@angular/router';
 import { AuthGuard } from '../apiConnection/AuthGuard';
 
 import { PageLoggedComponent } from '../components/page-logged/page-logged.component';
@@ -15,6 +15,28 @@ import { ContactListComponent } from '../pages/contact/contact-list/contact-list
 import { SteamPage } from '../pages/steam/steam.component';
 import { AmazonPage } from '../pages/amazon/amazon.component';
 
+const userMatcher: UrlMatcher = (segments: UrlSegment[]) => {
+  if (segments[0].path.startsWith('@')) {
+    const username = segments[0].path.substring(1); // Remover el @
+
+    if (!username.trim()) {
+      return null; // redirect to dashboard
+    }
+
+    const consumedSegments = segments.length >= 2 ? [segments[0], segments[1]] : [segments[0]];
+    const wishListName = segments[1] ? segments[1].path : null;
+
+    return {
+      consumed: consumedSegments,
+      posParams: {
+        username: new UrlSegment(username, {}),
+        ...(wishListName && { wishListName: new UrlSegment(wishListName, {}) }) // empty if wishlist is undefined
+      }
+    };
+  }
+  return null; // redirect to dashboard
+};
+
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
   { path: 'login', component: LoginComponent },
@@ -22,6 +44,15 @@ const routes: Routes = [
   { path: 'verify/:userId', component: VerifyComponent },
 
   { path: 'login-google/callback', component: SocialNetworkGoogleCallbackComponent },
+
+  {
+    matcher: userMatcher,
+    component: PageLoggedComponent,
+    children: [
+      { path: '', component: WishListComponent }, // @username
+      { path: ':wishListName', component: WishListComponent }, // @username/list
+    ]
+  },
 
   {
     path: '',

@@ -25,7 +25,7 @@
         <div class="space-y-3">
           <a routerLink="/contact" 
              class="flex items-center justify-center gap-2 text-neutral-600 hover:text-purple-600 transition-colors duration-200 group">
-            <fa-icon [icon]="['fas', 'envelope']" class="w-4 h-4 group-hover:scale-110 transition-transform duration-200"></fa-icon>
+            <fa-icon [icon]="['fas', 'envelope']" [classes]="['w-4 h-4']"></fa-icon>
             <span>Contáctanos</span>
           </a>
           
@@ -33,7 +33,7 @@
              target="_blank" 
              rel="noopener noreferrer"
              class="flex items-center justify-center gap-2 text-neutral-600 hover:text-purple-600 transition-colors duration-200 group">
-            <fa-icon [icon]="['fab', 'github']" class="w-4 h-4 group-hover:scale-110 transition-transform duration-200"></fa-icon>
+            <fa-icon [icon]="['fab', 'github']" [classes]="['w-4 h-4']"></fa-icon>
             <span>Contribuir en GitHub</span>
           </a>
         </div>
