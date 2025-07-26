@@ -18,7 +18,7 @@
       </div>
     </a>
 
-    <input checked type="checkbox" id="menu-toggle" class="hidden peer">
+    <input type="checkbox" id="menu-toggle" class="hidden peer">
 
     <!-- Botón hamburguesa (solo visible en móvil) -->
     <label for="menu-toggle" id="hamburger-button"
@@ -32,7 +32,8 @@
       <!-- Enlaces generales -->
       <a routerLink="/contact" routerLinkActive="text-purple-600 bg-purple-50"
         class="flex items-center gap-2 px-4 py-2 rounded-xl text-neutral-600 hover:text-purple-600 hover:bg-purple-50 transition-all duration-200 font-medium">
-        <fa-icon [icon]="['fas', 'envelope']" class="w-4 h-4"></fa-icon>
+        <fa-icon [icon]="['fas', 'envelope']" [classes]="['w-4 h-4']
+        "></fa-icon>
         <span>Contacto</span>
       </a>
 
@@ -66,7 +67,7 @@
           <div class="py-2">
             <a routerLink="/list"
               class="flex items-center gap-3 px-4 py-3 text-neutral-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200">
-              <fa-icon [icon]="['fas', 'list']" class="w-4 h-4"></fa-icon>
+              <fa-icon [icon]="['fas', 'list']" [classes]="['w-4 h-4']"></fa-icon>
               <span class="font-medium">Mis Listas</span>
             </a>
 
@@ -76,7 +77,7 @@
               <div class="flex items-center gap-2">
                 <div
                   class="w-6 h-6 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full flex items-center justify-center">
-                  <fa-icon [icon]="['fas', 'crown']" class="w-3 h-3 text-white"></fa-icon>
+                  <fa-icon [icon]="['fas', 'crown']" [classes]="['w-3 h-3 text-white']"></fa-icon>
                 </div>
                 <span
                   class="text-sm font-semibold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
@@ -91,7 +92,7 @@
                 class="flex items-center gap-3 px-4 py-3 text-neutral-700 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 hover:text-amber-700 transition-all duration-200 group">
                 <div
                   class="w-8 h-8 bg-gradient-to-br from-amber-100 to-orange-100 rounded-lg flex items-center justify-center group-hover:from-amber-200 group-hover:to-orange-200 transition-all duration-200">
-                  <fa-icon [icon]="['fas', 'users-cog']" class="w-4 h-4 text-amber-600"></fa-icon>
+                  <fa-icon [icon]="['fas', 'users-cog']" [classes]="['w-5 h-5 text-amber-600']" class="w-5 h-5"></fa-icon>
                 </div>
                 <div class="flex flex-col">
                   <span class="font-medium">Gestión de Usuarios</span>
@@ -106,10 +107,10 @@
                 class="flex items-center gap-3 px-4 py-3 text-neutral-700 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 hover:text-amber-700 transition-all duration-200 group">
                 <div
                   class="w-8 h-8 bg-gradient-to-br from-amber-100 to-orange-100 rounded-lg flex items-center justify-center group-hover:from-amber-200 group-hover:to-orange-200 transition-all duration-200">
-                  <fa-icon [icon]="['fas', 'comments']" class="w-4 h-4 text-amber-600"></fa-icon>
+                  <fa-icon [icon]="['fas', 'comments']" [classes]="['w-5 h-5 text-amber-600']" class="w-5 h-5"></fa-icon>
                 </div>
                 <div class="flex flex-col">
-                  <span class="font-medium">Lista de sigerencias</span>
+                  <span class="font-medium">Lista de sugerencias</span>
                   <span class="text-xs text-neutral-500">Ver sugerencias</span>
                 </div>
                 <fa-icon [icon]="['fas', 'chevron-right']"
@@ -124,7 +125,7 @@
           <div class="border-t border-neutral-100 p-2">
             <button (click)="logout()"
               class="w-full flex items-center gap-3 px-4 py-3 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors duration-200 font-medium">
-              <fa-icon [icon]="['fas', 'sign-out-alt']" class="w-4 h-4"></fa-icon>
+              <fa-icon [icon]="['fas', 'sign-out-alt']" [classes]="['w-4 h-4']"></fa-icon>
               <span>Cerrar Sesión</span>
             </button>
           </div>
@@ -135,12 +136,12 @@
       <ng-container *ngIf="!isLogged">
         <a routerLink="/login"
           class="flex items-center gap-2 px-4 py-2 rounded-xl text-neutral-600 hover:text-purple-600 hover:bg-purple-50 transition-all duration-200 font-medium">
-          <fa-icon [icon]="['fas', 'sign-in-alt']" class="w-4 h-4"></fa-icon>
+          <fa-icon [icon]="['fas', 'sign-in-alt']" [classes]="['w-4 h-4']"></fa-icon>
           <span>Iniciar Sesión</span>
         </a>
         <a routerLink="/register"
           class="flex items-center gap-2 px-6 py-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all duration-200 font-medium shadow-lg hover:shadow-xl">
-          <fa-icon [icon]="['fas', 'star']" class="w-4 h-4"></fa-icon>
+          <fa-icon [icon]="['fas', 'star']" [classes]="['w-4 h-4']"></fa-icon>
           <span>Registrarse</span>
         </a>
       </ng-container>
