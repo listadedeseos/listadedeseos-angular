@@ -37,9 +37,10 @@
       </a>
 
       <!-- Usuario autenticado con dropdown -->
-      <div *ngIf="isLogged" class="relative group">
+      <div *ngIf="isLogged" class="relative group w-full">
         <!-- Avatar y nombre -->
-        <button class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/50 transition-all duration-200">
+        <button
+          class="w-full flex items-center justify-between gap-3 px-4 py-2 rounded-xl hover:bg-white/50 transition-all duration-200">
           <div
             class="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md">
             {{getFirstLetter()}}
@@ -54,7 +55,7 @@
 
         <!-- Dropdown menu -->
         <div
-          class="absolute right-0 top-full mt-2 w-64 bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-white/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2">
+          class="w-full h-0 md:absolute right-0 top-full mt-2 md:w-64 bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-white/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 group-hover:h-auto">
           <!-- Header del dropdown -->
           <div class="px-4 py-3 border-b border-neutral-100 bg-gradient-to-r from-purple-50 to-pink-50 rounded-t-2xl">
             <p class="font-semibold text-neutral-800">{{fullname || 'Usuario'}}</p>
