@@ -3,6 +3,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
+import { CardComponent } from '../../components/card/card.component';
 
 @Component({
   templateUrl: './wish-list.component.html',
@@ -26,6 +27,7 @@ export class WishListComponent {
 
   public urlToShare = ''
 
+  public showReserveButton = CardComponent.showReserveButton;
 
   constructor(
     private apiService: ApiService,
@@ -135,6 +137,12 @@ export class WishListComponent {
 
   toggleModalProduct() {
     this.modalProductOpen = !this.modalProductOpen
+  }
+
+  toggleShowReserveButtons() {
+    CardComponent.showReserveButton = !CardComponent.showReserveButton;
+
+    this.showReserveButton = CardComponent.showReserveButton;
   }
 
   productUpdate(response: any) {

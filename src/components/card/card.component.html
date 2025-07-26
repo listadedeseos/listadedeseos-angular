@@ -79,6 +79,7 @@
         </div>
 
         <!-- Estado de reserva -->
+        @if((isLogged && parent.showReserveButton) || !isLogged) {
         <ng-container *ngIf="isReserved !== undefined">
             <div *ngIf="isReserved" class="mt-2">
                 <div *ngIf="!isLogged" 
@@ -101,5 +102,7 @@
                 <span>Reservar</span>
             </button>
         </ng-container>
+    }
+    
     </div>
 </div>

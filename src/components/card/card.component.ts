@@ -26,6 +26,10 @@ export class CardComponent {
 
   @Output() public toggleReserve = new EventEmitter<number>()
 
+  public static showReserveButton: boolean = false;
+
+  public parent = CardComponent;
+
   onImageError(event: Event) {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = '/assets/img/empty.webp';
