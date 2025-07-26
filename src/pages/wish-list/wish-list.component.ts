@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
+import { CardComponent } from '../../components/card/card.component';
 
 @Component({
   templateUrl: './wish-list.component.html',
@@ -26,11 +27,13 @@ export class WishListComponent {
 
   public urlToShare = ''
 
+  public showReserveButton = CardComponent.showReserveButton;
+
   constructor(
     private apiService: ApiService,
     private activateRoute: ActivatedRoute,
     private authenticationService: AuthenticationService,
-    private route: ActivatedRoute,
+    private router: Router
   ) {
   }
 
@@ -48,7 +51,7 @@ export class WishListComponent {
   }
 
   ngOnInit() {
-    this.routeSubsrciption = this.route.params.subscribe(params => {
+    this.routeSubsrciption = this.activateRoute.params.subscribe(params => {
       this.refreshData()
       this.getWishList()
     });
@@ -100,9 +103,25 @@ export class WishListComponent {
 
         this.urlToShare = '@' + value.username + (wishListName ? '/' + wishListName : '')
       },
+
+      error: () => {
+        // redirect to first wish list if not found
+        if (this.allWishList.length > 0) {
+          this.uuid = this.allWishList[0].uuid
+          this.getWishList()
+
+        } else {
+          // redirect to dashboard if no wish lists
+          this.router.navigateByUrl('/', {
+            replaceUrl: true
+          });
+        }
+      },
+
       complete: () => {
         this.loading = false
       }
+
     })
   }
 
@@ -118,6 +137,12 @@ export class WishListComponent {
 
   toggleModalProduct() {
     this.modalProductOpen = !this.modalProductOpen
+  }
+
+  toggleShowReserveButtons() {
+    CardComponent.showReserveButton = !CardComponent.showReserveButton;
+
+    this.showReserveButton = CardComponent.showReserveButton;
   }
 
   productUpdate(response: any) {
