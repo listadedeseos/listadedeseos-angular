@@ -24,6 +24,8 @@ export class WishListComponent {
   public wishListFormId = 0
   public routeSubsrciption: any
 
+  public urlToShare = ''
+
   constructor(
     private apiService: ApiService,
     private activateRoute: ActivatedRoute,
@@ -62,11 +64,7 @@ export class WishListComponent {
   }
 
   getwishListUrl() {
-    let wishListName = ''
-    if (this.wishListName && this.wishListName != 'principal') {
-      wishListName = '/' + this.wishListName
-    }
-    return 'https://listadedeseos.es/' + this.username + wishListName
+    return 'https://listadedeseos.es/' + this.urlToShare
   }
 
   getAllWishList() {
@@ -93,11 +91,14 @@ export class WishListComponent {
     this.apiService.getPetition(url).subscribe({
       next: (value: any) => {
 
+        let wishListName = ''
         if (value.wishlist) {
           this.wishListId = value.wishlist.id
           this.wishlist = value.wishlist
+          wishListName = this.wishlist.name.toLowerCase() != 'principal' ? this.wishlist.name : ''
         }
 
+        this.urlToShare = '@' + value.username + (wishListName ? '/' + wishListName : '')
       },
       complete: () => {
         this.loading = false
