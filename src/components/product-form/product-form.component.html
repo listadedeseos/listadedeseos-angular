@@ -1,52 +1,73 @@
 <app-custom-modal customTitle="Nuevo producto" (closeFunction)="closeFormFunction()" (acceptFunction)="acceptFormFunction()">
-    <form [formGroup]="saveForm" (ngSubmit)="saveEntity()">
+    <form [formGroup]="saveForm" (ngSubmit)="saveEntity()" class="space-y-6">
 
-        <section>
-            <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="icon">
-                Nombre
+        <!-- Nombre del producto -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-neutral-700" for="productName">
+                🏷️ Nombre del producto
             </label>
             <input
-                class="appearance-none block w-full text-white border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-transparent"
-                id="icon" type="text" formControlName="name">
-        </section>
+                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                id="productName" 
+                type="text" 
+                placeholder="Ingresa el nombre del producto"
+                formControlName="name">
+        </div>
 
-        <section>
-            <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="name">
-                URL de la imagen
+        <!-- URL de la imagen -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-neutral-700" for="imageUrl">
+                🖼️ URL de la imagen
             </label>
             <input
-                class="appearance-none block w-full text-white border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-transparent"
-                id="name" type="text" formControlName="url_preview">
-        </section>
+                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                id="imageUrl" 
+                type="url" 
+                placeholder="https://ejemplo.com/imagen.jpg"
+                formControlName="url_preview">
+        </div>
 
-        <section>
-            <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="name">
-                URL del producto
+        <!-- URL del producto -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-neutral-700" for="productUrl">
+                🔗 URL del producto
             </label>
             <input
-                class="appearance-none block w-full text-white border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-transparent"
-                id="name" type="text" formControlName="url_product">
-        </section>
+                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                id="productUrl" 
+                type="url" 
+                placeholder="https://tienda.com/producto"
+                formControlName="url_product">
+        </div>
 
-        <section>
-            <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="name">
-                Precio
+        <!-- Precio -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-neutral-700" for="price">
+                💰 Precio
             </label>
             <input
-                class="appearance-none block w-full text-white border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-transparent"
-                id="name" type="text" formControlName="price">
-        </section>
+                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                id="price" 
+                type="number" 
+                step="0.01"
+                min="0"
+                placeholder="0.00"
+                formControlName="price">
+        </div>
 
-        <section>
-            <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="name">
-                Visible
+        <!-- Estado visible -->
+        <div>
+            <label class="flex items-center gap-3 cursor-pointer">
+                <input
+                    type="checkbox"
+                    formControlName="is_active"
+                    class="w-5 h-5 text-purple-600 bg-white border-purple-200 rounded focus:ring-purple-500 focus:ring-2 transition-all duration-200">
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-medium text-neutral-700">👁️ Producto visible</span>
+                    <span class="text-xs text-neutral-500">Marca si quieres que el producto sea visible públicamente</span>
+                </div>
             </label>
-            <input
-                class="appearance-none block w-full text-white border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-transparent"
-                id="name" type="boolean" formControlName="is_active">
-        </section>
-
+        </div>
 
     </form>
-
 </app-custom-modal>
