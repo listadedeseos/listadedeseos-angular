@@ -2,127 +2,143 @@
 <app-loading />
 }
 
-<div class="overflow-x-auto border-2 border-gray-800 sm:rounded-lg rounded w-full">
+<div class="overflow-auto rounded-2xl bg-white/90 backdrop-blur-lg shadow-xl border border-white/50">
 
     <!-- Table mobile -->
+    <div class="md:hidden">
+        <!-- Mobile header -->
+        <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-t-2xl">
+            <h3 class="text-base font-semibold leading-tight">Lista de elementos</h3>
+            <div class="w-8 h-0.5 bg-white/30 rounded-full mt-1"></div>
+        </div>
 
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 md:hidden">
-        <tbody>
-            @for (item of items; track $index) {
-            <tr class="border-2 border-gray-600">
+        <table class="w-full text-sm text-left rtl:text-right text-neutral-700">
+            <tbody>
+                @for (item of items; track $index) {
+                <tr class="border-b border-purple-100/50 last:border-b-0">
+                    <td>
+                        <table class="w-full">
+                            <tbody>
+                                @for (header of headers; track $index) {
+                                <tr [class]="$index%2==0?'bg-purple-50/30':''">
 
-                <td>
-                    <table class="w-full">
-                        <tbody>
+                                    @if(header.type == 'table'){
+                                    <td scope="col" colspan="2" class="px-6">
+                                        <span class="block font-semibold py-3 text-neutral-800">{{header.name}}</span>
+                                        <app-custom-table [headers]="header.headers"
+                                            [items]="item[header.key]"></app-custom-table>
+                                    </td>
+                                    }@else{
 
-                            @for (header of headers; track $index) {
-                            <tr [class]="$index%2==0?'bg-gray-500 bg-opacity-10':''">
+                                    <th scope="col"
+                                        class="px-6 py-3 font-medium bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 max-w-min">
+                                        {{header.name}}
+                                    </th>
+                                    <td class="px-6 py-3 w-full text-neutral-800">
+                                        @if (header.innerHtml) {
+                                        <span [innerHTML]="getValue(item, header.key)"></span>
+                                        } @else {
+                                        @switch (header.type) {
 
-                                @if(header.type == 'table'){
-                                <td scope="col" colspan="2" class="px-6">
-                                    <span class="block font-bold py-2">{{header.name}}</span>
-                                    <app-custom-table [headers]="header.headers"
-                                        [items]="item[header.key]"></app-custom-table>
-                                </td>
-                                }@else{
+                                        @case ('boolean') {
+                                        @if(getValue(item, header.key)){
+                                        <div
+                                            class="inline-flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
+                                            <fa-icon [classes]="['text-emerald-600', 'text-xs']"
+                                                [icon]="['fas', 'check']"></fa-icon>
+                                        </div>
+                                        } @else {
+                                        <div
+                                            class="inline-flex items-center justify-center w-6 h-6 bg-rose-100 rounded-full">
+                                            <fa-icon [classes]="['text-rose-600', 'text-xs']"
+                                                [icon]="['fas', 'xmark']"></fa-icon>
+                                        </div>
+                                        }
+                                        }
 
-                                <th scope="col" class="px-6 py-2">
-                                    {{header.name}}
-                                </th>
-                                <td class="px-6 py-2 w-48">
-                                    @if (header.innerHtml) {
-                                    <span [innerHTML]="getValue(item, header.key)"></span>
-                                    } @else {
-                                    @switch (header.type) {
+                                        @case ('currency'){
+                                        <!-- {{formatEuro(getValue(item, header.key))}} -->
+                                        }
 
-                                    @case ('boolean') {
-                                    @if(getValue(item, header.key)){
-                                    <fa-icon [classes]="['text-green-500']" [icon]="['fas', 'check']"></fa-icon>
-                                    } @else {
-                                    <fa-icon [classes]="['text-red-500']" [icon]="['fas', 'xmark']"></fa-icon>
+                                        @case ('dateTime') {
+                                        <span class="text-neutral-600 text-sm">{{getValue(item, header.key) | date:
+                                            'dd/MM/yyyy HH:mm'}}</span>
+                                        }
+
+                                        @case ('color'){
+                                        <span
+                                            class="inline-block w-8 h-4 rounded-full border border-neutral-200 shadow-sm"
+                                            [style.background-color]="getValue(item, header.key)"></span>
+                                        }
+
+                                        @default {
+                                        {{getValue(item, header.key)}}
+                                        }
+                                        }
+                                        }
+                                    </td>
                                     }
-                                    }
-
-                                    @case ('currency'){
-                                    <!-- {{formatEuro(getValue(item, header.key))}} -->
-                                    }
-
-                                    @case ('dateTime') {
-                                    {{getValue(item, header.key) | date: 'dd/MM/yyyy HH:mm'}}
-                                    }
-
-                                    @case ('color'){
-                                    <span class="inline-block w-full h-4 rounded-full"
-                                        [style.background-color]="getValue(item, header.key)"></span>
-                                    }
-
-                                    @default {
-                                    {{getValue(item, header.key)}}
-                                    }
-                                    }
-                                    }
-                                </td>
+                                </tr>
                                 }
-                            </tr>
-                            }
 
-                            @if(this.url){
-                            <tr class="border-t-2 border-gray-800">
-                                <td colspan="2">
-                                    <div class="flex justify-around items-center w-full p-2">
-                                        @if(editEvent.observers.length > 0){
+                                @if(this.url){
+                                <tr
+                                    class="border-b-8 border-transparent bg-gradient-to-r from-purple-600 to-purple-400 p-4">
+                                    <td colspan="2">
+                                        <div class="flex justify-center gap-4 p-4">
+                                            @if(editEvent.observers.length > 0){
+                                            <button
+                                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 rounded-lg transition-all duration-200 border border-purple-200 hover:border-purple-300"
+                                                (click)="clickEditButton(item.id)">
+                                                <fa-icon [icon]="['fas', 'pen']" class="text-xs"></fa-icon>
+                                                Editar
+                                            </button>
+                                            }
 
-                                        <span class="flex items-center" role="button"
-                                            (click)="clickEditButton(item.id)">
-                                            <fa-icon [icon]="['fas', 'pen']"></fa-icon>
-                                            Editar</span>
-                                        }
+                                            @if(deleteEvent.observers.length > 0){
+                                            <button
+                                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-lg transition-all duration-200 border border-rose-200 hover:border-rose-300"
+                                                (click)="clickDeleteButton(item.id)">
+                                                <fa-icon [icon]="['fas', 'trash-can']" class="text-xs"></fa-icon>
+                                                Eliminar
+                                            </button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
 
-                                        @if(deleteEvent.observers.length > 0){
-                                        <span class="flex items-center" role="button"
-                                            (click)="clickDeleteButton(item.id)">
-                                            <fa-icon [icon]="['fas', 'trash-can']"></fa-icon>
-                                            Eliminar</span>
-                                        }
-                                    </div>
-                                </td>
-                            </tr>
-                            }
-
-                        </tbody>
-                    </table>
-                </td>
-
-            </tr>
-            }
-        </tbody>
-    </table>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
     <!-- Table mobile end -->
 
     <!-- Table desktop -->
-
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 hidden md:table">
-        <thead class="text-xs text-gray-300 uppercase bg-gray-950 bg-opacity-60">
+    <table class="w-full text-sm text-left rtl:text-right text-neutral-700 hidden md:table">
+        <thead class="text-xs font-semibold uppercase bg-gradient-to-r from-purple-600 to-pink-600 text-white">
             <tr>
-
                 @for (header of headers; track $index) {
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-4">
                     {{header.name}}
                 </th>
                 }
 
                 @if(this.url){
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-4">
                     Opciones
                 </th>
                 }
-
-
             </tr>
         </thead>
         <tbody>
             @for (item of items; track $index) {
-            <tr [class]="'hover:bg-gray-500 hover:bg-opacity-20 ' + ($index%2==0?'bg-gray-500 bg-opacity-10':'')">
+            <tr
+                [class]="'hover:bg-purple-50/50 transition-colors duration-200 border-b border-purple-100/30 last:border-b-0 ' + ($index%2==0?'bg-purple-50/20':'')">
 
                 @for (header of headers; track $index) {
                 <td class="px-6 py-4">
@@ -133,9 +149,13 @@
 
                     @case ('boolean') {
                     @if(getValue(item, header.key)){
-                    <fa-icon [classes]="['text-green-500']" [icon]="['fas', 'check']"></fa-icon>
+                    <div class="inline-flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
+                        <fa-icon [classes]="['text-emerald-600', 'text-xs']" [icon]="['fas', 'check']"></fa-icon>
+                    </div>
                     } @else {
-                    <fa-icon [classes]="['text-red-500']" [icon]="['fas', 'xmark']"></fa-icon>
+                    <div class="inline-flex items-center justify-center w-6 h-6 bg-rose-100 rounded-full">
+                        <fa-icon [classes]="['text-rose-600', 'text-xs']" [icon]="['fas', 'xmark']"></fa-icon>
+                    </div>
                     }
                     }
 
@@ -148,11 +168,12 @@
                     }
 
                     @case ('dateTime') {
-                    {{getValue(item, header.key) | date: 'dd/MM/yyyy HH:mm'}}
+                    <span class="text-neutral-600 text-sm">
+                        {{getValue(item, header.key) | date: 'dd/MM/yyyy HH:mm'}}</span>
                     }
 
                     @case ('color'){
-                    <span class="inline-block w-full h-4 rounded-full"
+                    <span class="inline-block w-8 h-4 rounded-full border border-neutral-200 shadow-sm"
                         [style.background-color]="getValue(item, header.key)"></span>
                     }
 
@@ -166,18 +187,23 @@
 
                 @if(this.url){
                 <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                        @if(editEvent.observers.length > 0){
+                        <button
+                            class="inline-flex items-center justify-center w-8 h-8 text-purple-600 bg-purple-50 hover:bg-purple-100 rounded-lg transition-all duration-200 border border-purple-200 hover:border-purple-300"
+                            (click)="clickEditButton(item.id)" title="Editar">
+                            <fa-icon [icon]="['fas', 'pen']" class="text-xs"></fa-icon>
+                        </button>
+                        }
 
-                    @if(editEvent.observers.length > 0){
-                    <span class="mr-2" role="button" (click)="clickEditButton(item.id)">
-                        <fa-icon [icon]="['fas', 'pen']"></fa-icon>
-                    </span>
-                    }
-
-                    @if(deleteEvent.observers.length > 0){
-                    <span role="button" (click)="clickDeleteButton(item.id)">
-                        <fa-icon [icon]="['fas', 'trash-can']"></fa-icon>
-                    </span>
-                    }
+                        @if(deleteEvent.observers.length > 0){
+                        <button
+                            class="inline-flex items-center justify-center w-8 h-8 text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-lg transition-all duration-200 border border-rose-200 hover:border-rose-300"
+                            (click)="clickDeleteButton(item.id)" title="Eliminar">
+                            <fa-icon [icon]="['fas', 'trash-can']" class="text-xs"></fa-icon>
+                        </button>
+                        }
+                    </div>
                 </td>
                 }
 
@@ -189,42 +215,40 @@
     <!-- table desktop end -->
 
     @if (items.length == 0) {
-
-    <div class="flex justify-center items-center h-48">
-        <p class="text-gray-500">No hay elementos</p>
+    <div class="flex flex-col items-center justify-center h-48 text-center">
+        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4">
+            <fa-icon [icon]="['fas', 'inbox']" class="text-purple-400 text-2xl"></fa-icon>
+        </div>
+        <p class="text-neutral-500 font-medium">No hay elementos</p>
+        <p class="text-neutral-400 text-sm">Los elementos aparecerán aquí cuando estén disponibles</p>
     </div>
 
     } @else if(total.length > 1) {
 
     <!-- Pagination -->
-
-    <div class="flex items-center justify-between p-4">
-        <button type="button" (click)="changePage(page-1)" [class]="page == 1?'opacity-0 pointer-events-none':''">
+    <div
+        class="flex items-center justify-between p-6 bg-gradient-to-r from-purple-50/50 to-pink-50/50 border-t border-purple-200/50">
+        <button type="button" (click)="changePage(page-1)"
+            [class]="'inline-flex items-center justify-center w-10 h-10 text-purple-600 bg-white border border-purple-200 rounded-lg hover:bg-purple-50 transition-all duration-200 ' + (page == 1?'opacity-50 pointer-events-none':'hover:border-purple-300')">
             <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
         </button>
+
         <div class="flex items-center gap-2">
-
             @for (item of total; track $index) {
-
             <button (click)="changePage(item)"
-                [class]="'relative h-8 max-h-[32px] w-8 max-w-[32px] select-none rounded-lg border text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none' + (item == page ? ' bg-primary text-secondary border-secondary' : ' ')"
+                [class]="'w-10 h-10 rounded-lg font-medium text-sm transition-all duration-200 ' + (item == page ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg' : 'text-purple-600 hover:bg-purple-50 border border-purple-200 hover:border-purple-300')"
                 type="button">
-                <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                    {{item}}
-                </span>
+                {{item}}
             </button>
-
             }
         </div>
 
         <button type="button" (click)="changePage(page+1)"
-            [class]="page == total[total.length-1]?'opacity-0 pointer-events-none':''">
+            [class]="'inline-flex items-center justify-center w-10 h-10 text-purple-600 bg-white border border-purple-200 rounded-lg hover:bg-purple-50 transition-all duration-200 ' + (page == total[total.length-1]?'opacity-50 pointer-events-none':'hover:border-purple-300')">
             <fa-icon [icon]="['fas', 'angle-right']"></fa-icon>
         </button>
     </div>
-
-    <!-- pafination end -->
-
+    <!-- pagination end -->
     }
 
 </div>
