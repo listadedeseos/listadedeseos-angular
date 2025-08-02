@@ -230,13 +230,42 @@
     }
 
     @case ('dateTime') {
-    <span class="text-neutral-600 text-sm">{{getValue(item, value) | date:
-        'dd/MM/yyyy HH:mm'}}</span>
+    <span class="text-neutral-600 text-sm">
+        {{getValue(item, value) | date: 'dd/MM/yyyy HH:mm'}}
+    </span>
     }
 
     @case ('color'){
     <span class="inline-block w-8 h-4 rounded-full border border-neutral-200 shadow-sm"
         [style.background-color]="getValue(item, value)"></span>
+    }
+
+    @case ('login'){
+    @if(item.active){
+    <span class="inline-flex items-center gap-1">
+
+        <div class="inline-flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
+            <fa-icon [classes]="['text-emerald-600', 'text-xs']" [icon]="['fas', 'check']"></fa-icon>
+        </div>
+
+        @if(item.email_verified_at){
+        <div [title]="item.email" class="inline-flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full">
+            <fa-icon [classes]="['text-blue-600', 'text-xs']" [icon]="['fas', 'envelope']"></fa-icon>
+        </div>
+        }
+
+        @if(item.google_id){
+        <div [title]="item.google_id" class="inline-flex items-center justify-center w-6 h-6 bg-red-100 rounded-full">
+            <fa-icon [classes]="['text-red-600', 'text-xs']" [icon]="['fab', 'google']"></fa-icon>
+        </div>
+        }
+
+    </span>
+    } @else {
+    <div class="inline-flex items-center justify-center w-6 h-6 bg-rose-100 rounded-full">
+        <fa-icon [classes]="['text-rose-600', 'text-xs']" [icon]="['fas', 'xmark']"></fa-icon>
+    </div>
+    }
     }
 
     @default {
