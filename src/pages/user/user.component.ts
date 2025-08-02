@@ -14,15 +14,10 @@ export class UserComponent {
     public url = Utils.urls.user
     public headers = [
         { name: 'ID', key: 'id' },
-        { name: 'ACTIVO', key: 'active', type: 'boolean' },
-        { name: 'NOMBRE DE USUARIO', key: 'username' },
-        { name: 'NOMBRE', key: 'name' },
-        { name: 'APELLIDO', key: 'surname' },
+        { name: 'LOGIN', key: 'key', type: 'login' },
+        { name: 'NOMBRE', key: ['name', 'surname'], subKey: 'username' },
         { name: 'CORREO ELECTRÓNICO', key: 'email' },
-        { name: 'GOOGLE ID', key: 'google_id' },
-        { name: 'ROL', key: 'role' },
-        { name: 'CREADO', key: 'created_at', type: 'dateTime' },
-        { name: 'ACTUALIZADO', key: 'updated_at', type: 'dateTime' },
+        { name: 'ACTUALIZADO', key: 'updated_at', subKey: 'created_at', type: 'dateTime' },
     ]
 
     public id = 0

@@ -37,16 +37,17 @@
         <span>Contacto</span>
       </a>
 
+      @if(isLogged){
       <!-- Usuario autenticado con dropdown -->
-      <div *ngIf="isLogged" class="relative group w-full">
+      <div class="relative group w-full">
         <!-- Avatar y nombre -->
         <button
-          class="w-full flex items-center justify-between gap-3 px-4 py-2 rounded-xl hover:bg-white/50 transition-all duration-200">
+          class="w-full flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/50 transition-all duration-200">
           <div
             class="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md">
             {{getFirstLetter()}}
           </div>
-          <div class="hidden lg:flex flex-col items-start">
+          <div class="flex flex-col items-start mr-auto">
             <span class="text-neutral-800 font-semibold text-sm">{{fullname || 'Usuario'}}</span>
             <span class="text-neutral-500 text-xs">{{username}}</span>
           </div>
@@ -56,12 +57,7 @@
 
         <!-- Dropdown menu -->
         <div
-          class="w-full h-0 md:absolute right-0 top-full mt-2 md:w-64 bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-white/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 group-hover:h-auto">
-          <!-- Header del dropdown -->
-          <div class="px-4 py-3 border-b border-neutral-100 bg-gradient-to-r from-purple-50 to-pink-50 rounded-t-2xl">
-            <p class="font-semibold text-neutral-800">{{fullname || 'Usuario'}}</p>
-            <p class="text-sm text-neutral-500">{{username}}</p>
-          </div>
+          class="overflow-hidden w-full h-0 md:h-auto md:absolute right-0 top-full md:w-64 bg-white backdrop-blur-lg rounded-2xl shadow-xl border border-white/50 scale-50 group-hover:scale-100 transition-all duration-200 group-hover:h-auto transform origin-top md:origin-top-right opacity-0 group-hover:opacity-100">
 
           <!-- Opciones del menú -->
           <div class="py-2">
@@ -92,7 +88,8 @@
                 class="flex items-center gap-3 px-4 py-3 text-neutral-700 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 hover:text-amber-700 transition-all duration-200 group">
                 <div
                   class="w-8 h-8 bg-gradient-to-br from-amber-100 to-orange-100 rounded-lg flex items-center justify-center group-hover:from-amber-200 group-hover:to-orange-200 transition-all duration-200">
-                  <fa-icon [icon]="['fas', 'users-cog']" [classes]="['w-5 h-5 text-amber-600']" class="w-5 h-5"></fa-icon>
+                  <fa-icon [icon]="['fas', 'users-cog']" [classes]="['w-5 h-5 text-amber-600']"
+                    class="w-5 h-5"></fa-icon>
                 </div>
                 <div class="flex flex-col">
                   <span class="font-medium">Gestión de Usuarios</span>
@@ -107,7 +104,8 @@
                 class="flex items-center gap-3 px-4 py-3 text-neutral-700 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 hover:text-amber-700 transition-all duration-200 group">
                 <div
                   class="w-8 h-8 bg-gradient-to-br from-amber-100 to-orange-100 rounded-lg flex items-center justify-center group-hover:from-amber-200 group-hover:to-orange-200 transition-all duration-200">
-                  <fa-icon [icon]="['fas', 'comments']" [classes]="['w-5 h-5 text-amber-600']" class="w-5 h-5"></fa-icon>
+                  <fa-icon [icon]="['fas', 'comments']" [classes]="['w-5 h-5 text-amber-600']"
+                    class="w-5 h-5"></fa-icon>
                 </div>
                 <div class="flex flex-col">
                   <span class="font-medium">Lista de sugerencias</span>
@@ -131,7 +129,7 @@
           </div>
         </div>
       </div>
-
+    }
       <!-- Usuario no autenticado -->
       <ng-container *ngIf="!isLogged">
         <a routerLink="/login"
