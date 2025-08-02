@@ -25,8 +25,12 @@
                                     @if(header.type == 'table'){
                                     <td scope="col" colspan="2" class="px-6">
                                         <span class="block font-semibold py-3 text-neutral-800">{{header.name}}</span>
+
+                                        @if(!isArray(header.key)){
                                         <app-custom-table [headers]="header.headers"
-                                            [items]="item[header.key]"></app-custom-table>
+                                            [items]="getValue(item, header.key)"></app-custom-table>
+                                        }
+
                                     </td>
                                     }@else{
 
@@ -76,6 +80,13 @@
                                         }
                                         }
                                         }
+
+                                        @if(header.subKey){
+                                        <span class="block text-neutral-600 text-xs">
+                                            ({{getValue(item, header.subKey)}})
+                                        </span>
+                                        }
+
                                     </td>
                                     }
                                 </tr>
@@ -160,7 +171,10 @@
                     }
 
                     @case ('table'){
-                    <app-custom-table [headers]="header.headers" [items]="item[header.key]"></app-custom-table>
+                    @if(!isArray(header.key)){
+                    <app-custom-table [headers]="header.headers"
+                        [items]="getValue(item, header.key)"></app-custom-table>
+                    }
                     }
 
                     @case ('currency'){
@@ -182,6 +196,13 @@
                     }
                     }
                     }
+
+                    @if(header.subKey){
+                    <span class="block text-neutral-600 text-xs">
+                        ({{getValue(item, header.subKey)}})
+                    </span>
+                    }
+
                 </td>
                 }
 

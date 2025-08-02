@@ -8,7 +8,7 @@ import { ApiService } from '../../apiConnection/ApiService';
 export class CustomTableComponent {
 
   @Input() url?: string;
-  @Input() headers?: { name: string, key: string, type?: string, innerHtml?: boolean, headers?: any }[];
+  @Input() headers?: { name: string, key: string | string[], subKey?: string, type?: string, innerHtml?: boolean, headers?: any }[];
   @Output() editEvent = new EventEmitter();
   @Output() deleteEvent = new EventEmitter();
 
@@ -56,22 +56,45 @@ export class CustomTableComponent {
     });
   }
 
-  getValue(item: any, key: string) {
-    let keys = key.split('.');
-    let value = item;
+  getValue(item: any, key: string | string[]) {
 
-    if (keys[0].includes('[]')) {
-      let arrayKey = keys[0].replace('[]', '');
+    let arrayKey = [];
 
-      value = value[arrayKey].map((element: any) => this.getValue(element, keys.slice(1).join('.'))).join(', ');
-
+    if (!Array.isArray(key)) {
+      arrayKey.push(key);
     } else {
-      for (let i = 0; value && i < keys.length; i++) {
-        value = value[keys[i]];
-      }
+      arrayKey = key.slice();
     }
 
-    return value;
+    let result = ''
+
+    while (arrayKey.length > 0) {
+
+      let keys = arrayKey[0].split('.');
+      let value = item;
+
+      if (keys[0].includes('[]')) {
+        let arrayKey = keys[0].replace('[]', '');
+
+        value = value[arrayKey].map((element: any) => this.getValue(element, keys.slice(1).join('.'))).join(', ');
+
+      } else {
+        for (let i = 0; value && i < keys.length; i++) {
+          value = value[keys[i]];
+        }
+      }
+
+      arrayKey.shift();
+
+      result += (value??'') + (arrayKey.length > 0 ? ' ' : '');
+
+    }
+
+    return result;
+  }
+
+  isArray(array: any): boolean {
+    return Array.isArray(array)
   }
 
   changePage(page: number) {

@@ -15,9 +15,7 @@ export class UserComponent {
     public headers = [
         { name: 'ID', key: 'id' },
         { name: 'ACTIVO', key: 'active', type: 'boolean' },
-        { name: 'NOMBRE DE USUARIO', key: 'username' },
-        { name: 'NOMBRE', key: 'name' },
-        { name: 'APELLIDO', key: 'surname' },
+        { name: 'NOMBRE', key: ['name', 'surname'], subKey: 'username' },
         { name: 'CORREO ELECTRÓNICO', key: 'email' },
         { name: 'GOOGLE ID', key: 'google_id' },
         { name: 'ROL', key: 'role' },
