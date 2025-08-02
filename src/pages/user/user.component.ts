@@ -17,7 +17,6 @@ export class UserComponent {
         { name: 'LOGIN', key: 'key', type: 'login' },
         { name: 'NOMBRE', key: ['name', 'surname'], subKey: 'username' },
         { name: 'CORREO ELECTRÓNICO', key: 'email' },
-        { name: 'ROL', key: 'role' },
         { name: 'ACTUALIZADO', key: 'updated_at', subKey: 'created_at', type: 'dateTime' },
     ]
 

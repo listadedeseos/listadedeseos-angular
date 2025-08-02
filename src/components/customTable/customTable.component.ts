@@ -86,7 +86,7 @@ export class CustomTableComponent {
 
       arrayKey.shift();
 
-      result += (value??'') + (arrayKey.length > 0 ? ' ' : '');
+      result += (value ?? '') + (arrayKey.length > 0 ? ' ' : '');
 
     }
 

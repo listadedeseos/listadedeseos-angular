@@ -39,22 +39,9 @@
                                         {{header.name}}
                                     </th>
                                     <td class="px-6 py-3 w-full text-neutral-800">
-                                        @if (header.innerHtml) {
-                                        <span [innerHTML]="getValue(item, header.key)"></span>
-                                        } @else {
 
                                         <ng-container [ngTemplateOutlet]="DataTemplate"
-                                            [ngTemplateOutletContext]="{item:item, value:header.key, type: header.type}"></ng-container>
-                                        }
-
-                                        @if(header.subKey){
-                                        <span class="block text-neutral-600 text-xs">
-                                            (
-                                            <ng-container [ngTemplateOutlet]="DataTemplate"
-                                                [ngTemplateOutletContext]="{item:item, value:header.subKey, type: header.type}"></ng-container>
-                                            )
-                                        </span>
-                                        }
+                                            [ngTemplateOutletContext]="{item:item, header:header}"></ng-container>
 
                                     </td>
                                     }
@@ -122,21 +109,9 @@
 
                 @for (header of headers; track $index) {
                 <td class="px-6 py-4">
-                    @if (header.innerHtml) {
-                    <span [innerHTML]="getValue(item, header.key)"></span>
-                    } @else {
-                    <ng-container [ngTemplateOutlet]="DataTemplate"
-                        [ngTemplateOutletContext]="{item:item, value:header.key, type: header.type}"></ng-container>
-                    }
 
-                    @if(header.subKey){
-                    <span class="block text-neutral-600 text-xs">
-                        (
-                        <ng-container [ngTemplateOutlet]="DataTemplate"
-                            [ngTemplateOutletContext]="{item:item, value:header.subKey, type: header.type}"></ng-container>
-                        )
-                    </span>
-                    }
+                    <ng-container [ngTemplateOutlet]="DataTemplate"
+                        [ngTemplateOutletContext]="{item:item, header:header}"></ng-container>
 
                 </td>
                 }
@@ -209,7 +184,41 @@
 </div>
 
 <!----------------------------------- Data template ----------------------------------->
-<ng-template #DataTemplate let-item="item" let-value="value" let-type="type">
+<ng-template #DataTemplate let-item="item" let-header="header">
+
+    <section class="flex items-center gap-2">
+
+        @if(header.name == 'NOMBRE' && item.role == 'ROLE_ADMIN') {
+        <div class="inline-flex items-center justify-center w-6 h-6 bg-orange-100 rounded-full">
+            <fa-icon [classes]="['text-orange-600', 'text-xs']" [icon]="['fas', 'crown']"></fa-icon>
+        </div>
+        }
+
+        <span>
+            @if (header.innerHtml) {
+            <span [innerHTML]="getValue(item, header.key)"></span>
+            } @else {
+            <ng-container [ngTemplateOutlet]="DataTypeTemplate"
+                [ngTemplateOutletContext]="{item:item, value:header.key, type: header.type}"></ng-container>
+            }
+
+            @if(header.subKey){
+            <span class="block text-neutral-600 text-xs">
+                (
+                <ng-container [ngTemplateOutlet]="DataTypeTemplate"
+                    [ngTemplateOutletContext]="{item:item, value:header.subKey, type: header.type}"></ng-container>
+                )
+            </span>
+            }
+        </span>
+
+    </section>
+
+</ng-template>
+<!--------------------------------- Data template end --------------------------------->
+
+<!----------------------------------- Data Type template ----------------------------------->
+<ng-template #DataTypeTemplate let-item="item" let-value="value" let-type="type">
 
     @switch (type) {
 
@@ -244,10 +253,6 @@
     @if(item.active){
     <span class="inline-flex items-center gap-1">
 
-        <div class="inline-flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
-            <fa-icon [classes]="['text-emerald-600', 'text-xs']" [icon]="['fas', 'check']"></fa-icon>
-        </div>
-
         @if(item.email_verified_at){
         <div [title]="item.email" class="inline-flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full">
             <fa-icon [classes]="['text-blue-600', 'text-xs']" [icon]="['fas', 'envelope']"></fa-icon>
@@ -274,4 +279,4 @@
     }
 
 </ng-template>
-<!--------------------------------- Data template end --------------------------------->
+<!--------------------------------- Data Type template end --------------------------------->
