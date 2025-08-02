@@ -4,7 +4,7 @@
 
 <div class="overflow-auto rounded-2xl bg-white/90 backdrop-blur-lg shadow-xl border border-white/50">
 
-    <!-- Table mobile -->
+    <!----------------------------------- Table mobile ----------------------------------->
     <div class="md:hidden">
         <!-- Mobile header -->
         <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-t-2xl">
@@ -42,48 +42,17 @@
                                         @if (header.innerHtml) {
                                         <span [innerHTML]="getValue(item, header.key)"></span>
                                         } @else {
-                                        @switch (header.type) {
 
-                                        @case ('boolean') {
-                                        @if(getValue(item, header.key)){
-                                        <div
-                                            class="inline-flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
-                                            <fa-icon [classes]="['text-emerald-600', 'text-xs']"
-                                                [icon]="['fas', 'check']"></fa-icon>
-                                        </div>
-                                        } @else {
-                                        <div
-                                            class="inline-flex items-center justify-center w-6 h-6 bg-rose-100 rounded-full">
-                                            <fa-icon [classes]="['text-rose-600', 'text-xs']"
-                                                [icon]="['fas', 'xmark']"></fa-icon>
-                                        </div>
-                                        }
-                                        }
-
-                                        @case ('currency'){
-                                        <!-- {{formatEuro(getValue(item, header.key))}} -->
-                                        }
-
-                                        @case ('dateTime') {
-                                        <span class="text-neutral-600 text-sm">{{getValue(item, header.key) | date:
-                                            'dd/MM/yyyy HH:mm'}}</span>
-                                        }
-
-                                        @case ('color'){
-                                        <span
-                                            class="inline-block w-8 h-4 rounded-full border border-neutral-200 shadow-sm"
-                                            [style.background-color]="getValue(item, header.key)"></span>
-                                        }
-
-                                        @default {
-                                        {{getValue(item, header.key)}}
-                                        }
-                                        }
+                                        <ng-container [ngTemplateOutlet]="DataTemplate"
+                                            [ngTemplateOutletContext]="{item:item, value:header.key, type: header.type}"></ng-container>
                                         }
 
                                         @if(header.subKey){
                                         <span class="block text-neutral-600 text-xs">
-                                            ({{getValue(item, header.subKey)}})
+                                            (
+                                            <ng-container [ngTemplateOutlet]="DataTemplate"
+                                                [ngTemplateOutletContext]="{item:item, value:header.subKey, type: header.type}"></ng-container>
+                                            )
                                         </span>
                                         }
 
@@ -127,9 +96,9 @@
             </tbody>
         </table>
     </div>
-    <!-- Table mobile end -->
+    <!--------------------------------- Table mobile end --------------------------------->
 
-    <!-- Table desktop -->
+    <!----------------------------------- Table desktop ----------------------------------->
     <table class="w-full text-sm text-left rtl:text-right text-neutral-700 hidden md:table">
         <thead class="text-xs font-semibold uppercase bg-gradient-to-r from-purple-600 to-pink-600 text-white">
             <tr>
@@ -156,50 +125,16 @@
                     @if (header.innerHtml) {
                     <span [innerHTML]="getValue(item, header.key)"></span>
                     } @else {
-                    @switch (header.type) {
-
-                    @case ('boolean') {
-                    @if(getValue(item, header.key)){
-                    <div class="inline-flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
-                        <fa-icon [classes]="['text-emerald-600', 'text-xs']" [icon]="['fas', 'check']"></fa-icon>
-                    </div>
-                    } @else {
-                    <div class="inline-flex items-center justify-center w-6 h-6 bg-rose-100 rounded-full">
-                        <fa-icon [classes]="['text-rose-600', 'text-xs']" [icon]="['fas', 'xmark']"></fa-icon>
-                    </div>
-                    }
-                    }
-
-                    @case ('table'){
-                    @if(!isArray(header.key)){
-                    <app-custom-table [headers]="header.headers"
-                        [items]="getValue(item, header.key)"></app-custom-table>
-                    }
-                    }
-
-                    @case ('currency'){
-                    <!-- {{formatEuro(getValue(item, header.key))}} -->
-                    }
-
-                    @case ('dateTime') {
-                    <span class="text-neutral-600 text-sm">
-                        {{getValue(item, header.key) | date: 'dd/MM/yyyy HH:mm'}}</span>
-                    }
-
-                    @case ('color'){
-                    <span class="inline-block w-8 h-4 rounded-full border border-neutral-200 shadow-sm"
-                        [style.background-color]="getValue(item, header.key)"></span>
-                    }
-
-                    @default {
-                    {{getValue(item, header.key)}}
-                    }
-                    }
+                    <ng-container [ngTemplateOutlet]="DataTemplate"
+                        [ngTemplateOutletContext]="{item:item, value:header.key, type: header.type}"></ng-container>
                     }
 
                     @if(header.subKey){
                     <span class="block text-neutral-600 text-xs">
-                        ({{getValue(item, header.subKey)}})
+                        (
+                        <ng-container [ngTemplateOutlet]="DataTemplate"
+                            [ngTemplateOutletContext]="{item:item, value:header.subKey, type: header.type}"></ng-container>
+                        )
                     </span>
                     }
 
@@ -232,8 +167,7 @@
             }
         </tbody>
     </table>
-
-    <!-- table desktop end -->
+    <!--------------------------------- table desktop end --------------------------------->
 
     @if (items.length == 0) {
     <div class="flex flex-col items-center justify-center h-48 text-center">
@@ -246,7 +180,7 @@
 
     } @else if(total.length > 1) {
 
-    <!-- Pagination -->
+    <!----------------------------------- Pagination ----------------------------------->
     <div
         class="flex items-center justify-between p-6 bg-gradient-to-r from-purple-50/50 to-pink-50/50 border-t border-purple-200/50">
         <button type="button" (click)="changePage(page-1)"
@@ -269,7 +203,46 @@
             <fa-icon [icon]="['fas', 'angle-right']"></fa-icon>
         </button>
     </div>
-    <!-- pagination end -->
+    <!--------------------------------- pagination end --------------------------------->
     }
 
 </div>
+
+<!----------------------------------- Data template ----------------------------------->
+<ng-template #DataTemplate let-item="item" let-value="value" let-type="type">
+
+    @switch (type) {
+
+    @case ('boolean') {
+    @if(getValue(item, value)){
+    <div class="inline-flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
+        <fa-icon [classes]="['text-emerald-600', 'text-xs']" [icon]="['fas', 'check']"></fa-icon>
+    </div>
+    } @else {
+    <div class="inline-flex items-center justify-center w-6 h-6 bg-rose-100 rounded-full">
+        <fa-icon [classes]="['text-rose-600', 'text-xs']" [icon]="['fas', 'xmark']"></fa-icon>
+    </div>
+    }
+    }
+
+    @case ('currency'){
+    <!-- {{formatEuro(getValue(item, value))}} -->
+    }
+
+    @case ('dateTime') {
+    <span class="text-neutral-600 text-sm">{{getValue(item, value) | date:
+        'dd/MM/yyyy HH:mm'}}</span>
+    }
+
+    @case ('color'){
+    <span class="inline-block w-8 h-4 rounded-full border border-neutral-200 shadow-sm"
+        [style.background-color]="getValue(item, value)"></span>
+    }
+
+    @default {
+    {{getValue(item, value)}}
+    }
+    }
+
+</ng-template>
+<!--------------------------------- Data template end --------------------------------->

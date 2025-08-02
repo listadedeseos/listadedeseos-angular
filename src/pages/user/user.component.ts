@@ -19,8 +19,7 @@ export class UserComponent {
         { name: 'CORREO ELECTRÓNICO', key: 'email' },
         { name: 'GOOGLE ID', key: 'google_id' },
         { name: 'ROL', key: 'role' },
-        { name: 'CREADO', key: 'created_at', type: 'dateTime' },
-        { name: 'ACTUALIZADO', key: 'updated_at', type: 'dateTime' },
+        { name: 'ACTUALIZADO', key: 'updated_at', subKey: 'created_at', type: 'dateTime' },
     ]
 
     public id = 0
