@@ -4,6 +4,7 @@ import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { CardComponent } from '../../components/card/card.component';
+import { ThemeConfig } from '../../enum/theme';
 
 @Component({
   templateUrl: './wish-list.component.html',
@@ -170,5 +171,33 @@ export class WishListComponent {
       response.wishList.is_new = true // To show animation
       this.allWishList.push(response.wishList)
     }
+  }
+
+  getThemeLabel(theme: string): string {
+    return ThemeConfig.getTheme(theme).label;
+  }
+
+  getThemeClasses(theme: string): string {
+    return ThemeConfig.getThemeClasses(theme);
+  }
+
+  getHeroClasses(theme: string): string {
+    return ThemeConfig.getHeroClasses(theme);
+  }
+
+  getThemeOverlay(theme: string): string {
+    return ThemeConfig.getTheme(theme).overlayClasses;
+  }
+
+  getThemeSubtitle(theme: string): string {
+    return ThemeConfig.getTheme(theme).subtitle;
+  }
+
+  getPageBackgroundClasses(theme: string): string {
+    return ThemeConfig.getPageClasses(theme);
+  }
+
+  getBannerImage(theme: string): string {
+    return ThemeConfig.getTheme(theme).banner;
   }
 }

@@ -1,0 +1,79 @@
+<svg width="1600" height="400" viewBox="0 0 1600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo -->
+  <rect width="1600" height="400" fill="#add8e6" />
+
+  <!-- Puntos de fondo -->
+  <circle cx="100" cy="80" r="5" fill="white"/>
+  <circle cx="300" cy="120" r="5" fill="white"/>
+  <circle cx="500" cy="90" r="5" fill="white"/>
+  <circle cx="700" cy="60" r="5" fill="white"/>
+  <circle cx="900" cy="110" r="5" fill="white"/>
+  <circle cx="1200" cy="70" r="5" fill="white"/>
+  <circle cx="1400" cy="130" r="5" fill="white"/>
+
+  <!-- Nube central -->
+  <ellipse cx="800" cy="200" rx="380" ry="110" fill="white" stroke="#ccc" stroke-width="4" />
+
+  <!-- Texto central -->
+  <text x="800" y="215" font-size="60" font-family="Comic Sans MS" fill="#ffb6c1" text-anchor="middle" font-weight="bold">
+    BABY SHOWER
+  </text>
+
+  <!-- Banderines -->
+  <path d="M300 50 Q600 20 900 50 Q1200 80 1500 50" stroke="#999" stroke-width="2" fill="none"/>
+  <polygon points="340,50 360,50 350,70" fill="#ffc0cb" />
+  <polygon points="380,50 400,50 390,70" fill="#fffacd" />
+  <polygon points="420,50 440,50 430,70" fill="#ffc0cb" />
+  <polygon points="460,50 480,50 470,70" fill="#fffacd" />
+  <polygon points="500,50 520,50 510,70" fill="#ffc0cb" />
+
+  <!-- Patito -->
+  <circle cx="150" cy="80" r="25" fill="yellow" />
+  <polygon points="170,80 185,75 170,70" fill="orange" />
+  <circle cx="140" cy="75" r="5" fill="black" />
+
+  <!-- Estrella sonriente -->
+  <polygon points="250,60 260,90 290,90 265,110 275,140 250,120 225,140 235,110 210,90 240,90" fill="gold" />
+  <circle cx="250" cy="90" r="3" fill="black"/>
+  <circle cx="260" cy="90" r="3" fill="black"/>
+  <path d="M245 100 Q250 105 255 100" stroke="black" fill="none"/>
+
+  <!-- Body de bebé -->
+  <rect x="1350" y="120" width="80" height="100" rx="20" ry="20" fill="#87CEFA" />
+  <circle cx="1390" cy="170" r="12" fill="yellow" />
+  <circle cx="1370" cy="210" r="5" fill="#4682B4"/>
+  <circle cx="1390" cy="210" r="5" fill="#4682B4"/>
+  <circle cx="1410" cy="210" r="5" fill="#4682B4"/>
+
+  <!-- Caballito mecedor -->
+  <path d="M400 320 Q420 280 460 280 Q500 280 520 320 Z" fill="#ffb6c1"/>
+  <circle cx="460" cy="290" r="8" fill="black"/>
+  <path d="M440 270 Q460 250 480 270" stroke="#d87093" stroke-width="4" fill="none"/>
+  <rect x="445" y="285" width="30" height="5" rx="2" ry="2" fill="#d87093"/>
+  <path d="M400 320 Q460 360 520 320" stroke="#d87093" stroke-width="8" fill="none"/>
+
+  <!-- Luna -->
+  <path d="M600 320 A40 40 0 1 1 560 280" fill="#ffffcc"/>
+  <circle cx="580" cy="300" r="3" fill="black"/>
+  <circle cx="590" cy="300" r="3" fill="black"/>
+  <path d="M578 310 Q585 315 592 310" stroke="black" fill="none"/>
+
+  <!-- Globo sonriente -->
+  <circle cx="1250" cy="280" r="30" fill="#ffc0cb"/>
+  <line x1="1250" y1="310" x2="1250" y2="350" stroke="#888" stroke-width="2"/>
+  <circle cx="1240" cy="275" r="3" fill="black"/>
+  <circle cx="1260" cy="275" r="3" fill="black"/>
+  <path d="M1245 285 Q1250 290 1255 285" stroke="black" fill="none"/>
+
+  <!-- Botella de bebé -->
+  <rect x="1100" y="280" width="40" height="80" rx="10" ry="10" fill="#add8e6" />
+  <rect x="1095" y="270" width="50" height="10" rx="5" ry="5" fill="white" />
+  <circle cx="1120" cy="265" r="7" fill="#ffd700" />
+  <line x1="1110" y1="310" x2="1130" y2="310" stroke="white" stroke-width="2"/>
+  <line x1="1110" y1="330" x2="1130" y2="330" stroke="white" stroke-width="2"/>
+
+  <!-- Corazones -->
+  <path d="M750 100 Q760 90 770 100 Q780 110 760 130 Q740 110 750 100" fill="#ffb6c1"/>
+  <path d="M1300 80 Q1310 70 1320 80 Q1330 90 1310 110 Q1290 90 1300 80" fill="#87CEFA"/>
+  <path d="M500 200 Q510 190 520 200 Q530 210 510 230 Q490 210 500 200" fill="#ffb6c1"/>
+</svg>

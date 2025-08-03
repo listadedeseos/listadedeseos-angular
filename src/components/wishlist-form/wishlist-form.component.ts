@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
+import { ThemeConfig } from '../../enum/theme';
 
 @Component({
   selector: 'app-wishlist-form',
@@ -14,12 +15,10 @@ export class WishlistFormComponent {
   @Output() acceptFunction = new EventEmitter<any>();
 
   public loading = false
-
   public saveForm: FormGroup = new FormGroup({});
-
   public showModalImage = false
-
   public dropdowns: any = {}
+  public themes = ThemeConfig.getAllThemes();
 
   constructor(
     private apiService: ApiService,
@@ -46,8 +45,9 @@ export class WishlistFormComponent {
     this.saveForm = new FormGroup({
 
       name: new FormControl('', [Validators.required]),
-      steam_username: new FormControl('', []),
-      amazon_wishlist_id: new FormControl('', []),
+      theme: new FormControl(null),
+      steam_username: new FormControl(null),
+      amazon_wishlist_id: new FormControl(null),
 
     })
   }
