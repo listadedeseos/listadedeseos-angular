@@ -14,6 +14,7 @@ import { ContactComponent } from '../pages/contact/contact.component';
 import { ContactListComponent } from '../pages/contact/contact-list/contact-list.component';
 import { SteamPage } from '../pages/steam/steam.component';
 import { AmazonPage } from '../pages/amazon/amazon.component';
+import { ProfileComponent } from '../pages/profile/profile.component';
 
 const userMatcher: UrlMatcher = (segments: UrlSegment[]) => {
   if (segments[0].path.startsWith('@')) {
@@ -74,6 +75,7 @@ const routes: Routes = [
     children: [
       { path: 'list', component: WishListComponent },
       { path: 'user', component: UserComponent },
+      { path: 'profile', component: ProfileComponent },
       { path: 'contact/list', component: ContactListComponent },
       { path: '**', redirectTo: 'dashboard' }
     ]

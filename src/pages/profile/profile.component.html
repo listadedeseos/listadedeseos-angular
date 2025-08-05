@@ -1,0 +1,217 @@
+@if(loading){
+<app-loading></app-loading>
+}
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">
+                Mi Perfil
+            </h1>
+            <p class="text-gray-600 text-lg">
+                Gestiona tu información personal y configuraciones de cuenta
+            </p>
+        </div>
+
+        <!-- Formulario de perfil en card profesional -->
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+            <!-- Header del card -->
+            <div class="bg-gradient-to-r from-purple-50 to-pink-50 border-b border-gray-200 px-8 py-6">
+                <h2 class="text-2xl font-semibold text-gray-900 flex items-center gap-3">
+                    <span
+                        class="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white text-sm">
+                        ✏️
+                    </span>
+                    Información Personal
+                </h2>
+                <p class="text-gray-600 mt-2">Actualiza tus datos personales y configuraciones de seguridad</p>
+            </div>
+
+            <!-- Contenido del formulario -->
+            <div class="p-8">
+                <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="space-y-8">
+
+                    <!-- Mensajes de éxito y error -->
+                    <div *ngIf="success" class="bg-emerald-50 border-l-4 border-emerald-400 p-4 rounded-md">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <span class="text-emerald-400 text-xl">✅</span>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-emerald-800">{{ success }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="error" class="bg-red-50 border-l-4 border-red-400 p-4 rounded-md">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <span class="text-red-400 text-xl">❌</span>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-red-800">{{ error }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información Básica -->
+                    <div class="space-y-6">
+                        <div class="border-b border-gray-200 pb-4">
+                            <h3 class="text-lg font-medium text-gray-900 flex items-center gap-2">
+                                <span
+                                    class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-sm">1</span>
+                                Información Básica
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1">Datos principales de tu perfil</p>
+                        </div>
+
+                        <!-- Nombre de usuario -->
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Nombre de usuario *
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-400">&#64;</span>
+                                    </div>
+                                    <input type="text" formControlName="username" placeholder="tu_usuario"
+                                        class="block w-full pl-7 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
+                                        [class]="submitted && f['username'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
+                                </div>
+                                <div *ngIf="submitted && f['username'].errors" class="mt-2 text-sm text-red-600">
+                                    <div *ngIf="f['username'].errors?.['required']">El nombre de usuario es requerido
+                                    </div>
+                                    <div *ngIf="f['username'].errors?.['minlength']">Debe tener al menos 3 caracteres
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nombre y Apellido -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Nombre *
+                                </label>
+                                <input type="text" formControlName="name" placeholder="Tu nombre"
+                                    class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
+                                    [class]="submitted && f['name'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
+                                <div *ngIf="submitted && f['name'].errors" class="mt-2 text-sm text-red-600">
+                                    <div *ngIf="f['name'].errors?.['required']">El nombre es requerido</div>
+                                    <div *ngIf="f['name'].errors?.['minlength']">Debe tener al menos 2 caracteres</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Apellido/s *
+                                </label>
+                                <input type="text" formControlName="surname" placeholder="Tu apellido"
+                                    class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
+                                    [class]="submitted && f['surname'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
+                                <div *ngIf="submitted && f['surname'].errors" class="mt-2 text-sm text-red-600">
+                                    <div *ngIf="f['surname'].errors?.['required']">El apellido es requerido</div>
+                                    <div *ngIf="f['surname'].errors?.['minlength']">Debe tener al menos 2 caracteres
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Correo electrónico *
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-400">📧</span>
+                                </div>
+                                <input type="email" formControlName="email" placeholder="tu@email.com"
+                                    class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
+                                    [class]="submitted && f['email'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
+                            </div>
+                            <div *ngIf="submitted && f['email'].errors" class="mt-2 text-sm text-red-600">
+                                <div *ngIf="f['email'].errors?.['required']">El correo electrónico es requerido</div>
+                                <div *ngIf="f['email'].errors?.['email']">El formato del correo no es válido</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección de Seguridad -->
+                    <div class="space-y-6 pt-8 border-t border-gray-200">
+                        <div class="border-b border-gray-200 pb-4">
+                            <h3 class="text-lg font-medium text-gray-900 flex items-center gap-2">
+                                <span
+                                    class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 text-sm">2</span>
+                                Seguridad
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1">Actualiza tu contraseña (opcional)</p>
+                        </div>
+
+                        <!-- Botón para mostrar/ocultar cambio de contraseña -->
+                        <div>
+                            <button type="button" (click)="togglePasswordField()"
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200">
+                                <span class="mr-2">{{ showPasswordField ? '🔒' : '🔓' }}</span>
+                                {{ showPasswordField ? 'Cancelar cambio de contraseña' : 'Cambiar contraseña' }}
+                            </button>
+                        </div>
+
+                        <!-- Campos de contraseña -->
+                        <div *ngIf="showPasswordField" class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Nueva contraseña
+                                    </label>
+                                    <input type="password" formControlName="password" placeholder="••••••••"
+                                        class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-white"
+                                        [class]="submitted && f['password'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
+                                    <div *ngIf="submitted && f['password'].errors" class="mt-2 text-sm text-red-600">
+                                        <div *ngIf="f['password'].errors?.['required']">La contraseña es requerida</div>
+                                        <div *ngIf="f['password'].errors?.['minlength']">Debe tener al menos 6
+                                            caracteres</div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Confirmar nueva contraseña
+                                    </label>
+                                    <input type="password" formControlName="confirmPassword" placeholder="••••••••"
+                                        class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-white"
+                                        [class]="submitted && f['confirmPassword'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
+                                    <div *ngIf="submitted && f['confirmPassword'].errors"
+                                        class="mt-2 text-sm text-red-600">
+                                        <div *ngIf="f['confirmPassword'].errors?.['required']">La confirmación es
+                                            requerida</div>
+                                        <div *ngIf="f['confirmPassword'].errors?.['passwordMismatch']">Las contraseñas
+                                            no coinciden</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <div class="flex flex-col sm:flex-row gap-4 pt-8 border-t border-gray-200">
+                        <button type="submit" [disabled]="loading"
+                            class="flex-1 inline-flex justify-center items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+                            <span *ngIf="loading"
+                                class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></span>
+                            <span *ngIf="!loading" class="mr-2">💾</span>
+                            {{ loading ? 'Guardando cambios...' : 'Guardar cambios' }}
+                        </button>
+
+                        <a type="button" routerLink="/dashboard"
+                            class="inline-flex justify-center items-center px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200">
+                            <span class="mr-2">↩️</span>
+                            Volver al Dashboard
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
