@@ -79,22 +79,6 @@ export const ThemeConfig = {
       }
     }
   },
-  
-  // Default theme configuration
-  default: {
-    label: 'Sin tema',
-    subtitle: '¡Una lista especial para una ocasión especial!',
-    banner: '/assets/banners/default.svg',
-    classes: 'bg-gray-100 text-gray-800 border border-gray-300',
-    heroClasses: 'bg-gradient-to-br from-purple-400 via-pink-400 to-purple-300',
-    pageBackgroundClasses: 'bg-gradient-to-br from-purple-50 via-pink-50 to-purple-50',
-    overlayClasses: 'bg-gradient-to-t from-purple-500/20 to-pink-500/20',
-    colors: {
-      primary: '#9333EA',
-      secondary: '#EC4899',
-      accent: '#8B5CF6'
-    }
-  },
 
   // Base classes for components
   baseClasses: {
@@ -105,7 +89,7 @@ export const ThemeConfig = {
 
   // Helper methods to get theme data
   getTheme: (theme: string) => {
-    return ThemeConfig.themes[theme as keyof typeof ThemeConfig.themes] || ThemeConfig.default;
+    return ThemeConfig.themes[theme as keyof typeof ThemeConfig.themes] || false;
   },
 
   getAllThemes: () => {
