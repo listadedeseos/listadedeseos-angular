@@ -67,6 +67,12 @@
               <span class="font-medium">Mis Listas</span>
             </a>
 
+            <a routerLink="/profile"
+              class="flex items-center gap-3 px-4 py-3 text-neutral-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200">
+              <fa-icon [icon]="['fas', 'user']" [classes]="['w-4 h-4']"></fa-icon>
+              <span class="font-medium">Mi Perfil</span>
+            </a>
+
             @if(isAdmin){
             <!-- Admin Section Header -->
             <div class="px-4 py-2 bg-gradient-to-r from-amber-50 to-orange-50 border-b border-amber-100">
@@ -129,7 +135,7 @@
           </div>
         </div>
       </div>
-    }
+      }
       <!-- Usuario no autenticado -->
       <ng-container *ngIf="!isLogged">
         <a routerLink="/login"

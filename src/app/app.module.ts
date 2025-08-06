@@ -51,6 +51,7 @@ import { ContactComponent } from '../pages/contact/contact.component';
 import { ContactListComponent } from '../pages/contact/contact-list/contact-list.component';
 import { SteamPage } from '../pages/steam/steam.component';
 import { AmazonPage } from '../pages/amazon/amazon.component';
+import { ProfileComponent } from '../pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { AmazonPage } from '../pages/amazon/amazon.component';
     ContactListComponent,
     SteamPage,
     AmazonPage,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

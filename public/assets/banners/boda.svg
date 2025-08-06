@@ -1,0 +1,412 @@
+<svg width="1200" height="300" viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f3e5f5"/>
+      <stop offset="50%" style="stop-color:#e1bee7"/>
+      <stop offset="100%" style="stop-color:#ce93d8"/>
+    </linearGradient>
+    <radialGradient id="sunGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#fff8e1"/>
+      <stop offset="100%" style="stop-color:#ffc107"/>
+    </radialGradient>
+    <linearGradient id="weddingDress" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#f5f5f5"/>
+    </linearGradient>
+    <linearGradient id="groomSuit" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#37474f"/>
+      <stop offset="100%" style="stop-color:#263238"/>
+    </linearGradient>
+    <radialGradient id="churchGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#eceff1"/>
+      <stop offset="100%" style="stop-color:#cfd8dc"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Elegant lavender sky background -->
+  <rect width="1200" height="300" fill="url(#skyGradient)"/>
+  
+  <!-- Soft afternoon sun -->
+  <circle cx="950" cy="80" r="35" fill="url(#sunGradient)" opacity="0.8"/>
+  <g stroke="#ffc107" stroke-width="1.5" opacity="0.4">
+    <line x1="920" y1="50" x2="928" y2="58"/>
+    <line x1="925" y1="42" x2="930" y2="55"/>
+    <line x1="935" y1="38" x2="935" y2="50"/>
+    <line x1="945" y1="35" x2="945" y2="48"/>
+    <line x1="955" y1="38" x2="955" y2="50"/>
+    <line x1="965" y1="42" x2="960" y2="55"/>
+    <line x1="980" y1="50" x2="972" y2="58"/>
+  </g>
+  
+  <!-- Romantic clouds -->
+  <g fill="#ffffff" opacity="0.7">
+    <g transform="translate(150, 70)">
+      <circle cx="0" cy="0" r="12"/>
+      <circle cx="15" cy="0" r="15"/>
+      <circle cx="30" cy="0" r="12"/>
+      <circle cx="42" cy="0" r="10"/>
+      <circle cx="8" cy="-6" r="10"/>
+      <circle cx="22" cy="-6" r="10"/>
+      <circle cx="35" cy="-5" r="8"/>
+    </g>
+    <g transform="translate(750, 55)">
+      <circle cx="0" cy="0" r="10"/>
+      <circle cx="12" cy="0" r="13"/>
+      <circle cx="25" cy="0" r="10"/>
+      <circle cx="35" cy="0" r="8"/>
+      <circle cx="6" cy="-5" r="8"/>
+      <circle cx="18" cy="-5" r="8"/>
+    </g>
+  </g>
+  
+  <!-- Enhanced church in background -->
+  <g transform="translate(900, 180)" opacity="0.8">
+    <!-- Main church building -->
+    <rect x="-50" y="-70" width="100" height="90" fill="url(#churchGradient)"/>
+    <polygon points="-55,-70 0,-105 55,-70" fill="#b0bec5"/>
+    
+    <!-- Church details -->
+    <rect x="-45" y="-65" width="90" height="5" fill="#90a4ae"/>
+    <rect x="-40" y="-50" width="80" height="3" fill="#90a4ae"/>
+    
+    <!-- Bell tower -->
+    <rect x="-18" y="-95" width="36" height="45" fill="url(#churchGradient)"/>
+    <polygon points="-23,-95 0,-115 23,-95" fill="#b0bec5"/>
+    <rect x="-15" y="-90" width="30" height="3" fill="#90a4ae"/>
+    
+    <!-- Church cross -->
+    <rect x="-2" y="-125" width="4" height="15" fill="#8d6e63"/>
+    <rect x="-6" y="-120" width="12" height="4" fill="#8d6e63"/>
+    
+    <!-- Bell in tower -->
+    <path d="M0 -85 Q-8 -85 -8 -75 Q-8 -70 0 -70 Q8 -70 8 -75 Q8 -85 0 -85" fill="#ffb74d"/>
+    <circle cx="0" cy="-68" r="2" fill="#8d6e63"/>
+    
+    <!-- Columns -->
+    <rect x="-35" y="-60" width="6" height="70" fill="#ffffff"/>
+    <rect x="-20" y="-60" width="6" height="70" fill="#ffffff"/>
+    <rect x="-5" y="-60" width="6" height="70" fill="#ffffff"/>
+    <rect x="10" y="-60" width="6" height="70" fill="#ffffff"/>
+    <rect x="25" y="-60" width="6" height="70" fill="#ffffff"/>
+    
+    <!-- Column capitals -->
+    <rect x="-37" y="-65" width="10" height="5" fill="#e0e0e0"/>
+    <rect x="-22" y="-65" width="10" height="5" fill="#e0e0e0"/>
+    <rect x="-7" y="-65" width="10" height="5" fill="#e0e0e0"/>
+    <rect x="8" y="-65" width="10" height="5" fill="#e0e0e0"/>
+    <rect x="23" y="-65" width="10" height="5" fill="#e0e0e0"/>
+    
+    <!-- Steps -->
+    <rect x="-55" y="10" width="110" height="8" fill="#c0c0c0"/>
+    <rect x="-50" y="18" width="100" height="6" fill="#c0c0c0"/>
+    <rect x="-45" y="24" width="90" height="4" fill="#c0c0c0"/>
+    
+    <!-- Rose windows -->
+    <circle cx="-25" cy="-40" r="8" fill="#4fc3f7"/>
+    <circle cx="25" cy="-40" r="8" fill="#4fc3f7"/>
+    <circle cx="-25" cy="-40" r="6" fill="#81d4fa"/>
+    <circle cx="25" cy="-40" r="6" fill="#81d4fa"/>
+    <line x1="-25" y1="-48" x2="-25" y2="-32" stroke="#0277bd" stroke-width="1"/>
+    <line x1="-33" y1="-40" x2="-17" y2="-40" stroke="#0277bd" stroke-width="1"/>
+    <line x1="25" y1="-48" x2="25" y2="-32" stroke="#0277bd" stroke-width="1"/>
+    <line x1="17" y1="-40" x2="33" y2="-40" stroke="#0277bd" stroke-width="1"/>
+    
+    <!-- Main entrance -->
+    <path d="M-12 10 Q-12 -15 0 -20 Q12 -15 12 10" fill="#5d4037"/>
+    <circle cx="8" cy="0" r="2" fill="#ffd700"/>
+    
+    <!-- Decorative arches -->
+    <path d="M-40 -35 Q-32 -45 -24 -35" fill="none" stroke="#90a4ae" stroke-width="2"/>
+    <path d="M-10 -35 Q-2 -45 6 -35" fill="none" stroke="#90a4ae" stroke-width="2"/>
+    <path d="M20 -35 Q28 -45 36 -35" fill="none" stroke="#90a4ae" stroke-width="2"/>
+  </g>
+  
+  <!-- Enhanced Bride with intricate details -->
+  <g transform="translate(350, 180)">
+    <!-- Bride's shadow -->
+    <ellipse cx="3" cy="95" rx="35" ry="6" fill="#000000" opacity="0.15"/>
+    
+    <!-- Wedding dress train -->
+    <path d="M-35 70 Q-30 85 -20 95 Q0 100 20 95 Q30 85 35 70 Q25 75 0 78 Q-25 75 -35 70" fill="url(#weddingDress)"/>
+    
+    <!-- Main wedding dress -->
+    <path d="M0 20 Q-28 15 -32 60 Q-28 90 0 95 Q28 90 32 60 Q28 15 0 20" fill="url(#weddingDress)"/>
+    
+    <!-- Dress texture and lace details -->
+    <path d="M-25 30 Q0 25 25 30" fill="none" stroke="#e8eaf6" stroke-width="1"/>
+    <path d="M-28 45 Q0 40 28 45" fill="none" stroke="#e8eaf6" stroke-width="1"/>
+    <path d="M-30 60 Q0 55 30 60" fill="none" stroke="#e8eaf6" stroke-width="1"/>
+    <path d="M-32 75 Q0 70 32 75" fill="none" stroke="#e8eaf6" stroke-width="1"/>
+    
+    <!-- Lace pattern -->
+    <circle cx="-20" cy="35" r="2" fill="#f3e5f5" opacity="0.6"/>
+    <circle cx="-8" cy="40" r="1.5" fill="#f3e5f5" opacity="0.6"/>
+    <circle cx="12" cy="38" r="2" fill="#f3e5f5" opacity="0.6"/>
+    <circle cx="20" cy="50" r="1.5" fill="#f3e5f5" opacity="0.6"/>
+    <circle cx="-15" cy="55" r="2" fill="#f3e5f5" opacity="0.6"/>
+    <circle cx="8" cy="65" r="1.5" fill="#f3e5f5" opacity="0.6"/>
+    
+    <!-- Bodice with corset details -->
+    <ellipse cx="0" cy="5" rx="15" ry="20" fill="url(#weddingDress)"/>
+    <line x1="-8" y1="-5" x2="-8" y2="15" stroke="#e0e0e0" stroke-width="0.5"/>
+    <line x1="-4" y1="-3" x2="-4" y2="17" stroke="#e0e0e0" stroke-width="0.5"/>
+    <line x1="0" y1="-2" x2="0" y2="18" stroke="#e0e0e0" stroke-width="0.5"/>
+    <line x1="4" y1="-3" x2="4" y2="17" stroke="#e0e0e0" stroke-width="0.5"/>
+    <line x1="8" y1="-5" x2="8" y2="15" stroke="#e0e0e0" stroke-width="0.5"/>
+    
+    <!-- Head and neck -->
+    <circle cx="0" cy="-18" r="14" fill="#ffdbac"/>
+    <ellipse cx="0" cy="-7" rx="5" ry="7" fill="#ffdbac"/>
+    
+    <!-- Detailed hair with wedding style -->
+    <path d="M-12 -30 Q0 -38 12 -30 Q10 -20 8 -23 Q4 -25 0 -23 Q-4 -25 -8 -23 Q-10 -20 -12 -30" fill="#d4af37"/>
+    <path d="M-8 -28 Q-4 -33 0 -28 Q4 -33 8 -28" fill="#daa520"/>
+    
+    <!-- Hair ornaments -->
+    <circle cx="-6" cy="-30" r="2" fill="#ffffff"/>
+    <circle cx="6" cy="-30" r="2" fill="#ffffff"/>
+    <circle cx="-6" cy="-30" r="1" fill="#e1bee7"/>
+    <circle cx="6" cy="-30" r="1" fill="#e1bee7"/>
+    
+    <!-- Bridal veil -->
+    <path d="M-18 -25 Q0 -45 18 -25 Q22 15 18 50 Q15 80 10 95 Q0 100 -10 95 Q-15 80 -18 50 Q-22 15 -18 -25" fill="#ffffff" opacity="0.85"/>
+    <path d="M-15 -22 Q0 -40 15 -22" fill="none" stroke="#f5f5f5" stroke-width="1"/>
+    <path d="M-12 -10 Q0 -20 12 -10" fill="none" stroke="#f5f5f5" stroke-width="1"/>
+    
+    <!-- Detailed facial features -->
+    <ellipse cx="-5" cy="-21" rx="3" ry="2" fill="#ffffff"/>
+    <ellipse cx="5" cy="-21" rx="3" ry="2" fill="#ffffff"/>
+    <circle cx="-5" cy="-21" r="2" fill="#4fc3f7"/>
+    <circle cx="5" cy="-21" r="2" fill="#4fc3f7"/>
+    <circle cx="-4" cy="-22" r="1" fill="#ffffff"/>
+    <circle cx="6" cy="-22" r="1" fill="#ffffff"/>
+    
+    <!-- Makeup details -->
+    <ellipse cx="-5" cy="-25" rx="4" ry="1" fill="#8d6e63"/>
+    <ellipse cx="5" cy="-25" rx="4" ry="1" fill="#8d6e63"/>
+    <ellipse cx="-7" cy="-18" rx="2" ry="1" fill="#f8bbd9" opacity="0.7"/>
+    <ellipse cx="7" cy="-18" rx="2" ry="1" fill="#f8bbd9" opacity="0.7"/>
+    
+    <!-- Lips with gloss -->
+    <ellipse cx="0" cy="-13" rx="4" ry="2" fill="#f48fb1"/>
+    <ellipse cx="0" cy="-13" rx="3" ry="1" fill="#f06292"/>
+    <ellipse cx="-1" cy="-14" rx="1" ry="0.5" fill="#ffffff" opacity="0.8"/>
+    
+    <!-- Arms in elegant pose -->
+    <ellipse cx="-25" cy="-2" rx="10" ry="6" fill="#ffdbac" transform="rotate(-35 -25 -2)"/>
+    <ellipse cx="25" cy="-2" rx="10" ry="6" fill="#ffdbac" transform="rotate(35 25 -2)"/>
+    
+    <!-- Hands with manicure -->
+    <ellipse cx="-30" cy="8" rx="5" ry="7" fill="#ffdbac"/>
+    <ellipse cx="30" cy="8" rx="5" ry="7" fill="#ffdbac"/>
+    
+    <!-- Detailed bridal bouquet -->
+    <g transform="translate(-35, 15)">
+      <ellipse cx="0" cy="0" rx="10" ry="15" fill="#4caf50"/>
+      <!-- Roses -->
+      <circle cx="-4" cy="-8" r="4" fill="#f8bbd9"/>
+      <circle cx="4" cy="-8" r="4" fill="#ffffff"/>
+      <circle cx="0" cy="-3" r="4" fill="#f8bbd9"/>
+      <circle cx="-6" cy="3" r="4" fill="#ffffff"/>
+      <circle cx="6" cy="3" r="4" fill="#f8bbd9"/>
+      <circle cx="0" cy="8" r="4" fill="#ffffff"/>
+      
+      <!-- Rose centers -->
+      <circle cx="-4" cy="-8" r="2" fill="#e91e63"/>
+      <circle cx="4" cy="-8" r="2" fill="#f5f5f5"/>
+      <circle cx="0" cy="-3" r="2" fill="#e91e63"/>
+      <circle cx="-6" cy="3" r="2" fill="#f5f5f5"/>
+      <circle cx="6" cy="3" r="2" fill="#e91e63"/>
+      <circle cx="0" cy="8" r="2" fill="#f5f5f5"/>
+      
+      <!-- Baby's breath -->
+      <circle cx="-8" cy="-5" r="1" fill="#ffffff"/>
+      <circle cx="8" cy="-3" r="1" fill="#ffffff"/>
+      <circle cx="-7" cy="6" r="1" fill="#ffffff"/>
+      <circle cx="7" cy="8" r="1" fill="#ffffff"/>
+      
+      <!-- Ribbon -->
+      <ellipse cx="0" cy="12" rx="8" ry="3" fill="#e1bee7"/>
+      <path d="M-5 15 Q0 18 5 15 Q8 17 5 20 Q0 17 -5 20 Q-8 17 -5 15" fill="#e1bee7"/>
+    </g>
+    
+    <!-- Legs under dress -->
+    <ellipse cx="-8" cy="110" rx="5" ry="15" fill="#ffdbac"/>
+    <ellipse cx="8" cy="110" rx="5" ry="15" fill="#ffdbac"/>
+    
+    <!-- Bridal shoes -->
+    <ellipse cx="-8" cy="125" rx="8" ry="4" fill="#ffffff"/>
+    <ellipse cx="8" cy="125" rx="8" ry="4" fill="#ffffff"/>
+    <ellipse cx="-8" cy="123" rx="6" ry="3" fill="#f5f5f5"/>
+    <ellipse cx="8" cy="123" rx="6" ry="3" fill="#f5f5f5"/>
+  </g>
+  
+  <!-- Enhanced Groom with detailed formal wear -->
+  <g transform="translate(450, 180)">
+    <!-- Groom's shadow -->
+    <ellipse cx="3" cy="95" rx="30" ry="6" fill="#000000" opacity="0.15"/>
+    
+    <!-- Formal suit jacket -->
+    <rect x="-15" y="-8" width="30" height="45" rx="3" fill="url(#groomSuit)"/>
+    <rect x="-13" y="-6" width="26" height="40" rx="2" fill="#455a64"/>
+    
+    <!-- Suit lapels -->
+    <path d="M-13 -6 Q-8 0 -6 8 Q-8 12 -13 15" fill="#37474f"/>
+    <path d="M13 -6 Q8 0 6 8 Q8 12 13 15" fill="#37474f"/>
+    
+    <!-- Shirt with detailed collar -->
+    <rect x="-10" y="-6" width="20" height="35" fill="#ffffff"/>
+    <polygon points="-6,-6 0,-10 6,-6 6,0 -6,0" fill="#ffffff"/>
+    
+    <!-- Shirt buttons -->
+    <circle cx="0" cy="2" r="1" fill="#e0e0e0"/>
+    <circle cx="0" cy="8" r="1" fill="#e0e0e0"/>
+    <circle cx="0" cy="14" r="1" fill="#e0e0e0"/>
+    <circle cx="0" cy="20" r="1" fill="#e0e0e0"/>
+    
+    <!-- Bow tie with detail -->
+    <path d="M-4 -4 Q0 -6 4 -4 Q6 -2 4 0 Q0 2 -4 0 Q-6 -2 -4 -4" fill="#263238"/>
+    <rect x="-1" y="-4" width="2" height="4" fill="#37474f"/>
+    <path d="M-3 -3 Q0 -4 3 -3" fill="none" stroke="#455a64" stroke-width="0.5"/>
+    <path d="M-3 -1 Q0 0 3 -1" fill="none" stroke="#455a64" stroke-width="0.5"/>
+    
+    <!-- Pocket square -->
+    <rect x="7" y="0" width="5" height="3" fill="#ffffff"/>
+    <polygon points="7,0 12,0 10,3" fill="#f5f5f5"/>
+    
+    <!-- Boutonniere -->
+    <circle cx="-8" cy="2" r="2" fill="#ffffff"/>
+    <circle cx="-8" cy="2" r="1" fill="#f8bbd9"/>
+    <rect x="-9" y="4" width="2" height="6" fill="#4caf50"/>
+    
+    <!-- Head and face -->
+    <circle cx="0" cy="-18" r="13" fill="#ffdbac"/>
+    <ellipse cx="0" cy="-8" rx="5" ry="6" fill="#ffdbac"/>
+    
+    <!-- Formal hairstyle -->
+    <path d="M-11 -28 Q0 -33 11 -28 Q9 -22 6 -24 Q3 -25 0 -24 Q-3 -25 -6 -24 Q-9 -22 -11 -28" fill="#654321"/>
+    <path d="M-8 -26 Q-4 -30 0 -26 Q4 -30 8 -26" fill="#8b4513"/>
+    
+    <!-- Hair gel shine -->
+    <ellipse cx="0" cy="-28" rx="6" ry="2" fill="#ffffff" opacity="0.3"/>
+    
+    <!-- Facial features -->
+    <ellipse cx="-4" cy="-21" rx="2.5" ry="2" fill="#ffffff"/>
+    <ellipse cx="4" cy="-21" rx="2.5" ry="2" fill="#ffffff"/>
+    <circle cx="-4" cy="-21" r="1.8" fill="#2e7d32"/>
+    <circle cx="4" cy="-21" r="1.8" fill="#2e7d32"/>
+    <circle cx="-3" cy="-22" r="0.8" fill="#ffffff"/>
+    <circle cx="5" cy="-22" r="0.8" fill="#ffffff"/>
+    
+    <!-- Eyebrows -->
+    <ellipse cx="-4" cy="-24" rx="3" ry="1" fill="#654321"/>
+    <ellipse cx="4" cy="-24" rx="3" ry="1" fill="#654321"/>
+    
+    <!-- Nose -->
+    <ellipse cx="0" cy="-16" rx="1.5" ry="2.5" fill="#ffcba0"/>
+    
+    <!-- Smile -->
+    <path d="M-4 -13 Q0 -11 4 -13" fill="none" stroke="#8b4513" stroke-width="1.5"/>
+    
+    <!-- Arms in formal pose -->
+    <ellipse cx="-20" cy="8" rx="10" ry="6" fill="url(#groomSuit)" transform="rotate(-25 -20 8)"/>
+    <ellipse cx="20" cy="8" rx="10" ry="6" fill="url(#groomSuit)" transform="rotate(25 20 8)"/>
+    
+    <!-- Hands -->
+    <circle cx="-23" cy="15" r="5" fill="#ffdbac"/>
+    <circle cx="23" cy="15" r="5" fill="#ffdbac"/>
+    
+    <!-- Watch -->
+    <rect x="-26" y="12" width="6" height="3" fill="#c0c0c0"/>
+    <circle cx="-23" cy="13.5" r="1" fill="#263238"/>
+    
+    <!-- Legs -->
+    <ellipse cx="-8" cy="65" rx="7" ry="25" fill="url(#groomSuit)"/>
+    <ellipse cx="8" cy="65" rx="7" ry="25" fill="url(#groomSuit)"/>
+    
+    <!-- Dress shoes -->
+    <ellipse cx="-8" cy="90" rx="10" ry="5" fill="#000000"/>
+    <ellipse cx="8" cy="90" rx="10" ry="5" fill="#000000"/>
+    <ellipse cx="-8" cy="88" rx="8" ry="3" fill="#1a1a1a"/>
+    <ellipse cx="8" cy="88" rx="8" ry="3" fill="#1a1a1a"/>
+    
+    <!-- Shoe laces -->
+    <line x1="-10" y1="86" x2="-6" y2="86" stroke="#424242" stroke-width="0.5"/>
+    <line x1="-9" y1="88" x2="-7" y2="88" stroke="#424242" stroke-width="0.5"/>
+    <line x1="10" y1="86" x2="6" y2="86" stroke="#424242" stroke-width="0.5"/>
+    <line x1="9" y1="88" x2="7" y2="88" stroke="#424242" stroke-width="0.5"/>
+  </g>
+  
+  <!-- Wedding arch -->
+  <g transform="translate(600, 200)" opacity="0.8">
+    <path d="M-60 20 Q-60 -40 0 -40 Q60 -40 60 20" fill="none" stroke="#DDA0DD" stroke-width="4"/>
+    
+    <!-- Flowers on arch -->
+    <g transform="translate(-45, -15)">
+      <circle cx="0" cy="0" r="3" fill="#FFB6C1"/>
+      <circle cx="-3" cy="-2" r="2" fill="#FFFFFF"/>
+      <circle cx="3" cy="-2" r="2" fill="#FFB6C1"/>
+    </g>
+    <g transform="translate(-30, -25)">
+      <circle cx="0" cy="0" r="2.5" fill="#DDA0DD"/>
+      <circle cx="-2" cy="-1" r="2" fill="#FFFFFF"/>
+      <circle cx="2" cy="-1" r="2" fill="#DDA0DD"/>
+    </g>
+    <g transform="translate(0, -35)">
+      <circle cx="0" cy="0" r="4" fill="#FFFFFF"/>
+      <circle cx="-3" cy="-2" r="3" fill="#FFB6C1"/>
+      <circle cx="3" cy="-2" r="3" fill="#FFFFFF"/>
+    </g>
+    <g transform="translate(30, -25)">
+      <circle cx="0" cy="0" r="2.5" fill="#DDA0DD"/>
+      <circle cx="-2" cy="-1" r="2" fill="#FFFFFF"/>
+      <circle cx="2" cy="-1" r="2" fill="#DDA0DD"/>
+    </g>
+    <g transform="translate(45, -15)">
+      <circle cx="0" cy="0" r="3" fill="#FFB6C1"/>
+      <circle cx="-3" cy="-2" r="2" fill="#FFFFFF"/>
+      <circle cx="3" cy="-2" r="2" fill="#FFB6C1"/>
+    </g>
+  </g>
+  
+  <!-- Flying doves -->
+  <g transform="translate(200, 100)">
+    <ellipse cx="0" cy="0" rx="15" ry="6" fill="#FFFFFF"/>
+    <ellipse cx="-8" cy="-3" rx="12" ry="4" fill="#FFFFFF" transform="rotate(-20 -8 -3)"/>
+    <ellipse cx="8" cy="-3" rx="12" ry="4" fill="#FFFFFF" transform="rotate(20 8 -3)"/>
+    <circle cx="12" cy="-2" r="3" fill="#FFFFFF"/>
+    <polygon points="15,-2 20,-1 15,0" fill="#FF8C00"/>
+    <circle cx="13" cy="-3" r="0.8" fill="#000"/>
+  </g>
+  
+  <g transform="translate(800, 80)">
+    <ellipse cx="0" cy="0" rx="12" ry="5" fill="#FFFFFF"/>
+    <ellipse cx="-6" cy="-2" rx="10" ry="3" fill="#FFFFFF" transform="rotate(-15 -6 -2)"/>
+    <ellipse cx="6" cy="-2" rx="10" ry="3" fill="#FFFFFF" transform="rotate(15 6 -2)"/>
+    <circle cx="9" cy="-1" r="2.5" fill="#FFFFFF"/>
+    <polygon points="11.5,-1 15.5,0 11.5,1" fill="#FF8C00"/>
+    <circle cx="10" cy="-2" r="0.6" fill="#000"/>
+  </g>
+  
+  <!-- Wedding rings floating -->
+  <g transform="translate(150, 150)" opacity="0.7">
+    <circle cx="0" cy="0" r="12" fill="none" stroke="#FFD700" stroke-width="3"/>
+    <circle cx="15" cy="0" r="12" fill="none" stroke="#FFD700" stroke-width="3"/>
+    <circle cx="7.5" cy="-5" r="2" fill="#FFD700"/>
+  </g>
+  
+  <!-- Rose petals falling -->
+  <g fill="#FFB6C1" opacity="0.6">
+    <ellipse cx="250" cy="120" rx="3" ry="6" transform="rotate(45 250 120)"/>
+    <ellipse cx="550" cy="80" rx="2" ry="4" transform="rotate(-30 550 80)"/>
+    <ellipse cx="750" cy="140" rx="3" ry="5" transform="rotate(60 750 140)"/>
+    <ellipse cx="950" cy="110" rx="2" ry="5" transform="rotate(-45 950 110)"/>
+    <ellipse cx="480" cy="60" rx="3" ry="4" transform="rotate(20 480 60)"/>
+  </g>
+  
+  <!-- Hearts floating -->
+  <g fill="#FFB6C1" opacity="0.5">
+    <path d="M100 200 C97 197, 92 197, 92 202 C92 207, 100 213, 100 213 C100 213, 108 207, 108 202 C108 197, 103 197, 100 200Z"/>
+    <path d="M1050 160 C1048 158, 1045 158, 1045 161 C1045 164, 1050 168, 1050 168 C1050 168, 1055 164, 1055 161 C1055 158, 1052 158, 1050 160Z"/>
+  </g>
+</svg>
