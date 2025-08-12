@@ -36,7 +36,8 @@
     @for(item of list; track $index){
 
     <app-card [principalUrl]="item.amazon_url" [img]="item.img" [name]="item.name" [price]="item.price"
-        [count]="item.count" principalLabelString="Amazon"></app-card>
+        [count]="item.count" principalLabelString="Amazon" [isReserved]="item.is_reserved" [isLogged]="isLogged"
+        (toggleReserve)="reserveGame(item.id)"></app-card>
 
     }
     }

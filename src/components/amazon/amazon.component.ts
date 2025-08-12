@@ -59,6 +59,17 @@ export class AmazonComponent {
     this.getAmazon(true)
   }
 
+  reserveGame(id: number) {
+    this.apiService.save(Utils.urls.amazon, '', id + '/reserve').subscribe({
+      next: (value: any) => {
+
+        this.list
+          .find((product: any) => product.id == id).is_reserved = value.product.is_reserved
+
+      }
+    })
+  }
+
   onImageError(event: Event) {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = '/assets/img/empty.webp';
