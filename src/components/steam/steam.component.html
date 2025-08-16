@@ -42,15 +42,14 @@
     @for(counter of [].constructor(list.length>6 && showMore ? 6 : list.length); track $index){
 
     <!-- See more button -->
-    @if($index == 5 && list.length == 7){
+    @if($index == 5 && list.length == 7 && showMore){
 
-    @if(showMore){
     <a [routerLink]="['/list', uuidList, 'steam']"
         class="h-full bg-white bg-opacity-60 rounded-xl flex flex-col items-center justify-center text-blue-800 hover:scale-[1.02] transition-transform">
         <fa-icon [icon]="['fas', 'plus']" class="text-2xl mb-2"></fa-icon>
         <span class="text-sm font-medium">Ver más</span>
     </a>
-    }
+
     <!-- See more button END -->
 
     }@else{
