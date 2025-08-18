@@ -202,7 +202,7 @@
       @if(wishlist.steam_username){
       <div class="bg-gradient-to-br from-blue-800 to-blue-500 rounded-2xl p-6 text-white relative overflow-hidden">
         <div class="relative z-20">
-          <app-steam [size]="5" [itemsPerRow]="3" [showMore]="true" 
+          <app-steam [size]="7" [itemsPerRow]="3" [showMore]="true" 
                      [username]="wishlist.steam_username" [wishlistId]="wishlist.id">
           </app-steam>
         </div>
@@ -214,7 +214,7 @@
       @if(wishlist.amazon_wishlist_id){
       <div class="bg-gradient-to-br from-orange-600 to-yellow-600 rounded-2xl p-6 text-white relative overflow-hidden">
         <div class="relative z-20">
-          <app-amazon [size]="5" [itemsPerRow]="3" [showMore]="true"
+          <app-amazon [size]="7" [itemsPerRow]="3" [showMore]="true"
                       [amazonWishlistId]="wishlist.amazon_wishlist_id" [wishlistId]="wishlist.id">
           </app-amazon>
         </div>

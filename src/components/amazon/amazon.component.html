@@ -9,7 +9,9 @@
     </a>
 
     @if(isLogged){
-    <button class="group ml-auto px-4 py-2 bg-white/70 hover:bg-white/90 backdrop-blur-sm border border-gray-200/50 text-gray-600 hover:text-gray-800 transition-all duration-200 font-medium rounded-xl flex items-center gap-2" (click)="refresh()">
+    <button
+        class="group ml-auto px-4 py-2 bg-white/70 hover:bg-white/90 backdrop-blur-sm border border-gray-200/50 text-gray-600 hover:text-gray-800 transition-all duration-200 font-medium rounded-xl flex items-center gap-2"
+        (click)="refresh()">
         <fa-icon [icon]="['fas', 'rotate']"
             [classes]="['group-hover:duration-500 group-hover:rotate-180 group-hover:transition-transform']"></fa-icon>
         Refrescar Productos
@@ -20,9 +22,9 @@
 
 <section class="grid gap-2 grid-cols-3 md:grid-cols-{{itemsPerRow}}">
 
-    @if(loading){
-    @for(item of [].constructor(size); track $index){
     <!-- Loading Cards -->
+    @if(loading){
+    @for(item of [].constructor(6); track $index){
     <div class="animate-pulse bg-white border border-gray-200 rounded-xl shadow-sm p-3">
         <div class="aspect-square bg-gray-200 rounded-lg mb-2"></div>
         <div class="h-2 rounded w-20 bg-gray-200 mb-2"></div>
@@ -32,21 +34,35 @@
         </div>
     </div>
     }
+    <!-- Loading Cards END -->
+
     } @else {
-    @for(item of list; track $index){
 
-    <app-card [principalUrl]="item.amazon_url" [img]="item.img" [name]="item.name" [price]="item.price"
-        [count]="item.count" principalLabelString="Amazon"></app-card>
+    <!-- Products list -->
+    @for(counter of [].constructor(list.length>6 && showMore ? 6 : list.length); track $index){
 
-    }
-    }
+    <!-- See more button -->
+    @if($index == 5 && list.length == 7 && showMore){
 
-    @if(showMore){
     <a [routerLink]="['/list', uuidList, 'amazon']"
-        class="aspect-square bg-gradient-to-br from-orange-100 to-yellow-100 border-2 border-dashed border-orange-300 rounded-xl flex flex-col items-center justify-center text-orange-600 hover:bg-gradient-to-br hover:from-orange-200 hover:to-yellow-200 transition-all duration-300">
+        class="h-full bg-white bg-opacity-60 rounded-xl flex flex-col items-center justify-center text-orange-800 hover:scale-[1.02] transition-transform">
         <fa-icon [icon]="['fas', 'plus']" class="text-2xl mb-2"></fa-icon>
         <span class="text-sm font-medium">Ver más</span>
     </a>
+
+    <!-- See more button END -->
+
+    }@else{
+
+    <app-card [principalUrl]="list[$index].amazon_url" [img]="list[$index].img" [name]="list[$index].name"
+        [price]="list[$index].price" [count]="list[$index].count" principalLabelString="Amazon"
+        [isReserved]="list[$index].is_reserved" [isLogged]="isLogged"
+        (toggleReserve)="reserveGame(list[$index].id)"></app-card>
+    }
+
+    }
+    <!-- Products list END -->
+
     }
 
 </section>
