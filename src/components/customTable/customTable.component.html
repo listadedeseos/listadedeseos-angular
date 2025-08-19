@@ -190,7 +190,7 @@
 
         @if(header.name == 'NOMBRE' && item.role == 'ROLE_ADMIN') {
         <div class="inline-flex items-center justify-center w-6 h-6 bg-orange-100 rounded-full">
-            <fa-icon [classes]="['text-orange-600', 'text-xs']" [icon]="['fas', 'crown']"></fa-icon>
+            <fa-icon [ngClass]="['text-orange-600', 'text-xs']" [icon]="['fas', 'crown']"></fa-icon>
         </div>
         }
 
@@ -225,11 +225,11 @@
     @case ('boolean') {
     @if(getValue(item, value)){
     <div class="inline-flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
-        <fa-icon [classes]="['text-emerald-600', 'text-xs']" [icon]="['fas', 'check']"></fa-icon>
+        <fa-icon [ngClass]="['text-emerald-600', 'text-xs']" [icon]="['fas', 'check']"></fa-icon>
     </div>
     } @else {
     <div class="inline-flex items-center justify-center w-6 h-6 bg-rose-100 rounded-full">
-        <fa-icon [classes]="['text-rose-600', 'text-xs']" [icon]="['fas', 'xmark']"></fa-icon>
+        <fa-icon [ngClass]="['text-rose-600', 'text-xs']" [icon]="['fas', 'xmark']"></fa-icon>
     </div>
     }
     }
@@ -255,20 +255,20 @@
 
         @if(item.email_verified_at){
         <div [title]="item.email" class="inline-flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full">
-            <fa-icon [classes]="['text-blue-600', 'text-xs']" [icon]="['fas', 'envelope']"></fa-icon>
+            <fa-icon [ngClass]="['text-blue-600', 'text-xs']" [icon]="['fas', 'envelope']"></fa-icon>
         </div>
         }
 
         @if(item.google_id){
         <div [title]="item.google_id" class="inline-flex items-center justify-center w-6 h-6 bg-red-100 rounded-full">
-            <fa-icon [classes]="['text-red-600', 'text-xs']" [icon]="['fab', 'google']"></fa-icon>
+            <fa-icon [ngClass]="['text-red-600', 'text-xs']" [icon]="['fab', 'google']"></fa-icon>
         </div>
         }
 
     </span>
     } @else {
     <div class="inline-flex items-center justify-center w-6 h-6 bg-rose-100 rounded-full">
-        <fa-icon [classes]="['text-rose-600', 'text-xs']" [icon]="['fas', 'xmark']"></fa-icon>
+        <fa-icon [ngClass]="['text-rose-600', 'text-xs']" [icon]="['fas', 'xmark']"></fa-icon>
     </div>
     }
     }

@@ -1,9 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-card',
+  imports: [
+    FontAwesomeModule,
+    CommonModule,
+  ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent {
 
@@ -26,13 +34,50 @@ export class CardComponent {
 
   @Output() public toggleReserve = new EventEmitter<number>()
 
-  public static showReserveButton: boolean = false;
+  // Cambiar de propiedad estática a BehaviorSubject reactivo
+  private static _showReserveButtonSubject = new BehaviorSubject<boolean>(false);
+  public static showReserveButton$ = CardComponent._showReserveButtonSubject.asObservable();
+  
+  public showReserveButton = false;
+  private subscription?: Subscription;
 
   public parent = CardComponent;
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  ngOnInit() {
+    // Suscribirse a los cambios del showReserveButton
+    this.subscription = CardComponent.showReserveButton$.subscribe(value => {
+      this.showReserveButton = value;
+      this.cdr.detectChanges();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  // Método estático para actualizar el estado
+  public static setShowReserveButton(value: boolean) {
+    CardComponent._showReserveButtonSubject.next(value);
+  }
+
+  // Getter para mantener compatibilidad con código existente
+  public static get showReserveButton(): boolean {
+    return CardComponent._showReserveButtonSubject.value;
+  }
+
+  // Setter para mantener compatibilidad con código existente  
+  public static set showReserveButton(value: boolean) {
+    CardComponent.setShowReserveButton(value);
+  }
 
   onImageError(event: Event) {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = '/assets/img/empty.webp';
+    this.cdr.detectChanges();
   }
 
   getClasses(label: string) {

@@ -1,10 +1,17 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
+import { LoadingComponent } from '../../components/loading/loading.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  imports: [
+    LoadingComponent,
+    ReactiveFormsModule,
+    CommonModule,
+  ],
   templateUrl: './verify.component.html',
   styleUrl: './verify.component.scss',
 })

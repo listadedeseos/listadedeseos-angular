@@ -14,8 +14,10 @@
 
     <!-- Imagen del producto -->
     <div>
-        <ng-container [ngSwitch]="aspect">
-            <a *ngSwitchCase="'video'" [href]="secondaryUrl??principalUrl" target="_blank" 
+        @switch (aspect) {
+
+            @case ('video') {
+            <a [href]="secondaryUrl??principalUrl" target="_blank" 
                class="block aspect-video overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-pink-50">
                 <img class="w-full h-full object-cover transition-transform duration-300" 
                      [src]="img" 
@@ -23,8 +25,9 @@
                      loading="lazy"
                      alt="product image">
             </a>
-            
-            <a *ngSwitchCase="'square'" [href]="secondaryUrl??principalUrl" target="_blank" 
+        }
+            @case ('square') {
+            <a [href]="secondaryUrl??principalUrl" target="_blank" 
                class="block aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-pink-50">
                 <img class="w-full h-full object-cover transition-transform duration-300" 
                      [src]="img" 
@@ -32,8 +35,10 @@
                      loading="lazy"
                      alt="product image">
             </a>
-            
-            <a *ngSwitchDefault [href]="secondaryUrl??principalUrl" target="_blank" 
+        }
+
+            @default {
+            <a [href]="secondaryUrl??principalUrl" target="_blank" 
                class="block aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-pink-50">
                 <img class="w-full h-full object-cover transition-transform duration-300" 
                      [src]="img" 
@@ -41,7 +46,8 @@
                      loading="lazy"
                      alt="product image">
             </a>
-        </ng-container>
+        }
+        }
         
     </div>
 
@@ -79,7 +85,7 @@
         </div>
 
         <!-- Estado de reserva -->
-        @if((isLogged && parent.showReserveButton) || !isLogged) {
+        @if((isLogged && showReserveButton) || !isLogged) {
         <ng-container *ngIf="isReserved !== undefined">
             <div *ngIf="isReserved" class="mt-2">
                 <div *ngIf="!isLogged" 

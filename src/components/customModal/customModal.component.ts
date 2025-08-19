@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-custom-modal',
+  imports: [
+    FontAwesomeModule,
+  ],
   templateUrl: './customModal.component.html',
 })
 export class CustomModalComponent {

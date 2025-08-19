@@ -1,8 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ApiService } from '../../apiConnection/ApiService';
+import { CustomModalComponent } from '../customModal/customModal.component';
 
 @Component({
   selector: 'app-custom-delete',
+  imports: [
+    CustomModalComponent,
+  ],
   templateUrl: './customDelete.component.html',
 })
 export class CustomDeleteComponent {

@@ -1,11 +1,18 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
+import { LoadingComponent } from '../../components/loading/loading.component';
+import { SocialNetworkAccessComponent } from '../../components/socialNetworkAccess/socialNetworkAccess.component';
 
 @Component({
+  imports: [
+    LoadingComponent,
+    SocialNetworkAccessComponent,
+    ReactiveFormsModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
