@@ -1,17 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { User } from '../../apiConnection/model/user';
+import { LoadingComponent } from '../../components/loading/loading.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-profile',
+    imports: [
+        LoadingComponent,
+        ReactiveFormsModule,
+        CommonModule,
+    ],
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
     profileForm: FormGroup;
     loading = false;
     submitted = false;

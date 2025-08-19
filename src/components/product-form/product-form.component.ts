@@ -1,10 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
+import { CustomModalComponent } from '../customModal/customModal.component';
 
 @Component({
   selector: 'app-product-form',
+  imports: [
+    CustomModalComponent,
+    ReactiveFormsModule,  
+  ],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.scss',
 })

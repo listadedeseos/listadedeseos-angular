@@ -1,11 +1,20 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { ThemeConfig } from '../../enum/theme';
+import { LoadingComponent } from '../loading/loading.component';
+import { CustomModalComponent } from '../customModal/customModal.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-wishlist-form',
+  imports: [
+    LoadingComponent,
+    CustomModalComponent,
+    ReactiveFormsModule,
+    FontAwesomeModule,
+  ],
   templateUrl: './wishlist-form.component.html',
   styleUrl: './wishlist-form.component.scss',
 })
