@@ -12,6 +12,32 @@
         </div>
     </ng-container>
 
+    <!-- Botón de reserva en esquina superior derecha -->
+    @if(((isLogged && showReserveButton) || !isLogged) && isReserved !== undefined) {
+        <div class="absolute -top-1 -right-1 z-20">
+            @if(isReserved){
+                @if(isLogged){
+                    <button (click)="toggleReserve.emit()"
+                        class="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white w-7 h-7 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center"
+                        title="Eliminar reserva">
+                        <fa-icon [icon]="['fas', 'check']" class="text-xs"></fa-icon>
+                    </button>
+                }@else{
+                    <div class="bg-gradient-to-r from-green-500 to-emerald-500 text-white w-7 h-7 rounded-full shadow-lg flex items-center justify-center"
+                         title="Reservado">
+                        <fa-icon [icon]="['fas', 'check']" class="text-xs"></fa-icon>
+                    </div>
+                }
+            }@else{
+                <button (click)="toggleReserve.emit()"
+                    class="bg-white/90 hover:bg-purple-50 border-2 border-purple-300 hover:border-purple-500 text-purple-600 hover:text-purple-700 w-7 h-7 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center"
+                    title="Reservar producto">
+                    <fa-icon [icon]="['fas', 'heart']" class="text-xs"></fa-icon>
+                </button>
+            }
+        </div>
+    }
+
     <!-- Imagen del producto -->
     <div>
         @switch (aspect) {
@@ -68,47 +94,74 @@
             </a>
         </div>
 
-        <!-- Botones de acción -->
-        <div class="flex flex-col gap-2 mt-auto">
-            <a [href]="principalUrl" 
-               target="_blank" 
-               [class]="getClasses(this.principalLabelString)">
-                {{principalLabelString}}
-            </a>
+        <!-- Pastilla de estado reservado -->
+        @if(((isLogged && showReserveButton) || !isLogged) && isReserved) {
+        <span class="inline-flex items-center gap-1 p-1 text-xs font-medium bg-green-100 text-green-700 border border-green-200 rounded-full shadow-sm mr-auto">
+            <fa-icon [icon]="['fas', 'check-circle']" class="text-green-600"></fa-icon>
+            Reservado
+        </span>
+        }
 
-            <a *ngIf="secondaryUrl" 
-               [href]="secondaryUrl" 
-               target="_blank" 
-               [class]="getClasses(this.secondaryLabelString)">
-                {{secondaryLabelString}}
-            </a>
-        </div>
-
-        <!-- Estado de reserva -->
-        @if((isLogged && showReserveButton) || !isLogged) {
-        <ng-container *ngIf="isReserved !== undefined">
-            <div *ngIf="isReserved" class="mt-2">
-                <div *ngIf="!isLogged" 
-                     class="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium py-2 px-4 rounded-lg text-center text-sm flex items-center justify-center gap-2 shadow-md overflow-hidden">
-                    <fa-icon [icon]="['fas', 'circle-check']"></fa-icon>
-                    <span>Reservado</span>
-                </div>
-                
-                <button *ngIf="isLogged" 
-                        (click)="toggleReserve.emit()"
-                        class="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-medium py-2 px-4 rounded-lg text-center text-sm transition-all duration-200 shadow-md hover:shadow-lg overflow-hidden">
-                    Eliminar reserva
+        <!-- Botones de acción con dropdown -->
+        <div class="flex flex-col gap-2 mt-auto text-xs">
+            <!-- Dropdown container -->
+            <div class="relative group/dropdown w-full">
+                <!-- Botón principal -->
+                <button class="w-full bg-white bg-opacity-50 border border-green-500 text-green-500 font-medium py-2 px-4 rounded-lg text-center transition-all duration-200 shadow-md flex items-center justify-center gap-2">
+                    <fa-icon [icon]="['fas', 'shop']"></fa-icon>
+                    <fa-icon [icon]="['fas', 'chevron-down']" class="text-xs transition-transform duration-200 group-hover/dropdown:rotate-180"></fa-icon>
                 </button>
+                
+                <!-- Dropdown menu -->
+                <div class="absolute bottom-full left-0 right-0 mb-2 opacity-0 invisible group-hover/dropdown:opacity-100 group-hover/dropdown:visible transition-all duration-200 z-50">
+                    <div class="bg-white/95 backdrop-blur-sm border border-gray-300 rounded-lg shadow-xl p-2 space-y-2">
+                        <strong class="text-black text-center w-full">
+                            Método{{secondaryUrl?'s':''}} de compra:
+                        </strong>
+                        <a [href]="principalUrl" 
+                           target="_blank" 
+                           [class]="getDropdownClasses(this.principalLabelString)">
+                            {{principalLabelString}}
+                        </a>
+
+                        @if(secondaryUrl){
+                        <a
+                           [href]="secondaryUrl" 
+                           target="_blank" 
+                           [class]="getDropdownClasses(this.secondaryLabelString)">
+                            {{secondaryLabelString}}
+                        </a>
+                        }
+
+                        <!-- Separador -->
+                        @if(((isLogged && showReserveButton) || !isLogged) && isReserved !== undefined) {
+                            <div class="border-t border-gray-200 my-2"></div>
+                            
+                            <!-- Botón de reserva en dropdown -->
+                            @if(isReserved) {
+                                @if(isLogged) {
+                                    <button (click)="toggleReserve.emit()"
+                                        class="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex flex-wrap items-center justify-center gap-2 hover:shadow-md">
+                                        <fa-icon [icon]="['fas', 'heart-crack']" class="text-sm"></fa-icon>
+                                        Eliminar reserva
+                                    </button>
+                                } @else {
+                                    <div class="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium py-2 px-4 rounded-lg flex items-center justify-center gap-2">
+                                        <fa-icon [icon]="['fas', 'heart']" class="text-sm"></fa-icon>
+                                        Ya reservado
+                                    </div>
+                                }
+                            } @else {
+                                <button (click)="toggleReserve.emit()"
+                                    class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex flex-wrap items-center justify-center gap-2 hover:shadow-md">
+                                    <fa-icon [icon]="['fas', 'heart']" class="text-sm"></fa-icon>
+                                    Reservar
+                                </button>
+                            }
+                        }
+                    </div>
+                </div>
             </div>
-            
-            <button *ngIf="!isReserved"
-                    (click)="toggleReserve.emit()"
-                    class="mt-2 w-full bg-white hover:bg-purple-50 border-2 border-purple-200 hover:border-purple-400 text-purple-600 font-medium py-2 px-4 rounded-lg text-center text-sm transition-all duration-200 flex items-center justify-center gap-2 overflow-hidden">
-                <fa-icon [icon]="['fas', 'basket-shopping']"></fa-icon>
-                <span>Reservar</span>
-            </button>
-        </ng-container>
-    }
-    
+        </div>
     </div>
 </div>
