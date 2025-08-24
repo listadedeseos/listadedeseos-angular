@@ -17,13 +17,10 @@ export class ContactComponent {
 
   public loading = false;
   public saveForm: FormGroup = new FormGroup({});
-  public errors = false
 
   constructor(
     private apiService: ApiService,
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.createForm();
   }
 
@@ -50,14 +47,15 @@ export class ContactComponent {
 
         },
         error: (error: any) => {
-          this.errors = true;
           this.loading = false;
 
           // Utils.showErrorMessage('Error al guardar el producto');
         }
       })
     } else {
-      this.errors = true;
+      // Mark all fields as touched to show errors
+      this.saveForm.markAllAsTouched();
+
       // Utils.showErrorMessage('Debe completar todos los campos');
     }
   }
