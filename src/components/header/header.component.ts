@@ -21,6 +21,21 @@ export class HeaderComponent {
   public fullname = ''
   public isAdmin = false
 
+  public adminRouting = [
+    {
+      url: '/user',
+      icon: 'users-cog',
+      title: 'Gestión de Usuarios',
+      subtitle: 'Administrar usuarios del sistema',
+    },
+    {
+      url: '/contact/list',
+      icon: 'comments',
+      title: 'Lista de sugerencias',
+      subtitle: 'Ver sugerencias',
+    },
+  ]
+
   constructor(
     private router: Router,
     private	authenticationService: AuthenticationService
