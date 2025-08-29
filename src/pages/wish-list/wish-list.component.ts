@@ -168,6 +168,10 @@ export class WishListComponent {
     })
   }
 
+  urlCopied() {
+    Utils.ToastUtils.success('Enlace copiado', 'El enlace de la lista de deseos ha sido copiado al portapapeles');
+  }
+
   toggleModalProduct() {
     this.modalProductOpen = !this.modalProductOpen
     this.cdr.detectChanges()
