@@ -3,6 +3,7 @@ import { ApiService } from '../../apiConnection/ApiService';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoadingComponent } from '../loading/loading.component';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-custom-table',
@@ -10,6 +11,7 @@ import { CommonModule } from '@angular/common';
     LoadingComponent,
     FontAwesomeModule,
     CommonModule,
+    RouterModule,
   ],
   templateUrl: './customTable.component.html',
 })
@@ -44,11 +46,11 @@ export class CustomTableComponent {
   getItems() {
     this.loading = true;
     this.cdr.detectChanges(); // Forzar detección antes de la petición
-    
+
     this.apiService.getPetition(this.url + '?page=' + this.page + '&limit=' + this.limit).subscribe({
       next: (data: any) => {
         this.items = [...data.list]; // Crear nueva referencia del array
-        
+
         this.total = []
         for (let i = 0; i < data.total / this.limit; i++) {
           this.total.push(i + 1)
@@ -74,6 +76,11 @@ export class CustomTableComponent {
     }
   }
 
+  getLink(url: string, item: any, value: string | string[]): string {
+    const keyValue = this.getValue(item, value);
+    return url.replace('{key}', keyValue)
+  }
+
   getValue(item: any, key: string | string[]) {
 
     let arrayKey = [];
@@ -97,6 +104,11 @@ export class CustomTableComponent {
         value = value[arrayKey].map((element: any) => this.getValue(element, keys.slice(1).join('.'))).join(', ');
 
       } else {
+
+        if (Array.isArray(item[String(key)])) {
+          return item[String(key)]
+        }
+
         for (let i = 0; value && i < keys.length; i++) {
           value = value[keys[i]];
         }

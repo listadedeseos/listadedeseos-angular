@@ -110,8 +110,17 @@
                 @for (header of headers; track $index) {
                 <td class="px-6 py-4">
 
+                    @if(header.type == 'table'){
+
+                    @if(!isArray(header.key)){
+                    <app-custom-table [headers]="header.headers"
+                        [items]="getValue(item, header.key)"></app-custom-table>
+                    }
+
+                    }@else{
                     <ng-container [ngTemplateOutlet]="DataTemplate"
                         [ngTemplateOutletContext]="{item:item, header:header}"></ng-container>
+                    }
 
                 </td>
                 }
@@ -157,7 +166,7 @@
 
     <!----------------------------------- Pagination ----------------------------------->
     <div
-        class="flex items-center justify-between p-6 bg-gradient-to-r from-purple-50/50 to-pink-50/50 border-t border-purple-200/50">
+        class="sticky left-0 flex items-center justify-between p-6 bg-gradient-to-r from-purple-50/50 to-pink-50/50 border-t border-purple-200/50">
         <button type="button" (click)="changePage(page-1)"
             [class]="'inline-flex items-center justify-center w-10 h-10 text-purple-600 bg-white border border-purple-200 rounded-lg hover:bg-purple-50 transition-all duration-200 ' + (page == 1?'opacity-50 pointer-events-none':'hover:border-purple-300')">
             <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
@@ -199,14 +208,14 @@
             <span [innerHTML]="getValue(item, header.key)"></span>
             } @else {
             <ng-container [ngTemplateOutlet]="DataTypeTemplate"
-                [ngTemplateOutletContext]="{item:item, value:header.key, type: header.type}"></ng-container>
+                [ngTemplateOutletContext]="{item:item, header:header, value:header.key}"></ng-container>
             }
 
             @if(header.subKey){
             <span class="block text-neutral-600 text-xs">
                 (
                 <ng-container [ngTemplateOutlet]="DataTypeTemplate"
-                    [ngTemplateOutletContext]="{item:item, value:header.subKey, type: header.type}"></ng-container>
+                    [ngTemplateOutletContext]="{item:item, header:header, value:header.subKey}"></ng-container>
                 )
             </span>
             }
@@ -218,9 +227,9 @@
 <!--------------------------------- Data template end --------------------------------->
 
 <!----------------------------------- Data Type template ----------------------------------->
-<ng-template #DataTypeTemplate let-item="item" let-value="value" let-type="type">
+<ng-template #DataTypeTemplate let-item="item" let-header="header" let-value="value">
 
-    @switch (type) {
+    @switch (header.type) {
 
     @case ('boolean') {
     @if(getValue(item, value)){
@@ -247,6 +256,12 @@
     @case ('color'){
     <span class="inline-block w-8 h-4 rounded-full border border-neutral-200 shadow-sm"
         [style.background-color]="getValue(item, value)"></span>
+    }
+
+    @case ('link'){
+    <a [routerLink]="getLink(header.url, item, value)" class="text-purple-600 hover:underline" target="_blank">
+        {{header.linkName}}
+    </a>
     }
 
     @case ('login'){

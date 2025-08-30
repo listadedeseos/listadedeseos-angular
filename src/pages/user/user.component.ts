@@ -25,6 +25,16 @@ export class UserComponent {
         { name: 'LOGIN', key: 'key', type: 'login' },
         { name: 'NOMBRE', key: ['name', 'surname'], subKey: 'username' },
         { name: 'CORREO ELECTRÓNICO', key: 'email' },
+        {
+            name: 'LISTAS', key: 'wish_lists', type: 'table', headers: [
+                { name: 'URL', key: 'uuid', linkName: 'Abrir lista', url: '/list/{key}', type: 'link' },
+                { name: 'UUID', key: 'uuid' },
+                { name: 'NAME', key: 'name' },
+                { name: 'STEAM', key: 'steam_username' },
+                { name: 'AMAZON', key: 'amazon_wishlist_id' },
+                { name: 'ACTUALIZADO', key: 'updated_at', subKey: 'created_at', type: 'dateTime' },
+            ]
+        },
         { name: 'ACTUALIZADO', key: 'updated_at', subKey: 'created_at', type: 'dateTime' },
     ]
 

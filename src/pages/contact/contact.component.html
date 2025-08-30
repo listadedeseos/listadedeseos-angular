@@ -34,7 +34,7 @@
                     </div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-neutral-800 mb-1">Contribuye en GitHub</h3>
-                        <p class="text-neutral-600">¿Eres desarrollador? Ayúdanos a mejorar el proyecto</p>
+                        <p class="text-neutral-600">¿Eres desarrollador/a? Ayúdanos a mejorar el proyecto</p>
                     </div>
                     <fa-icon [icon]="['fas', 'arrow-right']" class="text-neutral-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all duration-300"></fa-icon>
                 </div>
@@ -57,16 +57,6 @@
                     </div>
 
                     <form class="space-y-5" [formGroup]="saveForm" (submit)="onSubmit()">
-                        @if(errors){
-                        <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">
-                            <div class="flex items-center gap-2">
-                                <span class="text-rose-500">❌</span>
-                                <p class="text-sm text-rose-700 font-medium">
-                                    Ha ocurrido un error al enviar el mensaje
-                                </p>
-                            </div>
-                        </div>
-                        }
 
                         <!-- Tipo de mensaje -->
                         <div>
@@ -81,6 +71,16 @@
                                 <option value="complaint">🐛 Error/queja</option>
                                 <option value="question">❓ Consulta</option>
                             </select>
+                            @if(saveForm.get('type')?.invalid && saveForm.get('type')?.touched) {
+                            <div class="mt-2 text-sm text-rose-600">
+                                @if(saveForm.get('type')?.errors?.['required']) {
+                                <span class="flex items-center gap-1">
+                                    <span>❌</span>
+                                    <span>Debe seleccionar un tipo de mensaje</span>
+                                </span>
+                                }
+                            </div>
+                            }
                         </div>
 
                         <!-- Nombre y Email -->
@@ -94,6 +94,29 @@
                                        placeholder="Tu nombre"
                                        class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
                                        required>
+
+                                @if(saveForm.get('name')?.invalid && saveForm.get('name')?.touched) {
+                                <div class="mt-2 text-sm text-rose-600">
+                                    @if(saveForm.get('name')?.errors?.['required']) {
+                                    <span class="flex items-center gap-1">
+                                        <span>❌</span>
+                                        <span>El nombre es requerido</span>
+                                    </span>
+                                    }
+                                    @if(saveForm.get('name')?.errors?.['minlength']) {
+                                    <span class="flex items-center gap-1">
+                                        <span>❌</span>
+                                        <span>El nombre debe tener al menos 3 caracteres</span>
+                                    </span>
+                                    }
+                                    @if(saveForm.get('name')?.errors?.['maxlength']) {
+                                    <span class="flex items-center gap-1">
+                                        <span>❌</span>
+                                        <span>El nombre no debe exceder 50 caracteres</span>
+                                    </span>
+                                    }
+                                </div>
+                                }
                             </div>
 
                             <div>
@@ -105,6 +128,22 @@
                                        placeholder="tu@email.com"
                                        class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
                                        required>
+                                @if(saveForm.get('email')?.invalid && saveForm.get('email')?.touched) {
+                                <div class="mt-2 text-sm text-rose-600">
+                                    @if(saveForm.get('email')?.errors?.['required']) {
+                                    <span class="flex items-center gap-1">
+                                        <span>❌</span>
+                                        <span>El correo electrónico es requerido</span>
+                                    </span>
+                                    }
+                                    @if(saveForm.get('email')?.errors?.['email']) {
+                                    <span class="flex items-center gap-1">
+                                        <span>❌</span>
+                                        <span>Ingrese un correo electrónico válido</span>
+                                    </span>
+                                    }
+                                </div>
+                                }
                             </div>
                         </div>
 
@@ -118,6 +157,28 @@
                                    placeholder="Resumen de tu mensaje"
                                    class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
                                    min="3" max="50" required>
+                            @if(saveForm.get('title')?.invalid && saveForm.get('title')?.touched) {
+                            <div class="mt-2 text-sm text-rose-600">
+                                @if(saveForm.get('title')?.errors?.['required']) {
+                                <span class="flex items-center gap-1">
+                                    <span>❌</span>
+                                    <span>El título es requerido</span>
+                                </span>
+                                }
+                                @if(saveForm.get('title')?.errors?.['minlength']) {
+                                <span class="flex items-center gap-1">
+                                    <span>❌</span>
+                                    <span>El título debe tener al menos 3 caracteres</span>
+                                </span>
+                                }
+                                @if(saveForm.get('title')?.errors?.['maxlength']) {
+                                <span class="flex items-center gap-1">
+                                    <span>❌</span>
+                                    <span>El título no debe exceder 50 caracteres</span>
+                                </span>
+                                }
+                            </div>
+                            }
                         </div>
 
                         <!-- Descripción -->
@@ -130,6 +191,16 @@
                                       rows="5"
                                       class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400 resize-none"
                                       required></textarea>
+                            @if(saveForm.get('body')?.invalid && saveForm.get('body')?.touched) {
+                            <div class="mt-2 text-sm text-rose-600">
+                                @if(saveForm.get('body')?.errors?.['required']) {
+                                <span class="flex items-center gap-1">
+                                    <span>❌</span>
+                                    <span>La descripción es requerida</span>
+                                </span>
+                                }
+                            </div>
+                            }
                         </div>
 
                         <!-- Botón de envío -->

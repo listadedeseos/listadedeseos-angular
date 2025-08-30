@@ -70,7 +70,7 @@ export class ProfileComponent {
         this.loading = true;
 
         // Luego intentar obtener información completa desde la API
-        this.apiService.getById(Utils.urls.user, this.currentUser.id).subscribe({
+        this.apiService.getPetition(Utils.urls.user + '/current').subscribe({
             next: (response: any) => {
                 const userData = response.user;
 
@@ -122,7 +122,7 @@ export class ProfileComponent {
             delete formData.confirmPassword;
         }
 
-        this.apiService.save(Utils.urls.user, formData, this.currentUser.id).subscribe({
+        this.apiService.save(Utils.urls.user, formData, 'current').subscribe({
             next: (response: any) => {
                 this.success = 'Perfil actualizado correctamente';
                 this.loading = false;

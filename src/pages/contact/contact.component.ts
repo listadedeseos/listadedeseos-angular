@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
-import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
@@ -17,13 +16,10 @@ export class ContactComponent {
 
   public loading = false;
   public saveForm: FormGroup = new FormGroup({});
-  public errors = false
 
   constructor(
     private apiService: ApiService,
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.createForm();
   }
 
@@ -43,22 +39,19 @@ export class ContactComponent {
 
       this.apiService.save(Utils.urls.contact, this.saveForm.value).subscribe({
         next: (data: any) => {
-
           this.saveForm.reset();
-
-          // this.router.navigate(['/', 'verify', data.user.id]);
-
+          Utils.ToastUtils.success('Mensaje enviado', 'Tu mensaje ha sido enviado correctamente');
+          this.loading = false;
         },
         error: (error: any) => {
-          this.errors = true;
           this.loading = false;
-
-          // Utils.showErrorMessage('Error al guardar el producto');
+          Utils.ToastUtils.error('Error', 'No se pudo enviar el mensaje');
         }
       })
     } else {
-      this.errors = true;
-      // Utils.showErrorMessage('Debe completar todos los campos');
+      // Marcar todos los campos como touched para mostrar los errores
+      this.saveForm.markAllAsTouched();
+      Utils.ToastUtils.error('Formulario incompleto', 'Por favor completa todos los campos requeridos');
     }
   }
 }
