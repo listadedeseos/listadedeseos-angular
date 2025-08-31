@@ -62,19 +62,19 @@ export class WishListComponent {
     this.wishListName = this.activateRoute.snapshot.params['wishListName'] ?? 'principal'
     this.isLogged = this.authenticationService.isLogged
 
-    if (this.isLogged && this.username == null) {
-      this.username = this.authenticationService.currentUserValue.username
-      this.isMyWishList = true
-      this.getAllWishList()
+    if(this.isLogged && !this.uuid && !this.username){
+      this.getAllWishList(true)
     }
-    
+
     this.cdr.markForCheck()
   }
 
   ngOnInit() {
     this.routeSubsrciption = this.activateRoute.params.subscribe(params => {
       this.refreshData()
-      this.getWishList()
+      if(this.uuid || this.username){
+        this.getWishList()
+      }
     });
   }
 
@@ -92,14 +92,16 @@ export class WishListComponent {
     return 'https://listadedeseos.es/' + this.urlToShare
   }
 
-  getAllWishList() {
+  getAllWishList(getWishList = false) {
     this.apiService.getPetition(Utils.urls.wishlist).subscribe({
       next: (value: any) => {
         this.allWishList = [...(Array.isArray(value.wishlists) ? value.wishlists : [])]
 
         if (this.uuid == null) {
           this.uuid = this.allWishList[0]?.uuid
-          this.getWishList()
+          if(getWishList){
+            this.getWishList()
+          }
         }
 
         this.cdr.markForCheck()
@@ -127,7 +129,12 @@ export class WishListComponent {
         }
 
         this.urlToShare = '@' + value.username + (wishListName ? '/' + wishListName : '')
-        
+
+        if (this.isLogged && value.username == this.authenticationService.currentUserValue.username) {
+          this.isMyWishList = true
+          this.getAllWishList()
+        }
+
         this.cdr.markForCheck()
         this.cdr.detectChanges()
       },
@@ -157,7 +164,7 @@ export class WishListComponent {
   deleteWishList(id: number) {
     this.loading = true
     this.cdr.detectChanges()
-    
+
     this.apiService.deleteById(Utils.urls.wishlist, id).subscribe({
       next: (value: any) => {
         this.allWishList = [...this.allWishList.filter((wishList: any) => wishList.id != id)]

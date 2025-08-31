@@ -33,7 +33,7 @@
 
   <main class="container mx-auto py-8 px-4">
 
-    @if(isLogged && isMyWishList){
+    @if(isMyWishList){
     <!-- Admin Section -->
     <section class="bg-white rounded-2xl shadow-lg p-6 mb-8 flex flex-col gap-4">
     
@@ -105,7 +105,7 @@
             <span class="hidden md:inline">Compartir</span>
           </button>
           
-          @if(isLogged){
+          @if(isMyWishList){
 
           <!-- Settings Button -->
           <button (click)="toggleModalWishList(wishListId)" 
@@ -167,7 +167,7 @@
         </app-card>
         } @empty {
         <!-- Empty State -->
-        @if(isLogged || !(wishlist.steam_username || wishlist.amazon_wishlist_id)){
+        @if(isMyWishList || !(wishlist.steam_username || wishlist.amazon_wishlist_id)){
         <div class="col-span-full flex flex-col items-center justify-center py-16">
           <div class="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-gray-400 text-3xl mb-4">
             😔
@@ -177,7 +177,7 @@
             Comienza añadiendo productos a tu lista de deseos para compartir con otros
           </p>
 
-          @if(isLogged){
+          @if(isMyWishList){
           <div class="flex flex-col sm:flex-row gap-3">
             <button (click)="toggleModalProduct()"
                     class="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
