@@ -26,6 +26,7 @@ export class ProfileComponent {
     success = '';
     currentUser: User;
     showPasswordField = false;
+    wishlists: any[] = [];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -40,12 +41,15 @@ export class ProfileComponent {
             name: ['', [Validators.required, Validators.minLength(2)]],
             surname: ['', [Validators.required, Validators.minLength(2)]],
             email: ['', [Validators.required, Validators.email]],
+            main_wish_list_id: [-1, [Validators.required]],
             password: [''],
             confirmPassword: ['']
         }, { validator: this.passwordMatchValidator });
     }
 
     ngOnInit(): void {
+        this.getWishLists();
+
         this.loadUserProfile();
     }
 
@@ -74,12 +78,7 @@ export class ProfileComponent {
             next: (response: any) => {
                 const userData = response.user;
 
-                this.profileForm.patchValue({
-                    username: userData.username,
-                    name: userData.name,
-                    surname: userData.surname,
-                    email: userData.email
-                });
+                this.profileForm.patchValue(userData);
 
                 this.loading = false;
             },
@@ -172,5 +171,13 @@ export class ProfileComponent {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
+    }
+
+    getWishLists(){
+        this.apiService.getPetition(Utils.urls.wishlist).subscribe({
+            next: (value: any) => {
+              this.wishlists.push(...value.wishlists);
+            },
+          })
     }
 }
