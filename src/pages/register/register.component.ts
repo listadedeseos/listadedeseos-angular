@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { SocialNetworkAccessComponent } from '../../components/socialNetworkAccess/socialNetworkAccess.component';
 
 @Component({
   imports: [
     SocialNetworkAccessComponent,
     ReactiveFormsModule,
+    RouterModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',

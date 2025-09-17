@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
@@ -12,6 +12,7 @@ import { SocialNetworkAccessComponent } from '../../components/socialNetworkAcce
     LoadingComponent,
     SocialNetworkAccessComponent,
     ReactiveFormsModule,
+    RouterModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

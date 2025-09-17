@@ -194,6 +194,47 @@
                         </div>
                     </div>
 
+                    <!-- Sección de Lista de Deseos Principal -->
+                    <div class="space-y-6 pt-8 border-t border-gray-200">
+                        <div class="border-b border-gray-200 pb-4">
+                            <h3 class="text-lg font-medium text-gray-900 flex items-center gap-2">
+                                <span
+                                    class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-sm">3</span>
+                                Lista de Deseos Principal
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1">Selecciona tu lista de deseos principal</p>
+                        </div>
+
+                        <!-- Selección de Lista de Deseos Principal -->
+                        @if(wishlists.length > 0){
+                        <div>
+                            <label for="main_wish_list_id" class="block text-sm font-medium text-gray-700 mb-2">
+                                Lista de Deseos Principal *
+                            </label>
+                            <select formControlName="main_wish_list_id" id="main_wish_list_id"
+                                class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
+                                [class]="submitted && f['main_wish_list_id'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
+                                
+                                <option [value]="-1" disabled>Selecciona una lista</option>
+
+                                @for (wishlist of wishlists; track $index) {
+                                <option [value]="wishlist.id">
+                                    {{ wishlist.name }}
+                                </option>
+                                }
+
+                            </select>
+
+                            @if(submitted && f['main_wish_list_id'].errors?.['required']){
+                            <div class="mt-2 text-sm text-red-600">
+                                La lista de deseos principal es requerida
+                            </div>
+                            }
+
+                        </div>
+                        }
+                    </div>
+
                     <!-- Botones de acción -->
                     <div class="flex flex-col sm:flex-row gap-4 pt-8 border-t border-gray-200">
                         <button type="submit" [disabled]="loading"
