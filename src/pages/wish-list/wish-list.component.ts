@@ -42,6 +42,7 @@ export class WishListComponent {
   public modalWishListOpen = false
   public wishListFormId = 0
   public routeSubsrciption: any
+  public isMainWishlist = false
 
   public urlToShare = ''
 
@@ -59,10 +60,10 @@ export class WishListComponent {
   refreshData() {
     this.uuid = this.activateRoute.snapshot.params['uuid'] ?? null
     this.username = this.activateRoute.snapshot.params['username'] ?? null
-    this.wishListName = this.activateRoute.snapshot.params['wishListName'] ?? 'principal'
+    this.wishListName = this.activateRoute.snapshot.params['wishListName'] ?? null
     this.isLogged = this.authenticationService.isLogged
 
-    if(this.isLogged && !this.uuid && !this.username){
+    if (this.isLogged && !this.uuid && !this.username) {
       this.getAllWishList(true)
     }
 
@@ -72,7 +73,7 @@ export class WishListComponent {
   ngOnInit() {
     this.routeSubsrciption = this.activateRoute.params.subscribe(params => {
       this.refreshData()
-      if(this.uuid || this.username){
+      if (this.uuid || this.username) {
         this.getWishList()
       }
     });
@@ -93,21 +94,28 @@ export class WishListComponent {
   }
 
   getAllWishList(getWishList = false) {
-    this.apiService.getPetition(Utils.urls.wishlist).subscribe({
-      next: (value: any) => {
-        this.allWishList = [...(Array.isArray(value.wishlists) ? value.wishlists : [])]
+    if (this.allWishList.length == 0) {
+      this.apiService.getPetition(Utils.urls.wishlist).subscribe({
+        next: (value: any) => {
+          this.allWishList = [...(Array.isArray(value.wishlists) ? value.wishlists : [])]
 
-        if (this.uuid == null) {
-          this.uuid = this.allWishList[0]?.uuid
-          if(getWishList){
-            this.getWishList()
+          this.allWishList = this.allWishList.map((wishList: any) => {
+            wishList.isMain = wishList.id == value.main_wish_list_id
+            return wishList
+          })
+
+          if (this.uuid == null) {
+            this.uuid = this.allWishList[0]?.uuid
+            if (getWishList) {
+              this.getWishList()
+            }
           }
-        }
 
-        this.cdr.markForCheck()
-        this.cdr.detectChanges()
-      },
-    })
+          this.cdr.markForCheck()
+          this.cdr.detectChanges()
+        },
+      })
+    }
   }
 
   getWishList() {
@@ -116,19 +124,18 @@ export class WishListComponent {
 
     let url = this.uuid ?
       Utils.urls.wishlist + '/uuid/' + this.uuid :
-      Utils.urls.wishlist + '/' + this.username + '/' + this.wishListName
+      Utils.urls.wishlist + '/' + this.username + (this.wishListName ? '/' + this.wishListName : '')
 
     this.apiService.getPetition(url).subscribe({
       next: (value: any) => {
 
-        let wishListName = ''
         if (value.wishlist) {
           this.wishListId = value.wishlist.id
           this.wishlist = { ...value.wishlist }
-          wishListName = this.wishlist.name.toLowerCase() != 'principal' ? this.wishlist.name : ''
         }
 
-        this.urlToShare = '@' + value.username + (wishListName ? '/' + wishListName : '')
+        this.isMainWishlist = value.isMain
+        this.urlToShare = '@' + value.username + (this.isMainWishlist ? '' : '/' + this.wishlist.name)
 
         if (this.isLogged && value.username == this.authenticationService.currentUserValue.username) {
           this.isMyWishList = true
@@ -218,12 +225,18 @@ export class WishListComponent {
   }
 
   wishlistUpdate(id: number, response: any) {
-    if (id == 0) {
+
+    if (id == 0) { // New wish list
       response.wishList.is_new = true // To show animation
       this.allWishList = [...this.allWishList, response.wishList]
-      this.cdr.markForCheck()
-      this.cdr.detectChanges()
+
+    } else { // Update wish list
+      const index = this.allWishList.findIndex((wishList: any) => wishList.id == id)
+      if (index > -1) {
+        this.allWishList[index] = { ...this.allWishList[index], ...response.wishList }
+      }
     }
+
   }
 
   getThemeLabel(theme: string): string {
