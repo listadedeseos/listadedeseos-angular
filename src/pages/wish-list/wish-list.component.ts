@@ -170,13 +170,27 @@ export class WishListComponent {
 
   deleteWishList(id: number) {
     this.loading = true
-    this.cdr.detectChanges()
 
     this.apiService.deleteById(Utils.urls.wishlist, id).subscribe({
       next: (value: any) => {
         this.allWishList = [...this.allWishList.filter((wishList: any) => wishList.id != id)]
         this.loading = false
+
+        if (this.uuid == value.wishList.uuid) {
+
+          let mainUuid = this.allWishList.find((wishList: any) => wishList.isMain)?.uuid
+
+          this.router.navigateByUrl('/list/' + (mainUuid ? mainUuid : ''));
+        }
+
+        Utils.ToastUtils.success('Lista eliminada', 'La lista de deseos ha sido eliminada correctamente')
+
         this.cdr.markForCheck()
+        this.cdr.detectChanges()
+      },
+      error: () => {
+        Utils.ToastUtils.error('Error', 'No se ha podido eliminar la lista de deseos')
+        this.loading = false
         this.cdr.detectChanges()
       }
     })
