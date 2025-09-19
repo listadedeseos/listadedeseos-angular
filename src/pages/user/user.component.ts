@@ -27,9 +27,9 @@ export class UserComponent {
         { name: 'CORREO ELECTRÓNICO', key: 'email' },
         {
             name: 'LISTAS', key: 'wish_lists', type: 'table', headers: [
+                { name: 'Principal', key: 'is_main', type: 'boolean' },
                 { name: 'URL', key: 'uuid', linkName: 'Abrir lista', url: '/list/{key}', type: 'link' },
-                { name: 'UUID', key: 'uuid' },
-                { name: 'NAME', key: 'name' },
+                { name: 'NAME', key: 'name', subKey: 'uuid' },
                 { name: 'STEAM', key: 'steam_username' },
                 { name: 'AMAZON', key: 'amazon_wishlist_id' },
                 { name: 'ACTUALIZADO', key: 'updated_at', subKey: 'created_at', type: 'dateTime' },
