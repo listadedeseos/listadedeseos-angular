@@ -104,9 +104,13 @@ export class CustomTableComponent {
         value = value[arrayKey].map((element: any) => this.getValue(element, keys.slice(1).join('.'))).join(', ');
 
       } else {
+        let finalValue = item[String(key)]
 
-        if (Array.isArray(item[String(key)])) {
-          return item[String(key)]
+        let isArray = Array.isArray(finalValue)
+        let isBoolean = typeof finalValue === 'boolean'
+
+        if (isArray || isBoolean) {
+          return finalValue
         }
 
         for (let i = 0; value && i < keys.length; i++) {

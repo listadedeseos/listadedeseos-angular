@@ -35,10 +35,10 @@
                                     }@else{
 
                                     <th scope="col"
-                                        class="px-6 py-3 font-medium bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 max-w-min">
+                                        class="p-2 font-medium bg-gradient-to-r from-purple-600 to-pink-600 text-white max-w-min">
                                         {{header.name}}
                                     </th>
-                                    <td class="px-6 py-3 w-full text-neutral-800">
+                                    <td class="p-2 w-full text-neutral-800">
 
                                         <ng-container [ngTemplateOutlet]="DataTemplate"
                                             [ngTemplateOutletContext]="{item:item, header:header}"></ng-container>
@@ -86,17 +86,17 @@
     <!--------------------------------- Table mobile end --------------------------------->
 
     <!----------------------------------- Table desktop ----------------------------------->
-    <table class="w-full text-sm text-left rtl:text-right text-neutral-700 hidden md:table">
+    <table class="w-full text-sm text-center rtl:text-right text-neutral-700 hidden md:table">
         <thead class="text-xs font-semibold uppercase bg-gradient-to-r from-purple-600 to-pink-600 text-white">
             <tr>
                 @for (header of headers; track $index) {
-                <th scope="col" class="px-6 py-4">
+                <th scope="col" class="p-2">
                     {{header.name}}
                 </th>
                 }
 
                 @if(this.url){
-                <th scope="col" class="px-6 py-4">
+                <th scope="col" class="p-2">
                     Opciones
                 </th>
                 }
@@ -105,10 +105,10 @@
         <tbody>
             @for (item of items; track $index) {
             <tr
-                [class]="'hover:bg-purple-50/50 transition-colors duration-200 border-b border-purple-100/30 last:border-b-0 ' + ($index%2==0?'bg-purple-50/20':'')">
+                [class]="'min-w-max hover:bg-purple-50/50 transition-colors duration-200 border-b border-purple-100/30 last:border-b-0 ' + ($index%2==0?'bg-purple-50/20':'')">
 
                 @for (header of headers; track $index) {
-                <td class="px-6 py-4">
+                <td class="p-2">
 
                     @if(header.type == 'table'){
 
@@ -212,7 +212,7 @@
             }
 
             @if(header.subKey){
-            <span class="block text-neutral-600 text-xs">
+            <span class="block text-neutral-600 text-xs min-w-max">
                 (
                 <ng-container [ngTemplateOutlet]="DataTypeTemplate"
                     [ngTemplateOutletContext]="{item:item, header:header, value:header.subKey}"></ng-container>
@@ -229,69 +229,72 @@
 <!----------------------------------- Data Type template ----------------------------------->
 <ng-template #DataTypeTemplate let-item="item" let-header="header" let-value="value">
 
-    @switch (header.type) {
+    <section class="inline-block min-w-max">
+        @switch (header.type) {
 
-    @case ('boolean') {
-    @if(getValue(item, value)){
-    <div class="inline-flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
-        <fa-icon [ngClass]="['text-emerald-600', 'text-xs']" [icon]="['fas', 'check']"></fa-icon>
-    </div>
-    } @else {
-    <div class="inline-flex items-center justify-center w-6 h-6 bg-rose-100 rounded-full">
-        <fa-icon [ngClass]="['text-rose-600', 'text-xs']" [icon]="['fas', 'xmark']"></fa-icon>
-    </div>
-    }
-    }
-
-    @case ('currency'){
-    <!-- {{formatEuro(getValue(item, value))}} -->
-    }
-
-    @case ('dateTime') {
-    <span class="text-neutral-600 text-sm">
-        {{getValue(item, value) | date: 'dd/MM/yyyy HH:mm'}}
-    </span>
-    }
-
-    @case ('color'){
-    <span class="inline-block w-8 h-4 rounded-full border border-neutral-200 shadow-sm"
-        [style.background-color]="getValue(item, value)"></span>
-    }
-
-    @case ('link'){
-    <a [routerLink]="getLink(header.url, item, value)" class="text-purple-600 hover:underline" target="_blank">
-        {{header.linkName}}
-    </a>
-    }
-
-    @case ('login'){
-    @if(item.active){
-    <span class="inline-flex items-center gap-1">
-
-        @if(item.email_verified_at){
-        <div [title]="item.email" class="inline-flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full">
-            <fa-icon [ngClass]="['text-blue-600', 'text-xs']" [icon]="['fas', 'envelope']"></fa-icon>
+        @case ('boolean') {
+        @if(getValue(item, value)){
+        <div class="inline-flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
+            <fa-icon [ngClass]="['text-emerald-600', 'text-xs']" [icon]="['fas', 'check']"></fa-icon>
+        </div>
+        } @else {
+        <div class="inline-flex items-center justify-center w-6 h-6 bg-rose-100 rounded-full">
+            <fa-icon [ngClass]="['text-rose-600', 'text-xs']" [icon]="['fas', 'xmark']"></fa-icon>
         </div>
         }
-
-        @if(item.google_id){
-        <div [title]="item.google_id" class="inline-flex items-center justify-center w-6 h-6 bg-red-100 rounded-full">
-            <fa-icon [ngClass]="['text-red-600', 'text-xs']" [icon]="['fab', 'google']"></fa-icon>
-        </div>
         }
 
-    </span>
-    } @else {
-    <div class="inline-flex items-center justify-center w-6 h-6 bg-rose-100 rounded-full">
-        <fa-icon [ngClass]="['text-rose-600', 'text-xs']" [icon]="['fas', 'xmark']"></fa-icon>
-    </div>
-    }
-    }
+        @case ('currency'){
+        <!-- {{formatEuro(getValue(item, value))}} -->
+        }
 
-    @default {
-    {{getValue(item, value)}}
-    }
-    }
+        @case ('dateTime') {
+        <span class="text-neutral-600 text-sm">
+            {{getValue(item, value) | date: 'dd/MM/yyyy HH:mm'}}
+        </span>
+        }
+
+        @case ('color'){
+        <span class="inline-block w-8 h-4 rounded-full border border-neutral-200 shadow-sm"
+            [style.background-color]="getValue(item, value)"></span>
+        }
+
+        @case ('link'){
+        <a [routerLink]="getLink(header.url, item, value)" class="text-purple-600 hover:underline" target="_blank">
+            {{header.linkName}}
+        </a>
+        }
+
+        @case ('login'){
+        @if(item.active){
+        <span class="inline-flex items-center gap-1">
+
+            @if(item.email_verified_at){
+            <div [title]="item.email" class="inline-flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full">
+                <fa-icon [ngClass]="['text-blue-600', 'text-xs']" [icon]="['fas', 'envelope']"></fa-icon>
+            </div>
+            }
+
+            @if(item.google_id){
+            <div [title]="item.google_id"
+                class="inline-flex items-center justify-center w-6 h-6 bg-red-100 rounded-full">
+                <fa-icon [ngClass]="['text-red-600', 'text-xs']" [icon]="['fab', 'google']"></fa-icon>
+            </div>
+            }
+
+        </span>
+        } @else {
+        <div class="inline-flex items-center justify-center w-6 h-6 bg-rose-100 rounded-full">
+            <fa-icon [ngClass]="['text-rose-600', 'text-xs']" [icon]="['fas', 'xmark']"></fa-icon>
+        </div>
+        }
+        }
+
+        @default {
+        {{getValue(item, value)}}
+        }
+        }
+    </section>
 
 </ng-template>
 <!--------------------------------- Data Type template end --------------------------------->
