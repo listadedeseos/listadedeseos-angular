@@ -161,6 +161,8 @@ export class ProfileComponent {
                 // Scroll to top to show success message
                 window.scrollTo({ top: 0, behavior: 'smooth' });
 
+                Utils.ToastUtils.success('Perfil actualizado', 'Tu perfil ha sido actualizado correctamente.');
+
                 this.router.navigate(['/']);
             },
             error: (error) => {
