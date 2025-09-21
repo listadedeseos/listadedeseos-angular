@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
@@ -7,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   imports: [
     FontAwesomeModule,
     CommonModule,
+    RouterModule,
 ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
