@@ -55,10 +55,15 @@ export class WishlistFormComponent {
 
       name: new FormControl('', [Validators.required]),
       theme: new FormControl(null),
+      date_end: new FormControl(null),
       steam_username: new FormControl(null),
       amazon_wishlist_id: new FormControl(null),
 
     })
+  }
+
+  deleteDateEnd() {
+    this.saveForm.get('date_end')?.setValue(null);
   }
 
   getById(id: number) {
@@ -79,6 +84,10 @@ export class WishlistFormComponent {
   saveEntity() {
     if (this.saveForm.valid) {
       this.loading = true;
+
+      if (this.saveForm.value.date_end == null) {
+        delete this.saveForm.value.date_end;
+      }
 
       this.apiService.save(Utils.urls.wishlist, this.saveForm.value, this.id).subscribe({
         next: (response: any) => {

@@ -11,6 +11,7 @@ import { SteamComponent } from '../../components/steam/steam.component';
 import { AmazonComponent } from '../../components/amazon/amazon.component';
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
 import { WishlistFormComponent } from '../../components/wishlist-form/wishlist-form.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   imports: [
@@ -22,6 +23,7 @@ import { WishlistFormComponent } from '../../components/wishlist-form/wishlist-f
     AmazonComponent,
     ProductFormComponent,
     WishlistFormComponent,
+    DatePipe,
   ],
   templateUrl: './wish-list.component.html',
   styleUrl: './wish-list.component.scss',
@@ -132,6 +134,8 @@ export class WishListComponent {
         if (value.wishlist) {
           this.wishListId = value.wishlist.id
           this.wishlist = { ...value.wishlist }
+
+          this.dateCounter(this.wishlist.date_end)
         }
 
         this.isMainWishlist = value.isMain
@@ -280,4 +284,53 @@ export class WishListComponent {
   getBannerImage(theme: string): string {
     return ThemeConfig.getTheme(theme).banner;
   }
+
+  dateCounter(dateEnd: string) {
+
+    if (dateEnd) {
+
+      this.calculateDateEndCounter(dateEnd);
+
+      setInterval(() => {
+        this.calculateDateEndCounter(dateEnd);
+      }, 1000);
+
+    }
+
+  }
+
+  calculateDateEndCounter(dateEnd: string) {
+    const now = new Date();
+    const endDate = new Date(dateEnd);
+    const timeDiff = endDate.getTime() - now.getTime();
+
+    if (timeDiff <= 0) {
+      this.wishlist.date_end_counter = 'Finalizado';
+      this.cdr.detectChanges();
+      return;
+    }
+
+    // Calculate all time units
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+    // Build the counter string
+    let counterParts = [];
+
+    if (days > 0) {
+      counterParts.push(`${days} día${days !== 1 ? 's' : ''}`);
+    }
+
+    // Always show hours, minutes, and seconds
+    counterParts.push(`${hours.toString().padStart(2, '0')}h`);
+    counterParts.push(`${minutes.toString().padStart(2, '0')}m`);
+    counterParts.push(`${seconds.toString().padStart(2, '0')}s`);
+
+    this.wishlist.date_end_counter = counterParts.join(' ');
+
+    this.cdr.detectChanges()
+  }
+
 }
