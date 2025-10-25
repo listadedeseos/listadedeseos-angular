@@ -1,12 +1,12 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
-import { CustomTableComponent } from '../../components/customTable/customTable.component';
+import { TableModule } from '@some-angular-utils/table';
 import { CustomDeleteComponent } from '../../components/customDelete/customDelete.component';
 
 @Component({
     imports: [
-        CustomTableComponent,
+        TableModule,
         CustomDeleteComponent,
     ],
     templateUrl: './user.component.html',
@@ -15,7 +15,7 @@ import { CustomDeleteComponent } from '../../components/customDelete/customDelet
 })
 export class UserComponent {
 
-    @ViewChild('customTable') customTable!: CustomTableComponent;
+    @ViewChild('customTable') customTable!: TableModule;
 
     loading: boolean = true;
 

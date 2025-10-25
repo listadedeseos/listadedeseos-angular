@@ -1,6 +1,17 @@
 <main class="p-2">
-    <app-custom-table #customTable [url]="url" [headers]="headers"
-        (deleteEvent)="toogleDeleteForm($event)"></app-custom-table>
+    <sau-table
+        #customTable
+        [url]="url"
+        [headers]="headers"
+        contentList="list"
+        contentTotal="total"
+        pageParamName="page"
+        limitParamName="limit"
+        [sizeBetweenPages]="1"
+        [limit]="10"
+        [sizeInitialPage]="1"
+        (deleteEvent)="toogleDeleteForm($event)"
+    ></sau-table>
 
     @if (deleteProduct) {
     <app-custom-delete [url]="url" [id]="id" (closeFunction)="toogleDeleteForm()"

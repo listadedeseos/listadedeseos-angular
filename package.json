@@ -35,6 +35,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@some-angular-utils/table": "^0.1.5",
     "ngx-toastr-notifier": "^20.0.9",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
