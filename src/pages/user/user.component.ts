@@ -3,10 +3,12 @@ import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { TableModule } from '@some-angular-utils/table';
 import { CustomDeleteComponent } from '../../components/customDelete/customDelete.component';
+import { UserFormComponent } from '../../components/user-form/user-form.component';
 
 @Component({
     imports: [
         TableModule,
+        UserFormComponent,
         CustomDeleteComponent,
     ],
     templateUrl: './user.component.html',
@@ -39,9 +41,15 @@ export class UserComponent {
     ]
 
     public id = 0
+    public editProduct = false
     public deleteProduct = false
 
     constructor(private apiService: ApiService) { }
+
+    toogleEditForm(id = 0) {
+        this.id = id
+        this.editProduct = !this.editProduct
+    }
 
     toogleDeleteForm(id = 0) {
         this.id = id

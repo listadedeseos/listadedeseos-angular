@@ -1,6 +1,6 @@
 @if(loading){
 <app-loading></app-loading>
-}
+} @else {
 <div class="min-h-screen bg-gray-50 py-8">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
@@ -206,7 +206,7 @@
                         </div>
 
                         <!-- Selección de Lista de Deseos Principal -->
-                        @if(wishlists.length > 0){
+                        @if(wishlists && wishlists.length > 0){
                         <div>
                             <label for="main_wish_list_id" class="block text-sm font-medium text-gray-700 mb-2">
                                 Lista de Deseos Principal *
@@ -214,7 +214,7 @@
                             <select formControlName="main_wish_list_id" id="main_wish_list_id"
                                 class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
                                 [class]="submitted && f['main_wish_list_id'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
-                                
+
                                 <option [value]="-1" disabled>Selecciona una lista</option>
 
                                 @for (wishlist of wishlists; track $index) {
@@ -256,3 +256,4 @@
         </div>
     </div>
 </div>
+}

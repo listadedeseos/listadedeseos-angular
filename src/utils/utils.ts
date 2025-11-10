@@ -12,6 +12,7 @@ export namespace Utils {
         user: Utils.base + 'user',
         userVerify: Utils.base + 'user/verify',
         wishlist: Utils.base + 'wishlist',
+        wishlistUser: Utils.base + 'wishlist/user',
         product: Utils.base + 'product',
         steam: Utils.base + 'steam',
         amazon: Utils.base + 'amazon',

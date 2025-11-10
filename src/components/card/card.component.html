@@ -40,6 +40,7 @@
 
     <!-- Imagen del producto -->
     <div>
+        @if(img){
         @switch (aspect) {
 
             @case ('video') {
@@ -74,14 +75,16 @@
             </a>
         }
         }
+    }
         
     </div>
 
     <!-- Contenido del producto -->
     <div class="flex-1 flex flex-col gap-1">
         <!-- Nombre del producto -->
-        <a [href]="secondaryUrl??principalUrl" target="_blank" class="group/title">
+        <a [href]="secondaryUrl??principalUrl" target="_blank" class="group/title" [class.mt-auto]="!img">
             <h3 class="text-lg font-semibold text-neutral-800 transition-colors duration-200 line-clamp-2 leading-tight" 
+                [class.text-center]="!img"
                 [title]="name">
                 {{name}}
             </h3>

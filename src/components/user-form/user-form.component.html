@@ -1,0 +1,100 @@
+@if(loading){
+<app-loading></app-loading>
+}
+<app-custom-modal [customTitle]="(id?'Editar':'Nuevo') + ' usuario'" (closeFunction)="closeFormFunction()"
+    (acceptFunction)="acceptFormFunction()">
+    <form [formGroup]="saveForm" (ngSubmit)="saveEntity()" class="space-y-6">
+
+        <!-- Username -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-neutral-700" for="username">
+                👤 Nombre de usuario
+            </label>
+            <input
+                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                id="username" type="text" placeholder="Nombre de usuario" formControlName="username">
+        </div>
+
+        <!-- Name -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-neutral-700" for="name">
+                📝 Nombre completo
+            </label>
+            <input
+                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                id="name" type="text" placeholder="Nombre completo" formControlName="name">
+        </div>
+
+        <!-- Surname -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-neutral-700" for="surname">
+                📝 Apellido/s
+            </label>
+            <input
+                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                id="surname" type="text" placeholder="Apellido" formControlName="surname">
+        </div>
+
+        <!-- Email -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-neutral-700" for="email">
+                📧 Email
+            </label>
+            <input
+                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                id="email" type="email" placeholder="ejemplo@email.com" formControlName="email">
+        </div>
+
+        <!-- Role -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-neutral-700" for="role">
+                🛡️ Rol
+            </label>
+            <input
+                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                id="role" type="text" placeholder="Rol del usuario" formControlName="role">
+        </div>
+
+        <!-- Password -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-neutral-700" for="password">
+                🔒 Contraseña
+            </label>
+            <input
+                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                id="password" type="password" placeholder="Contraseña" formControlName="password">
+        </div>
+
+        @if(dropdowns.wishlists && dropdowns.wishlists.length > 0){
+        <div>
+            <label for="main_wish_list_id" class="block text-sm font-medium text-gray-700 mb-2">
+                Lista de Deseos Principal *
+            </label>
+            <select formControlName="main_wish_list_id" id="main_wish_list_id"
+                class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200">
+
+                <!-- <select formControlName="main_wish_list_id" id="main_wish_list_id"
+                    class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
+                    [class]="submitted && f['main_wish_list_id'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''"> -->
+
+                <option [value]="-1" disabled>Selecciona una lista</option>
+
+                @for (wishlist of dropdowns.wishlists; track $index) {
+                <option [value]="wishlist.id">
+                    {{ wishlist.name }}
+                </option>
+                }
+
+            </select>
+
+            <!-- @if(submitted && f['main_wish_list_id'].errors?.['required']){
+                            <div class="mt-2 text-sm text-red-600">
+                                La lista de deseos principal es requerida
+                            </div>
+                            } -->
+
+        </div>
+        }
+
+    </form>
+</app-custom-modal>
