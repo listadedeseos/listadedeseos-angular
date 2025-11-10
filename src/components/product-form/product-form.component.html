@@ -14,46 +14,61 @@
                 formControlName="name">
         </div>
 
-        <!-- URL de la imagen -->
-        <div>
-            <label class="block mb-2 text-sm font-medium text-neutral-700" for="imageUrl">
-                🖼️ URL de la imagen
-            </label>
-            <input
-                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
-                id="imageUrl" 
-                type="url" 
-                placeholder="https://ejemplo.com/imagen.jpg"
-                formControlName="url_preview">
+        <!-- Botón para mostrar/ocultar campos opcionales -->
+        <div class="mb-4">
+            <button type="button"
+                class="px-4 py-2 bg-purple-200 text-purple-900 rounded hover:bg-purple-300 transition"
+                (click)="toggleOptionalFields()">
+                {{ showOptionalFields ? 'Ocultar campos opcionales' : 'Mostrar campos opcionales' }}
+            </button>
         </div>
 
-        <!-- URL del producto -->
-        <div>
-            <label class="block mb-2 text-sm font-medium text-neutral-700" for="productUrl">
-                🔗 URL del producto
-            </label>
-            <input
-                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
-                id="productUrl" 
-                type="url" 
-                placeholder="https://tienda.com/producto"
-                formControlName="url_product">
-        </div>
+        <!-- Campos opcionales -->
+        @if(showOptionalFields){
+        <div class="p-4 mb-4 rounded-xl border-2 border-dashed border-purple-300 bg-purple-50 flex flex-col gap-4">
+            <div class="mb-2 text-purple-700 font-semibold text-sm">Campos opcionales</div>
+            <!-- URL de la imagen -->
+            <div>
+                <label class="block mb-2 text-sm font-medium text-neutral-700" for="imageUrl">
+                    🖼️ URL de la imagen
+                </label>
+                <input
+                    class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                    id="imageUrl" 
+                    type="url" 
+                    placeholder="https://ejemplo.com/imagen.jpg"
+                    formControlName="url_preview">
+            </div>
 
-        <!-- Precio -->
-        <div>
-            <label class="block mb-2 text-sm font-medium text-neutral-700" for="price">
-                💰 Precio
-            </label>
-            <input
-                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
-                id="price" 
-                type="number" 
-                step="0.01"
-                min="0"
-                placeholder="0.00"
-                formControlName="price">
+            <!-- URL del producto -->
+            <div>
+                <label class="block mb-2 text-sm font-medium text-neutral-700" for="productUrl">
+                    🔗 URL del producto
+                </label>
+                <input
+                    class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                    id="productUrl" 
+                    type="url" 
+                    placeholder="https://tienda.com/producto"
+                    formControlName="url_product">
+            </div>
+
+            <!-- Precio -->
+            <div>
+                <label class="block mb-2 text-sm font-medium text-neutral-700" for="price">
+                    💰 Precio
+                </label>
+                <input
+                    class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                    id="price" 
+                    type="number" 
+                    step="0.01"
+                    min="0"
+                    placeholder="0.00"
+                    formControlName="price">
+            </div>
         </div>
+        }
 
         <!-- Estado visible -->
         <div>

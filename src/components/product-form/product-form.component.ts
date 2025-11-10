@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
@@ -8,7 +8,7 @@ import { CustomModalComponent } from '../customModal/customModal.component';
   selector: 'app-product-form',
   imports: [
     CustomModalComponent,
-    ReactiveFormsModule,  
+    ReactiveFormsModule,
   ],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.scss',
@@ -26,6 +26,8 @@ export class ProductFormComponent {
   public showModalImage = false
 
   public dropdowns: any = { }
+
+  public showOptionalFields = false;
 
   constructor(
     private apiService: ApiService,
@@ -50,15 +52,17 @@ export class ProductFormComponent {
 
   createForm() {
     this.saveForm = new FormGroup({
-
       name: new FormControl('', [Validators.required]),
-      url_preview: new FormControl('', [Validators.required]),
-      url_product: new FormControl('', [Validators.required]),
-      price: new FormControl(null),
+      url_product: new FormControl(null), // Opcional
+      url_preview: new FormControl(null), // Opcional
+      price: new FormControl(null), // Opcional
       is_active: new FormControl(true),
       wish_list_id: new FormControl(this.wishListId),
-
     })
+  }
+
+  toggleOptionalFields() {
+    this.showOptionalFields = !this.showOptionalFields;
   }
 
   // getById(id: number) {
