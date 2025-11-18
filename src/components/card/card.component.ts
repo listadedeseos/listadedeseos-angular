@@ -25,7 +25,7 @@ export class CardComponent {
   @Input() public principalUrl: string = '';
   @Input() public principalLabelString: string = '';
 
-  @Input() public secondaryUrl: string|undefined;
+  @Input() public secondaryUrl: string | undefined;
   @Input() public secondaryLabelString: string = '';
 
   @Input() public isLogged: boolean = false;
@@ -35,17 +35,27 @@ export class CardComponent {
 
   @Output() public toggleReserve = new EventEmitter<number>()
   @Output() public editProduct = new EventEmitter<any>()
+  @Output() public deleteProduct = new EventEmitter<number>()
 
   // Cambiar de propiedad estática a BehaviorSubject reactivo
   private static _showReserveButtonSubject = new BehaviorSubject<boolean>(false);
   public static showReserveButton$ = CardComponent._showReserveButtonSubject.asObservable();
-  
+
   public showReserveButton = false;
+
+  public hasEventListener(emitter: EventEmitter<any> | undefined): boolean {
+    try {
+      return !!(emitter && (emitter as any).observers && (emitter as any).observers.length);
+    } catch {
+      return false;
+    }
+  }
+
   private subscription?: Subscription;
 
   public parent = CardComponent;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     // Suscribirse a los cambios del showReserveButton

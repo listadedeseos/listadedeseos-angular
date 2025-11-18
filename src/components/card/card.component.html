@@ -1,9 +1,11 @@
-<div class="group relative bg-white/80 backdrop-blur-sm border border-white/50 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-2 flex flex-col gap-4 h-full hover:scale-[1.02]">
+<div
+    class="group relative bg-white/80 backdrop-blur-sm border border-white/50 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-2 flex flex-col gap-4 h-full hover:scale-[1.02]">
 
     <!-- Badge de posición y contador -->
     <ng-container *ngIf="index">
         <div class="absolute -top-2 -left-2 z-10">
-            <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-2">
+            <div
+                class="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-2">
                 <span class="text-white">{{index}}</span>
                 <ng-container *ngIf="count">
                     <span class="bg-white/20 px-2 py-0.5 rounded-full">{{count}}x</span>
@@ -14,28 +16,28 @@
 
     <!-- Botón de reserva en esquina superior derecha -->
     @if(((isLogged && showReserveButton) || !isLogged) && isReserved !== undefined) {
-        <div class="absolute -top-1 -right-1 z-20">
-            @if(isReserved){
-                @if(isLogged){
-                    <button (click)="toggleReserve.emit()"
-                        class="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white w-7 h-7 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center"
-                        title="Eliminar reserva">
-                        <fa-icon [icon]="['fas', 'check']" class="text-xs"></fa-icon>
-                    </button>
-                }@else{
-                    <div class="bg-gradient-to-r from-green-500 to-emerald-500 text-white w-7 h-7 rounded-full shadow-lg flex items-center justify-center"
-                         title="Reservado">
-                        <fa-icon [icon]="['fas', 'check']" class="text-xs"></fa-icon>
-                    </div>
-                }
-            }@else{
-                <button (click)="toggleReserve.emit()"
-                    class="bg-white/90 hover:bg-purple-50 border-2 border-purple-300 hover:border-purple-500 text-purple-600 hover:text-purple-700 w-7 h-7 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center"
-                    title="Reservar producto">
-                    <fa-icon [icon]="['fas', 'heart']" class="text-xs"></fa-icon>
-                </button>
-            }
+    <div class="absolute -top-1 -right-1 z-20">
+        @if(isReserved){
+        @if(isLogged){
+        <button (click)="toggleReserve.emit()"
+            class="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white w-7 h-7 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center"
+            title="Eliminar reserva">
+            <fa-icon [icon]="['fas', 'check']" class="text-xs"></fa-icon>
+        </button>
+        }@else{
+        <div class="bg-gradient-to-r from-green-500 to-emerald-500 text-white w-7 h-7 rounded-full shadow-lg flex items-center justify-center"
+            title="Reservado">
+            <fa-icon [icon]="['fas', 'check']" class="text-xs"></fa-icon>
         </div>
+        }
+        }@else{
+        <button (click)="toggleReserve.emit()"
+            class="bg-white/90 hover:bg-purple-50 border-2 border-purple-300 hover:border-purple-500 text-purple-600 hover:text-purple-700 w-7 h-7 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center"
+            title="Reservar producto">
+            <fa-icon [icon]="['fas', 'heart']" class="text-xs"></fa-icon>
+        </button>
+        }
+    </div>
     }
 
     <!-- Imagen del producto -->
@@ -43,63 +45,55 @@
         @if(img){
         @switch (aspect) {
 
-            @case ('video') {
-            <a [href]="secondaryUrl??principalUrl" target="_blank" 
-               class="block aspect-video overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-pink-50">
-                <img class="w-full h-full object-cover transition-transform duration-300" 
-                     [src]="img" 
-                     (error)="onImageError($event)" 
-                     loading="lazy"
-                     alt="product image">
-            </a>
+        @case ('video') {
+        <a [href]="secondaryUrl??principalUrl" target="_blank"
+            class="block aspect-video overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-pink-50">
+            <img class="w-full h-full object-cover transition-transform duration-300" [src]="img"
+                (error)="onImageError($event)" loading="lazy" alt="product image">
+        </a>
         }
-            @case ('square') {
-            <a [href]="secondaryUrl??principalUrl" target="_blank" 
-               class="block aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-pink-50">
-                <img class="w-full h-full object-cover transition-transform duration-300" 
-                     [src]="img" 
-                     (error)="onImageError($event)" 
-                     loading="lazy"
-                     alt="product image">
-            </a>
+        @case ('square') {
+        <a [href]="secondaryUrl??principalUrl" target="_blank"
+            class="block aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-pink-50">
+            <img class="w-full h-full object-cover transition-transform duration-300" [src]="img"
+                (error)="onImageError($event)" loading="lazy" alt="product image">
+        </a>
         }
 
-            @default {
-            <a [href]="secondaryUrl??principalUrl" target="_blank" 
-               class="block aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-pink-50">
-                <img class="w-full h-full object-cover transition-transform duration-300" 
-                     [src]="img" 
-                     (error)="onImageError($event)" 
-                     loading="lazy"
-                     alt="product image">
-            </a>
+        @default {
+        <a [href]="secondaryUrl??principalUrl" target="_blank"
+            class="block aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-pink-50">
+            <img class="w-full h-full object-cover transition-transform duration-300" [src]="img"
+                (error)="onImageError($event)" loading="lazy" alt="product image">
+        </a>
         }
         }
-    }
-        
+        }
+
     </div>
 
     <!-- Contenido del producto -->
     <div class="flex-1 flex flex-col gap-1">
         <!-- Nombre del producto -->
         <a [href]="secondaryUrl??principalUrl" target="_blank" class="group/title" [class.mt-auto]="!img">
-            <h3 class="text-lg font-semibold text-neutral-800 transition-colors duration-200 line-clamp-2 leading-tight" 
-                [class.text-center]="!img"
-                [title]="name">
+            <h3 class="text-lg font-semibold text-neutral-800 transition-colors duration-200 line-clamp-2 leading-tight"
+                [class.text-center]="!img" [title]="name">
                 {{name}}
             </h3>
         </a>
 
         <!-- Precio -->
         <div class="flex items-center gap-2">
-            <a [href]="secondaryUrl??principalUrl" target="_blank" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <a [href]="secondaryUrl??principalUrl" target="_blank"
+                class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 {{price}}
             </a>
         </div>
 
         <!-- Pastilla de estado reservado -->
         @if(((isLogged && showReserveButton) || !isLogged) && isReserved) {
-        <span class="inline-flex items-center gap-1 p-1 text-xs font-medium bg-green-100 text-green-700 border border-green-200 rounded-full shadow-sm mr-auto">
+        <span
+            class="inline-flex items-center gap-1 p-1 text-xs font-medium bg-green-100 text-green-700 border border-green-200 rounded-full shadow-sm mr-auto">
             <fa-icon [icon]="['fas', 'check-circle']" class="text-green-600"></fa-icon>
             Reservado
         </span>
@@ -108,73 +102,85 @@
         <!-- Botones de acción con dropdown -->
         <div class="flex flex-col gap-2 mt-auto text-xs">
 
-           @if(isLogged && isMyWishList && editProduct) {
-            <!-- Botón para editar producto -->
-            <button (click)="editProduct.emit()"
-                class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex flex-wrap items-center justify-center gap-2 hover:shadow-md">
-                <fa-icon [icon]="['fas', 'pen-to-square']" class="text-sm"></fa-icon>
-                Editar producto
-            </button>
-        }
-
             <!-- Dropdown container -->
             <div class="relative group/dropdown w-full">
                 <!-- Botón principal -->
-                <button class="w-full bg-white bg-opacity-50 border border-green-500 text-green-500 font-medium py-2 px-4 rounded-lg text-center transition-all duration-200 shadow-md flex items-center justify-center gap-2">
-                    <fa-icon [icon]="['fas', 'shop']"></fa-icon>
-                    <fa-icon [icon]="['fas', 'chevron-down']" class="text-xs transition-transform duration-200 group-hover/dropdown:rotate-180"></fa-icon>
+                <button
+                    class="w-full bg-white bg-opacity-50 border border-green-500 text-green-500 font-medium py-2 px-4 rounded-lg text-center transition-all duration-200 shadow-md flex items-center justify-center gap-2">
+                    <fa-icon [icon]="['fas', (isMyWishList? 'gear':'shop')]"></fa-icon>
+                    <fa-icon [icon]="['fas', 'chevron-down']"
+                        class="text-xs transition-transform duration-200 group-hover/dropdown:rotate-180"></fa-icon>
                 </button>
-                
+
                 <!-- Dropdown menu -->
-                <div class="absolute bottom-full left-0 right-0 mb-2 opacity-0 invisible group-hover/dropdown:opacity-100 group-hover/dropdown:visible transition-all duration-200 z-50">
-                    <div class="bg-white/95 backdrop-blur-sm border border-gray-300 rounded-lg shadow-xl p-2 space-y-2">
+                <div
+                    class="absolute bottom-full left-0 right-0 mb-2 opacity-0 invisible group-hover/dropdown:opacity-100 group-hover/dropdown:visible transition-all duration-200 z-50">
+                    <div
+                        class="flex flex-col gap-2 bg-white/95 backdrop-blur-sm border border-gray-300 rounded-lg shadow-xl p-2">
                         <strong class="text-black text-center w-full">
                             Método{{secondaryUrl?'s':''}} de compra:
                         </strong>
-                        <a [href]="principalUrl" 
-                           target="_blank" 
-                           [class]="getDropdownClasses(this.principalLabelString)">
+                        <a [href]="principalUrl" target="_blank"
+                            [class]="getDropdownClasses(this.principalLabelString)">
                             {{principalLabelString}}
                         </a>
 
                         @if(secondaryUrl){
-                        <a
-                           [href]="secondaryUrl" 
-                           target="_blank" 
-                           [class]="getDropdownClasses(this.secondaryLabelString)">
+                        <a [href]="secondaryUrl" target="_blank"
+                            [class]="getDropdownClasses(this.secondaryLabelString)">
                             {{secondaryLabelString}}
                         </a>
                         }
 
                         <!-- Separador -->
-                        @if(((isLogged && showReserveButton) || !isLogged) && isReserved !== undefined) {
-                            <div class="border-t border-gray-200 my-2"></div>
+                        <div class="border-t border-gray-200"></div>
 
-                            <!-- Botón de reserva en dropdown -->
-                            @if(isReserved) {
-                                @if(isLogged) {
-                                    <button (click)="toggleReserve.emit()"
-                                        class="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex flex-wrap items-center justify-center gap-2 hover:shadow-md">
-                                        <fa-icon [icon]="['fas', 'heart-crack']" class="text-sm"></fa-icon>
-                                        Eliminar reserva
-                                    </button>
-                                } @else {
-                                    <div class="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium py-2 px-4 rounded-lg flex items-center justify-center gap-2">
-                                        <fa-icon [icon]="['fas', 'heart']" class="text-sm"></fa-icon>
-                                        Ya reservado
-                                    </div>
-                                }
-                            } @else {
-                                <button (click)="toggleReserve.emit()"
-                                    class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex flex-wrap items-center justify-center gap-2 hover:shadow-md">
-                                    <fa-icon [icon]="['fas', 'heart']" class="text-sm"></fa-icon>
-                                    Reservar
-                                </button>
-                            }
+                        @if(isMyWishList) {
+                        @if(hasEventListener(editProduct)) {
+                        <!-- Botón para editar producto -->
+                        <button (click)="editProduct.emit()"
+                            class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex flex-wrap items-center justify-center gap-2 hover:shadow-md">
+                            <fa-icon [icon]="['fas', 'pen']" class="text-sm"></fa-icon>
+                            Editar
+                        </button>
                         }
+                        @if(hasEventListener(deleteProduct)){
+                        <!-- Botón para eliminar producto -->
+                        <button (click)="deleteProduct.emit()"
+                            class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex flex-wrap items-center justify-center gap-2 hover:shadow-md">
+                            <fa-icon [icon]="['fas', 'trash']" class="text-sm"></fa-icon>
+                            Eliminar
+                        </button>
+                        }
+                        }
+
+                        @if(((isMyWishList && showReserveButton) || !isMyWishList) && isReserved !== undefined) {
+                        <!-- Botón de reserva en dropdown -->
+                        @if(isReserved) {
+                        @if(isLogged) {
+                        <button (click)="toggleReserve.emit()"
+                            class="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex flex-wrap items-center justify-center gap-2 hover:shadow-md">
+                            <fa-icon [icon]="['fas', 'heart-crack']" class="text-sm"></fa-icon>
+                            Eliminar reserva
+                        </button>
+                        } @else {
+                        <div
+                            class="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium py-2 px-4 rounded-lg flex items-center justify-center gap-2">
+                            <fa-icon [icon]="['fas', 'heart']" class="text-sm"></fa-icon>
+                            Ya reservado
+                        </div>
+                        }
+                        } @else {
+                        <button (click)="toggleReserve.emit()"
+                            class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex flex-wrap items-center justify-center gap-2 hover:shadow-md">
+                            <fa-icon [icon]="['fas', 'heart']" class="text-sm"></fa-icon>
+                            Reservar
+                        </button>
+                        }
+                        }
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

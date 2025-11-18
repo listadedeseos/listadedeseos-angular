@@ -12,6 +12,7 @@ import { AmazonComponent } from '../../components/amazon/amazon.component';
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
 import { WishlistFormComponent } from '../../components/wishlist-form/wishlist-form.component';
 import { DatePipe } from '@angular/common';
+import { CustomDeleteComponent } from '../../components/customDelete/customDelete.component';
 
 @Component({
   imports: [
@@ -24,6 +25,7 @@ import { DatePipe } from '@angular/common';
     ProductFormComponent,
     WishlistFormComponent,
     DatePipe,
+    CustomDeleteComponent,
   ],
   templateUrl: './wish-list.component.html',
   styleUrl: './wish-list.component.scss',
@@ -46,10 +48,14 @@ export class WishListComponent {
   public wishListFormId = 0
   public routeSubsrciption: any
   public isMainWishlist = false
+  public modalDeleteProductOpen = false
+  public deletingProductId: number | null = null
 
   public urlToShare = ''
 
   public showReserveButton = CardComponent.showReserveButton;
+
+  public deleteUrl = Utils.urls.product
 
   constructor(
     private apiService: ApiService,
@@ -226,6 +232,18 @@ export class WishListComponent {
       this.wishlist.products = [...(this.wishlist.products || []), response.product]
     }
 
+    this.cdr.markForCheck()
+    this.cdr.detectChanges()
+  }
+
+  toggleModalDeleteProduct(id: number = 0) {
+    this.modalDeleteProductOpen = !this.modalDeleteProductOpen
+    this.deletingProductId = id
+    this.cdr.detectChanges()
+  }
+
+  deleteProduct(id: number) {
+    this.wishlist.products = this.wishlist.products.filter((product: any) => product.id != id)
     this.cdr.markForCheck()
     this.cdr.detectChanges()
   }
