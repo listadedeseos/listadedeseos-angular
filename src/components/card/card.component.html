@@ -132,10 +132,10 @@
                         </a>
                         }
 
+                        @if(isMyWishList) {
                         <!-- Separador -->
                         <div class="border-t border-gray-200"></div>
 
-                        @if(isMyWishList) {
                         @if(hasEventListener(editProduct)) {
                         <!-- Botón para editar producto -->
                         <button (click)="editProduct.emit()"
@@ -144,6 +144,7 @@
                             Editar
                         </button>
                         }
+
                         @if(hasEventListener(deleteProduct)){
                         <!-- Botón para eliminar producto -->
                         <button (click)="deleteProduct.emit()"
@@ -152,9 +153,13 @@
                             Eliminar
                         </button>
                         }
+
                         }
 
                         @if(((isMyWishList && showReserveButton) || !isMyWishList) && isReserved !== undefined) {
+                        <!-- Separador -->
+                        <div class="border-t border-gray-200"></div>
+
                         <!-- Botón de reserva en dropdown -->
                         @if(isReserved) {
                         @if(isLogged) {
