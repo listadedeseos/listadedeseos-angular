@@ -1,4 +1,5 @@
-<app-custom-modal customTitle="Nuevo producto" (closeFunction)="closeFormFunction()" (acceptFunction)="acceptFormFunction()">
+@if(!loading){
+<app-custom-modal [customTitle]="(id ? 'Editar' : 'Nuevo') + ' producto'" (closeFunction)="closeFormFunction()" (acceptFunction)="acceptFormFunction()">
     <form [formGroup]="saveForm" (ngSubmit)="saveEntity()" class="space-y-6">
 
         <!-- Nombre del producto -->
@@ -86,3 +87,6 @@
 
     </form>
 </app-custom-modal>
+} @else {
+<app-loading></app-loading>
+}

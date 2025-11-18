@@ -29,10 +29,12 @@ export class CardComponent {
   @Input() public secondaryLabelString: string = '';
 
   @Input() public isLogged: boolean = false;
+  @Input() public isMyWishList: boolean = false;
 
   @Input() public isReserved: boolean | undefined;
 
   @Output() public toggleReserve = new EventEmitter<number>()
+  @Output() public editProduct = new EventEmitter<any>()
 
   // Cambiar de propiedad estática a BehaviorSubject reactivo
   private static _showReserveButtonSubject = new BehaviorSubject<boolean>(false);

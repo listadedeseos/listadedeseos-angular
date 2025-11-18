@@ -41,6 +41,7 @@ export class WishListComponent {
   public wishlist: any = []
   public wishListId = 0
   public modalProductOpen = false
+  public editingProductId: number | null = null
   public modalWishListOpen = false
   public wishListFormId = 0
   public routeSubsrciption: any
@@ -206,6 +207,7 @@ export class WishListComponent {
 
   toggleModalProduct() {
     this.modalProductOpen = !this.modalProductOpen
+    this.editingProductId = null
     this.cdr.detectChanges()
   }
 
@@ -215,8 +217,15 @@ export class WishListComponent {
     this.cdr.detectChanges()
   }
 
-  productUpdate(response: any) {
-    this.wishlist.products = [...(this.wishlist.products || []), response.product]
+  productUpdate(response: any, id: number = 0) {
+    if (id != 0) { // Update product
+      const index = this.wishlist.products.findIndex((product: any) => product.id == id)
+      this.wishlist.products[index] = { ...this.wishlist.products[index], ...response.product }
+
+    } else {
+      this.wishlist.products = [...(this.wishlist.products || []), response.product]
+    }
+
     this.cdr.markForCheck()
     this.cdr.detectChanges()
   }
@@ -234,6 +243,11 @@ export class WishListComponent {
 
       }
     })
+  }
+
+  editProduct(id: number) {
+    this.editingProductId = id
+    this.modalProductOpen = true
   }
 
   toggleModalWishList(wishListFormId = 0) {

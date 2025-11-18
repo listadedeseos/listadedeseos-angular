@@ -192,7 +192,10 @@
         @for(item of wishlist.products; track $index){
         <app-card [principalUrl]="item.url_product" [img]="item.url_preview" [name]="item.name" [price]="item.price"
           [count]="item.count" principalLabelString="Comprar" [isReserved]="item.is_reserved" [isLogged]="isLogged"
-          (toggleReserve)="reserveProduct(item.id)" class="transform hover:scale-105 transition-transform duration-300">
+          [isMyWishList]="isMyWishList"
+          (toggleReserve)="reserveProduct(item.id)"
+          (editProduct)="editProduct(item.id)"
+          class="transform hover:scale-105 transition-transform duration-300">
         </app-card>
         } @empty {
         <!-- Empty State -->
@@ -266,7 +269,11 @@
 </div>
 
 <!-- Modals -->
-@if(modalProductOpen && wishListId){
+@if(modalProductOpen && wishListId && editingProductId){
+<app-product-form [wishListId]="wishListId" [id]="editingProductId" (closeFunction)="toggleModalProduct()"
+  (acceptFunction)="productUpdate($event, editingProductId)"></app-product-form>
+
+} @else if(modalProductOpen && wishListId){
 <app-product-form [wishListId]="wishListId" (closeFunction)="toggleModalProduct()"
   (acceptFunction)="productUpdate($event)"></app-product-form>
 }
