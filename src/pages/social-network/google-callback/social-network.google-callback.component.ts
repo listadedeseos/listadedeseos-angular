@@ -20,9 +20,15 @@ export class SocialNetworkGoogleCallbackComponent {
   login() {
     this.apiService.getPetition(Utils.urls.loginGoogleCallback, window.location.search).subscribe({
       next: (data: any) => {
+
+        // save user data and token in local storage
         data.user.token = data.token;
         localStorage.setItem('currentUser', JSON.stringify(data.user));
-        this.router.navigate([sessionStorage.getItem('returnUrl') ?? '/']);
+
+        // if first time, redirect to profile, else to returnUrl or home
+        let returnUrl = data.first_time ? '/profile' : sessionStorage.getItem('returnUrl');
+        this.router.navigate([returnUrl ?? '/']);
+
       },
       error: (error: any) => {
         this.router.navigate(['/login']);
