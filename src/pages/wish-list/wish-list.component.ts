@@ -12,6 +12,7 @@ import { AmazonComponent } from '../../components/amazon/amazon.component';
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
 import { WishlistFormComponent } from '../../components/wishlist-form/wishlist-form.component';
 import { DatePipe } from '@angular/common';
+import { CustomDeleteComponent } from '../../components/customDelete/customDelete.component';
 
 @Component({
   imports: [
@@ -24,6 +25,7 @@ import { DatePipe } from '@angular/common';
     ProductFormComponent,
     WishlistFormComponent,
     DatePipe,
+    CustomDeleteComponent,
   ],
   templateUrl: './wish-list.component.html',
   styleUrl: './wish-list.component.scss',
@@ -41,14 +43,19 @@ export class WishListComponent {
   public wishlist: any = []
   public wishListId = 0
   public modalProductOpen = false
+  public editingProductId: number | null = null
   public modalWishListOpen = false
   public wishListFormId = 0
   public routeSubsrciption: any
   public isMainWishlist = false
+  public modalDeleteProductOpen = false
+  public deletingProductId: number | null = null
 
   public urlToShare = ''
 
   public showReserveButton = CardComponent.showReserveButton;
+
+  public deleteUrl = Utils.urls.product
 
   constructor(
     private apiService: ApiService,
@@ -206,6 +213,7 @@ export class WishListComponent {
 
   toggleModalProduct() {
     this.modalProductOpen = !this.modalProductOpen
+    this.editingProductId = null
     this.cdr.detectChanges()
   }
 
@@ -215,8 +223,27 @@ export class WishListComponent {
     this.cdr.detectChanges()
   }
 
-  productUpdate(response: any) {
-    this.wishlist.products = [...(this.wishlist.products || []), response.product]
+  productUpdate(response: any, id: number = 0) {
+    if (id != 0) { // Update product
+      const index = this.wishlist.products.findIndex((product: any) => product.id == id)
+      this.wishlist.products[index] = { ...this.wishlist.products[index], ...response.product }
+
+    } else {
+      this.wishlist.products = [...(this.wishlist.products || []), response.product]
+    }
+
+    this.cdr.markForCheck()
+    this.cdr.detectChanges()
+  }
+
+  toggleModalDeleteProduct(id: number = 0) {
+    this.modalDeleteProductOpen = !this.modalDeleteProductOpen
+    this.deletingProductId = id
+    this.cdr.detectChanges()
+  }
+
+  deleteProduct(id: number) {
+    this.wishlist.products = this.wishlist.products.filter((product: any) => product.id != id)
     this.cdr.markForCheck()
     this.cdr.detectChanges()
   }
@@ -234,6 +261,11 @@ export class WishListComponent {
 
       }
     })
+  }
+
+  editProduct(id: number) {
+    this.editingProductId = id
+    this.modalProductOpen = true
   }
 
   toggleModalWishList(wishListFormId = 0) {
