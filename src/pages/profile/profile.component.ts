@@ -1,6 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
         LoadingComponent,
         ReactiveFormsModule,
         CommonModule,
+        RouterLink
     ],
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
