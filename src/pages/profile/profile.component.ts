@@ -1,6 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
         LoadingComponent,
         ReactiveFormsModule,
         CommonModule,
+        RouterLink
     ],
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
@@ -42,10 +43,28 @@ export class ProfileComponent {
             name: ['', [Validators.required, Validators.minLength(2)]],
             surname: ['', [Validators.required, Validators.minLength(2)]],
             email: ['', [Validators.required, Validators.email]],
+
+            // Optional measurements
+            height: [null, [this.numberPatternValidator]],
+            shirt_size: [null],
+            pant_size: [null],
+            shoe_size: [null],
+            // Optional measurements - END
+
             main_wish_list_id: [-1, [Validators.required]],
             password: [''],
             confirmPassword: ['']
         }, { validator: this.passwordMatchValidator });
+    }
+
+    numberPatternValidator(control: AbstractControl) {
+        const val = control.value;
+        if (val === null || val === undefined || val === '') {
+            return null;
+        }
+        const str = String(val).trim();
+        const re = /^[0-9]+(\.[0-9]{1,2})?$/;
+        return re.test(str) ? null : { pattern: true };
     }
 
     ngOnInit(): void {
