@@ -50,7 +50,7 @@ export class WishListComponent {
   public isMainWishlist = false
   public modalDeleteProductOpen = false
   public deletingProductId: number | null = null
-
+  public measurements: any = {}
   public urlToShare = ''
 
   public showReserveButton = CardComponent.showReserveButton;
@@ -137,6 +137,7 @@ export class WishListComponent {
 
     this.apiService.getPetition(url).subscribe({
       next: (value: any) => {
+        this.measurements = { ...value.measurements }
 
         if (value.wishlist) {
           this.wishListId = value.wishlist.id
