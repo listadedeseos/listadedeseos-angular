@@ -318,6 +318,10 @@ export class WishListComponent {
     return ThemeConfig.getTheme(theme).banner;
   }
 
+  isDarkTheme(theme: string): boolean {
+    return ThemeConfig.isDarkTheme(theme);
+  }
+
   dateCounter(dateEnd: string) {
 
     if (dateEnd) {

@@ -1,23 +1,25 @@
 <!-- <app-loading *ngIf="loading"></app-loading> -->
-<div class="min-h-screen">
+<div [class]="wishlist.theme ? getPageBackgroundClasses(wishlist.theme) : 'min-h-screen'">
 
   <!-- Hero Section -->
-  <section class="relative py-12 px-4 overflow-hidden">
+  <section
+    [class]="(wishlist.theme ? getHeroClasses(wishlist.theme) : 'relative py-12 px-4 overflow-hidden bg-gradient-to-br from-purple-100 via-pink-50 to-purple-100') + ' rounded-b-[2.5rem] shadow-lg'">
 
     @if(getBannerImage(wishlist.theme)){
-    <img [src]="getBannerImage(wishlist.theme)" class="absolute inset-0 w-full h-full object-cover opacity-30"
-      alt="Banner">
+    <div class="absolute inset-0">
+      <img [src]="getBannerImage(wishlist.theme)" class="w-full h-full object-cover" alt="Banner">
+      <div class="absolute inset-0 bg-gradient-to-b from-black/0 via-transparent to-black/20"></div>
+    </div>
+    } @else {
+    <!-- Floating elements for decoration (no theme banner set) -->
+    <div class="absolute top-6 left-8 w-24 h-24 bg-white/30 rounded-full blur-2xl opacity-70 animate-bounce"></div>
+    <div class="absolute top-16 right-12 w-20 h-20 bg-white/20 rounded-full blur-2xl opacity-60 animate-pulse">
+    </div>
+    <div class="absolute -bottom-4 left-1/3 w-16 h-16 bg-white/20 rounded-full blur-xl opacity-40 animate-pulse"
+      style="animation-delay: 1.2s;"></div>
     }
 
     <div class="container mx-auto">
-
-      <!-- Floating elements for decoration -->
-      <div
-        class="absolute top-10 left-10 w-16 h-16 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full opacity-30 animate-bounce">
-      </div>
-      <div
-        class="absolute top-20 right-16 w-12 h-12 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full opacity-20 animate-pulse">
-      </div>
 
       <div class="relative z-10">
         <h1
@@ -75,10 +77,12 @@
         @if(wishlist.date_end) {
         <div class="flex justify-center gap-2 my-2">
           <div class="flex items-center gap-2 justify-center">
-            <fa-icon [icon]="['fas', 'calendar-alt']" class="text-purple-600 text-xs"></fa-icon>
-            <span class="text-xs font-medium text-gray-600 uppercase tracking-wide">Fecha límite</span>
+            <fa-icon [icon]="['fas', 'calendar-alt']" class="text-purple-500 text-xs"></fa-icon>
+            <span
+              [class]="'text-xs font-medium uppercase tracking-wide ' + (isDarkTheme(wishlist.theme) ? 'text-white/70' : 'text-gray-600')">Fecha
+              límite</span>
           </div>
-          <div class="text-sm font-semibold text-gray-800">
+          <div [class]="'text-sm font-semibold ' + (isDarkTheme(wishlist.theme) ? 'text-white' : 'text-gray-800')">
             {{wishlist.date_end | date: 'dd/MM/yyyy'}}
           </div>
         </div>
@@ -86,18 +90,19 @@
         <div class="flex justify-center gap-2">
           @if(wishlist.date_end_counter && wishlist.date_end_counter !== 'Finalizado') {
           <div class="flex items-center gap-1 justify-center">
-            <fa-icon [icon]="['fas', 'clock']" class="text-purple-600 text-xs"></fa-icon>
-            <span class="text-xs font-medium text-gray-600">QUEDAN</span>
+            <fa-icon [icon]="['fas', 'clock']" class="text-purple-500 text-xs"></fa-icon>
+            <span
+              [class]="'text-xs font-medium ' + (isDarkTheme(wishlist.theme) ? 'text-white/70' : 'text-gray-600')">QUEDAN</span>
           </div>
-          <div class="text-sm font-bold text-gray-800">
+          <div [class]="'text-sm font-bold ' + (isDarkTheme(wishlist.theme) ? 'text-white' : 'text-gray-800')">
             {{ wishlist.date_end_counter }}
           </div>
           } @else if(wishlist.date_end_counter === 'Finalizado') {
           <div class="flex items-center gap-1 justify-center">
-            <fa-icon [icon]="['fas', 'flag-checkered']" class="text-purple-600 text-xs"></fa-icon>
-            <span class="text-xs font-medium">Estado</span>
+            <fa-icon [icon]="['fas', 'flag-checkered']" class="text-purple-500 text-xs"></fa-icon>
+            <span [class]="'text-xs font-medium ' + (isDarkTheme(wishlist.theme) ? 'text-white/70' : 'text-gray-600')">Estado</span>
           </div>
-          <div class="text-sm font-bold">¡Finalizado!</div>
+          <div [class]="'text-sm font-bold ' + (isDarkTheme(wishlist.theme) ? 'text-white' : 'text-gray-800')">¡Finalizado!</div>
           }
         </div>
         }
@@ -105,7 +110,8 @@
         <!-- Theme subtitle -->
         @if(wishlist.theme) {
         <div class="flex justify-center mb-4">
-          <p class="text-lg font-medium text-white/90 text-center drop-shadow-md">
+          <p
+            [class]="'text-lg font-medium text-center drop-shadow-md ' + (isDarkTheme(wishlist.theme) ? 'text-white/90' : 'text-neutral-700/90')">
             {{getThemeSubtitle(wishlist.theme)}}
           </p>
         </div>

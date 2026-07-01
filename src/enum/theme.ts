@@ -16,6 +16,7 @@ export const ThemeConfig = {
       heroClasses: 'bg-gradient-to-br from-pink-300 via-blue-200 to-pink-200',
       pageBackgroundClasses: 'bg-gradient-to-br from-pink-100 via-blue-50 to-pink-50',
       overlayClasses: 'absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30',
+      dark: false,
       colors: {
         primary: '#FFB6C1',
         secondary: '#87CEEB',
@@ -30,6 +31,7 @@ export const ThemeConfig = {
       heroClasses: 'bg-gradient-to-br from-yellow-300 via-orange-300 to-pink-300',
       pageBackgroundClasses: 'bg-gradient-to-br from-yellow-100 via-orange-50 to-pink-50',
       overlayClasses: 'absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30',
+      dark: false,
       colors: {
         primary: '#FFD700',
         secondary: '#FF8C00',
@@ -44,6 +46,7 @@ export const ThemeConfig = {
       heroClasses: 'bg-gradient-to-br from-white via-pink-100 to-purple-100',
       pageBackgroundClasses: 'bg-gradient-to-br from-white via-pink-50 to-purple-50',
       overlayClasses: 'absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30',
+      dark: false,
       colors: {
         primary: '#FFFFFF',
         secondary: '#FFB6C1',
@@ -58,6 +61,7 @@ export const ThemeConfig = {
       heroClasses: 'bg-gradient-to-br from-red-400 via-green-300 to-red-300',
       pageBackgroundClasses: 'bg-gradient-to-br from-red-100 via-green-50 to-red-50',
       overlayClasses: 'absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30',
+      dark: true,
       colors: {
         primary: '#DC143C',
         secondary: '#228B22',
@@ -72,6 +76,7 @@ export const ThemeConfig = {
       heroClasses: 'bg-gradient-to-br from-blue-400 via-indigo-300 to-blue-300',
       pageBackgroundClasses: 'bg-gradient-to-br from-blue-100 via-indigo-50 to-blue-50',
       overlayClasses: 'absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30',
+      dark: true,
       colors: {
         primary: '#4169E1',
         secondary: '#6495ED',
@@ -112,5 +117,10 @@ export const ThemeConfig = {
   getPageClasses: (theme: string) => {
     const themeData = ThemeConfig.getTheme(theme);
     return `${ThemeConfig.baseClasses.page} ${themeData.pageBackgroundClasses}`;
+  },
+
+  isDarkTheme: (theme: string) => {
+    const themeData = ThemeConfig.getTheme(theme);
+    return themeData ? themeData.dark : false;
   }
 };
