@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Utils } from '../../../utils/utils';
 import { CustomDeleteComponent } from '../../../components/customDelete/customDelete.component';
-import { TableModule } from "@some-angular-utils/table";
+import { SAUTableModule } from "@some-angular-utils/table";
 
 @Component({
     imports: [
-        TableModule,
+        SAUTableModule,
         CustomDeleteComponent,
     ],
     templateUrl: './contact-list.component.html',

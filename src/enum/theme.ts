@@ -9,87 +9,87 @@ export const enum Theme {
 export const ThemeConfig = {
   themes: {
     babyshower: {
-      label: '🍼 Baby Shower',
-      subtitle: '¡Celebrando la llegada de un nuevo bebé! 🍼',
+      label: 'Baby Shower',
+      subtitle: 'Celebrando la llegada de un nuevo bebé',
       banner: '/assets/banners/babyshower.svg',
-      classes: 'bg-gradient-to-r from-pink-200 to-blue-200 text-pink-800 border border-pink-300',
-      heroClasses: 'bg-gradient-to-br from-pink-300 via-blue-200 to-pink-200',
-      pageBackgroundClasses: 'bg-gradient-to-br from-pink-100 via-blue-50 to-pink-50',
+      classes: 'bg-[#EEF1F5] text-[#4E6076] border border-[#D7DEE6]',
+      heroClasses: 'bg-cream-alt',
+      pageBackgroundClasses: 'bg-cream',
       overlayClasses: 'absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30',
       dark: false,
       colors: {
-        primary: '#FFB6C1',
-        secondary: '#87CEEB',
-        accent: '#DEB887'
+        primary: '#7A8FA6',
+        secondary: '#EEF1F5',
+        accent: '#4E6076'
       }
     },
     cumpleanos: {
-      label: '🎂 Cumpleaños',
-      subtitle: '¡Que tengas un feliz cumpleaños lleno de sorpresas! 🎂',
+      label: 'Cumpleaños',
+      subtitle: 'Que tengas un feliz cumpleaños lleno de sorpresas',
       banner: '/assets/banners/cumpleanos.svg',
-      classes: 'bg-gradient-to-r from-yellow-200 to-orange-200 text-orange-800 border border-orange-300',
-      heroClasses: 'bg-gradient-to-br from-yellow-300 via-orange-300 to-pink-300',
-      pageBackgroundClasses: 'bg-gradient-to-br from-yellow-100 via-orange-50 to-pink-50',
+      classes: 'bg-[#FAF2E6] text-[#8A5A17] border border-[#EBDCC2]',
+      heroClasses: 'bg-cream-alt',
+      pageBackgroundClasses: 'bg-cream',
       overlayClasses: 'absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30',
       dark: false,
       colors: {
-        primary: '#FFD700',
-        secondary: '#FF8C00',
-        accent: '#FF69B4'
+        primary: '#B4762B',
+        secondary: '#FAF2E6',
+        accent: '#8A5A17'
       }
     },
     boda: {
-      label: '💒 Boda',
-      subtitle: 'Celebrando el amor y la nueva vida juntos 💒',
+      label: 'Boda',
+      subtitle: 'Celebrando el amor y la nueva vida juntos',
       banner: '/assets/banners/boda.svg',
-      classes: 'bg-gradient-to-r from-white to-pink-100 text-pink-800 border border-pink-300',
-      heroClasses: 'bg-gradient-to-br from-white via-pink-100 to-purple-100',
-      pageBackgroundClasses: 'bg-gradient-to-br from-white via-pink-50 to-purple-50',
+      classes: 'bg-[#F3EFF4] text-[#6B5A76] border border-[#E1D8E6]',
+      heroClasses: 'bg-cream-alt',
+      pageBackgroundClasses: 'bg-cream',
       overlayClasses: 'absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30',
       dark: false,
       colors: {
-        primary: '#FFFFFF',
-        secondary: '#FFB6C1',
-        accent: '#E6E6FA'
+        primary: '#8C7B96',
+        secondary: '#F3EFF4',
+        accent: '#6B5A76'
       }
     },
     navidad: {
-      label: '🎄 Navidad',
-      subtitle: '¡Que la magia de la Navidad llene tu hogar! 🎄',
+      label: 'Navidad',
+      subtitle: 'Que la magia de la Navidad llene tu hogar',
       banner: '/assets/banners/navidad.svg',
-      classes: 'bg-gradient-to-r from-red-200 to-green-200 text-green-800 border border-green-300',
-      heroClasses: 'bg-gradient-to-br from-red-400 via-green-300 to-red-300',
-      pageBackgroundClasses: 'bg-gradient-to-br from-red-100 via-green-50 to-red-50',
+      classes: 'bg-[#EAF0EC] text-[#2F5D45] border border-[#CBDCD1]',
+      heroClasses: 'bg-cream-alt',
+      pageBackgroundClasses: 'bg-cream',
       overlayClasses: 'absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30',
       dark: true,
       colors: {
-        primary: '#DC143C',
-        secondary: '#228B22',
-        accent: '#FFD700'
+        primary: '#3E6B52',
+        secondary: '#EAF0EC',
+        accent: '#2F5D45'
       }
     },
     graduacion: {
-      label: '🎓 Graduación',
-      subtitle: '¡Celebrando este gran logro académico! 🎓',
+      label: 'Graduación',
+      subtitle: 'Celebrando este gran logro académico',
       banner: '/assets/banners/graduacion.svg',
-      classes: 'bg-gradient-to-r from-blue-200 to-indigo-200 text-blue-800 border border-blue-300',
-      heroClasses: 'bg-gradient-to-br from-blue-400 via-indigo-300 to-blue-300',
-      pageBackgroundClasses: 'bg-gradient-to-br from-blue-100 via-indigo-50 to-blue-50',
+      classes: 'bg-[#E9ECF2] text-[#2B3A57] border border-[#CBD3E2]',
+      heroClasses: 'bg-cream-alt',
+      pageBackgroundClasses: 'bg-cream',
       overlayClasses: 'absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30',
       dark: true,
       colors: {
-        primary: '#4169E1',
-        secondary: '#6495ED',
-        accent: '#FFD700'
+        primary: '#3A4B6B',
+        secondary: '#E9ECF2',
+        accent: '#2B3A57'
       }
     }
   },
 
   // Base classes for components
   baseClasses: {
-    badge: 'inline-flex items-center px-4 py-2 rounded-full text-sm font-medium shadow-lg',
-    hero: 'relative py-12 px-4 overflow-hidden',
-    page: 'min-h-screen transition-all duration-500',
+    badge: 'inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide',
+    hero: 'relative py-14 px-4 overflow-hidden border-b border-line',
+    page: 'min-h-screen',
   },
 
   // Helper methods to get theme data

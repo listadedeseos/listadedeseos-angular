@@ -3,109 +3,99 @@
 }
 <app-custom-modal [customTitle]="(id?'Editar':'Nueva') + ' lista de deseos'" (closeFunction)="closeFormFunction()"
     (acceptFunction)="acceptFormFunction()">
-    <form [formGroup]="saveForm" (ngSubmit)="saveEntity()" class="space-y-6">
+    <form [formGroup]="saveForm" (ngSubmit)="saveEntity()" class="flex flex-col gap-4">
 
         <!-- Nombre de la lista -->
         <div>
-            <label class="block mb-2 text-sm font-medium text-neutral-700" for="name">
-                📝 Nombre de la lista
+            <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5" for="name">
+                Nombre de la lista
             </label>
-            <input
-                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
-                id="name" 
-                type="text" 
-                placeholder="Mi lista de deseos"
-                formControlName="name">
+            <input class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink" id="name" type="text"
+                placeholder="Mi lista de deseos" formControlName="name">
         </div>
 
+        @if(false){
         <!-- Tema de la lista -->
         <div>
-            <label class="block mb-2 text-sm font-medium text-neutral-700" for="theme">
-                🎨 Tema de la lista
+            <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                Tema de la lista
             </label>
-            <select
-                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200"
-                id="theme"
-                formControlName="theme">
-                <option value="">Sin tema específico</option>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                <label class="flex items-center gap-2 px-3.5 py-2.5 border rounded-lg bg-white cursor-pointer"
+                    [class.border-ink]="saveForm.get('theme')?.value === '' || saveForm.get('theme')?.value === null"
+                    [class.border-line]="saveForm.get('theme')?.value !== '' && saveForm.get('theme')?.value !== null">
+                    <input type="radio" name="theme" formControlName="theme" value="" class="sr-only">
+                    <span class="w-2.5 h-2.5 rounded-sm bg-line-strong"></span>
+                    <span class="text-sm font-semibold text-ink">Sin tema específico</span>
+                </label>
                 @for(theme of themes; track theme.value) {
-                <option [value]="theme.value">{{theme.label}}</option>
+                <label class="flex items-center gap-2 px-3.5 py-2.5 border rounded-lg bg-white cursor-pointer"
+                    [class.border-ink]="saveForm.get('theme')?.value === theme.value"
+                    [class.border-line]="saveForm.get('theme')?.value !== theme.value">
+                    <input type="radio" name="theme" formControlName="theme" [value]="theme.value" class="sr-only">
+                    <span class="w-2.5 h-2.5 rounded-sm" [class.bg-event-babyshower]="theme.value === 'babyshower'"
+                        [class.bg-event-cumpleanos]="theme.value === 'cumpleanos'"
+                        [class.bg-event-boda]="theme.value === 'boda'"
+                        [class.bg-event-navidad]="theme.value === 'navidad'"
+                        [class.bg-event-graduacion]="theme.value === 'graduacion'"></span>
+                    <span class="text-sm font-semibold text-ink">{{theme.label}}</span>
+                </label>
                 }
-            </select>
+            </div>
         </div>
+        }
 
         <!-- Fecha límite -->
         <div>
-            <label class="block mb-2 text-sm font-medium text-neutral-700" for="date_end">
-                ⏳ Fecha límite (opcional)
+            <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5" for="date_end">
+                Fecha límite (opcional)
             </label>
-            <input
-                class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
-                id="date_end" 
-                type="date" 
+            <input class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink" id="date_end" type="date"
                 formControlName="date_end">
-            <button type="button" (click)="deleteDateEnd()" class="mt-2 text-xs text-red-500 hover:underline">
-                ❌ Eliminar fecha límite
+            <button type="button" (click)="deleteDateEnd()" class="mt-2 text-xs text-danger-text hover:underline">
+                Eliminar fecha límite
             </button>
         </div>
 
         <!-- Integraciones con plataformas -->
         <div>
-            <h3 class="text-sm font-medium text-neutral-700 mb-4">🔗 Conectar con plataformas</h3>
-            
+            <h3 class="text-xs font-bold uppercase tracking-wide text-muted mb-2.5">Conectar con plataformas</h3>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 <!-- Steam Integration -->
-                <div class="p-4 border border-purple-100 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 hover:shadow-md transition-all duration-200">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
-                            <fa-icon [icon]="['fab', 'steam']" class="text-white text-lg"></fa-icon>
-                        </div>
-                        <div>
-                            <h4 class="font-medium text-neutral-800">Steam</h4>
-                            <p class="text-xs text-neutral-600">Conecta tu perfil de Steam</p>
-                        </div>
-                    </div>
-                    
-                    <label class="block mb-2 text-sm font-medium text-neutral-700" for="steamUsername">
+                <div class="p-4 border border-line-soft rounded-lg bg-white">
+                    <h4 class="text-sm font-bold text-ink">Steam</h4>
+                    <p class="text-xs text-muted-light mt-0.5">Conecta tu perfil de Steam</p>
+
+                    <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5 mt-3"
+                        for="steamUsername">
                         Nombre de usuario
                     </label>
-                    <input
-                        class="w-full px-3 py-2 text-sm border border-blue-200 rounded-lg bg-white/70 backdrop-blur-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition-all duration-200 placeholder-neutral-400"
-                        id="steamUsername"
-                        type="text" 
-                        placeholder="tu_usuario_steam"
-                        formControlName="steam_username">
+                    <input class="w-full px-2.5 py-2 text-sm border border-line rounded-lg bg-white text-ink"
+                        id="steamUsername" type="text" placeholder="tu_usuario_steam" formControlName="steam_username">
                 </div>
 
                 <!-- Amazon Integration -->
-                <div class="p-4 border border-purple-100 rounded-xl bg-gradient-to-br from-orange-50 to-yellow-50 hover:shadow-md transition-all duration-200">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-lg flex items-center justify-center">
-                            <fa-icon [icon]="['fab', 'amazon']" class="text-white text-lg"></fa-icon>
-                        </div>
-                        <div>
-                            <h4 class="font-medium text-neutral-800">Amazon</h4>
-                            <p class="text-xs text-neutral-600">ID de tu lista de Amazon</p>
-                        </div>
-                    </div>
-                    
-                    <label class="block mb-2 text-sm font-medium text-neutral-700" for="amazonWishlist">
+                <div class="p-4 border border-line-soft rounded-lg bg-white">
+                    <h4 class="text-sm font-bold text-ink">Amazon</h4>
+                    <p class="text-xs text-muted-light mt-0.5">ID de tu lista de Amazon</p>
+
+                    <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5 mt-3"
+                        for="amazonWishlist">
                         ID de lista de deseos
                     </label>
-                    <input
-                        class="w-full px-3 py-2 text-sm border border-orange-200 rounded-lg bg-white/70 backdrop-blur-sm focus:ring-2 focus:ring-orange-300 focus:border-orange-400 transition-all duration-200 placeholder-neutral-400"
-                        id="amazonWishlist"
-                        type="text" 
-                        placeholder="ABCD1234EFGH5678"
+                    <input class="w-full px-2.5 py-2 text-sm border border-line rounded-lg bg-white text-ink"
+                        id="amazonWishlist" type="text" placeholder="ABCD1234EFGH5678"
                         formControlName="amazon_wishlist_id">
                 </div>
 
             </div>
-            
-            <div class="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                <p class="text-xs text-blue-700">
-                    💡 <strong>Tip:</strong> Estas integraciones son opcionales. Puedes agregar productos manualmente sin conectar ninguna plataforma.
+
+            <div class="mt-3 p-3 border border-line-soft rounded-lg bg-white">
+                <p class="text-xs text-muted-light">
+                    <strong class="text-ink">Tip:</strong> Estas integraciones son opcionales. Puedes agregar productos
+                    manualmente sin conectar ninguna plataforma.
                 </p>
             </div>
         </div>

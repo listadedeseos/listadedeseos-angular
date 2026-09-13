@@ -1,13 +1,13 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
-import { TableModule } from '@some-angular-utils/table';
 import { CustomDeleteComponent } from '../../components/customDelete/customDelete.component';
 import { UserFormComponent } from '../../components/user-form/user-form.component';
+import { SAUTableModule } from '@some-angular-utils/table';
 
 @Component({
     imports: [
-        TableModule,
+        SAUTableModule,
         UserFormComponent,
         CustomDeleteComponent,
     ],
@@ -17,7 +17,7 @@ import { UserFormComponent } from '../../components/user-form/user-form.componen
 })
 export class UserComponent {
 
-    @ViewChild('customTable') customTable!: TableModule;
+    @ViewChild('customTable') customTable!: SAUTableModule;
 
     loading: boolean = true;
 

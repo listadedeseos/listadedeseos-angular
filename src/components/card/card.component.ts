@@ -92,47 +92,4 @@ export class CardComponent {
     this.cdr.detectChanges();
   }
 
-  getClasses(label: string) {
-
-    let classes = ['w-full', 'rounded-lg', 'p-1', 'shadow-lg', 'text-center', 'overflow-hidden', 'hover:scale-105'];
-
-    switch (label.toLocaleLowerCase()) {
-      case "steam":
-        classes.push('bg-gradient-to-br', 'from-blue-600', 'to-blue-800', 'text-red-100');
-        break;
-
-      case "amazon":
-      case "instant gaming":
-        classes.push('bg-gradient-to-br', 'from-orange-600', 'to-yellow-600', 'text-white');
-        break;
-
-      default:
-        classes.push('bg-gradient-to-br', 'from-blue-600', 'to-purple-700', 'text-red-100');
-        break;
-    }
-
-    return classes
-  }
-
-  getDropdownClasses(label: string) {
-    let classes = ['block', 'w-full', 'rounded-lg', 'p-2', 'text-center', 'font-medium', 'transition-all', 'duration-200', 'hover:shadow-md'];
-
-    switch (label.toLocaleLowerCase()) {
-      case "steam":
-        classes.push('bg-gradient-to-r', 'from-blue-600', 'to-blue-800', 'text-white', 'hover:from-blue-700', 'hover:to-blue-900');
-        break;
-
-      case "amazon":
-      case "instant gaming":
-        classes.push('bg-gradient-to-r', 'from-orange-500', 'to-yellow-500', 'text-white', 'hover:from-orange-600', 'hover:to-yellow-600');
-        break;
-
-      default:
-        classes.push('bg-gradient-to-r', 'from-blue-600', 'to-purple-700', 'text-white', 'hover:from-blue-700', 'hover:to-purple-800');
-        break;
-    }
-
-    return classes.join(' ');
-  }
-
 }

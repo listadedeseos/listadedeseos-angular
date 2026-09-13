@@ -1,249 +1,170 @@
-<section class="min-h-screen overflow-hidden relative">
-    <!-- Elementos decorativos flotantes -->
-    <div class="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full opacity-30 animate-bounce"></div>
-    <div class="absolute top-40 right-16 w-16 h-16 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full opacity-20 animate-pulse"></div>
-    <div class="absolute bottom-32 left-1/4 w-12 h-12 bg-gradient-to-br from-purple-300 to-pink-300 rounded-full opacity-25 animate-bounce" style="animation-delay: 1s;"></div>
+<section class="min-h-screen">
+    <div class="container mx-auto px-6 py-16 max-w-2xl">
 
-    <!-- Header de la página -->
-    <div class="relative z-10 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <div class="flex items-center justify-center mb-6 gap-3">
-                <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                    📧
-                </div>
-                <h1 class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                    Contáctanos
-                </h1>
-            </div>
-            <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
-                ¿Tienes alguna sugerencia, pregunta o encontraste un error? ¡Nos encantaría escucharte!
+        <!-- Header de la página -->
+        <div class="mb-10">
+            <h1 class="font-serif font-normal text-4xl md:text-5xl text-ink tracking-tight">
+                Contáctanos
+            </h1>
+            <p class="text-muted text-base mt-3 max-w-md">
+                ¿Tienes alguna sugerencia, pregunta o encontraste un error? Nos encantaría escucharte.
             </p>
         </div>
-    </div>
 
-    <!-- Tarjeta de GitHub -->
-    <div class="relative z-10 container mx-auto px-6 mb-8">
-        <div class="max-w-2xl mx-auto">
-            <a href="https://github.com/listadedeseos/listadedeseos-angular" 
-               target="_blank" 
-               rel="noopener noreferrer"
-               class="block glass-enhanced backdrop-blur-lg border border-white/20 shadow-soft rounded-2xl p-6 hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300 group">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-gray-700 to-gray-900 rounded-full flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <fa-icon [icon]="['fab', 'github']" class="text-lg"></fa-icon>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="text-xl font-bold text-neutral-800 mb-1">Contribuye en GitHub</h3>
-                        <p class="text-neutral-600">¿Eres desarrollador/a? Ayúdanos a mejorar el proyecto</p>
-                    </div>
-                    <fa-icon [icon]="['fas', 'arrow-right']" class="text-neutral-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all duration-300"></fa-icon>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <!-- Formulario de contacto -->
-    <div class="relative z-10 container mx-auto px-6 pb-16">
-        <div class="max-w-2xl mx-auto">
-            <div class="glass-enhanced backdrop-blur-lg border border-white/20 shadow-soft rounded-3xl">
-                <div class="p-8 space-y-6">
-                    <div class="text-center">
-                        <h2 class="text-2xl font-bold text-neutral-800 mb-2">
-                            Envíanos un mensaje ✉️
-                        </h2>
-                        <p class="text-neutral-600 text-sm">
-                            Completa el formulario y te responderemos lo antes posible
-                        </p>
-                    </div>
-
-                    <form class="space-y-5" [formGroup]="saveForm" (submit)="onSubmit()">
-
-                        <!-- Tipo de mensaje -->
-                        <div>
-                            <label class="block mb-2 text-sm font-medium text-neutral-700">
-                                📋 Tipo de mensaje
-                            </label>
-                            <select formControlName="type" 
-                                    class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200"
-                                    required>
-                                <option value="" disabled selected>Selecciona un tipo de mensaje</option>
-                                <option value="suggestion">💡 Sugerencia</option>
-                                <option value="complaint">🐛 Error/queja</option>
-                                <option value="question">❓ Consulta</option>
-                            </select>
-                            @if(saveForm.get('type')?.invalid && saveForm.get('type')?.touched) {
-                            <div class="mt-2 text-sm text-rose-600">
-                                @if(saveForm.get('type')?.errors?.['required']) {
-                                <span class="flex items-center gap-1">
-                                    <span>❌</span>
-                                    <span>Debe seleccionar un tipo de mensaje</span>
-                                </span>
-                                }
-                            </div>
-                            }
-                        </div>
-
-                        <!-- Nombre y Email -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block mb-2 text-sm font-medium text-neutral-700">
-                                    👤 Nombre
-                                </label>
-                                <input formControlName="name" 
-                                       type="text" 
-                                       placeholder="Tu nombre"
-                                       class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
-                                       required>
-
-                                @if(saveForm.get('name')?.invalid && saveForm.get('name')?.touched) {
-                                <div class="mt-2 text-sm text-rose-600">
-                                    @if(saveForm.get('name')?.errors?.['required']) {
-                                    <span class="flex items-center gap-1">
-                                        <span>❌</span>
-                                        <span>El nombre es requerido</span>
-                                    </span>
-                                    }
-                                    @if(saveForm.get('name')?.errors?.['minlength']) {
-                                    <span class="flex items-center gap-1">
-                                        <span>❌</span>
-                                        <span>El nombre debe tener al menos 3 caracteres</span>
-                                    </span>
-                                    }
-                                    @if(saveForm.get('name')?.errors?.['maxlength']) {
-                                    <span class="flex items-center gap-1">
-                                        <span>❌</span>
-                                        <span>El nombre no debe exceder 50 caracteres</span>
-                                    </span>
-                                    }
-                                </div>
-                                }
-                            </div>
-
-                            <div>
-                                <label class="block mb-2 text-sm font-medium text-neutral-700">
-                                    📧 Correo electrónico
-                                </label>
-                                <input formControlName="email" 
-                                       type="email" 
-                                       placeholder="tu@email.com"
-                                       class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
-                                       required>
-                                @if(saveForm.get('email')?.invalid && saveForm.get('email')?.touched) {
-                                <div class="mt-2 text-sm text-rose-600">
-                                    @if(saveForm.get('email')?.errors?.['required']) {
-                                    <span class="flex items-center gap-1">
-                                        <span>❌</span>
-                                        <span>El correo electrónico es requerido</span>
-                                    </span>
-                                    }
-                                    @if(saveForm.get('email')?.errors?.['email']) {
-                                    <span class="flex items-center gap-1">
-                                        <span>❌</span>
-                                        <span>Ingrese un correo electrónico válido</span>
-                                    </span>
-                                    }
-                                </div>
-                                }
-                            </div>
-                        </div>
-
-                        <!-- Título -->
-                        <div>
-                            <label class="block mb-2 text-sm font-medium text-neutral-700">
-                                🏷️ Título
-                            </label>
-                            <input formControlName="title" 
-                                   type="text" 
-                                   placeholder="Resumen de tu mensaje"
-                                   class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
-                                   min="3" max="50" required>
-                            @if(saveForm.get('title')?.invalid && saveForm.get('title')?.touched) {
-                            <div class="mt-2 text-sm text-rose-600">
-                                @if(saveForm.get('title')?.errors?.['required']) {
-                                <span class="flex items-center gap-1">
-                                    <span>❌</span>
-                                    <span>El título es requerido</span>
-                                </span>
-                                }
-                                @if(saveForm.get('title')?.errors?.['minlength']) {
-                                <span class="flex items-center gap-1">
-                                    <span>❌</span>
-                                    <span>El título debe tener al menos 3 caracteres</span>
-                                </span>
-                                }
-                                @if(saveForm.get('title')?.errors?.['maxlength']) {
-                                <span class="flex items-center gap-1">
-                                    <span>❌</span>
-                                    <span>El título no debe exceder 50 caracteres</span>
-                                </span>
-                                }
-                            </div>
-                            }
-                        </div>
-
-                        <!-- Descripción -->
-                        <div>
-                            <label class="block mb-2 text-sm font-medium text-neutral-700">
-                                📝 Descripción
-                            </label>
-                            <textarea formControlName="body" 
-                                      placeholder="Cuéntanos con detalle tu sugerencia, problema o pregunta..."
-                                      rows="5"
-                                      class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400 resize-none"
-                                      required></textarea>
-                            @if(saveForm.get('body')?.invalid && saveForm.get('body')?.touched) {
-                            <div class="mt-2 text-sm text-rose-600">
-                                @if(saveForm.get('body')?.errors?.['required']) {
-                                <span class="flex items-center gap-1">
-                                    <span>❌</span>
-                                    <span>La descripción es requerida</span>
-                                </span>
-                                }
-                            </div>
-                            }
-                        </div>
-
-                        <!-- Botón de envío -->
-                        <button type="submit"
-                                class="w-full py-3 px-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-purple-600 hover:to-pink-600 transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2">
-                            <span>📤</span>
-                            <span>Enviar Mensaje</span>
-                        </button>
-                    </form>
-                </div>
+        <!-- Tarjeta de GitHub -->
+        <a href="https://github.com/listadedeseos/listadedeseos-angular"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="flex items-center gap-3.5 p-4.5 border border-line rounded-xl bg-white hover:border-ink transition-colors duration-200 mb-8">
+            <div class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-cream flex-shrink-0">
+                <fa-icon [icon]="['fab', 'github']" class="text-base"></fa-icon>
             </div>
+            <div class="flex-1">
+                <h3 class="text-ink font-bold text-sm">Contribuye en GitHub</h3>
+                <p class="text-muted text-xs">¿Eres desarrollador/a? Ayúdanos a mejorar el proyecto</p>
+            </div>
+            <fa-icon [icon]="['fas', 'chevron-right']" class="text-muted-light"></fa-icon>
+        </a>
+
+        <!-- Formulario de contacto -->
+        <div class="border border-line-card rounded-xl bg-white p-7">
+            <div class="mb-5">
+                <h2 class="font-serif font-normal text-2xl text-ink">
+                    Envíanos un mensaje
+                </h2>
+                <p class="text-muted text-sm mt-1">
+                    Completa el formulario y te responderemos lo antes posible
+                </p>
+            </div>
+
+            <form class="flex flex-col gap-4.5" [formGroup]="saveForm" (submit)="onSubmit()">
+
+                <!-- Tipo de mensaje -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                        Tipo de mensaje
+                    </label>
+                    <select formControlName="type"
+                            [class.border-danger]="saveForm.get('type')?.invalid && saveForm.get('type')?.touched"
+                            class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink"
+                            required>
+                        <option value="" disabled selected>Selecciona un tipo de mensaje</option>
+                        <option value="suggestion">Sugerencia</option>
+                        <option value="complaint">Error o queja</option>
+                        <option value="question">Consulta</option>
+                    </select>
+                    @if(saveForm.get('type')?.invalid && saveForm.get('type')?.touched) {
+                    <div class="text-danger-text text-xs mt-1">
+                        @if(saveForm.get('type')?.errors?.['required']) {
+                        <span>Debe seleccionar un tipo de mensaje</span>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <!-- Nombre y Email -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                            Nombre
+                        </label>
+                        <input formControlName="name"
+                               type="text"
+                               placeholder="Tu nombre"
+                               [class.border-danger]="saveForm.get('name')?.invalid && saveForm.get('name')?.touched"
+                               class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink placeholder-muted-placeholder"
+                               required>
+
+                        @if(saveForm.get('name')?.invalid && saveForm.get('name')?.touched) {
+                        <div class="text-danger-text text-xs mt-1">
+                            @if(saveForm.get('name')?.errors?.['required']) {
+                            <span>El nombre es requerido</span>
+                            }
+                            @if(saveForm.get('name')?.errors?.['minlength']) {
+                            <span>El nombre debe tener al menos 3 caracteres</span>
+                            }
+                            @if(saveForm.get('name')?.errors?.['maxlength']) {
+                            <span>El nombre no debe exceder 50 caracteres</span>
+                            }
+                        </div>
+                        }
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                            Correo electrónico
+                        </label>
+                        <input formControlName="email"
+                               type="email"
+                               placeholder="tu@email.com"
+                               [class.border-danger]="saveForm.get('email')?.invalid && saveForm.get('email')?.touched"
+                               class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink placeholder-muted-placeholder"
+                               required>
+                        @if(saveForm.get('email')?.invalid && saveForm.get('email')?.touched) {
+                        <div class="text-danger-text text-xs mt-1">
+                            @if(saveForm.get('email')?.errors?.['required']) {
+                            <span>El correo electrónico es requerido</span>
+                            }
+                            @if(saveForm.get('email')?.errors?.['email']) {
+                            <span>Ingrese un correo electrónico válido</span>
+                            }
+                        </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Título -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                        Título
+                    </label>
+                    <input formControlName="title"
+                           type="text"
+                           placeholder="Resumen de tu mensaje"
+                           [class.border-danger]="saveForm.get('title')?.invalid && saveForm.get('title')?.touched"
+                           class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink placeholder-muted-placeholder"
+                           min="3" max="50" required>
+                    @if(saveForm.get('title')?.invalid && saveForm.get('title')?.touched) {
+                    <div class="text-danger-text text-xs mt-1">
+                        @if(saveForm.get('title')?.errors?.['required']) {
+                        <span>El título es requerido</span>
+                        }
+                        @if(saveForm.get('title')?.errors?.['minlength']) {
+                        <span>El título debe tener al menos 3 caracteres</span>
+                        }
+                        @if(saveForm.get('title')?.errors?.['maxlength']) {
+                        <span>El título no debe exceder 50 caracteres</span>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <!-- Descripción -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                        Descripción
+                    </label>
+                    <textarea formControlName="body"
+                              placeholder="Cuéntanos con detalle tu sugerencia, problema o pregunta..."
+                              rows="5"
+                              [class.border-danger]="saveForm.get('body')?.invalid && saveForm.get('body')?.touched"
+                              class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink placeholder-muted-placeholder resize-none"
+                              required></textarea>
+                    @if(saveForm.get('body')?.invalid && saveForm.get('body')?.touched) {
+                    <div class="text-danger-text text-xs mt-1">
+                        @if(saveForm.get('body')?.errors?.['required']) {
+                        <span>La descripción es requerida</span>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <!-- Botón de envío -->
+                <button type="submit"
+                        class="w-full py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200">
+                    Enviar mensaje
+                </button>
+            </form>
         </div>
     </div>
-
-    <!-- Ondas decorativas de fondo -->
-    <svg class="absolute bottom-0 left-0 w-full h-1/3 -z-10" 
-         xmlns="http://www.w3.org/2000/svg" 
-         viewBox="0 0 1024 200" 
-         preserveAspectRatio="none">
-        <defs>
-            <linearGradient id="contactWave1" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:rgb(196, 181, 253);stop-opacity:0.3" />
-                <stop offset="100%" style="stop-color:rgb(251, 207, 232);stop-opacity:0.3" />
-            </linearGradient>
-            <linearGradient id="contactWave2" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:rgb(167, 139, 250);stop-opacity:0.4" />
-                <stop offset="100%" style="stop-color:rgb(244, 114, 182);stop-opacity:0.4" />
-            </linearGradient>
-            <linearGradient id="contactWave3" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:rgb(139, 92, 246);stop-opacity:0.5" />
-                <stop offset="100%" style="stop-color:rgb(236, 72, 153);stop-opacity:0.5" />
-            </linearGradient>
-        </defs>
-        <g fill="none">
-            <path fill="url(#contactWave1)"
-                  d="M 0,13 C 68.4,23.4 205.2,65 342,65 C 478.8,65 547.6,15.6 684,13 C 820.4,10.4 956,44.2 1024,52L1024 200L0 200z">
-            </path>
-            <path fill="url(#contactWave2)"
-                  d="M 0,107 C 68.4,101.8 205.2,76 342,81 C 478.8,86 547.6,131.6 684,132 C 820.4,132.4 956,92.8 1024,83L1024 200L0 200z">
-            </path>
-            <path fill="url(#contactWave3)"
-                  d="M 0,198 C 68.4,187.2 205.2,147.6 342,144 C 478.8,140.4 547.6,182 684,180 C 820.4,178 956,143.2 1024,134L1024 200L0 200z">
-            </path>
-        </g>
-    </svg>
 </section>

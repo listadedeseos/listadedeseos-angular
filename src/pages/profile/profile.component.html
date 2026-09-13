@@ -1,143 +1,107 @@
 @if(loading){
 <app-loading></app-loading>
 } @else {
-<div class="min-h-screen bg-gray-50 py-8">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-cream py-12">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-900 mb-2">
-                Mi Perfil
+        <div class="mb-8">
+            <h1 class="font-serif font-normal text-4xl md:text-5xl text-ink tracking-tight">
+                Mi perfil
             </h1>
-            <p class="text-gray-600 text-lg">
+            <p class="text-muted text-base mt-2">
                 Gestiona tu información personal y configuraciones de cuenta
             </p>
         </div>
 
-        <!-- Formulario de perfil en card profesional -->
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
-            <!-- Header del card -->
-            <div class="bg-gradient-to-r from-purple-50 to-pink-50 border-b border-gray-200 px-8 py-6">
-                <h2 class="text-2xl font-semibold text-gray-900 flex items-center gap-3">
-                    <span
-                        class="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white text-sm">
-                        ✏️
-                    </span>
-                    Información Personal
-                </h2>
-                <p class="text-gray-600 mt-2">Actualiza tus datos personales y configuraciones de seguridad</p>
-            </div>
+        <!-- Mensajes de éxito y error -->
+        @if(success){
+        <div class="mb-6 bg-reserved-light border border-reserved-border rounded-lg px-4 py-3">
+            <p class="text-sm font-medium text-reserved">{{ success }}</p>
+        </div>
+        }
 
-            <!-- Contenido del formulario -->
-            <div class="p-8">
-                <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="space-y-8">
+        @if(error){
+        <div class="mb-6 bg-danger-light border border-danger-border rounded-lg px-4 py-3">
+            <p class="text-sm font-medium text-danger-text">{{ error }}</p>
+        </div>
+        }
 
-                    <!-- Mensajes de éxito y error -->
-                    @if(success){
-                    <div class="bg-emerald-50 border-l-4 border-emerald-400 p-4 rounded-md">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <span class="text-emerald-400 text-xl">✅</span>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-sm font-medium text-emerald-800">{{ success }}</p>
-                            </div>
-                        </div>
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <div class="border border-line-card rounded-xl bg-white overflow-hidden">
+
+                <!-- Sección 01: Información Básica -->
+                <div>
+                    <div class="px-6 py-5 border-b border-line-soft bg-cream-alt">
+                        <span class="font-serif text-sm text-primary-500">01</span>
+                        <h2 class="font-serif font-medium text-xl text-ink">Información básica</h2>
+                        <p class="text-sm text-muted mt-1">Datos principales de tu perfil</p>
                     </div>
-                    }
 
-                    @if(error){
-                    <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded-md">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <span class="text-red-400 text-xl">❌</span>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-sm font-medium text-red-800">{{ error }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    }
-
-                    <!-- Información Básica -->
-                    <div class="space-y-6">
-                        <div class="border-b border-gray-200 pb-4">
-                            <h3 class="text-lg font-medium text-gray-900 flex items-center gap-2">
-                                <span
-                                    class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-sm">1</span>
-                                Información Básica
-                            </h3>
-                            <p class="text-sm text-gray-500 mt-1">Datos principales de tu perfil</p>
-                        </div>
+                    <div class="p-6 flex flex-col gap-5">
 
                         <!-- Nombre de usuario -->
-                        <div class="grid grid-cols-1 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
-                                    Nombre de usuario *
-                                </label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <span class="text-gray-400">&#64;</span>
-                                    </div>
-                                    <input type="text" formControlName="username" placeholder="tu_usuario"
-                                        class="block w-full pl-7 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
-                                        [class]="submitted && f['username'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                                Nombre de usuario *
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-muted-placeholder">&#64;</span>
                                 </div>
-
-                                @if(submitted && f['username'].errors){
-                                <div class="mt-2 text-sm text-red-600">
-                                    @if(f['username']?.errors?.['required']){
-                                    <div>El nombre de usuario es requerido
-                                    </div>
-                                    }
-                                    @if(f['username']?.errors?.['minlength']){
-                                    <div>Debe tener al menos 3 caracteres
-                                    </div>
-                                    }
-                                </div>
-                                }
-
+                                <input type="text" formControlName="username" placeholder="tu_usuario"
+                                    class="w-full pl-7 pr-3 py-2.5 border border-line rounded-lg bg-white text-ink"
+                                    [class]="submitted && f['username'].errors ? 'border-danger text-danger-text' : ''">
                             </div>
+
+                            @if(submitted && f['username'].errors){
+                            <div class="mt-1.5">
+                                @if(f['username']?.errors?.['required']){
+                                <p class="text-danger-text text-xs">El nombre de usuario es requerido</p>
+                                }
+                                @if(f['username']?.errors?.['minlength']){
+                                <p class="text-danger-text text-xs">Debe tener al menos 3 caracteres</p>
+                                }
+                            </div>
+                            }
                         </div>
 
                         <!-- Nombre y Apellido -->
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
                                     Nombre *
                                 </label>
                                 <input type="text" formControlName="name" placeholder="Tu nombre"
-                                    class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
-                                    [class]="submitted && f['name'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
+                                    class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink"
+                                    [class]="submitted && f['name'].errors ? 'border-danger text-danger-text' : ''">
 
                                 @if(submitted && f['name'].errors){
-                                <div class="mt-2 text-sm text-red-600">
+                                <div class="mt-1.5">
                                     @if(f['name']?.errors?.['required']){
-                                    <div>El nombre es requerido</div>
+                                    <p class="text-danger-text text-xs">El nombre es requerido</p>
                                     }
                                     @if(f['name']?.errors?.['minlength']){
-                                    <div>Debe tener al menos 2 caracteres</div>
+                                    <p class="text-danger-text text-xs">Debe tener al menos 2 caracteres</p>
                                     }
                                 </div>
                                 }
-
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
                                     Apellido/s *
                                 </label>
                                 <input type="text" formControlName="surname" placeholder="Tu apellido"
-                                    class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
-                                    [class]="submitted && f['surname'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
+                                    class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink"
+                                    [class]="submitted && f['surname'].errors ? 'border-danger text-danger-text' : ''">
 
                                 @if(submitted && f['surname'].errors){
-                                <div class="mt-2 text-sm text-red-600">
+                                <div class="mt-1.5">
                                     @if(f['surname']?.errors?.['required']){
-                                    <div>El apellido es requerido</div>
+                                    <p class="text-danger-text text-xs">El apellido es requerido</p>
                                     }
                                     @if(f['surname']?.errors?.['minlength']){
-                                    <div>Debe tener al menos 2 caracteres</div>
+                                    <p class="text-danger-text text-xs">Debe tener al menos 2 caracteres</p>
                                     }
                                 </div>
                                 }
@@ -146,162 +110,151 @@
 
                         <!-- Email -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                            <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
                                 Correo electrónico *
                             </label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-400">📧</span>
-                                </div>
-                                <input type="email" formControlName="email" placeholder="tu@email.com"
-                                    class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
-                                    [class]="submitted && f['email'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
-                            </div>
+                            <input type="email" formControlName="email" placeholder="tu@email.com"
+                                class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink"
+                                [class]="submitted && f['email'].errors ? 'border-danger text-danger-text' : ''">
 
                             @if(submitted && f['email'].errors){
-                            <div class="mt-2 text-sm text-red-600">
+                            <div class="mt-1.5">
                                 @if(f['email']?.errors?.['required']){
-                                <div>El correo electrónico es requerido</div>
+                                <p class="text-danger-text text-xs">El correo electrónico es requerido</p>
                                 }
                                 @if(f['email']?.errors?.['email']){
-                                <div>El formato del correo no es válido</div>
+                                <p class="text-danger-text text-xs">El formato del correo no es válido</p>
                                 }
                             </div>
                             }
-
                         </div>
 
                         <!-- Medidas opcionales -->
-                        <div class="mt-6">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Medidas (opcional)</label>
-                            <div
-                                class="bg-gray-50 rounded-lg p-6 border border-gray-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                                Medidas (opcional)
+                            </label>
+                            <div class="bg-cream-alt border border-line-soft rounded-lg p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Altura (cm)</label>
+                                    <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">Altura (cm)</label>
                                     <input type="text" inputmode="numeric" pattern="[0-9]+(\.[0-9]{1,2})?" formControlName="height" placeholder="Altura (cm)"
-                                        class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-white" />
+                                        class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink" />
 
                                     @if(submitted && f['height'].errors){
-                                    <div class="mt-2 text-sm text-red-600">
+                                    <div class="mt-1.5">
                                         @if(f['height']?.errors?.['pattern']){
-                                        <div>Altura inválida. Usa solo números (hasta 2 decimales).</div>
+                                        <p class="text-danger-text text-xs">Altura inválida. Usa solo números (hasta 2 decimales).</p>
                                         }
                                     </div>
                                     }
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Talla camiseta</label>
+                                    <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">Talla camiseta</label>
                                     <input type="text" formControlName="shirt_size" placeholder="Talla camiseta"
-                                        class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-white" />
+                                        class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink" />
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Talla pantalón</label>
+                                    <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">Talla pantalón</label>
                                     <input type="text" formControlName="pant_size" placeholder="Talla pantalón"
-                                        class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-white" />
+                                        class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink" />
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Talla calzado</label>
+                                    <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">Talla calzado</label>
                                     <input type="text" formControlName="shoe_size" placeholder="Talla calzado"
-                                        class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-white" />
+                                        class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink" />
                                 </div>
                             </div>
-                            <p class="text-xs text-gray-500 mt-2">Estos campos son opcionales.</p>
+                            <p class="text-xs text-muted mt-2">Estos campos son opcionales y, si se rellenan, se muestran en la cabecera pública de tu lista.</p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Sección de Seguridad -->
-                    <div class="space-y-6 pt-8 border-t border-gray-200">
-                        <div class="border-b border-gray-200 pb-4">
-                            <h3 class="text-lg font-medium text-gray-900 flex items-center gap-2">
-                                <span
-                                    class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 text-sm">2</span>
-                                Seguridad
-                            </h3>
-                            <p class="text-sm text-gray-500 mt-1">Actualiza tu contraseña (opcional)</p>
-                        </div>
+                <!-- Sección 02: Seguridad -->
+                <div>
+                    <div class="px-6 py-5 border-b border-line-soft bg-cream-alt">
+                        <span class="font-serif text-sm text-primary-500">02</span>
+                        <h2 class="font-serif font-medium text-xl text-ink">Seguridad</h2>
+                        <p class="text-sm text-muted mt-1">Actualiza tu contraseña (opcional)</p>
+                    </div>
+
+                    <div class="p-6 flex flex-col gap-5">
 
                         <!-- Botón para mostrar/ocultar cambio de contraseña -->
                         <div>
                             <button type="button" (click)="togglePasswordField()"
-                                class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200">
-                                <span class="mr-2">{{ showPasswordField ? '🔒' : '🔓' }}</span>
+                                class="px-4 py-2.5 border border-line rounded-lg bg-white text-muted-dark font-semibold text-sm hover:border-ink hover:text-ink transition-colors duration-200">
                                 {{ showPasswordField ? 'Cancelar cambio de contraseña' : 'Cambiar contraseña' }}
                             </button>
                         </div>
 
                         @if(showPasswordField){
                         <!-- Campos de contraseña -->
-                        <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                                        Nueva contraseña
-                                    </label>
-                                    <input type="password" formControlName="password" placeholder="••••••••"
-                                        class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-white"
-                                        [class]="submitted && f['password'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
+                        <div class="bg-cream-alt border border-line-soft rounded-lg p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                                    Nueva contraseña
+                                </label>
+                                <input type="password" formControlName="password" placeholder="••••••••"
+                                    class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink"
+                                    [class]="submitted && f['password'].errors ? 'border-danger text-danger-text' : ''">
 
-                                    @if(submitted && f['password'].errors){
-                                    <div class="mt-2 text-sm text-red-600">
-                                        @if(f['password']?.errors?.['required']){
-                                        <div>La contraseña es requerida</div>
-                                        }
-                                        @if(f['password']?.errors?.['minlength']){
-                                        <div>Debe tener al menos 6 caracteres</div>
-                                        }
-                                    </div>
+                                @if(submitted && f['password'].errors){
+                                <div class="mt-1.5">
+                                    @if(f['password']?.errors?.['required']){
+                                    <p class="text-danger-text text-xs">La contraseña es requerida</p>
                                     }
-
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                                        Confirmar nueva contraseña
-                                    </label>
-                                    <input type="password" formControlName="confirmPassword" placeholder="••••••••"
-                                        class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-white"
-                                        [class]="submitted && f['confirmPassword'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
-
-                                    @if(submitted && f['confirmPassword'].errors){
-                                    <div class="mt-2 text-sm text-red-600">
-                                        @if(f['confirmPassword']?.errors?.['required']){
-                                        <div>La confirmación es requerida</div>
-                                        }
-                                        @if(f['confirmPassword']?.errors?.['passwordMismatch']){
-                                        <div>Las contraseñas no coinciden</div>
-                                        }
-                                    </div>
+                                    @if(f['password']?.errors?.['minlength']){
+                                    <p class="text-danger-text text-xs">Debe tener al menos 6 caracteres</p>
                                     }
-
                                 </div>
+                                }
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                                    Confirmar nueva contraseña
+                                </label>
+                                <input type="password" formControlName="confirmPassword" placeholder="••••••••"
+                                    class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink"
+                                    [class]="submitted && f['confirmPassword'].errors ? 'border-danger text-danger-text' : ''">
+
+                                @if(submitted && f['confirmPassword'].errors){
+                                <div class="mt-1.5">
+                                    @if(f['confirmPassword']?.errors?.['required']){
+                                    <p class="text-danger-text text-xs">La confirmación es requerida</p>
+                                    }
+                                    @if(f['confirmPassword']?.errors?.['passwordMismatch']){
+                                    <p class="text-danger-text text-xs">Las contraseñas no coinciden</p>
+                                    }
+                                </div>
+                                }
                             </div>
                         </div>
                         }
                     </div>
+                </div>
 
-                    <!-- Sección de Lista de Deseos Principal -->
-                    <div class="space-y-6 pt-8 border-t border-gray-200">
-                        <div class="border-b border-gray-200 pb-4">
-                            <h3 class="text-lg font-medium text-gray-900 flex items-center gap-2">
-                                <span
-                                    class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-sm">3</span>
-                                Lista de Deseos Principal
-                            </h3>
-                            <p class="text-sm text-gray-500 mt-1">Selecciona tu lista de deseos principal</p>
-                        </div>
+                <!-- Sección 03: Lista de Deseos Principal -->
+                <div>
+                    <div class="px-6 py-5 border-b border-line-soft bg-cream-alt">
+                        <span class="font-serif text-sm text-primary-500">03</span>
+                        <h2 class="font-serif font-medium text-xl text-ink">Lista de deseos principal</h2>
+                        <p class="text-sm text-muted mt-1">Selecciona tu lista de deseos principal</p>
+                    </div>
 
+                    <div class="p-6 flex flex-col gap-5">
                         <!-- Selección de Lista de Deseos Principal -->
                         @if(wishlists && wishlists.length > 0){
                         <div>
-                            <label for="main_wish_list_id" class="block text-sm font-medium text-gray-700 mb-2">
-                                Lista de Deseos Principal *
+                            <label for="main_wish_list_id" class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                                Lista de deseos principal *
                             </label>
                             <select formControlName="main_wish_list_id" id="main_wish_list_id"
-                                class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
-                                [class]="submitted && f['main_wish_list_id'].errors ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''">
+                                class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink"
+                                [class]="submitted && f['main_wish_list_id'].errors ? 'border-danger text-danger-text' : ''">
 
                                 <option [value]="-1" disabled>Selecciona una lista</option>
 
@@ -314,40 +267,33 @@
                             </select>
 
                             @if(submitted && f['main_wish_list_id'].errors?.['required']){
-                            <div class="mt-2 text-sm text-red-600">
-                                La lista de deseos principal es requerida
-                            </div>
+                            <p class="text-danger-text text-xs mt-1.5">La lista de deseos principal es requerida</p>
                             }
-
                         </div>
                         }
                     </div>
+                </div>
 
-                    <!-- Botones de acción -->
-                    <div class="flex flex-col sm:flex-row gap-4 pt-8 border-t border-gray-200">
-                        <button type="submit" [disabled]="profileForm.invalid || loading"
-                            class="flex-1 inline-flex justify-center items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+                <!-- Botones de acción -->
+                <div class="px-6 py-5 border-t border-line-soft bg-cream-alt flex flex-wrap gap-2.5">
+                    <button type="submit" [disabled]="profileForm.invalid || loading"
+                        class="px-6 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2">
 
-                            @if(loading){
-                            <span
-                                class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></span>
-                            Guardando cambios...
-                            } @else {
-                            <span class="mr-2">💾</span>
-                            Guardar cambios
-                            }
+                        @if(loading){
+                        <span class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                        Guardando cambios...
+                        } @else {
+                        Guardar cambios
+                        }
+                    </button>
 
-                        </button>
-
-                        <a type="button" routerLink="/dashboard"
-                            class="inline-flex justify-center items-center px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200">
-                            <span class="mr-2">↩️</span>
-                            Volver al Dashboard
-                        </a>
-                    </div>
-                </form>
+                    <a type="button" routerLink="/dashboard"
+                        class="px-6 py-3 border border-line-strong text-ink font-semibold rounded-lg hover:border-ink transition-colors duration-200 bg-transparent inline-flex items-center justify-center">
+                        Cancelar
+                    </a>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 }

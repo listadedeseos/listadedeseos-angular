@@ -12,7 +12,8 @@
         [sizeInitialPage]="1"
         (editEvent)="toogleEditForm($event)"
         (deleteEvent)="toogleDeleteForm($event)"
-    ></sau-table>
+    >
+    </sau-table>
 
     @if(editProduct){
         <app-user-form [id]="id" (closeFunction)="toogleEditForm()" (acceptFunction)="customTable.getItems()"></app-user-form>
