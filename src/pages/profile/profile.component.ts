@@ -6,16 +6,15 @@ import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { User } from '../../apiConnection/model/user';
 import { LoadingComponent } from '../../components/loading/loading.component';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-profile',
     imports: [
-        LoadingComponent,
-        ReactiveFormsModule,
-        CommonModule,
-        RouterLink
-    ],
+    LoadingComponent,
+    ReactiveFormsModule,
+    RouterLink
+],
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
 })

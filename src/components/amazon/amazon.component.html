@@ -1,16 +1,16 @@
 @if(amazonWishlistId){
 
-<section class="flex mb-2">
+<section class="flex items-center pb-3.5 border-b border-line mb-4">
 
-    <a class="text-xl my-2" [href]="'https://www.amazon.es/hz/wishlist/ls/'+amazonWishlistId" target="_blank"
-        rel="noopener noreferrer">
+    <a class="inline-flex items-center gap-2 text-sm font-semibold text-muted-dark hover:text-ink transition-colors duration-200"
+        [href]="'https://www.amazon.es/hz/wishlist/ls/'+amazonWishlistId" target="_blank" rel="noopener noreferrer">
         <fa-icon [icon]="['fab', 'amazon']"></fa-icon>
         Amazon
     </a>
 
     @if(isLogged){
     <button
-        class="group ml-auto px-4 py-2 bg-white/70 hover:bg-white/90 backdrop-blur-sm border border-gray-200/50 text-gray-600 hover:text-gray-800 transition-all duration-200 font-medium rounded-xl flex items-center gap-2"
+        class="group ml-auto inline-flex items-center gap-2 px-3 py-2 border border-line rounded-lg bg-white text-muted-dark text-sm font-semibold hover:border-ink hover:text-ink transition-colors duration-200"
         (click)="refresh()">
         <fa-icon [icon]="['fas', 'rotate']"
             [ngClass]="['group-hover:duration-500 group-hover:rotate-180 group-hover:transition-transform']"></fa-icon>
@@ -20,17 +20,17 @@
 
 </section>
 
-<section class="grid gap-2 grid-cols-3 md:grid-cols-{{itemsPerRow}}">
+<section class="responsive-grid gap-2" [style.--items-per-row]="itemsPerRow">
 
     <!-- Loading Cards -->
     @if(loading){
     @for(item of [].constructor(6); track $index){
-    <div class="animate-pulse bg-white border border-gray-200 rounded-xl shadow-sm p-3">
-        <div class="aspect-square bg-gray-200 rounded-lg mb-2"></div>
-        <div class="h-2 rounded w-20 bg-gray-200 mb-2"></div>
+    <div class="animate-pulse bg-white border border-line-card rounded-lg p-3">
+        <div class="aspect-square bg-swatch rounded-lg mb-2"></div>
+        <div class="h-2 rounded w-20 bg-swatch mb-2"></div>
         <div class="space-y-1">
-            <div class="h-4 rounded bg-gray-200"></div>
-            <div class="h-4 rounded bg-gray-200"></div>
+            <div class="h-4 rounded bg-swatch"></div>
+            <div class="h-4 rounded bg-swatch"></div>
         </div>
     </div>
     }
@@ -45,9 +45,9 @@
     @if($index == 5 && list.length == 7 && showMore){
 
     <a [routerLink]="['/list', uuidList, 'amazon']"
-        class="h-full bg-white bg-opacity-60 rounded-xl flex flex-col items-center justify-center text-orange-800 hover:scale-[1.02] transition-transform">
-        <fa-icon [icon]="['fas', 'plus']" class="text-2xl mb-2"></fa-icon>
-        <span class="text-sm font-medium">Ver más</span>
+        class="h-full flex flex-col items-center justify-center gap-2 border border-line-card rounded-lg text-muted-dark hover:border-ink hover:text-ink transition-colors duration-200 text-sm font-semibold">
+        <span>Ver más</span>
+        <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
     </a>
 
     <!-- See more button END -->

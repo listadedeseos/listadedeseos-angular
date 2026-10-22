@@ -1,16 +1,17 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ChangeDetectorRef, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ModalRef } from '@some-angular-utils/modal';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
-import { CustomModalComponent } from '../customModal/customModal.component';
 import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-product-form',
   imports: [
-    CustomModalComponent,
     ReactiveFormsModule,
     LoadingComponent,
+    FontAwesomeModule,
   ],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.scss',
@@ -18,8 +19,8 @@ import { LoadingComponent } from '../loading/loading.component';
 export class ProductFormComponent {
   @Input() id = 0;
   @Input() wishListId: number | null = null;
-  @Output() closeFunction = new EventEmitter<any>();
-  @Output() acceptFunction = new EventEmitter<any>();
+
+  private modalRef = inject<ModalRef<ProductFormComponent>>(ModalRef);
 
   public loading = false
 
@@ -44,12 +45,16 @@ export class ProductFormComponent {
     }
   }
 
+  get modalTitle(): string {
+    return (this.id ? 'Editar' : 'Nuevo') + ' producto';
+  }
+
   acceptFormFunction() {
     this.saveEntity()
   }
 
   closeFormFunction() {
-    this.closeFunction.emit();
+    this.modalRef.dismiss();
   }
 
   createForm() {
@@ -96,10 +101,8 @@ export class ProductFormComponent {
 
       this.apiService.save(Utils.urls.product, this.saveForm.value, this.id).subscribe({
         next: (response: any) => {
-          this.acceptFunction.emit(response);
           Utils.ToastUtils.success('Producto guardado', 'El producto ha sido guardado correctamente.');
-          this.closeFormFunction()
-          // Utils.showSuccessMessage('Producto guardado correctamente');
+          this.modalRef.close(response);
         },
         error: (error: any) => {
           // Utils.showErrorMessage('Error al guardar el producto');

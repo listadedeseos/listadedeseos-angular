@@ -1,0 +1,20 @@
+// `itemsPerRow` is a dynamic @Input(), so its column count can't be expressed as a
+// literal Tailwind class (e.g. `md:grid-cols-{{itemsPerRow}}` is never a real class:
+// Tailwind only generates CSS for class names that appear literally in source files,
+// and a runtime-interpolated string never does). Plain CSS + a custom property instead.
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  .responsive-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .responsive-grid {
+    grid-template-columns: repeat(var(--items-per-row, 6), minmax(0, 1fr));
+  }
+}

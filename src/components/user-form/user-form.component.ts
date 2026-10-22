@@ -1,16 +1,15 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { LoadingComponent } from '../loading/loading.component';
-import { CustomModalComponent } from '../customModal/customModal.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ModalRef } from '@some-angular-utils/modal';
 
 @Component({
   selector: 'app-user-form',
   imports: [
     LoadingComponent,
-    CustomModalComponent,
     ReactiveFormsModule,
     FontAwesomeModule,
   ],
@@ -19,8 +18,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 })
 export class UserFormComponent {
   @Input() id = 0;
-  @Output() closeFunction = new EventEmitter<any>();
-  @Output() acceptFunction = new EventEmitter<any>();
+
+  private modalRef = inject<ModalRef<UserFormComponent>>(ModalRef);
 
   public loading = false
   public saveForm: FormGroup = new FormGroup({});
@@ -40,12 +39,16 @@ export class UserFormComponent {
     }
   }
 
+  get modalTitle(): string {
+    return (this.id ? 'Editar' : 'Nuevo') + ' usuario';
+  }
+
   acceptFormFunction() {
     this.saveEntity()
   }
 
   closeFormFunction() {
-    this.closeFunction.emit();
+    this.modalRef.dismiss();
   }
 
   createForm() {
@@ -58,6 +61,7 @@ export class UserFormComponent {
       role: new FormControl(''),
       password: new FormControl(''),
       main_wish_list_id: new FormControl('', [Validators.required]),
+      active: new FormControl(false),
 
     })
   }
@@ -97,9 +101,7 @@ export class UserFormComponent {
 
       this.apiService.save(Utils.urls.user, this.saveForm.value, this.id).subscribe({
         next: (response: any) => {
-          this.acceptFunction.emit(response);
-          this.closeFormFunction()
-          // Utils.showSuccessMessage('Producto guardado correctamente');
+          this.modalRef.close(response);
         },
         error: (error: any) => {
           // Utils.showErrorMessage('Error al guardar el producto');

@@ -1,30 +1,22 @@
-<section class="min-h-screen overflow-hidden relative">
-    <!-- Elementos decorativos flotantes -->
-    <div class="absolute top-20 right-10 w-20 h-20 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full opacity-30 animate-bounce"></div>
-    <div class="absolute top-40 left-16 w-16 h-16 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full opacity-20 animate-pulse"></div>
-    <div class="absolute bottom-32 right-1/4 w-12 h-12 bg-gradient-to-br from-purple-300 to-pink-300 rounded-full opacity-25 animate-bounce" style="animation-delay: 1s;"></div>
-    
+<section class="min-h-screen overflow-hidden relative bg-cream">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0 relative z-10">
         <!-- Logo y título -->
         <div class="flex items-center mb-8 gap-3">
-            <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                ✨
-            </div>
-            <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <h1 class="font-serif font-normal text-4xl md:text-5xl text-ink tracking-tight">
                 LISTA DE DESEOS
             </h1>
         </div>
-        
+
         <!-- Formulario de registro -->
-        <div class="w-full glass-enhanced backdrop-blur-lg border border-white/20 shadow-soft rounded-3xl md:mt-0 sm:max-w-2xl xl:p-0">
-            <div class="p-8 space-y-6">
+        <div class="w-full border border-line-card rounded-xl bg-white md:mt-0 sm:max-w-2xl xl:p-0">
+            <div class="p-7 space-y-6">
                 <app-social-network-access></app-social-network-access>
 
                 <div class="text-center">
-                    <h2 class="text-2xl font-bold text-neutral-800 mb-2">
-                        ¡Únete a nosotros! 🎉
+                    <h2 class="text-2xl font-semibold text-ink mb-2">
+                        ¡Únete a nosotros!
                     </h2>
-                    <p class="text-neutral-600 text-sm">
+                    <p class="text-muted text-sm">
                         Crea tu cuenta y empieza a gestionar tus listas de deseos
                     </p>
                 </div>
@@ -33,24 +25,24 @@
                     <!-- Fila 1: Nombre y Apellido -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block mb-2 text-sm font-medium text-neutral-700">
-                                👤 Nombre
+                            <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                                Nombre
                             </label>
-                            <input formControlName="name" 
-                                   type="text" 
+                            <input formControlName="name"
+                                   type="text"
                                    placeholder="Tu nombre"
-                                   class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                                   class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink text-sm placeholder-muted-placeholder"
                                    required>
                         </div>
 
                         <div>
-                            <label class="block mb-2 text-sm font-medium text-neutral-700">
-                                👥 Apellido(s)
+                            <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                                Apellido(s)
                             </label>
-                            <input formControlName="surname" 
-                                   type="text" 
+                            <input formControlName="surname"
+                                   type="text"
                                    placeholder="Tus apellidos"
-                                   class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                                   class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink text-sm placeholder-muted-placeholder"
                                    required>
                         </div>
                     </div>
@@ -58,24 +50,24 @@
                     <!-- Fila 2: Username y Email -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block mb-2 text-sm font-medium text-neutral-700">
-                                🏷️ Nombre de usuario
+                            <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                                Nombre de usuario
                             </label>
-                            <input formControlName="username" 
-                                   type="text" 
+                            <input formControlName="username"
+                                   type="text"
                                    placeholder="@tu_usuario"
-                                   class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                                   class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink text-sm placeholder-muted-placeholder"
                                    required>
                         </div>
 
                         <div>
-                            <label class="block mb-2 text-sm font-medium text-neutral-700">
-                                📧 Correo electrónico
+                            <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                                Correo electrónico
                             </label>
-                            <input formControlName="email" 
-                                   type="email" 
+                            <input formControlName="email"
+                                   type="email"
                                    placeholder="tu@email.com"
-                                   class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                                   class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink text-sm placeholder-muted-placeholder"
                                    required>
                         </div>
                     </div>
@@ -83,49 +75,45 @@
                     <!-- Fila 3: Contraseñas -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block mb-2 text-sm font-medium text-neutral-700">
-                                🔐 Contraseña
+                            <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                                Contraseña
                             </label>
-                            <input formControlName="password" 
-                                   type="password" 
+                            <input formControlName="password"
+                                   type="password"
                                    placeholder="••••••••"
-                                   class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                                   class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink text-sm placeholder-muted-placeholder"
                                    required>
                         </div>
 
                         <div>
-                            <label class="block mb-2 text-sm font-medium text-neutral-700">
-                                🔄 Confirmar contraseña
+                            <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                                Confirmar contraseña
                             </label>
-                            <input formControlName="repassword" 
-                                   type="password" 
+                            <input formControlName="repassword"
+                                   type="password"
                                    placeholder="••••••••"
-                                   class="w-full px-4 py-3 text-sm border border-purple-100 rounded-xl bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition-all duration-200 placeholder-neutral-400"
+                                   class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink text-sm placeholder-muted-placeholder"
                                    required>
                         </div>
                     </div>
 
                     @if(errors){
-                    <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">
-                        <div class="flex items-center gap-2">
-                            <span class="text-rose-500">❌</span>
-                            <p class="text-sm text-rose-700 font-medium">
-                                Un error ha ocurrido al intentar registrarte. Por favor, revisa los datos ingresados.
-                            </p>
-                        </div>
+                    <div class="flex items-start gap-2 p-3.5 border border-danger-border rounded-lg bg-danger-light">
+                        <p class="text-sm text-danger-text font-semibold">
+                            Un error ha ocurrido al intentar registrarte. Por favor, revisa los datos ingresados.
+                        </p>
                     </div>
                     }
 
                     <button type="submit"
-                            class="w-full py-3 px-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-purple-600 hover:to-pink-600 transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2">
-                        <span>🚀</span>
-                        <span>Crear Mi Cuenta</span>
+                            class="w-full py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200">
+                        Crear mi cuenta
                     </button>
-                    
+
                     <div class="text-center">
-                        <p class="text-sm text-neutral-600">
-                            ¿Ya tienes cuenta? 
-                            <a class="font-semibold text-purple-600 hover:text-purple-800 underline transition-colors ml-1" 
+                        <p class="text-sm text-muted">
+                            ¿Ya tienes cuenta?
+                            <a class="text-primary-500 font-bold ml-1"
                                routerLink="/login">
                                 Inicia sesión aquí
                             </a>
@@ -137,22 +125,22 @@
     </div>
 
     <!-- Ondas decorativas de fondo -->
-    <svg class="absolute bottom-0 left-0 w-full h-1/3 -z-10" 
-         xmlns="http://www.w3.org/2000/svg" 
-         viewBox="0 0 1024 200" 
+    <svg class="absolute bottom-0 left-0 w-full h-1/3 -z-10"
+         xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 1024 200"
          preserveAspectRatio="none">
         <defs>
             <linearGradient id="wave1-register" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:rgb(251, 207, 232);stop-opacity:0.3" />
-                <stop offset="100%" style="stop-color:rgb(196, 181, 253);stop-opacity:0.3" />
+                <stop offset="0%" style="stop-color:#DDD6CB;stop-opacity:0.6" />
+                <stop offset="100%" style="stop-color:#F4F1EC;stop-opacity:0.6" />
             </linearGradient>
             <linearGradient id="wave2-register" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:rgb(244, 114, 182);stop-opacity:0.4" />
-                <stop offset="100%" style="stop-color:rgb(167, 139, 250);stop-opacity:0.4" />
+                <stop offset="0%" style="stop-color:#C6BCAC;stop-opacity:0.6" />
+                <stop offset="100%" style="stop-color:#DDD6CB;stop-opacity:0.6" />
             </linearGradient>
             <linearGradient id="wave3-register" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:rgb(236, 72, 153);stop-opacity:0.5" />
-                <stop offset="100%" style="stop-color:rgb(139, 92, 246);stop-opacity:0.5" />
+                <stop offset="0%" style="stop-color:#9A4A28;stop-opacity:0.35" />
+                <stop offset="100%" style="stop-color:#C6BCAC;stop-opacity:0.5" />
             </linearGradient>
         </defs>
         <g fill="none">

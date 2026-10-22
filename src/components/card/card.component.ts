@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -6,9 +6,8 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 @Component({
   selector: 'app-card',
   imports: [
-    FontAwesomeModule,
-    CommonModule,
-  ],
+    FontAwesomeModule
+],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -86,53 +85,22 @@ export class CardComponent {
     CardComponent.setShowReserveButton(value);
   }
 
+  private static priceFormatter = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
+
+  // Numeric prices (manual products) are shown as "9,50 €"; already-formatted strings
+  // (e.g. from the Steam/Amazon scrapers) are shown untouched
+  get formattedPrice(): string {
+    if (this.price === null || this.price === undefined || this.price === '') {
+      return '';
+    }
+    const value = Number(this.price);
+    return Number.isFinite(value) ? CardComponent.priceFormatter.format(value) : String(this.price);
+  }
+
   onImageError(event: Event) {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = '/assets/img/empty.webp';
     this.cdr.detectChanges();
-  }
-
-  getClasses(label: string) {
-
-    let classes = ['w-full', 'rounded-lg', 'p-1', 'shadow-lg', 'text-center', 'overflow-hidden', 'hover:scale-105'];
-
-    switch (label.toLocaleLowerCase()) {
-      case "steam":
-        classes.push('bg-gradient-to-br', 'from-blue-600', 'to-blue-800', 'text-red-100');
-        break;
-
-      case "amazon":
-      case "instant gaming":
-        classes.push('bg-gradient-to-br', 'from-orange-600', 'to-yellow-600', 'text-white');
-        break;
-
-      default:
-        classes.push('bg-gradient-to-br', 'from-blue-600', 'to-purple-700', 'text-red-100');
-        break;
-    }
-
-    return classes
-  }
-
-  getDropdownClasses(label: string) {
-    let classes = ['block', 'w-full', 'rounded-lg', 'p-2', 'text-center', 'font-medium', 'transition-all', 'duration-200', 'hover:shadow-md'];
-
-    switch (label.toLocaleLowerCase()) {
-      case "steam":
-        classes.push('bg-gradient-to-r', 'from-blue-600', 'to-blue-800', 'text-white', 'hover:from-blue-700', 'hover:to-blue-900');
-        break;
-
-      case "amazon":
-      case "instant gaming":
-        classes.push('bg-gradient-to-r', 'from-orange-500', 'to-yellow-500', 'text-white', 'hover:from-orange-600', 'hover:to-yellow-600');
-        break;
-
-      default:
-        classes.push('bg-gradient-to-r', 'from-blue-600', 'to-purple-700', 'text-white', 'hover:from-blue-700', 'hover:to-purple-800');
-        break;
-    }
-
-    return classes.join(' ');
   }
 
 }

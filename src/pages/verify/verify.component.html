@@ -1,31 +1,34 @@
 @if(loading){ <app-loading></app-loading> }
-<section>
+<section class="min-h-screen bg-cream">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <h1 class="flex items-center mb-6 text-2xl font-semibold text-white">LISTA DE DESEOS</h1>
-        <div class="w-full bg-gray-800 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl">
+        <h1 class="flex items-center mb-6 font-serif font-normal text-4xl text-ink tracking-tight">LISTA DE DESEOS</h1>
+        <div class="w-full border border-line-card rounded-xl bg-white md:mt-0 sm:max-w-md xl:p-0">
+            <div class="p-7 space-y-6">
+                <h2 class="text-2xl font-semibold text-ink">
                     Entra en tu cuenta
-                </h1>
-                <form class="space-y-4 md:space-y-6" [formGroup]="form" (submit)="onSubmit()">
+                </h2>
+                <form class="space-y-5" [formGroup]="form" (submit)="onSubmit()">
 
-                    <label class="block mb-2 text-sm font-medium text-white">Código de seguridad
-                        <p class="text-sm text-gray-500">Te hemos enviado un código de verificación a tu
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
+                            Código de seguridad
+                        </label>
+                        <p class="text-sm text-muted mb-2">Te hemos enviado un código de verificación a tu
                             correo</p>
 
                         <input formControlName="security_code" type="text" placeholder="XXXX"
-                            class="sm:text-sm rounded-lg focus:ring-primary-600 block w-full mt-2 p-2.5 bg-gray-700 text-white"
+                            class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink text-sm placeholder-muted-placeholder"
                             pattern="[0-9]*" required>
-                    </label>
+                    </div>
 
                     @if (error) {
-                    <div class="flex">
-                        <p class="text-sm text-[#b31f1f]">Código incorrecto</p>
+                    <div class="flex items-start gap-2 p-3.5 border border-danger-border rounded-lg bg-danger-light">
+                        <p class="text-sm text-danger-text font-semibold">Código incorrecto</p>
                     </div>
                     }
 
                     <button type="submit"
-                        class="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800 border border-gray-700">
+                        class="w-full py-3 bg-ink text-cream font-semibold rounded-lg hover:bg-ink-hover transition-colors duration-200">
                         Verificar
                     </button>
 

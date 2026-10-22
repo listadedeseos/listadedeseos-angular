@@ -1,38 +1,37 @@
-<div class="min-h-screen">
-  
+<div class="min-h-screen bg-cream">
+
   <!-- Hero Section -->
   <section class="relative py-20 px-4">
     <div class="container mx-auto text-center">
-      
-      <!-- Floating elements for decoration -->
-      <div class="absolute top-10 left-10 w-20 h-20 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full opacity-30 animate-bounce"></div>
-      <div class="absolute top-32 right-16 w-16 h-16 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full opacity-20 animate-pulse"></div>
-      <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-gradient-to-br from-purple-300 to-pink-300 rounded-full opacity-25 animate-bounce" style="animation-delay: 1s;"></div>
-      
       <div class="relative z-10">
-        <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 bg-clip-text text-transparent animate-pulse">
-          ✨ Lista de Deseos ✨
+        <div class="inline-flex items-center gap-2 mb-4">
+          <span class="w-2 h-2 rounded-sm bg-primary-500"></span>
+          <span class="text-sm font-bold uppercase tracking-wide text-primary-500">Bienvenido</span>
+        </div>
+
+        <h1 class="text-5xl md:text-6xl font-serif font-normal text-ink tracking-tight mb-6">
+          Lista de Deseos
         </h1>
-        
-        <p class="text-xl md:text-2xl text-neutral-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+
+        <p class="text-xl md:text-2xl text-muted mb-8 max-w-3xl mx-auto leading-relaxed">
           Descubre los productos más deseados y crea tus propias listas de deseos de forma sencilla y divertida
         </p>
-        
+
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a routerLink="/list" 
-             class="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3">
+          <a routerLink="/list"
+            class="px-8 py-4 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200 flex items-center gap-3">
             <fa-icon [icon]="['fas', 'list-ul']"></fa-icon>
             <span>Crear Mi Lista</span>
           </a>
-          
-          <a routerLink="/contact" 
-             class="px-8 py-4 bg-white/80 backdrop-blur-sm text-purple-600 font-semibold rounded-2xl border-2 border-purple-200 hover:border-purple-400 hover:bg-white transition-all duration-300 flex items-center gap-3">
+
+          <a routerLink="/contact"
+            class="px-8 py-4 bg-transparent text-ink font-semibold rounded-lg border border-line-strong hover:border-ink transition-colors duration-200 flex items-center gap-3">
             <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
             <span>Contáctanos</span>
           </a>
 
           <a routerLink="/@admin/demo"
-            class="px-8 py-4 bg-gradient-to-r from-blue-300 to-blue-500 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3">
+            class="px-8 py-4 bg-ink text-cream font-semibold rounded-lg hover:bg-ink-hover transition-colors duration-200 flex items-center gap-3">
             <fa-icon [icon]="['fas', 'search']"></fa-icon>
             <span>Demo</span>
           </a>
@@ -43,15 +42,19 @@
   </section>
 
   <!-- Popular Products Section -->
-  <section class="py-16 px-4">
+  <section class="py-16 px-4 bg-cream-alt">
     <div class="container mx-auto">
-      
+
       <!-- Section Header -->
       <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold text-neutral-800 mb-4">
-          🏆 Los Más Deseados
+        <div class="inline-flex items-center gap-2 mb-3">
+          <span class="w-2 h-2 rounded-sm bg-primary-500"></span>
+          <span class="text-sm font-bold uppercase tracking-wide text-primary-500">Tendencias</span>
+        </div>
+        <h2 class="text-4xl font-serif font-normal text-ink tracking-tight mb-4">
+          Los Más Deseados
         </h2>
-        <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
+        <p class="text-lg text-muted max-w-2xl mx-auto">
           Descubre los productos que más personas han añadido a sus listas de deseos
         </p>
       </div>
@@ -59,69 +62,68 @@
       <!-- Steam Products -->
       <div class="mb-16">
         <div class="flex items-center justify-center gap-3 mb-8">
-          <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-800 rounded-xl flex items-center justify-center text-white text-xl">
+          <div class="w-12 h-12 bg-ink rounded-xl flex items-center justify-center text-cream text-xl">
             <fa-icon [icon]="['fab', 'steam']"
             [ngClass]="['h-7 w-7']" class="h-7"></fa-icon>
 
           </div>
-          <h3 class="text-2xl font-bold text-neutral-800">Steam Games</h3>
-          <div class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">
+          <h3 class="text-2xl font-serif font-normal text-ink">Steam Games</h3>
+          <div class="px-3 py-1 bg-primary-50 text-primary-500 rounded-full text-sm font-semibold border border-primary-100">
             Videojuegos
           </div>
         </div>
-        
+
         <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
           @for (item of steamList; track $index) {
-          <app-card 
-            aspect="video" 
-            [index]="$index+1" 
-            [principalUrl]="item.steam_url" 
-            [img]="item.img" 
-            [name]="item.name"
-            [price]="item.price" 
-            [count]="item.count" 
-            principalLabelString="Steam"
-            [secondaryUrl]="item.instant_gaming_url" 
-            secondaryLabelString="Instant Gaming"
-            class="transform hover:scale-105 transition-transform duration-300">
-          </app-card>
+            <app-card
+              aspect="video"
+              [index]="$index+1"
+              [principalUrl]="item.steam_url"
+              [img]="item.img"
+              [name]="item.name"
+              [price]="item.price"
+              [count]="item.count"
+              principalLabelString="Steam"
+              [secondaryUrl]="item.instant_gaming_url"
+              secondaryLabelString="Instant Gaming">
+            </app-card>
           }
         </div>
       </div>
 
       <!-- Loading State -->
-       @if(steamList && steamList.length === 0){
+      @if(steamList && steamList.length === 0){
         <div class="text-center py-16">
-          <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4 animate-spin">
-            ⭐
-          </div>
-          <p class="text-neutral-600 text-lg">Cargando productos populares...</p>
+          <div class="w-16 h-16 rounded-full border-4 border-line border-t-primary-500 animate-spin mx-auto mb-4"></div>
+          <p class="text-muted text-lg">Cargando productos populares...</p>
         </div>
-       }
-      
+      }
+
 
     </div>
   </section>
 
   <!-- Call to Action Section -->
-  <section class="py-16 px-4 bg-gradient-to-r from-purple-100 to-pink-100">
+  <section class="py-16 px-4 bg-cream">
     <div class="container mx-auto text-center">
       <div class="max-w-3xl mx-auto">
-        <h2 class="text-3xl font-bold text-neutral-800 mb-6">
-          🚀 ¿Listo para empezar?
+        <h2 class="text-3xl font-serif font-normal text-ink tracking-tight mb-6">
+          ¿Listo para empezar?
         </h2>
-        <p class="text-lg text-neutral-600 mb-8">
+        <p class="text-lg text-muted mb-8">
           Únete a miles de usuarios que ya están creando y compartiendo sus listas de deseos
         </p>
-        
+
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a *ngIf="!isLogged" routerLink="/register" 
-             class="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-            Registrarse Gratis
-          </a>
-          
-          <a routerLink="/list" 
-             class="px-8 py-4 bg-white text-purple-600 font-semibold rounded-2xl border-2 border-purple-200 hover:border-purple-400 transition-all duration-300">
+          @if (!isLogged) {
+            <a routerLink="/register"
+              class="px-8 py-4 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200">
+              Registrarse Gratis
+            </a>
+          }
+
+          <a routerLink="/list"
+            class="px-8 py-4 bg-transparent text-ink font-semibold rounded-lg border border-line-strong hover:border-ink transition-colors duration-200">
             Ver Todas las Listas
           </a>
         </div>

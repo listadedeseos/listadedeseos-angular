@@ -1,38 +1,36 @@
-<footer class="mt-auto bg-gradient-to-br from-purple-50 to-pink-50 border-t border-purple-100/50 backdrop-blur-lg">
+<footer class="mt-auto bg-cream-alt border-t border-line">
   <div class="container mx-auto px-4 py-12">
-    
+
     <!-- Contenido principal del footer -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-      
+
       <!-- Logo y descripción -->
       <div class="text-center md:text-left">
         <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
-          <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-sm">
-            ✨
-          </div>
-          <h3 class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <img src="/assets/icon/logo.svg" class="w-8 h-8" alt="Logo">
+          <h3 class="font-serif text-xl text-ink">
             Lista de Deseos
           </h3>
         </div>
-        <p class="text-neutral-600 text-sm leading-relaxed">
+        <p class="text-muted text-sm leading-relaxed">
           Crea y gestiona tus listas de deseos de forma sencilla y compártelas con quien quieras.
         </p>
       </div>
 
       <!-- Enlaces útiles -->
       <div class="text-center">
-        <h4 class="font-semibold text-neutral-800 mb-4">Enlaces Útiles</h4>
+        <h4 class="font-semibold text-ink mb-4 text-sm uppercase tracking-wide">Enlaces útiles</h4>
         <div class="space-y-3">
-          <a routerLink="/contact" 
-             class="flex items-center justify-center gap-2 text-neutral-600 hover:text-purple-600 transition-colors duration-200 group">
+          <a routerLink="/contact"
+             class="flex items-center justify-center gap-2 text-muted hover:text-primary-500 transition-colors duration-200">
             <fa-icon [icon]="['fas', 'envelope']" [ngClass]="['w-4 h-4 flex ']"></fa-icon>
             <span>Contáctanos</span>
           </a>
-          
-          <a href="https://github.com/listadedeseos/listadedeseos-angular" 
-             target="_blank" 
+
+          <a href="https://github.com/listadedeseos/listadedeseos-angular"
+             target="_blank"
              rel="noopener noreferrer"
-             class="flex items-center justify-center gap-2 text-neutral-600 hover:text-purple-600 transition-colors duration-200 group">
+             class="flex items-center justify-center gap-2 text-muted hover:text-primary-500 transition-colors duration-200">
             <fa-icon [icon]="['fab', 'github']" [ngClass]="['w-4 h-4 flex']"></fa-icon>
             <span>Contribuir en GitHub</span>
           </a>
@@ -41,14 +39,14 @@
 
       <!-- Información del desarrollador -->
       <div class="text-center">
-        <h4 class="font-semibold text-neutral-800 mb-4">Desarrollado con 💜</h4>
-        <a href="https://jose-web.github.io" 
-           target="_blank" 
+        <h4 class="font-semibold text-ink mb-4 text-sm uppercase tracking-wide">Desarrollado por</h4>
+        <a href="https://jose-web.github.io"
+           target="_blank"
            rel="noopener noreferrer"
            class="group">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/50 hover:bg-white/80 transition-all duration-200 shadow-sm hover:shadow-md">
-            <img class="h-8 w-8 rounded-full object-cover" 
-                 src="https://jose-web.github.io/logo.svg" 
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-line bg-white hover:border-muted-placeholder transition-colors duration-200">
+            <img class="h-8 w-8 rounded-full object-cover"
+                 src="https://jose-web.github.io/logo.svg"
                  alt="Logo desarrollador"
                  onerror="this.style.display='none'">
           </div>
@@ -57,27 +55,23 @@
     </div>
 
     <!-- Separador -->
-    <div class="border-t border-purple-100/50 pt-6">
-      
+    <div class="border-t border-line pt-6">
+
       <!-- Copyright y año -->
-      <div class="flex flex-col md:flex-row items-center justify-between text-sm text-neutral-500">
+      <div class="flex flex-col md:flex-row items-center justify-between text-sm text-muted-light">
         <div class="flex items-center gap-2 mb-2 md:mb-0">
           <fa-icon [icon]="['far', 'copyright']"></fa-icon>
           <span>{{year}} Lista de Deseos</span>
-          <span class="hidden md:inline">•</span>
-          <span class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full font-medium">
-            BETA
-          </span>
         </div>
-        
+
         <!-- Versión y tecnología -->
         <div class="flex items-center gap-4 text-xs">
           <span class="flex items-center gap-1">
-            <fa-icon [icon]="['fab', 'angular']" class="text-red-500"></fa-icon>
+            <fa-icon [icon]="['fab', 'angular']"></fa-icon>
             Angular
           </span>
           <span class="flex items-center gap-1">
-            <fa-icon [icon]="['fas', 'palette']" class="text-purple-500"></fa-icon>
+            <fa-icon [icon]="['fas', 'palette']"></fa-icon>
             Tailwind CSS
           </span>
         </div>

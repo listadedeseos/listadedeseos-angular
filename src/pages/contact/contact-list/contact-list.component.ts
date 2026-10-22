@@ -1,18 +1,22 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, inject } from '@angular/core';
 import { Utils } from '../../../utils/utils';
 import { CustomDeleteComponent } from '../../../components/customDelete/customDelete.component';
-import { TableModule } from "@some-angular-utils/table";
+import { SAUTableModule } from "@some-angular-utils/table";
+import { SAUModalService } from '@some-angular-utils/modal';
 
 @Component({
     imports: [
-        TableModule,
-        CustomDeleteComponent,
+        SAUTableModule,
     ],
     templateUrl: './contact-list.component.html',
     styleUrl: './contact-list.component.scss',
     encapsulation: ViewEncapsulation.None,
 })
 export class ContactListComponent {
+
+    @ViewChild('customTable') customTable!: SAUTableModule;
+
+    private sauModalService = inject(SAUModalService);
 
     loading: boolean = true;
 
@@ -26,11 +30,10 @@ export class ContactListComponent {
         { name: 'FECHA', key: 'created_at', type: 'dateTime' },
     ]
 
-    public id = 0
-    public deleteProduct = false
-
-    toogleDeleteForm(id = 0) {
-        this.id = id
-        this.deleteProduct = !this.deleteProduct
+    openDeleteModal(id: number) {
+        const modalRef = this.sauModalService.open(CustomDeleteComponent, { size: 'md' });
+        modalRef.componentInstance.url = this.url;
+        modalRef.componentInstance.id = id;
+        modalRef.result.then(() => this.customTable.getItems(), () => { });
     }
 }
