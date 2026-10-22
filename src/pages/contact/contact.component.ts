@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
+import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { Utils } from '../../utils/utils';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -19,6 +20,7 @@ export class ContactComponent {
 
   constructor(
     private apiService: ApiService,
+    public authenticationService: AuthenticationService,
   ) {
     this.createForm();
   }
@@ -31,6 +33,12 @@ export class ContactComponent {
       title: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
       body: new FormControl('', [Validators.required]),
     });
+
+    // Logged-in users don't see name/email: the API fills them from the account behind the token
+    if (this.authenticationService.isLogged) {
+      this.saveForm.removeControl('name');
+      this.saveForm.removeControl('email');
+    }
   }
 
   onSubmit() {

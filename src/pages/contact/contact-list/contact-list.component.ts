@@ -44,7 +44,7 @@ export class ContactListComponent {
 
     public types: { [key: string]: { label: string, classes: string } } = {
         suggestion: { label: 'Sugerencia', classes: 'bg-primary-50 text-primary-600 border-primary-200' },
-        complaint: { label: 'Error o queja', classes: 'bg-danger-light text-danger border-danger-border' },
+        complaint: { label: 'Queja', classes: 'bg-danger-light text-danger border-danger-border' },
         question: { label: 'Consulta', classes: 'bg-cream-alt text-muted-dark border-line' },
     }
 

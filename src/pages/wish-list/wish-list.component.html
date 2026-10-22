@@ -167,6 +167,14 @@
         <div class="flex items-center gap-2">
           <h2 class="font-serif font-medium text-2xl text-ink">Productos</h2>
           <span class="px-2.5 py-0.5 rounded-full bg-cream-alt border border-line text-xs font-semibold text-muted">{{wishlist.products?.length ?? 0}}</span>
+          <!-- Visit counter: only the owner and admins see it (the API doesn't count the owner's own visits) -->
+          @if(isMyWishList || isAdmin){
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-line text-xs font-semibold text-muted"
+                title="Veces que otras personas han visitado esta lista">
+            <fa-icon [icon]="['fas', 'eye']"></fa-icon>
+            {{wishlist.views ?? 0}} {{wishlist.views === 1 ? 'visita' : 'visitas'}}
+          </span>
+          }
         </div>
 
         <div class="flex flex-wrap items-center gap-2">

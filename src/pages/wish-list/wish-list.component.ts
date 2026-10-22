@@ -38,6 +38,7 @@ export class WishListComponent {
   public username = ''
   private wishListName = ''
   public isLogged = false
+  public isAdmin = false
   public allWishList: any = []
   public isMyWishList = false
   public wishlist: any = []
@@ -67,6 +68,7 @@ export class WishListComponent {
     this.username = this.activateRoute.snapshot.params['username'] ?? null
     this.wishListName = this.activateRoute.snapshot.params['wishListName'] ?? null
     this.isLogged = this.authenticationService.isLogged
+    this.isAdmin = this.authenticationService.isAdmin
 
     if (this.isLogged && !this.uuid && !this.username) {
       this.getAllWishList(true)

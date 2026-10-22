@@ -621,3 +621,28 @@ which should run after each change to this repo and append an entry here.
   on error, then refreshes counts and, under a status tab, the rows). Same mobile-card shrink fix as
   the users table, scoped via `.contact-page`. (`src/pages/contact/contact-list/*`,
   `src/pages/contact/contact.component.ts`)
+- 2026-10-22 — Contact form (`/contact`, still public): when the user is logged in, the "Nombre" and
+  "Correo electrónico" fields are hidden and their controls removed from the form; the backend fills
+  them from the account. In the Laravel backend, `ContactController@create` now optionally checks the
+  `Authorization` token (the route has no auth middleware) and, if valid, overwrites `name`
+  (`name surname`, falling back to `username`) and `email` from the `User` row before validating, so
+  client-sent values are ignored. Anonymous visitors still see and must fill both fields. New test
+  `test_logged_user_name_and_email_come_from_account`; suite 19/19.
+  (`src/pages/contact/contact.component.html`/`.ts`)
+- 2026-10-22 — Renamed the `complaint` contact type's label from "Error o queja" to "Queja" in the
+  contact form's select and the admin inbox's type pill.
+  (`src/pages/contact/contact.component.html`, `src/pages/contact/contact-list/contact-list.component.ts`)
+- 2026-10-22 — **Wish-list visit counter.** Backend (Laravel): new migration
+  `2026_10_22_000001_add_views_to_wish_list` adds `wish_list.views` (unsigned int, default 0);
+  `WishListController::countVisit` increments it from the two public read endpoints
+  (`GET wishlist/{username}[/{name}]` and `GET wishlist/uuid/{uuid}`) unless the optional bearer token
+  belongs to the list's owner. It increments via the query builder so visits don't touch `updated_at`.
+  Every page load counts (no per-visitor dedupe). New `tests/Feature/WishListViewsTest.php`; suite
+  20/20. **Deploying needs `php artisan migrate`.** Frontend: the owner (`isMyWishList`) sees an
+  eye-icon "N visitas" pill next to the "Productos" count (owner and admins only — `isMyWishList || isAdmin`).
+  (`src/pages/wish-list/wish-list.component.html`)
+- 2026-10-22 — Header user dropdown (admin section): the "Lista de sugerencias" item's subtitle now
+  shows "N pendientes · M en curso" (pending count highlighted in `text-danger` when > 0) instead of
+  "Ver sugerencias". `HeaderComponent.loadContactCounts()` reads the `counts` field of
+  `GET contact?page=1&limit=1`. It runs on load and again on `mouseenter` of the dropdown, since the
+  header persists across navigations. Admins only. (`src/components/header/header.component.html`/`.ts`)
