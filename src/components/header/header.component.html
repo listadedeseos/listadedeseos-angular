@@ -38,7 +38,7 @@
         </a>
 
         <!-- Usuario autenticado con dropdown -->
-        <div class="relative group/general-dropdown w-full md:w-auto md:ml-2 md:pl-4 md:border-l md:border-line">
+        <div (mouseenter)="loadContactCounts()" class="relative group/general-dropdown w-full md:w-auto md:ml-2 md:pl-4 md:border-l md:border-line">
           <!-- Avatar y nombre -->
           <button
             class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-cream-alt transition-colors duration-200">
@@ -91,7 +91,14 @@
                       </div>
                       <div class="flex flex-col">
                         <span class="font-medium">{{routing.title}}</span>
+                        @if(routing.url === '/contact/list'){
+                        <span class="text-xs text-muted-light">
+                          <span [class.text-danger]="contactCounts.pending" [class.font-semibold]="contactCounts.pending">{{contactCounts.pending}} {{contactCounts.pending === 1 ? 'pendiente' : 'pendientes'}}</span>
+                          · {{contactCounts.in_progress}} en curso
+                        </span>
+                        } @else {
                         <span class="text-xs text-muted-light">{{routing.subtitle}}</span>
+                        }
                       </div>
                       <fa-icon [icon]="['fas', 'chevron-right']" routerLinkActive="text-admin"
                       class="w-3 h-3 text-muted-light ml-auto"></fa-icon>

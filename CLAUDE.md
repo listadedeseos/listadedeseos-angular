@@ -641,3 +641,8 @@ which should run after each change to this repo and append an entry here.
   20/20. **Deploying needs `php artisan migrate`.** Frontend: the owner (`isMyWishList`) sees an
   eye-icon "N visitas" pill next to the "Productos" count (owner and admins only — `isMyWishList || isAdmin`).
   (`src/pages/wish-list/wish-list.component.html`)
+- 2026-10-22 — Header user dropdown (admin section): the "Lista de sugerencias" item's subtitle now
+  shows "N pendientes · M en curso" (pending count highlighted in `text-danger` when > 0) instead of
+  "Ver sugerencias". `HeaderComponent.loadContactCounts()` reads the `counts` field of
+  `GET contact?page=1&limit=1`. It runs on load and again on `mouseenter` of the dropdown, since the
+  header persists across navigations. Admins only. (`src/components/header/header.component.html`/`.ts`)

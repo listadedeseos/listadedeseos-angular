@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ApiService } from '../../apiConnection/ApiService';
+import { Utils } from '../../utils/utils';
 
 
 @Component({
@@ -20,6 +22,9 @@ export class HeaderComponent {
   public fullname = ''
   public isAdmin = false
 
+  // Suggestions still to handle, shown on the "Lista de sugerencias" admin item
+  public contactCounts = { pending: 0, in_progress: 0 }
+
   public adminRouting = [
     {
       url: '/user',
@@ -37,7 +42,8 @@ export class HeaderComponent {
 
   constructor(
     private router: Router,
-    private	authenticationService: AuthenticationService
+    private	authenticationService: AuthenticationService,
+    private apiService: ApiService,
   ) {
     this.isLogged = this.authenticationService.isLogged
     this.isAdmin = this.authenticationService.isAdmin
@@ -47,6 +53,23 @@ export class HeaderComponent {
       this.username = currentUser.username
       this.fullname = currentUser.fullName
     }
+
+    this.loadContactCounts()
+  }
+
+  // The header lives across navigations, so this also runs each time the dropdown is opened
+  loadContactCounts() {
+    if (!this.isAdmin) return
+
+    // limit=1: only the per-status `counts` of the response are needed
+    this.apiService.getPetition(Utils.urls.contact, '?page=1&limit=1').subscribe({
+      next: (value: any) => {
+        this.contactCounts = {
+          pending: value.counts?.pending ?? 0,
+          in_progress: value.counts?.in_progress ?? 0,
+        }
+      },
+    })
   }
 
   getFirstLetter(): string {
