@@ -21,9 +21,14 @@
             <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5" for="username">
                 Nombre de usuario
             </label>
-            <input
-                class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink"
-                id="username" type="text" placeholder="Nombre de usuario" formControlName="username">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span class="text-muted-placeholder">&#64;</span>
+                </div>
+                <input
+                    class="w-full pl-7 pr-3 py-2.5 border border-line rounded-lg bg-white text-ink"
+                    id="username" type="text" placeholder="nombre_de_usuario" formControlName="username">
+            </div>
         </div>
 
         <!-- Name -->

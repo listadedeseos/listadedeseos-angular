@@ -62,6 +62,8 @@ export class UserFormComponent {
       active: new FormControl(false),
 
     })
+
+    Utils.stripUsernameAt(this.saveForm.get('username'));
   }
 
   getById(id: number) {

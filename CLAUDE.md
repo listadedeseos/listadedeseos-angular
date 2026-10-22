@@ -584,3 +584,16 @@ which should run after each change to this repo and append an entry here.
   `urlToShare` (new private `ownerUsername`, captured in `getWishList`) and the deadline counter, and
   calls `markForCheck()`/`detectChanges()` for both new and edited lists.
   (`src/pages/wish-list/wish-list.component.ts`)
+- 2026-10-22 — Backend follow-up: the admin-only `theme` check added to `WishListController@update`
+  broke 4 of the Laravel feature tests (`login`, `create product`, `verify user`, `delete main wish
+  list user`) with "Attempt to read property "role" on null" — `update` is also called internally from
+  public, unauthenticated flows (verify/login creating the default "Principal" list), where there's no
+  `user` request attribute. Switched to a null-safe read (`$request->attributes->get('user')?->role`),
+  so those calls count as non-admin. `php artisan test`: 12/12 passing.
+- 2026-10-22 — Username inputs in the register page and the admin edit-user modal now show a fixed,
+  non-editable "@" prefix inside the field (same recipe the profile page already used: absolutely
+  positioned `&#64;` span + `pl-7` on the input), so users don't type it. New
+  `Utils.stripUsernameAt(control)` (`src/utils/utils.ts`) strips any leading "@" typed or pasted anyway,
+  since the API validates usernames as `alpha_num`; wired into both forms. Also fixed the register
+  form's `username` control being initialised to `[]` instead of `''`.
+  (`src/pages/register/register.component.html`/`.ts`, `src/components/user-form/user-form.component.html`/`.ts`)
