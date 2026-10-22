@@ -1,0 +1,10 @@
+// sau-table wraps each cell's custom template in a flex row (.sau-table-data-section) whose child
+// (.sau-table-data-type-section) doesn't shrink, so wide content (e.g. the mobile card's list pills)
+// overflowed the card instead of wrapping. Let it shrink to the cell width. Scoped to this page
+// (ViewEncapsulation.None makes these rules global) and to the mobile cards (in the desktop table it
+// would also re-center the cells' content).
+.users-page .sau-table-mobile .sau-table-data-type-section {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+}

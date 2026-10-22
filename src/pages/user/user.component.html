@@ -1,8 +1,9 @@
-<main class="p-2 max-w-7xl mx-auto">
+<main class="users-page p-2 max-w-7xl mx-auto">
     <sau-table
         #customTable
         [url]="url"
         [headers]="headers"
+        [customTemplates]="{ username: userCell, wish_lists: listsCell }"
         contentList="list"
         contentTotal="total"
         pageParamName="page"
@@ -15,3 +16,102 @@
     >
     </sau-table>
 </main>
+
+<!-- Usuario: avatar + nombre + @usuario/email + estado + fechas (antes ID, LOGIN, NOMBRE, CORREO y ACTUALIZADO) -->
+<ng-template #userCell let-item="item">
+    <div class="flex items-center gap-3 text-left">
+        <div class="w-9 h-9 shrink-0 rounded-full flex items-center justify-center font-bold text-xs"
+            [class]="item.active ? 'bg-ink text-cream' : 'bg-swatch text-muted'">
+            {{ (item.name || item.username || '?').charAt(0).toUpperCase() }}
+        </div>
+        <div class="min-w-0">
+            <div class="flex flex-wrap items-center gap-1.5">
+                <span class="font-semibold text-ink">{{ item.name }} {{ item.surname }}</span>
+                @if (isAdmin(item)) {
+                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-admin-light text-admin border border-admin-border">Admin</span>
+                }
+                @if (!item.active) {
+                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-danger-light text-danger border border-danger/30">Inactivo</span>
+                }
+            </div>
+            <div class="flex flex-wrap items-center gap-x-1.5 text-xs text-muted">
+                <span>&#64;{{ item.username }}</span>
+                <span>·</span>
+                <span class="break-all">{{ item.email }}</span>
+                @if (item.email_verified_at) {
+                <fa-icon [icon]="['fas', 'circle-check']" class="text-reserved" title="Email verificado"></fa-icon>
+                }
+                @if (item.google_id) {
+                <fa-icon [icon]="['fab', 'google']" class="text-muted-dark" title="Acceso con Google"></fa-icon>
+                }
+                <span class="text-muted-light">· #{{ item.id }}</span>
+            </div>
+            <div class="text-[11px] text-muted-light">
+                Actualizado {{ item.updated_at | date: 'dd/MM/yyyy HH:mm' }}
+                · Creado {{ item.created_at | date: 'dd/MM/yyyy' }}
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<!-- Listas: una pastilla por lista (antes una tabla anidada de 7 columnas).
+     Con más de 3 listas, en la tabla de escritorio se agrupan en un desplegable que las muestra en
+     columna; en las tarjetas móviles se muestran todas. sau-table pinta cada celda dos veces (tabla
+     + tarjetas dentro de .sau-table-mobile), así que se alterna con el variant [.sau-table-mobile_&]
+     y sigue el mismo punto de corte que la librería -->
+<ng-template #listsCell let-item="item">
+    @let lists = item.wish_lists ?? [];
+    @if (lists.length > 3) {
+    <!-- Desplegable flotante (CDK overlay): se pinta fuera de la tabla, así no cambia el alto de la fila -->
+    <span class="[.sau-table-mobile_&]:hidden">
+    <button type="button" cdkOverlayOrigin #listsOrigin="cdkOverlayOrigin"
+        (click)="toggleLists(listsOrigin)" [attr.aria-expanded]="openListsOrigin === listsOrigin"
+        class="inline-flex items-center gap-1.5 px-2 py-1 border rounded-md bg-white text-xs font-semibold transition-colors duration-200"
+        [class]="openListsOrigin === listsOrigin ? 'border-ink text-ink' : 'border-line text-muted-dark hover:border-ink hover:text-ink'">
+        {{ lists.length }} listas
+        <fa-icon [icon]="['fas', 'chevron-down']" class="text-[10px] transition-transform"
+            [class.rotate-180]="openListsOrigin === listsOrigin"></fa-icon>
+    </button>
+    </span>
+
+    <ng-template cdkConnectedOverlay
+        [cdkConnectedOverlayOrigin]="listsOrigin"
+        [cdkConnectedOverlayOpen]="openListsOrigin === listsOrigin"
+        [cdkConnectedOverlayPositions]="listsDropdownPositions"
+        [cdkConnectedOverlayHasBackdrop]="true"
+        cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+        (backdropClick)="openListsOrigin = null"
+        (overlayKeydown)="$event.key === 'Escape' && (openListsOrigin = null)"
+        (detach)="openListsOrigin = null">
+        <div class="mt-1 min-w-48 max-h-72 overflow-auto p-1.5 flex flex-col items-start gap-1 bg-white border border-line rounded-lg">
+            @for (list of lists; track list.uuid) {
+            <ng-container [ngTemplateOutlet]="listPill" [ngTemplateOutletContext]="{ $implicit: list }"></ng-container>
+            }
+        </div>
+    </ng-template>
+    }
+
+    <div class="flex-wrap gap-1.5" [class]="lists.length > 3 ? 'hidden [.sau-table-mobile_&]:flex' : 'flex'">
+        @for (list of lists; track list.uuid) {
+        <ng-container [ngTemplateOutlet]="listPill" [ngTemplateOutletContext]="{ $implicit: list }"></ng-container>
+        } @empty {
+        <span class="text-xs text-muted-light">Sin listas</span>
+        }
+    </div>
+</ng-template>
+
+<ng-template #listPill let-list>
+    <a [routerLink]="['/list', list.uuid]" [title]="'Abrir lista ' + list.name"
+        class="inline-flex items-center gap-1.5 px-2 py-1 border border-line rounded-md bg-white text-xs font-semibold text-muted-dark hover:border-ink hover:text-ink transition-colors duration-200">
+        @if (list.is_main) {
+        <fa-icon [icon]="['fas', 'star']" class="text-primary-500" title="Lista principal"></fa-icon>
+        }
+        {{ list.name }}
+        @if (list.steam_username) {
+        <fa-icon [icon]="['fab', 'steam']" class="text-muted-light" [title]="'Steam: ' + list.steam_username"></fa-icon>
+        }
+        @if (list.amazon_wishlist_id) {
+        <fa-icon [icon]="['fab', 'amazon']" class="text-muted-light" [title]="'Amazon: ' + list.amazon_wishlist_id"></fa-icon>
+        }
+    </a>
+</ng-template>

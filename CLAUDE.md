@@ -520,3 +520,51 @@ which should run after each change to this repo and append an entry here.
   step could not work since the repo has no `package-lock.json` (`bun.lock` is the lockfile). Node is
   still set up (bumped 20 → 22) because the Angular CLI runs on Node; bun is the package manager and
   script runner. (`.github/workflows/pipeline.yml`)
+- 2026-10-22 — Fixed the admin "Editar usuario" action (and user/contact deletion) never working:
+  `<sau-table>`'s `editEvent`/`deleteEvent` emit the **whole row object** (`editEvent.emit(item)`), but
+  `UserComponent.openEditModal`/`openDeleteModal` and `ContactListComponent.openDeleteModal` treated the
+  payload as a numeric id, so the modals requested `user/[object Object]` (edit form stayed empty, save
+  /delete hit invalid URLs). Handlers now take the row and use `item.id`. Verified with Playwright
+  (mocked API): edit loads `GET user/7` + `GET wishlist/user/7`, prefills the form, saves via
+  `PUT user/7` (including `active`), and delete sends `DELETE user/7` / `DELETE contact/9`. Note: the
+  `#editButton`/`#deleteButton` custom templates mentioned in an earlier entry are no longer in
+  `user.component.html`/`contact-list.component.html`; the library's default buttons are used.
+  (`src/pages/user/user.component.ts`, `src/pages/contact/contact-list/contact-list.component.ts`)
+- 2026-10-22 — Slimmed the admin users table (`/user`) from 7 columns + a nested 7-column wish-list
+  sub-table down to 4: **Usuario** (avatar initial, name, `@username · email`, `#id`, Admin/Inactivo
+  pills, email-verified/Google icons — replacing ID/LOGIN/NOMBRE/CORREO), **Listas** (one linked pill
+  per wish list, star for main, Steam/Amazon brand icons — replacing the nested table), Actualizado,
+  Opciones. Done via `<sau-table [customTemplates]="{ username: userCell, wish_lists: listsCell }">`:
+  the library looks up custom cell templates by `header.key` (string keys only) and passes
+  `let-item="item"`. Note the library's own admin crown only renders for a header literally named
+  `'NOMBRE'`, hence the explicit Admin pill. (`src/pages/user/user.component.html`/`.ts`)
+- 2026-10-22 — Fixed a "flash" when opening edit modals: the product/wishlist/user forms showed the
+  full-screen `<app-loading>` overlay (blurred page + animated logo) during the ~100–300ms `getById`
+  fetch (the product form even swapped the whole modal out for it), so it blinked on and off. All 3
+  forms now always render the modal and show an in-modal busy overlay (`absolute inset-0`, small
+  spinner) whose visibility is delayed by the new `animate-fadein-delayed` Tailwind animation
+  (`fadein` 0.2s after a 0.3s delay): fast loads/saves never show it, slow ones fade it in; it still
+  blocks clicks immediately. `LoadingComponent` is no longer used by the modal forms (still used by
+  login/verify/profile). (`tailwind.config.js`, `src/components/{product,wishlist,user}-form/*`)
+- 2026-10-22 — Users table "Listas" cell: users with more than 3 wish lists now get a "N listas ▾"
+  button that opens a floating dropdown listing them in a column (≤3 still show inline pills; the pill
+  markup lives in a shared `#listPill` template). The dropdown is a `@angular/cdk/overlay`
+  `cdkConnectedOverlay` (transparent backdrop, closes on outside click / Escape, flips above the button
+  when there's no room below), so it renders outside the table and never changes the row height. Its
+  open state is keyed by the clicked `CdkOverlayOrigin`, not the user id, because `<sau-table>` renders
+  every custom cell twice (desktop table + hidden mobile cards) — an id key also opened the hidden
+  copy's overlay, which showed up stuck at the page's top-left corner. No CDK overlay CSS import was
+  needed (CDK 21 loads its overlay structural styles itself). (`src/pages/user/user.component.html`/`.ts`)
+- 2026-10-22 — Folded the users table's "Actualizado" column into the **Usuario** cell as a small third
+  line ("Actualizado dd/MM/yyyy HH:mm · Creado dd/MM/yyyy", via `DatePipe`), so the table is now just
+  Usuario / Listas / Opciones. (`src/pages/user/user.component.html`/`.ts`)
+- 2026-10-22 — Users table, mobile cards: users with more than 3 wish lists now show **all** list pills
+  (wrapped) instead of the "N listas ▾" dropdown, which stays desktop-only. Since `<sau-table>` renders
+  each custom cell twice (desktop table + cards inside `.sau-table-mobile`), the two variants are
+  toggled with the Tailwind arbitrary variant `[.sau-table-mobile_&]:hidden` / `[.sau-table-mobile_&]:flex`,
+  which follows the library's own mobile breakpoint rather than a guessed `md:`. Also fixed the pills
+  overflowing the card instead of wrapping: the library's cell wrapper `.sau-table-data-type-section`
+  is a non-shrinking flex item, so `user.component.scss` (scoped via a new `.users-page` class on the
+  page's `<main>`, since the component uses `ViewEncapsulation.None`) gives it `min-width: 0; flex: 1 1
+  auto` inside `.sau-table-mobile` only — applying it to the desktop table too would re-center cells.
+  (`src/pages/user/user.component.html`/`.scss`)

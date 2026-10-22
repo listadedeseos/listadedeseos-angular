@@ -3,14 +3,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { ThemeConfig } from '../../enum/theme';
-import { LoadingComponent } from '../loading/loading.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ModalRef } from '@some-angular-utils/modal';
 
 @Component({
   selector: 'app-wishlist-form',
   imports: [
-    LoadingComponent,
     ReactiveFormsModule,
     FontAwesomeModule,
   ],

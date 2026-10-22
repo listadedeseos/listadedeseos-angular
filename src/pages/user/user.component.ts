@@ -5,10 +5,20 @@ import { CustomDeleteComponent } from '../../components/customDelete/customDelet
 import { UserFormComponent } from '../../components/user-form/user-form.component';
 import { SAUTableModule } from '@some-angular-utils/table';
 import { SAUModalService } from '@some-angular-utils/modal';
+import { RouterModule } from '@angular/router';
+import { DatePipe, NgTemplateOutlet } from '@angular/common';
+import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition } from '@angular/cdk/overlay';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
     imports: [
         SAUTableModule,
+        RouterModule,
+        FontAwesomeModule,
+        NgTemplateOutlet,
+        DatePipe,
+        CdkOverlayOrigin,
+        CdkConnectedOverlay,
     ],
     templateUrl: './user.component.html',
     styleUrl: './user.component.scss',
@@ -23,38 +33,47 @@ export class UserComponent {
     loading: boolean = true;
 
     public url = Utils.urls.user
+    // 'username' and 'wish_lists' cells are rendered by the #userCell / #listsCell templates
+    // (sau-table matches customTemplates by header.key), grouping what used to be 8 columns
     public headers = [
-        { name: 'ID', key: 'id' },
-        { name: 'LOGIN', key: 'key', type: 'login' },
-        { name: 'NOMBRE', key: ['name', 'surname'], subKey: 'username' },
-        { name: 'CORREO ELECTRÓNICO', key: 'email' },
-        {
-            name: 'LISTAS', key: 'wish_lists', type: 'table', headers: [
-                { name: 'Principal', key: 'is_main', type: 'boolean' },
-                { name: 'URL', key: 'uuid', linkName: 'Abrir lista', url: '/list/{key}', type: 'link' },
-                { name: 'NAME', key: 'name', subKey: 'uuid' },
-                { name: 'STEAM', key: 'steam_username' },
-                { name: 'AMAZON', key: 'amazon_wishlist_id' },
-                { name: 'ACTUALIZADO', key: 'updated_at', subKey: 'created_at', type: 'dateTime' },
-            ]
-        },
-        { name: 'ACTUALIZADO', key: 'updated_at', subKey: 'created_at', type: 'dateTime' },
+        { name: 'USUARIO', key: 'username' },
+        { name: 'LISTAS', key: 'wish_lists' },
     ]
+
+    // Button whose "N listas" dropdown is open (users with more than 3 wish lists). Keyed by the
+    // origin element, not the user id: sau-table renders each custom cell twice (desktop table +
+    // hidden mobile cards), and an id key would also open the hidden copy's overlay at (0,0)
+    public openListsOrigin: CdkOverlayOrigin | null = null
+
+    // Below the button, aligned left; flips above it when there's no room underneath
+    public listsDropdownPositions: ConnectedPosition[] = [
+        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
+        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
+    ]
+
+    toggleLists(origin: CdkOverlayOrigin) {
+        this.openListsOrigin = this.openListsOrigin === origin ? null : origin
+    }
+
+    isAdmin(user: any): boolean {
+        return Array.isArray(user.role) ? user.role.includes('ROLE_ADMIN') : user.role === 'ROLE_ADMIN';
+    }
 
     constructor(private apiService: ApiService) { }
 
-    openEditModal(id: number = 0) {
+    // sau-table's editEvent/deleteEvent emit the whole row object, not its id
+    openEditModal(item?: { id: number }) {
         const modalRef = this.sauModalService.open(UserFormComponent, { size: 'lg' });
-        if (id) {
-            modalRef.componentInstance.id = id;
+        if (item?.id) {
+            modalRef.componentInstance.id = item.id;
         }
         modalRef.result.then(() => this.customTable.getItems(), () => { });
     }
 
-    openDeleteModal(id: number) {
+    openDeleteModal(item: { id: number }) {
         const modalRef = this.sauModalService.open(CustomDeleteComponent, { size: 'md' });
         modalRef.componentInstance.url = this.url;
-        modalRef.componentInstance.id = id;
+        modalRef.componentInstance.id = item.id;
         modalRef.result.then(() => this.customTable.getItems(), () => { });
     }
 }

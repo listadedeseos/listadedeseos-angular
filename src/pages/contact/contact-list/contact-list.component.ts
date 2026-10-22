@@ -30,10 +30,11 @@ export class ContactListComponent {
         { name: 'FECHA', key: 'created_at', type: 'dateTime' },
     ]
 
-    openDeleteModal(id: number) {
+    // sau-table's deleteEvent emits the whole row object, not its id
+    openDeleteModal(item: { id: number }) {
         const modalRef = this.sauModalService.open(CustomDeleteComponent, { size: 'md' });
         modalRef.componentInstance.url = this.url;
-        modalRef.componentInstance.id = id;
+        modalRef.componentInstance.id = item.id;
         modalRef.result.then(() => this.customTable.getItems(), () => { });
     }
 }

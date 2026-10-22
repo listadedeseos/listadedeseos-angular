@@ -2,14 +2,12 @@ import { ChangeDetectorRef, Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
-import { LoadingComponent } from '../loading/loading.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ModalRef } from '@some-angular-utils/modal';
 
 @Component({
   selector: 'app-user-form',
   imports: [
-    LoadingComponent,
     ReactiveFormsModule,
     FontAwesomeModule,
   ],

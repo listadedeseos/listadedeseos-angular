@@ -18,7 +18,7 @@
         "@fortawesome/free-regular-svg-icons": "^6.7.2",
         "@fortawesome/free-solid-svg-icons": "^6.7.2",
         "@some-angular-utils/modal": "^0.0.3",
-        "@some-angular-utils/table": "^0.1.29",
+        "@some-angular-utils/table": "^0.1.30",
         "ngx-toastr-notifier": "^21.0.11",
         "rxjs": "~7.8.0",
         "tslib": "^2.3.0",
@@ -477,13 +477,13 @@
 
     "@some-angular-utils/date-range-picker": ["@some-angular-utils/date-range-picker@0.0.4", "", { "dependencies": { "tslib": "^2.3.0" }, "peerDependencies": { "@angular/common": "^21.0.0", "@angular/core": "^21.0.0" } }, "sha512-CTvkvxZ9tUG0qT4nsgVH6HA1YbZ3FdJxeu5xS55GBcXUnn2M8mDiCZ1rN/BHdeVoDbBhlQ1E367KXa+zba0zKQ=="],
 
-    "@some-angular-utils/filter": ["@some-angular-utils/filter@0.0.13", "", { "dependencies": { "@some-angular-utils/date-range-picker": "^0.0.4", "tslib": "^2.3.0" }, "peerDependencies": { "@angular/common": "^21.0.0", "@angular/core": "^21.0.0" } }, "sha512-59YVXD/uj+HFM8OXSgJ+A38rd9FtzlXb0FevNvi+j5ciNZcFun0xa06ou8Hj0gq9uYW9s1MbbCOb4bZNuliBXw=="],
+    "@some-angular-utils/filter": ["@some-angular-utils/filter@0.0.14", "", { "dependencies": { "@some-angular-utils/date-range-picker": "^0.0.4", "tslib": "^2.3.0" }, "peerDependencies": { "@angular/common": "^21.0.0", "@angular/core": "^21.0.0" } }, "sha512-066PoP8Qb9ABX9Pyllhu1s9eY/GuDpYZ8flId5+8m+KLcW7x8yhVbQYdzH43FgHu5YutJN4ulXvUE0S9a8PUuw=="],
 
     "@some-angular-utils/modal": ["@some-angular-utils/modal@0.0.3", "", { "dependencies": { "tslib": "^2.3.0" }, "peerDependencies": { "@angular/common": "^21.0.0", "@angular/core": "^21.0.0" } }, "sha512-filwyPKv0G3TU5j89czrHzHblXjJLlRiOOf0TbZ5Qyu6hO85RZS1ceOa/tBZeqezarq3xbFT6LcSRziMzFGFbg=="],
 
     "@some-angular-utils/paginator": ["@some-angular-utils/paginator@0.0.11", "", { "dependencies": { "tslib": "^2.3.0" }, "peerDependencies": { "@angular/common": "^21.0.0", "@angular/core": "^21.0.0" } }, "sha512-pR9Jyff/d4m7vcIEgZiwRw5qI9bkD5xPTFLgUyGMuFNE9Z2hgQc6BQxyiw7xPsUFhphNVnprZpp14suZAIVH+A=="],
 
-    "@some-angular-utils/table": ["@some-angular-utils/table@0.1.29", "", { "dependencies": { "@some-angular-utils/filter": "^0.0.13", "@some-angular-utils/paginator": "^0.0.11", "tslib": "^2.3.0" }, "peerDependencies": { "@angular/common": "^21.0.0", "@angular/core": "^21.0.0" } }, "sha512-4Ibq89C+A009Qj+Q04/ga7J3yoB1kOvMCIsvZKK7zuNtdUa1cPZBZO8dE+lk7cjFOiJt7APZ/heyIhP9fZU4kg=="],
+    "@some-angular-utils/table": ["@some-angular-utils/table@0.1.30", "", { "dependencies": { "@some-angular-utils/filter": "^0.0.14", "@some-angular-utils/paginator": "^0.0.11", "tslib": "^2.3.0" }, "peerDependencies": { "@angular/common": "^21.0.0", "@angular/core": "^21.0.0" } }, "sha512-NUCuNdy+YjQddL7lvWFkkcTLBx1RVGRwEn+ehXU6zUa/CaeDSikBMbftIJsj5Yt6QMMr93+axKhykEalMESh2g=="],
 
     "@standard-schema/spec": ["@standard-schema/spec@1.1.0", "", {}, "sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w=="],
 
