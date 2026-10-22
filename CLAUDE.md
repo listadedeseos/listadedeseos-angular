@@ -621,3 +621,11 @@ which should run after each change to this repo and append an entry here.
   on error, then refreshes counts and, under a status tab, the rows). Same mobile-card shrink fix as
   the users table, scoped via `.contact-page`. (`src/pages/contact/contact-list/*`,
   `src/pages/contact/contact.component.ts`)
+- 2026-10-22 — Contact form (`/contact`, still public): when the user is logged in, the "Nombre" and
+  "Correo electrónico" fields are hidden and their controls removed from the form; the backend fills
+  them from the account. In the Laravel backend, `ContactController@create` now optionally checks the
+  `Authorization` token (the route has no auth middleware) and, if valid, overwrites `name`
+  (`name surname`, falling back to `username`) and `email` from the `User` row before validating, so
+  client-sent values are ignored. Anonymous visitors still see and must fill both fields. New test
+  `test_logged_user_name_and_email_come_from_account`; suite 19/19.
+  (`src/pages/contact/contact.component.html`/`.ts`)

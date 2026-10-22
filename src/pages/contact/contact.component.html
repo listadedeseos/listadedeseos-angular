@@ -62,7 +62,8 @@
                     }
                 </div>
 
-                <!-- Nombre y Email -->
+                <!-- Nombre y Email (solo sin sesión; con sesión los pone el backend) -->
+                @if(!authenticationService.isLogged) {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
@@ -112,6 +113,7 @@
                         }
                     </div>
                 </div>
+                }
 
                 <!-- Título -->
                 <div>
