@@ -632,3 +632,12 @@ which should run after each change to this repo and append an entry here.
 - 2026-10-22 — Renamed the `complaint` contact type's label from "Error o queja" to "Queja" in the
   contact form's select and the admin inbox's type pill.
   (`src/pages/contact/contact.component.html`, `src/pages/contact/contact-list/contact-list.component.ts`)
+- 2026-10-22 — **Wish-list visit counter.** Backend (Laravel): new migration
+  `2026_10_22_000001_add_views_to_wish_list` adds `wish_list.views` (unsigned int, default 0);
+  `WishListController::countVisit` increments it from the two public read endpoints
+  (`GET wishlist/{username}[/{name}]` and `GET wishlist/uuid/{uuid}`) unless the optional bearer token
+  belongs to the list's owner. It increments via the query builder so visits don't touch `updated_at`.
+  Every page load counts (no per-visitor dedupe). New `tests/Feature/WishListViewsTest.php`; suite
+  20/20. **Deploying needs `php artisan migrate`.** Frontend: the owner (`isMyWishList`) sees an
+  eye-icon "N visitas" pill next to the "Productos" count (owner and admins only — `isMyWishList || isAdmin`).
+  (`src/pages/wish-list/wish-list.component.html`)
