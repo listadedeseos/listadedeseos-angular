@@ -25,8 +25,8 @@
                 placeholder="Mi lista de deseos" formControlName="name">
         </div>
 
-        @if(false){
-        <!-- Tema de la lista -->
+        @if(isAdmin){
+        <!-- Tema de la lista (solo admin; para el resto se conserva el tema actual al guardar) -->
         <div>
             <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
                 Tema de la lista

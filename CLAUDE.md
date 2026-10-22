@@ -568,3 +568,19 @@ which should run after each change to this repo and append an entry here.
   page's `<main>`, since the component uses `ViewEncapsulation.None`) gives it `min-width: 0; flex: 1 1
   auto` inside `.sau-table-mobile` only — applying it to the desktop table too would re-center cells.
   (`src/pages/user/user.component.html`/`.scss`)
+- 2026-10-22 — The wish-list form's theme ("Tema de la lista") picker, previously hidden for everyone
+  behind `@if(false)`, is now shown to admins only (`isAdmin` from `AuthenticationService`). The
+  `theme` control stays in the form for all users so the current theme is sent back unchanged.
+  Enforced server-side too, in the separate Laravel backend
+  (`C:\Users\ADMINISTRATOR\listadedeseos\listadedeseos-laravel`): `WishListController@update` (also
+  used by `create`) only assigns `theme` when the JWT's `role` is `ROLE_ADMIN`; otherwise the stored
+  theme is kept (null on create). (`src/components/wishlist-form/wishlist-form.component.html`/`.ts`)
+- 2026-10-22 — Fixed edits made in the wish-list settings modal (theme, name, deadline, Steam/Amazon)
+  not showing until a reload: `WishListComponent.wishlistUpdate` only patched the "Mis listas" card
+  array, never the list being viewed (`this.wishlist` → hero badge/banner/deadline, share URL), and
+  never ran change detection — the page is `OnPush` and the result arrives via the modal's
+  `result` promise, not a template event. It now also merges the response into `this.wishlist` when
+  the edited list is the one on screen (keeping `products`, which the API response omits), recomputes
+  `urlToShare` (new private `ownerUsername`, captured in `getWishList`) and the deadline counter, and
+  calls `markForCheck()`/`detectChanges()` for both new and edited lists.
+  (`src/pages/wish-list/wish-list.component.ts`)
