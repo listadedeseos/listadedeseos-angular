@@ -1,5 +1,6 @@
 import { environment } from "../environments/environment";
 import { Injectable, Injector } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 import { ToastService } from 'ngx-toastr-notifier';
 
 export namespace Utils {
@@ -24,6 +25,16 @@ export namespace Utils {
 
     export function setGlobalInjector(injector: Injector): void {
         globalInjector = injector;
+    }
+
+    // Username inputs show a fixed "@" prefix, so drop any "@" the user types or pastes anyway
+    // (the API validates usernames as alpha_num)
+    export function stripUsernameAt(control: AbstractControl | null): void {
+        control?.valueChanges.subscribe((value) => {
+            if (typeof value === 'string' && value.startsWith('@')) {
+                control.setValue(value.replace(/^@+/, ''), { emitEvent: false });
+            }
+        });
     }
 
     // Toast utilities with proper service access

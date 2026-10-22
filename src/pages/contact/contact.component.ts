@@ -39,7 +39,9 @@ export class ContactComponent {
 
       this.apiService.save(Utils.urls.contact, this.saveForm.value).subscribe({
         next: (data: any) => {
-          this.saveForm.reset();
+          // reset() alone nulls `type` (the select's only valid values are the 3 types),
+          // which made the next submission fail validation
+          this.saveForm.reset({ type: 'question' });
           Utils.ToastUtils.success('Mensaje enviado', 'Tu mensaje ha sido enviado correctamente');
           this.loading = false;
         },

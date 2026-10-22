@@ -520,3 +520,104 @@ which should run after each change to this repo and append an entry here.
   step could not work since the repo has no `package-lock.json` (`bun.lock` is the lockfile). Node is
   still set up (bumped 20 → 22) because the Angular CLI runs on Node; bun is the package manager and
   script runner. (`.github/workflows/pipeline.yml`)
+- 2026-10-22 — Fixed the admin "Editar usuario" action (and user/contact deletion) never working:
+  `<sau-table>`'s `editEvent`/`deleteEvent` emit the **whole row object** (`editEvent.emit(item)`), but
+  `UserComponent.openEditModal`/`openDeleteModal` and `ContactListComponent.openDeleteModal` treated the
+  payload as a numeric id, so the modals requested `user/[object Object]` (edit form stayed empty, save
+  /delete hit invalid URLs). Handlers now take the row and use `item.id`. Verified with Playwright
+  (mocked API): edit loads `GET user/7` + `GET wishlist/user/7`, prefills the form, saves via
+  `PUT user/7` (including `active`), and delete sends `DELETE user/7` / `DELETE contact/9`. Note: the
+  `#editButton`/`#deleteButton` custom templates mentioned in an earlier entry are no longer in
+  `user.component.html`/`contact-list.component.html`; the library's default buttons are used.
+  (`src/pages/user/user.component.ts`, `src/pages/contact/contact-list/contact-list.component.ts`)
+- 2026-10-22 — Slimmed the admin users table (`/user`) from 7 columns + a nested 7-column wish-list
+  sub-table down to 4: **Usuario** (avatar initial, name, `@username · email`, `#id`, Admin/Inactivo
+  pills, email-verified/Google icons — replacing ID/LOGIN/NOMBRE/CORREO), **Listas** (one linked pill
+  per wish list, star for main, Steam/Amazon brand icons — replacing the nested table), Actualizado,
+  Opciones. Done via `<sau-table [customTemplates]="{ username: userCell, wish_lists: listsCell }">`:
+  the library looks up custom cell templates by `header.key` (string keys only) and passes
+  `let-item="item"`. Note the library's own admin crown only renders for a header literally named
+  `'NOMBRE'`, hence the explicit Admin pill. (`src/pages/user/user.component.html`/`.ts`)
+- 2026-10-22 — Fixed a "flash" when opening edit modals: the product/wishlist/user forms showed the
+  full-screen `<app-loading>` overlay (blurred page + animated logo) during the ~100–300ms `getById`
+  fetch (the product form even swapped the whole modal out for it), so it blinked on and off. All 3
+  forms now always render the modal and show an in-modal busy overlay (`absolute inset-0`, small
+  spinner) whose visibility is delayed by the new `animate-fadein-delayed` Tailwind animation
+  (`fadein` 0.2s after a 0.3s delay): fast loads/saves never show it, slow ones fade it in; it still
+  blocks clicks immediately. `LoadingComponent` is no longer used by the modal forms (still used by
+  login/verify/profile). (`tailwind.config.js`, `src/components/{product,wishlist,user}-form/*`)
+- 2026-10-22 — Users table "Listas" cell: users with more than 3 wish lists now get a "N listas ▾"
+  button that opens a floating dropdown listing them in a column (≤3 still show inline pills; the pill
+  markup lives in a shared `#listPill` template). The dropdown is a `@angular/cdk/overlay`
+  `cdkConnectedOverlay` (transparent backdrop, closes on outside click / Escape, flips above the button
+  when there's no room below), so it renders outside the table and never changes the row height. Its
+  open state is keyed by the clicked `CdkOverlayOrigin`, not the user id, because `<sau-table>` renders
+  every custom cell twice (desktop table + hidden mobile cards) — an id key also opened the hidden
+  copy's overlay, which showed up stuck at the page's top-left corner. No CDK overlay CSS import was
+  needed (CDK 21 loads its overlay structural styles itself). (`src/pages/user/user.component.html`/`.ts`)
+- 2026-10-22 — Folded the users table's "Actualizado" column into the **Usuario** cell as a small third
+  line ("Actualizado dd/MM/yyyy HH:mm · Creado dd/MM/yyyy", via `DatePipe`), so the table is now just
+  Usuario / Listas / Opciones. (`src/pages/user/user.component.html`/`.ts`)
+- 2026-10-22 — Users table, mobile cards: users with more than 3 wish lists now show **all** list pills
+  (wrapped) instead of the "N listas ▾" dropdown, which stays desktop-only. Since `<sau-table>` renders
+  each custom cell twice (desktop table + cards inside `.sau-table-mobile`), the two variants are
+  toggled with the Tailwind arbitrary variant `[.sau-table-mobile_&]:hidden` / `[.sau-table-mobile_&]:flex`,
+  which follows the library's own mobile breakpoint rather than a guessed `md:`. Also fixed the pills
+  overflowing the card instead of wrapping: the library's cell wrapper `.sau-table-data-type-section`
+  is a non-shrinking flex item, so `user.component.scss` (scoped via a new `.users-page` class on the
+  page's `<main>`, since the component uses `ViewEncapsulation.None`) gives it `min-width: 0; flex: 1 1
+  auto` inside `.sau-table-mobile` only — applying it to the desktop table too would re-center cells.
+  (`src/pages/user/user.component.html`/`.scss`)
+- 2026-10-22 — The wish-list form's theme ("Tema de la lista") picker, previously hidden for everyone
+  behind `@if(false)`, is now shown to admins only (`isAdmin` from `AuthenticationService`). The
+  `theme` control stays in the form for all users so the current theme is sent back unchanged.
+  Enforced server-side too, in the separate Laravel backend
+  (`C:\Users\ADMINISTRATOR\listadedeseos\listadedeseos-laravel`): `WishListController@update` (also
+  used by `create`) only assigns `theme` when the JWT's `role` is `ROLE_ADMIN`; otherwise the stored
+  theme is kept (null on create). (`src/components/wishlist-form/wishlist-form.component.html`/`.ts`)
+- 2026-10-22 — Fixed edits made in the wish-list settings modal (theme, name, deadline, Steam/Amazon)
+  not showing until a reload: `WishListComponent.wishlistUpdate` only patched the "Mis listas" card
+  array, never the list being viewed (`this.wishlist` → hero badge/banner/deadline, share URL), and
+  never ran change detection — the page is `OnPush` and the result arrives via the modal's
+  `result` promise, not a template event. It now also merges the response into `this.wishlist` when
+  the edited list is the one on screen (keeping `products`, which the API response omits), recomputes
+  `urlToShare` (new private `ownerUsername`, captured in `getWishList`) and the deadline counter, and
+  calls `markForCheck()`/`detectChanges()` for both new and edited lists.
+  (`src/pages/wish-list/wish-list.component.ts`)
+- 2026-10-22 — Backend follow-up: the admin-only `theme` check added to `WishListController@update`
+  broke 4 of the Laravel feature tests (`login`, `create product`, `verify user`, `delete main wish
+  list user`) with "Attempt to read property "role" on null" — `update` is also called internally from
+  public, unauthenticated flows (verify/login creating the default "Principal" list), where there's no
+  `user` request attribute. Switched to a null-safe read (`$request->attributes->get('user')?->role`),
+  so those calls count as non-admin. `php artisan test`: 12/12 passing.
+- 2026-10-22 — Username inputs in the register page and the admin edit-user modal now show a fixed,
+  non-editable "@" prefix inside the field (same recipe the profile page already used: absolutely
+  positioned `&#64;` span + `pl-7` on the input), so users don't type it. New
+  `Utils.stripUsernameAt(control)` (`src/utils/utils.ts`) strips any leading "@" typed or pasted anyway,
+  since the API validates usernames as `alpha_num`; wired into both forms. Also fixed the register
+  form's `username` control being initialised to `[]` instead of `''`.
+  (`src/pages/register/register.component.html`/`.ts`, `src/components/user-form/user-form.component.html`/`.ts`)
+- 2026-10-22 — **Reworked suggestions (contact messages) end to end.** Users send them from
+  `/contact`; admins triage them at `/contact/list`. Problems fixed: the admin inbox couldn't show the
+  message text or email, there was no way to mark anything (the backend's `mark-as-done` endpoint was
+  unused and one-way), it listed oldest first, messages over 255 chars broke on MySQL (`body` was
+  VARCHAR(255)), and the contact form's `reset()` nulled `type` so a second submission failed
+  validation (now `reset({ type: 'question' })`).
+  Backend (`C:\Users\ADMINISTRATOR\listadedeseos\listadedeseos-laravel`): new migration
+  `2026_10_22_000000_add_status_to_contact` adds `contact.status` (`pending` / `in_progress` / `done`
+  / `discarded`, default `pending`, backfilled `done` from `is_done`) and widens `body` to TEXT on MySQL
+  (raw `ALTER`, since the project has no doctrine/dbal for `->change()`); `Contact::STATUSES`;
+  `GET /contact` now sorts newest first, accepts `?status=`/`?type=` filters and returns per-status
+  `counts`; new admin-only `PUT /contact/{id}/status` (validated; keeps `is_done` in sync for older
+  clients; `mark-as-done` also sets `status`). New `tests/Feature/ContactTest.php` (6 tests) — suite is
+  18/18 green (run with `php -d "error_reporting=E_ALL & ~E_DEPRECATED" artisan test`, otherwise
+  PHP 8.4 floods the output with Laravel 9 deprecation notices). **Deploying needs
+  `php artisan migrate`.**
+  Frontend: `ContactListComponent` rebuilt — status tabs (Todas / Pendiente / En curso / Hecha /
+  Descartada, with counts; default Pendiente) that re-point the table's `[url]` to
+  `contact?status=…` and call `onPageChange(1)` (sau-table doesn't reload on `[url]` changes);
+  columns MENSAJE (type pill, title, full body with "Ver más" past 180 chars, sender, `mailto:` reply
+  link, date) and ESTADO (colour-coded `<select>` that PUTs the new status optimistically, reverting
+  on error, then refreshes counts and, under a status tab, the rows). Same mobile-card shrink fix as
+  the users table, scoped via `.contact-page`. (`src/pages/contact/contact-list/*`,
+  `src/pages/contact/contact.component.ts`)

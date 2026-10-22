@@ -1,15 +1,74 @@
-<main class="p-6 max-w-6xl mx-auto">
+<main class="contact-page p-6 max-w-6xl mx-auto">
     <div class="flex items-center gap-2 mb-3.5">
         <span class="w-2.5 h-2.5 rounded-sm bg-admin"></span>
         <span class="text-xs font-bold uppercase tracking-wide text-admin">Modo administrador</span>
     </div>
-    <h1 class="font-serif font-normal text-4xl text-ink tracking-tight">Mensajes de contacto</h1>
-    <p class="text-muted text-base mt-2 mb-6">Sugerencias, errores y consultas recibidas desde el formulario.</p>
+    <h1 class="font-serif font-normal text-4xl text-ink tracking-tight">Sugerencias y mensajes</h1>
+    <p class="text-muted text-base mt-2 mb-6">Sugerencias, errores y consultas recibidas desde el formulario de contacto.</p>
+
+    <!-- Pestañas por estado -->
+    <div class="flex flex-wrap gap-2 mb-4" role="tablist">
+        @for (tab of tabs; track tab.value) {
+        <button type="button" role="tab" [attr.aria-selected]="statusFilter === tab.value"
+            (click)="setFilter(tab.value)"
+            class="inline-flex items-center gap-2 px-3 py-1.5 border rounded-lg text-sm font-semibold transition-colors duration-200"
+            [class]="statusFilter === tab.value ? 'border-ink bg-ink text-cream' : 'border-line bg-white text-muted-dark hover:border-ink hover:text-ink'">
+            {{ tab.label }}
+            <span class="min-w-5 px-1.5 rounded-full text-[11px] leading-5 text-center"
+                [class]="statusFilter === tab.value ? 'bg-cream/20 text-cream' : 'bg-cream-alt text-muted'">
+                {{ tab.value ? (counts[tab.value] ?? 0) : totalCount }}
+            </span>
+        </button>
+        }
+    </div>
 
     <div class="border border-line-card rounded-xl bg-white overflow-hidden">
-        <sau-table #customTable [url]="url" [headers]="headers" contentList="list" contentTotal="total" pageParamName="page"
+        <sau-table #customTable [url]="url" [headers]="headers"
+            [customTemplates]="{ title: messageCell, status: statusCell }"
+            contentList="list" contentTotal="total" pageParamName="page"
             limitParamName="limit" [sizeBetweenPages]="1" [limit]="10" [sizeInitialPage]="1"
             (deleteEvent)="openDeleteModal($event)">
         </sau-table>
     </div>
 </main>
+
+<!-- Mensaje: tipo + título + texto completo (desplegable si es largo) + remitente y fecha -->
+<ng-template #messageCell let-item="item">
+    <div class="text-left max-w-2xl">
+        <div class="flex flex-wrap items-center gap-2">
+            <span class="px-1.5 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wide"
+                [class]="types[item.type]?.classes">{{ types[item.type]?.label ?? item.type }}</span>
+            <span class="font-semibold text-ink">{{ item.title }}</span>
+        </div>
+
+        <p class="mt-1.5 text-sm text-muted-dark whitespace-pre-line break-words"
+            [class.line-clamp-3]="!expanded.has(item.id)">{{ item.body }}</p>
+        @if (item.body?.length > 180) {
+        <button type="button" (click)="toggleExpanded(item.id)"
+            class="mt-1 text-xs font-semibold text-primary-500 hover:underline">
+            {{ expanded.has(item.id) ? 'Ver menos' : 'Ver más' }}
+        </button>
+        }
+
+        <div class="mt-1.5 flex flex-wrap items-center gap-x-1.5 text-xs text-muted-light">
+            <span class="text-muted">{{ item.name }}</span>
+            <span>·</span>
+            <a [href]="mailto(item)"
+                class="text-muted hover:text-ink hover:underline break-all">{{ item.email }}</a>
+            <span>·</span>
+            <span>{{ item.created_at | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+    </div>
+</ng-template>
+
+<!-- Estado: selector con los 4 estados, coloreado según el actual -->
+<ng-template #statusCell let-item="item">
+    <select [value]="item.status" (change)="changeStatus(item, $any($event.target).value)"
+        [attr.aria-label]="'Estado de ' + item.title"
+        class="px-2.5 py-1 border rounded-full text-xs font-bold cursor-pointer"
+        [class]="getStatus(item.status).classes">
+        @for (status of statuses; track status.value) {
+        <option [value]="status.value" [selected]="status.value === item.status">{{ status.label }}</option>
+        }
+    </select>
+</ng-template>

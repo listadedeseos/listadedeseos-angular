@@ -97,8 +97,14 @@ module.exports = {
       animation: {
         scaleadd: 'scaleadd 0.5s ease-in-out',
         twinkle: 'twinkle 1.8s ease-in-out infinite',
+        // Modal busy overlay: stays invisible for quick requests, so fast loads don't flash
+        'fadein-delayed': 'fadein 0.2s ease-out 0.3s both',
       },
       keyframes: {
+        fadein: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
         scaleadd: {
           '0%': { transform: 'scale(0)' },
           '80%': { transform: 'scale(1.1)' },

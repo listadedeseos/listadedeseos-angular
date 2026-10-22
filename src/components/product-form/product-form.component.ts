@@ -4,13 +4,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ModalRef } from '@some-angular-utils/modal';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
-import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-product-form',
   imports: [
     ReactiveFormsModule,
-    LoadingComponent,
     FontAwesomeModule,
   ],
   templateUrl: './product-form.component.html',

@@ -37,7 +37,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@some-angular-utils/modal": "^0.0.3",
-    "@some-angular-utils/table": "^0.1.29",
+    "@some-angular-utils/table": "^0.1.30",
     "ngx-toastr-notifier": "^21.0.11",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"

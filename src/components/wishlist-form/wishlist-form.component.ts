@@ -1,16 +1,15 @@
 import { Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
+import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { Utils } from '../../utils/utils';
 import { ThemeConfig } from '../../enum/theme';
-import { LoadingComponent } from '../loading/loading.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ModalRef } from '@some-angular-utils/modal';
 
 @Component({
   selector: 'app-wishlist-form',
   imports: [
-    LoadingComponent,
     ReactiveFormsModule,
     FontAwesomeModule,
   ],
@@ -27,6 +26,9 @@ export class WishlistFormComponent {
   public showModalImage = false
   public dropdowns: any = {}
   public themes = ThemeConfig.getAllThemes();
+  // Only admins can change a list's theme. The control stays in the form for everyone so the
+  // current theme is sent back unchanged (the API sets theme to null when it's missing)
+  public isAdmin = inject(AuthenticationService).isAdmin;
 
   constructor(
     private apiService: ApiService,

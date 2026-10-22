@@ -53,11 +53,16 @@
                             <label class="block text-xs font-bold uppercase tracking-wide text-muted mb-1.5">
                                 Nombre de usuario
                             </label>
-                            <input formControlName="username"
-                                   type="text"
-                                   placeholder="@tu_usuario"
-                                   class="w-full px-3 py-2.5 border border-line rounded-lg bg-white text-ink text-sm placeholder-muted-placeholder"
-                                   required>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-muted-placeholder text-sm">&#64;</span>
+                                </div>
+                                <input formControlName="username"
+                                       type="text"
+                                       placeholder="tu_usuario"
+                                       class="w-full pl-7 pr-3 py-2.5 border border-line rounded-lg bg-white text-ink text-sm placeholder-muted-placeholder"
+                                       required>
+                            </div>
                         </div>
 
                         <div>

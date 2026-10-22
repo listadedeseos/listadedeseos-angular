@@ -46,6 +46,7 @@ export class WishListComponent {
   public isMainWishlist = false
   public measurements: any = {}
   public urlToShare = ''
+  private ownerUsername = ''
   private dateCounterInterval: ReturnType<typeof setInterval> | undefined
 
   public showReserveButton = CardComponent.showReserveButton;
@@ -143,6 +144,7 @@ export class WishListComponent {
         }
 
         this.isMainWishlist = value.isMain
+        this.ownerUsername = value.username
         this.urlToShare = '@' + value.username + (this.isMainWishlist ? '' : '/' + this.wishlist.name)
 
         if (this.isLogged && value.username == this.authenticationService.currentUserValue.username) {
@@ -292,9 +294,21 @@ export class WishListComponent {
       const index = this.allWishList.findIndex((wishList: any) => wishList.id == id)
       if (index > -1) {
         this.allWishList[index] = { ...this.allWishList[index], ...response.wishList }
+        this.allWishList = [...this.allWishList]
+      }
+
+      // Also refresh the list being viewed (hero theme/name/deadline, share URL); the API response
+      // doesn't include products, so they're kept from the current state
+      if (id == this.wishListId) {
+        this.wishlist = { ...this.wishlist, ...response.wishList }
+        this.urlToShare = '@' + this.ownerUsername + (this.isMainWishlist ? '' : '/' + this.wishlist.name)
+        this.dateCounter(this.wishlist.date_end)
       }
     }
 
+    // OnPush + the update arrives from the modal's promise, not a template event
+    this.cdr.markForCheck()
+    this.cdr.detectChanges()
   }
 
   getThemeLabel(theme: string): string {
