@@ -4,14 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { LoadingComponent } from '../../components/loading/loading.component';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   imports: [
     LoadingComponent,
-    ReactiveFormsModule,
-    CommonModule,
-  ],
+    ReactiveFormsModule
+],
   templateUrl: './verify.component.html',
   styleUrl: './verify.component.scss',
 })

@@ -19,13 +19,13 @@
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a routerLink="/list"
-             class="px-8 py-4 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200 flex items-center gap-3">
+            class="px-8 py-4 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200 flex items-center gap-3">
             <fa-icon [icon]="['fas', 'list-ul']"></fa-icon>
             <span>Crear Mi Lista</span>
           </a>
 
           <a routerLink="/contact"
-             class="px-8 py-4 bg-transparent text-ink font-semibold rounded-lg border border-line-strong hover:border-ink transition-colors duration-200 flex items-center gap-3">
+            class="px-8 py-4 bg-transparent text-ink font-semibold rounded-lg border border-line-strong hover:border-ink transition-colors duration-200 flex items-center gap-3">
             <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
             <span>Contáctanos</span>
           </a>
@@ -75,29 +75,29 @@
 
         <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
           @for (item of steamList; track $index) {
-          <app-card
-            aspect="video"
-            [index]="$index+1"
-            [principalUrl]="item.steam_url"
-            [img]="item.img"
-            [name]="item.name"
-            [price]="item.price"
-            [count]="item.count"
-            principalLabelString="Steam"
-            [secondaryUrl]="item.instant_gaming_url"
-            secondaryLabelString="Instant Gaming">
-          </app-card>
+            <app-card
+              aspect="video"
+              [index]="$index+1"
+              [principalUrl]="item.steam_url"
+              [img]="item.img"
+              [name]="item.name"
+              [price]="item.price"
+              [count]="item.count"
+              principalLabelString="Steam"
+              [secondaryUrl]="item.instant_gaming_url"
+              secondaryLabelString="Instant Gaming">
+            </app-card>
           }
         </div>
       </div>
 
       <!-- Loading State -->
-       @if(steamList && steamList.length === 0){
+      @if(steamList && steamList.length === 0){
         <div class="text-center py-16">
           <div class="w-16 h-16 rounded-full border-4 border-line border-t-primary-500 animate-spin mx-auto mb-4"></div>
           <p class="text-muted text-lg">Cargando productos populares...</p>
         </div>
-       }
+      }
 
 
     </div>
@@ -115,13 +115,15 @@
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a *ngIf="!isLogged" routerLink="/register"
-             class="px-8 py-4 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200">
-            Registrarse Gratis
-          </a>
+          @if (!isLogged) {
+            <a routerLink="/register"
+              class="px-8 py-4 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200">
+              Registrarse Gratis
+            </a>
+          }
 
           <a routerLink="/list"
-             class="px-8 py-4 bg-transparent text-ink font-semibold rounded-lg border border-line-strong hover:border-ink transition-colors duration-200">
+            class="px-8 py-4 bg-transparent text-ink font-semibold rounded-lg border border-line-strong hover:border-ink transition-colors duration-200">
             Ver Todas las Listas
           </a>
         </div>

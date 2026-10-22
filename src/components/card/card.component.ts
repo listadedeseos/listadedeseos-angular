@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -6,9 +6,8 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 @Component({
   selector: 'app-card',
   imports: [
-    FontAwesomeModule,
-    CommonModule,
-  ],
+    FontAwesomeModule
+],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -84,6 +83,18 @@ export class CardComponent {
   // Setter para mantener compatibilidad con código existente  
   public static set showReserveButton(value: boolean) {
     CardComponent.setShowReserveButton(value);
+  }
+
+  private static priceFormatter = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
+
+  // Numeric prices (manual products) are shown as "9,50 €"; already-formatted strings
+  // (e.g. from the Steam/Amazon scrapers) are shown untouched
+  get formattedPrice(): string {
+    if (this.price === null || this.price === undefined || this.price === '') {
+      return '';
+    }
+    const value = Number(this.price);
+    return Number.isFinite(value) ? CardComponent.priceFormatter.format(value) : String(this.price);
   }
 
   onImageError(event: Event) {

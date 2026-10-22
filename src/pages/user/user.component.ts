@@ -1,15 +1,14 @@
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, inject } from '@angular/core';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { CustomDeleteComponent } from '../../components/customDelete/customDelete.component';
 import { UserFormComponent } from '../../components/user-form/user-form.component';
 import { SAUTableModule } from '@some-angular-utils/table';
+import { SAUModalService } from '@some-angular-utils/modal';
 
 @Component({
     imports: [
         SAUTableModule,
-        UserFormComponent,
-        CustomDeleteComponent,
     ],
     templateUrl: './user.component.html',
     styleUrl: './user.component.scss',
@@ -18,6 +17,8 @@ import { SAUTableModule } from '@some-angular-utils/table';
 export class UserComponent {
 
     @ViewChild('customTable') customTable!: SAUTableModule;
+
+    private sauModalService = inject(SAUModalService);
 
     loading: boolean = true;
 
@@ -40,19 +41,20 @@ export class UserComponent {
         { name: 'ACTUALIZADO', key: 'updated_at', subKey: 'created_at', type: 'dateTime' },
     ]
 
-    public id = 0
-    public editProduct = false
-    public deleteProduct = false
-
     constructor(private apiService: ApiService) { }
 
-    toogleEditForm(id = 0) {
-        this.id = id
-        this.editProduct = !this.editProduct
+    openEditModal(id: number = 0) {
+        const modalRef = this.sauModalService.open(UserFormComponent, { size: 'lg' });
+        if (id) {
+            modalRef.componentInstance.id = id;
+        }
+        modalRef.result.then(() => this.customTable.getItems(), () => { });
     }
 
-    toogleDeleteForm(id = 0) {
-        this.id = id
-        this.deleteProduct = !this.deleteProduct
+    openDeleteModal(id: number) {
+        const modalRef = this.sauModalService.open(CustomDeleteComponent, { size: 'md' });
+        modalRef.componentInstance.url = this.url;
+        modalRef.componentInstance.id = id;
+        modalRef.result.then(() => this.customTable.getItems(), () => { });
     }
 }

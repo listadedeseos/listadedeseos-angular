@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Route, Router, RouterModule } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
@@ -13,6 +13,7 @@ import { ProductFormComponent } from '../../components/product-form/product-form
 import { WishlistFormComponent } from '../../components/wishlist-form/wishlist-form.component';
 import { DatePipe } from '@angular/common';
 import { CustomDeleteComponent } from '../../components/customDelete/customDelete.component';
+import { SAUModalService } from '@some-angular-utils/modal';
 
 @Component({
   imports: [
@@ -22,16 +23,15 @@ import { CustomDeleteComponent } from '../../components/customDelete/customDelet
     CardComponent,
     SteamComponent,
     AmazonComponent,
-    ProductFormComponent,
-    WishlistFormComponent,
     DatePipe,
-    CustomDeleteComponent,
   ],
   templateUrl: './wish-list.component.html',
   styleUrl: './wish-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WishListComponent {
+
+  private sauModalService = inject(SAUModalService);
 
   public loading = true
   private uuid = ''
@@ -42,16 +42,11 @@ export class WishListComponent {
   public isMyWishList = false
   public wishlist: any = []
   public wishListId = 0
-  public modalProductOpen = false
-  public editingProductId: number | null = null
-  public modalWishListOpen = false
-  public wishListFormId = 0
   public routeSubsrciption: any
   public isMainWishlist = false
-  public modalDeleteProductOpen = false
-  public deletingProductId: number | null = null
   public measurements: any = {}
   public urlToShare = ''
+  private dateCounterInterval: ReturnType<typeof setInterval> | undefined
 
   public showReserveButton = CardComponent.showReserveButton;
 
@@ -90,6 +85,7 @@ export class WishListComponent {
 
   ngOnDestroy() {
     this.routeSubsrciption.unsubscribe()
+    clearInterval(this.dateCounterInterval)
   }
 
   onImageError(event: Event) {
@@ -212,10 +208,16 @@ export class WishListComponent {
     Utils.ToastUtils.success('Enlace copiado', 'El enlace de la lista de deseos ha sido copiado al portapapeles');
   }
 
-  toggleModalProduct() {
-    this.modalProductOpen = !this.modalProductOpen
-    this.editingProductId = null
-    this.cdr.detectChanges()
+  openProductModal(id: number = 0) {
+    const modalRef = this.sauModalService.open(ProductFormComponent, { size: 'lg' });
+    modalRef.componentInstance.wishListId = this.wishListId;
+    if (id) {
+      modalRef.componentInstance.id = id;
+    }
+    modalRef.result.then(
+      (response: any) => this.productUpdate(response, id),
+      () => { }
+    );
   }
 
   toggleShowReserveButtons() {
@@ -237,10 +239,11 @@ export class WishListComponent {
     this.cdr.detectChanges()
   }
 
-  toggleModalDeleteProduct(id: number = 0) {
-    this.modalDeleteProductOpen = !this.modalDeleteProductOpen
-    this.deletingProductId = id
-    this.cdr.detectChanges()
+  openDeleteProductModal(id: number) {
+    const modalRef = this.sauModalService.open(CustomDeleteComponent, { size: 'md' });
+    modalRef.componentInstance.url = this.deleteUrl;
+    modalRef.componentInstance.id = id;
+    modalRef.result.then(() => this.deleteProduct(id), () => { });
   }
 
   deleteProduct(id: number) {
@@ -265,14 +268,18 @@ export class WishListComponent {
   }
 
   editProduct(id: number) {
-    this.editingProductId = id
-    this.modalProductOpen = true
+    this.openProductModal(id)
   }
 
-  toggleModalWishList(wishListFormId = 0) {
-    this.wishListFormId = wishListFormId
-    this.modalWishListOpen = !this.modalWishListOpen
-    this.cdr.detectChanges()
+  openWishlistModal(id: number = 0) {
+    const modalRef = this.sauModalService.open(WishlistFormComponent, { size: 'lg' });
+    if (id) {
+      modalRef.componentInstance.id = id;
+    }
+    modalRef.result.then(
+      (response: any) => this.wishlistUpdate(id, response),
+      () => { }
+    );
   }
 
   wishlistUpdate(id: number, response: any) {
@@ -324,11 +331,14 @@ export class WishListComponent {
 
   dateCounter(dateEnd: string) {
 
+    // Clear the previous list's counter so intervals don't pile up when switching lists
+    clearInterval(this.dateCounterInterval)
+
     if (dateEnd) {
 
       this.calculateDateEndCounter(dateEnd);
 
-      setInterval(() => {
+      this.dateCounterInterval = setInterval(() => {
         this.calculateDateEndCounter(dateEnd);
       }, 1000);
 

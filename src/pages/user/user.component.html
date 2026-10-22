@@ -1,4 +1,4 @@
-<main class="p-2">
+<main class="p-2 max-w-7xl mx-auto">
     <sau-table
         #customTable
         [url]="url"
@@ -10,17 +10,8 @@
         [sizeBetweenPages]="1"
         [limit]="10"
         [sizeInitialPage]="1"
-        (editEvent)="toogleEditForm($event)"
-        (deleteEvent)="toogleDeleteForm($event)"
+        (editEvent)="openEditModal($event)"
+        (deleteEvent)="openDeleteModal($event)"
     >
     </sau-table>
-
-    @if(editProduct){
-        <app-user-form [id]="id" (closeFunction)="toogleEditForm()" (acceptFunction)="customTable.getItems()"></app-user-form>
-    }
-
-    @if (deleteProduct) {
-    <app-custom-delete [url]="url" [id]="id" (closeFunction)="toogleDeleteForm()"
-        (acceptFunction)="customTable.getItems()"></app-custom-delete>
-    }
 </main>

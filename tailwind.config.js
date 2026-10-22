@@ -6,6 +6,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      // 18px step used by the redesign's button/panel recipes (px-4.5, p-4.5, gap-4.5)
+      spacing: {
+        '4.5': '1.125rem',
+      },
       colors: {
         // Terracotta accent scale (primary brand color)
         primary: {

@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { ApiService } from '../../apiConnection/ApiService';
-import { CustomModalComponent } from '../customModal/customModal.component';
+import { ModalRef } from '@some-angular-utils/modal';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-custom-delete',
   imports: [
-    CustomModalComponent,
+    FontAwesomeModule,
   ],
   templateUrl: './customDelete.component.html',
 })
@@ -13,8 +14,8 @@ export class CustomDeleteComponent {
 
   @Input() id = 0;
   @Input() url = '';
-  @Output() closeFunction = new EventEmitter<any>();
-  @Output() acceptFunction = new EventEmitter<any>();
+
+  private modalRef = inject<ModalRef<CustomDeleteComponent>>(ModalRef);
 
   constructor(
     private apiService: ApiService
@@ -23,8 +24,7 @@ export class CustomDeleteComponent {
   acceptFormFunction() {
     this.apiService.deleteById(this.url, this.id).subscribe({
       next: (data: any) => {
-        this.acceptFunction.emit();
-        this.closeFormFunction()
+        this.modalRef.close();
       },
       error: (error: any) => {
         console.error('ERROR al eliminar producto. ' + error);
@@ -33,7 +33,7 @@ export class CustomDeleteComponent {
   }
 
   closeFormFunction() {
-    this.closeFunction.emit();
+    this.modalRef.dismiss();
   }
 
 }

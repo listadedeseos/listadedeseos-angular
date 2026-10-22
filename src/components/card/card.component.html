@@ -1,136 +1,130 @@
 <div
-    class="group relative bg-white border border-line-card rounded-lg transition-colors duration-200 p-2 flex flex-col gap-3 h-full hover:border-muted-placeholder">
+  class="group relative bg-white border border-line-card rounded-lg transition-colors duration-200 p-2 flex flex-col gap-3 h-full hover:border-muted-placeholder">
 
-    <!-- Badge de posición y contador -->
-    <ng-container *ngIf="index">
-        <div class="absolute top-3 left-3 z-10">
-            <div
-                class="bg-ink/85 text-cream text-[11px] font-bold px-2 py-0.5 rounded flex items-center gap-1.5">
-                <span>{{index}}</span>
-                <ng-container *ngIf="count">
-                    <span class="text-muted-placeholder">·</span>
-                    <span>{{count}}x</span>
-                </ng-container>
-            </div>
-        </div>
-    </ng-container>
+  <!-- Badge de posición y contador -->
+  @if (index) {
+    <div class="absolute top-3 left-3 z-10">
+      <div
+        class="bg-ink/85 text-cream text-[11px] font-bold px-2 py-0.5 rounded flex items-center gap-1.5">
+        <span>{{index}}</span>
+        @if (count) {
+          <span class="text-muted-placeholder">·</span>
+          <span>{{count}}x</span>
+        }
+      </div>
+    </div>
+  }
 
-    <!-- Botón de reserva en esquina superior derecha -->
-    @if(((isLogged && showReserveButton) || !isLogged) && isReserved !== undefined) {
+  <!-- Botón de reserva en esquina superior derecha -->
+  @if(((isLogged && showReserveButton) || !isLogged) && isReserved !== undefined) {
     <div class="absolute top-3 right-3 z-20">
-        @if(isReserved){
+      @if(isReserved){
         @if(isLogged){
-        <button (click)="toggleReserve.emit()"
+          <button (click)="toggleReserve.emit()"
             class="bg-reserved hover:bg-reserved/90 text-white w-7 h-7 rounded-full transition-colors duration-200 flex items-center justify-center"
             title="Eliminar reserva">
             <fa-icon [icon]="['fas', 'check']" class="text-xs"></fa-icon>
-        </button>
-        }@else{
-        <div class="bg-reserved text-white w-7 h-7 rounded-full flex items-center justify-center"
+          </button>
+          }@else{
+          <div class="bg-reserved text-white w-7 h-7 rounded-full flex items-center justify-center"
             title="Reservado">
             <fa-icon [icon]="['fas', 'check']" class="text-xs"></fa-icon>
-        </div>
+          </div>
         }
         }@else{
         <button (click)="toggleReserve.emit()"
-            class="bg-white/90 hover:bg-cream-alt border border-line hover:border-primary-500 text-muted hover:text-primary-500 w-7 h-7 rounded-full transition-colors duration-200 flex items-center justify-center"
-            title="Reservar producto">
-            <fa-icon [icon]="['fas', 'heart']" class="text-xs"></fa-icon>
+          class="bg-white/90 hover:bg-cream-alt border border-line hover:border-primary-500 text-muted hover:text-primary-500 w-7 h-7 rounded-full transition-colors duration-200 flex items-center justify-center"
+          title="Reservar producto">
+          <fa-icon [icon]="['fas', 'heart']" class="text-xs"></fa-icon>
         </button>
-        }
+      }
     </div>
+  }
+
+  <!-- Imagen del producto -->
+  <!-- Sin imagen se muestra el mismo placeholder que cuando la URL falla -->
+  <div>
+    @switch (aspect) {
+
+      @case ('video') {
+        <a [href]="secondaryUrl??principalUrl" target="_blank"
+          class="block aspect-video overflow-hidden rounded-md bg-swatch border border-line-card">
+          <img class="w-full h-full object-cover" [src]="img || '/assets/img/empty.webp'"
+            (error)="onImageError($event)" loading="lazy" alt="product image">
+        </a>
+      }
+
+      @default {
+        <a [href]="secondaryUrl??principalUrl" target="_blank"
+          class="block aspect-square overflow-hidden rounded-md bg-swatch border border-line-card">
+          <img class="w-full h-full object-cover" [src]="img || '/assets/img/empty.webp'"
+            (error)="onImageError($event)" loading="lazy" alt="product image">
+        </a>
+      }
+    }
+  </div>
+
+  <!-- Contenido del producto -->
+  <div class="flex-1 flex flex-col gap-2">
+    <!-- Nombre del producto -->
+    <a [href]="secondaryUrl??principalUrl" target="_blank" class="group/title">
+      <h3 class="text-sm font-semibold text-ink line-clamp-2 leading-tight" [title]="name">
+        {{name}}
+      </h3>
+    </a>
+
+    <!-- Precio -->
+    @if(formattedPrice){
+      <div class="flex items-center gap-2">
+        <a [href]="secondaryUrl??principalUrl" target="_blank"
+          class="font-serif text-xl text-ink">
+          {{formattedPrice}}
+        </a>
+      </div>
     }
 
-    <!-- Imagen del producto -->
-    <div>
-        @if(img){
-        @switch (aspect) {
+    <!-- Pastilla de estado reservado -->
+    @if(((isLogged && showReserveButton) || !isLogged) && isReserved) {
+      <span
+        class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-semibold bg-reserved-light text-reserved border border-reserved-border rounded-full mr-auto">
+        <fa-icon [icon]="['fas', 'check-circle']"></fa-icon>
+        Reservado
+      </span>
+    }
 
-        @case ('video') {
-        <a [href]="secondaryUrl??principalUrl" target="_blank"
-            class="block aspect-video overflow-hidden rounded-md bg-swatch border border-line-card">
-            <img class="w-full h-full object-cover" [src]="img"
-                (error)="onImageError($event)" loading="lazy" alt="product image">
+    <!-- Botones de acción -->
+    <div class="flex flex-col gap-1.5 mt-auto text-xs">
+      @if(principalUrl){
+        <a [href]="principalUrl" target="_blank" [title]="principalLabelString"
+          class="flex-1 text-center py-1.5 px-2 border border-line rounded-md font-semibold text-muted-dark hover:border-ink hover:text-ink transition-colors duration-200 truncate">
+          {{principalLabelString}}
         </a>
-        }
-        @case ('square') {
-        <a [href]="secondaryUrl??principalUrl" target="_blank"
-            class="block aspect-square overflow-hidden rounded-md bg-swatch border border-line-card">
-            <img class="w-full h-full object-cover" [src]="img"
-                (error)="onImageError($event)" loading="lazy" alt="product image">
+      }
+
+      @if(secondaryUrl){
+        <a [href]="secondaryUrl" target="_blank" [title]="secondaryLabelString"
+          class="flex-1 text-center py-1.5 px-2 border border-line rounded-md font-semibold text-muted-dark hover:border-ink hover:text-ink transition-colors duration-200 truncate">
+          {{secondaryLabelString}}
         </a>
+      }
+
+      @if(isMyWishList) {
+        @if(hasEventListener(editProduct)) {
+          <button (click)="editProduct.emit()" title="Editar producto"
+            class="p-2 flex gap-1 items-center justify-center border border-line rounded-md text-muted hover:border-ink hover:text-ink transition-colors duration-200">
+            <fa-icon [icon]="['fas', 'pen']"></fa-icon>
+            <span>Editar</span>
+          </button>
         }
 
-        @default {
-        <a [href]="secondaryUrl??principalUrl" target="_blank"
-            class="block aspect-square overflow-hidden rounded-md bg-swatch border border-line-card">
-            <img class="w-full h-full object-cover" [src]="img"
-                (error)="onImageError($event)" loading="lazy" alt="product image">
-        </a>
+        @if(hasEventListener(deleteProduct)){
+          <button (click)="deleteProduct.emit()" title="Eliminar producto"
+            class="p-2 flex gap-1 items-center justify-center border border-line rounded-md text-muted hover:border-danger hover:text-danger transition-colors duration-200">
+            <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+            <span>Borrar</span>
+          </button>
         }
-        }
-        }
-
+      }
     </div>
-
-    <!-- Contenido del producto -->
-    <div class="flex-1 flex flex-col gap-2">
-        <!-- Nombre del producto -->
-        <a [href]="secondaryUrl??principalUrl" target="_blank" class="group/title" [class.mt-auto]="!img">
-            <h3 class="text-sm font-semibold text-ink line-clamp-2 leading-tight"
-                [class.text-center]="!img" [title]="name">
-                {{name}}
-            </h3>
-        </a>
-
-        <!-- Precio -->
-        <div class="flex items-center gap-2">
-            <a [href]="secondaryUrl??principalUrl" target="_blank"
-                class="font-serif text-xl text-ink">
-                {{price}}
-            </a>
-        </div>
-
-        <!-- Pastilla de estado reservado -->
-        @if(((isLogged && showReserveButton) || !isLogged) && isReserved) {
-        <span
-            class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-semibold bg-reserved-light text-reserved border border-reserved-border rounded-full mr-auto">
-            <fa-icon [icon]="['fas', 'check-circle']"></fa-icon>
-            Reservado
-        </span>
-        }
-
-        <!-- Botones de acción -->
-        <div class="flex flex-col gap-1.5 mt-auto text-xs">
-            <a [href]="principalUrl" target="_blank" [title]="principalLabelString"
-                class="flex-1 text-center py-1.5 px-2 border border-line rounded-md font-semibold text-muted-dark hover:border-ink hover:text-ink transition-colors duration-200 truncate">
-                {{principalLabelString}}
-            </a>
-
-            @if(secondaryUrl){
-            <a [href]="secondaryUrl" target="_blank" [title]="secondaryLabelString"
-                class="flex-1 text-center py-1.5 px-2 border border-line rounded-md font-semibold text-muted-dark hover:border-ink hover:text-ink transition-colors duration-200 truncate">
-                {{secondaryLabelString}}
-            </a>
-            }
-
-            @if(isMyWishList) {
-            @if(hasEventListener(editProduct)) {
-            <button (click)="editProduct.emit()" title="Editar producto"
-                class="p-2 flex gap-1 items-center justify-center border border-line rounded-md text-muted hover:border-ink hover:text-ink transition-colors duration-200">
-                <fa-icon [icon]="['fas', 'pen']"></fa-icon> 
-                <span>Editar</span>
-            </button>
-            }
-
-            @if(hasEventListener(deleteProduct)){
-            <button (click)="deleteProduct.emit()" title="Eliminar producto"
-                class="p-2 flex gap-1 items-center justify-center border border-line rounded-md text-muted hover:border-danger hover:text-danger transition-colors duration-200">
-                <fa-icon [icon]="['fas', 'trash']"></fa-icon> 
-                <span>Borrar</span>
-            </button>
-            }
-            }
-        </div>
-    </div>
+  </div>
 </div>

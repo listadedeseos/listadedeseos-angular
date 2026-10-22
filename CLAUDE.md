@@ -17,7 +17,7 @@ Backend is a separate REST API (not in this repo), consumed via `ApiService`. Lo
 
 ## Tech stack
 
-- **Angular 20**, standalone components only (no NgModules), `ChangeDetectionStrategy.OnPush` +
+- **Angular 21**, standalone components only (no NgModules), `ChangeDetectionStrategy.OnPush` +
   manual `ChangeDetectorRef.markForCheck()/detectChanges()` — this codebase does **not** use Angular
   signals.
 - **Tailwind CSS 3** for all styling (`tailwind.config.js`), utility classes written inline in
@@ -25,13 +25,19 @@ Backend is a separate REST API (not in this repo), consumed via `ApiService`. Lo
 - **RxJS** for async (HTTP calls return `Observable`s from `ApiService`).
 - **Font Awesome** (`@fortawesome/angular-fontawesome`) for icons, `ngx-toastr-notifier` for toasts
   (via `Utils.ToastUtils`).
+- **`@some-angular-utils/modal`** (`SAUModalService`) for every modal/dialog in the app — see
+  "Modal system" below.
 - Karma/Jasmine for unit tests (`npm test`).
+- **Package manager: bun** (`bun.lock` is the lockfile of record; there is no `package-lock.json`).
+  `ng update` on this repo correctly detects and shells out to bun.
 
 ## Architecture
 
 - **Routing** (`src/app/app.routes.ts`): a custom `UrlMatcher` (`userMatcher`) recognizes
   `@username[/wishListName]` URLs and routes them to `WishListComponent`. Everything renders inside
-  `PageLoggedComponent` (header + `<router-outlet>` + footer). `AuthGuard` protects private routes
+  `PageLoggedComponent` (header + `<router-outlet>` + footer). The outlet wrapper is full-width (no
+  `max-w-*`), so each page constrains its own content (`container mx-auto` or `max-w-* mx-auto`) and
+  full-bleed section backgrounds (wish-list hero, dashboard bands) span the viewport. `AuthGuard` protects private routes
   (`/list`, `/user`, `/profile`, `/contact/list`).
 - **API layer** (`src/apiConnection/`): `ApiService` is a thin generic REST wrapper
   (`getPetition`/`getById`/`save`/`deleteById`). `JwtInterceptor` attaches the auth token,
@@ -40,7 +46,32 @@ Backend is a separate REST API (not in this repo), consumed via `ApiService`. Lo
 - **Pages** (`src/pages/`): route-level components (dashboard, wish-list, login/register, profile,
   contact, steam/amazon integrations, verify email, etc).
 - **Components** (`src/components/`): reusable/shared pieces (header, footer, product card, modals —
-  product form, wishlist form, delete confirm — steam/amazon widgets, page-logged shell).
+  product form, wishlist form, delete confirm, user form — steam/amazon widgets, page-logged shell).
+- **Modal system**: every modal (`ProductFormComponent`, `WishlistFormComponent`,
+  `CustomDeleteComponent`, `UserFormComponent`) is opened via `SAUModalService.open(Component,
+  { size })` from `@some-angular-utils/modal`, not embedded in a parent's template behind an `@if`.
+  The service dynamically creates the given component and appends it straight to `<body>` inside its
+  own `<sau-modal>` backdrop/dialog shell (centered, Escape/backdrop-click dismiss, no host markup
+  needed in the opening page) — it returns a `ModalRef` whose `.componentInstance` you set `@Input()`s
+  on right after `open()`, and whose `.result` promise resolves on `modalRef.close(value)` / rejects
+  on `modalRef.dismiss()`. Each modal component injects its own `ModalRef<Self>` (`inject(ModalRef)`)
+  and calls `close`/`dismiss` itself instead of emitting `@Output()` events — there used to be a
+  `CustomModalComponent` wrapper that rendered a shared header/footer via `<ng-content>` around a
+  parent-supplied body, but `SAUModalComponent` (the library's own chrome) only provides the
+  backdrop/centering/sizing, not a header or footer — so each of the 4 form components now renders its
+  *own* header (`font-serif` title computed from a `modalTitle` getter, e.g. `(id?'Editar':'Nuevo') +
+  ' producto'`, plus a `fa-icon` close button) and footer (`Cancelar`/`Aceptar`) inline in its own
+  template, using the exact markup `CustomModalComponent` used to provide. Callers (`WishListComponent`,
+  `UserComponent`, `ContactListComponent`) inject `SAUModalService` and call an `open*Modal(id?)`
+  method that does `modalRef.componentInstance.x = y` then `modalRef.result.then(onConfirm, onCancel)`
+  — see `src/pages/wish-list/wish-list.component.ts`'s `openProductModal`/`openWishlistModal`/
+  `openDeleteProductModal` for the pattern. The library's default backdrop/dialog chrome (blur,
+  rounded corners, box-shadow, 3 sizes `sm`/`md`/`lg`) is used as-is; only its 3 exposed CSS custom
+  properties are reskinned to the app's brand via a global `sau-modal { --sau-color-primary;
+  --sau-color-background; --sau-color-text }` block in `src/styles.scss` (needs `!important` for the
+  same reason `.sau-table`'s override does — see the `@some-angular-utils/table` changelog entry
+  below). `CustomModalComponent` itself was deleted (`src/components/customModal/`) since nothing uses
+  it anymore.
 - **Wish list themes** (`src/enum/theme.ts`): `ThemeConfig` is the single source of truth for the 5
   event themes (`babyshower`, `cumpleanos`, `boda`, `navidad`, `graduacion`). Each theme defines a
   label, subtitle, an SVG banner (`public/assets/banners/*.svg`), badge classes (a small pill using a
@@ -106,8 +137,7 @@ src/
 ├── components/                Shared/reusable UI components
 │   ├── amazon/                Amazon wishlist widget
 │   ├── card/                  Product card
-│   ├── customDelete/          Generic delete-confirmation modal
-│   ├── customModal/           Generic modal shell
+│   ├── customDelete/          Generic delete-confirmation modal (opened via SAUModalService)
 │   ├── footer/
 │   ├── header/
 │   ├── loading/
@@ -392,3 +422,96 @@ which should run after each change to this repo and append an entry here.
   `src/components/header/header.component.html`'s image-load fallback, and
   `src/components/loading/loading.component.html`. Verified visually via a dev-server screenshot of
   the header.
+- 2026-09-13 — **Upgraded Angular 20 → 21** (`@angular/core`/`common`/`compiler`/`forms`/
+  `platform-browser`/`router`/`cli`/`build`/`compiler-cli` all `^21.2.x`, `@angular/cdk` → `^21.2.14`,
+  `typescript` → `^5.9.3`) via `ng update`, as a prerequisite for adding `@some-angular-utils/modal`
+  (see next entry) — its only two published versions (0.0.2/0.0.3) require `@angular/core`/`common`
+  `^21.0.0`, and this app was still on 20.3.31. `ng update`'s official migration schematics
+  auto-converted the last remaining `*ngIf`/`*ngFor` structural directives to `@if`/`@for` block syntax
+  (and dropped the now-unneeded `CommonModule` import) in `src/components/card/card.component.ts`,
+  `src/components/header/header.component.ts`, `src/pages/profile/profile.component.ts`, and
+  `src/pages/verify/verify.component.ts` (plus their templates) — no manual changes needed there.
+  Also had to bump two more packages whose peer deps didn't yet support Angular 21:
+  `@fortawesome/angular-fontawesome` `^3.0.0` → `^4.0.0` (4.0.0's only breaking change is dropping
+  Angular 20 support — no API changes) and `ngx-toastr-notifier` `^20.0.9` → `^21.0.11`; the latter
+  pulls in `@angular/material` as a peer dependency it uses internally (for toast rendering) that
+  wasn't previously pinned in `package.json` at all — added `"@angular/material": "^21.2.14"`
+  explicitly, since without it `bun install` silently resolved a stale, incompatible
+  `@angular/material@20.2.14` from a prior lockfile entry (Angular does not tolerate mixed major
+  versions across `@angular/*` packages at runtime). `@some-angular-utils/table` was already on
+  `^0.1.29` (Angular-21-only) per its own changelog entry below, so it now correctly matches the rest
+  of the app. Verified via `ng build` / `ng build --configuration=production` after each dependency
+  bump.
+- 2026-09-13 — **Added `@some-angular-utils/modal`** and rewired every modal in the app
+  (`ProductFormComponent`, `WishlistFormComponent`, `CustomDeleteComponent`, `UserFormComponent`) to
+  open through `SAUModalService.open()` instead of being embedded in a parent template behind an
+  `@if(modalOpen){...}` flag — see "Modal system" under Architecture above for the full pattern.
+  Deleted `src/components/customModal/` (`CustomModalComponent`), whose header/footer chrome markup
+  was copied verbatim into each of the 4 form components' own templates (the library's `SAUModalComponent`
+  chrome only provides backdrop/centering/sizing, not a header or footer). Rewrote the 3 pages that
+  used to render `@if(...){<app-x-form (closeFunction)="..." (acceptFunction)="...">}` blocks
+  (`src/pages/wish-list/wish-list.component.ts`/`.html`, `src/pages/user/user.component.ts`/`.html`,
+  `src/pages/contact/contact-list/contact-list.component.ts`/`.html`) into `open*Modal(id?)` TS methods
+  that call `sauModalService.open(Component, { size })`, set `@Input()`s on `modalRef.componentInstance`,
+  and handle success/cancel via `modalRef.result.then(onConfirm, onCancel)` — all now-unused
+  `modalXOpen`/`editingXId`/`toggleModalX` state and template blocks were removed. Sized the product/
+  wishlist/user forms `size: 'lg'` (closest match to the old default `max-w-2xl`) and the delete
+  confirmation `size: 'md'` (previously also defaulted to the same wide `2xl`, which was oversized for
+  a 2-line confirm dialog — an intentional small improvement, not just a port). Reskinned the library's
+  3 exposed CSS custom properties to the app's brand in `src/styles.scss` (`sau-modal { --sau-color-primary:
+  #9A4A28; --sau-color-background: #FBF9F6; --sau-color-text: #232019 }`, all `!important` — needed for
+  the same load-order-wins-the-cascade reason the `.sau-table` override needed it, see that changelog
+  entry below); did not attempt to strip the library's own box-shadow/blur/rounded-corner chrome since
+  those aren't exposed as overridable properties and doing so would mean fighting the library's own
+  component styles rather than a documented customization point. Along the way, fixed a real (if minor)
+  regression introduced mid-task and one pre-existing bug in `CustomDeleteComponent`: its header close
+  button was first ported using a raw `<i class="fa-solid fa-xmark">` (mirroring the component's
+  pre-existing raw-`<i>` trash-can icon), but this app has no global Font Awesome CSS/webfont loaded
+  anywhere — the `fa-icon` Angular component (backed by `@fortawesome/angular-fontawesome` + SVG icon
+  packs registered in `src/app/app.ts`) is the only way icons render here, which is exactly why the
+  pre-existing trash-can icon was invisible too (previously left alone per a note in this file, since
+  the component didn't import `FontAwesomeModule`). Fixed both: added `FontAwesomeModule` to
+  `CustomDeleteComponent`'s `imports` and switched both icons to `<fa-icon>`. Verified end-to-end with
+  a Playwright script against the dev server (`ng serve --port 4201`, to avoid the user's own `4200`
+  session) with `localStorage.currentUser` pre-seeded and `**/api/**` routes mocked (no live backend
+  needed): opened and screenshotted all 4 modals (new product, edit product with prefilled data, new
+  wishlist, delete confirm), confirmed the brand CSS variables render correctly (cream-alt background,
+  terracotta accept button, ink text), and confirmed dismissal via the X button, the footer Cancelar
+  button, the Escape key, and a backdrop click all correctly tear the `<sau-modal>` element out of the
+  DOM. `ng build` / `ng build --configuration=production` both succeed.
+- 2026-10-22 — Fixes from a Playwright QA pass over the redesign (all pages at 1440px/375px with mocked
+  `/api/**` and a pre-seeded `localStorage.currentUser`). The redesign's button/panel recipes used
+  `px-4.5`/`p-4.5`/`gap-4.5` (modal Cancelar/Aceptar footers in all 4 modals, the product form's
+  optional-fields toggle/panel, the contact form), but Tailwind 3's default scale has no `4.5` step, so
+  those classes silently produced no CSS (unpadded buttons with text touching the border, uneven contact
+  form spacing) — added `spacing: { '4.5': '1.125rem' }` to `tailwind.config.js` rather than rewriting
+  12 call sites. Mobile polish in `wish-list.component.html`: the date-limit block's vertical dividers
+  are now `hidden sm:block` (they dangled when the block stacks), "Mis listas" tiles got `px-8` +
+  `break-words` so long names no longer run under the delete button, the floating share button is
+  smaller/closer to the edge below `sm`, and the icon-only (below `md`) Compartir/Ajustes/Reservas/Añadir
+  buttons got `aria-label`s. The header's hamburger checkbox went from `hidden` to `sr-only` (+
+  `peer-focus-visible` ring on its `<label>`) so the mobile menu is keyboard-operable. Also fixed
+  `WishListComponent.dateCounter` leaking a new `setInterval` per list load — the interval id is now
+  stored, cleared before starting a new one and in `ngOnDestroy`. (`tailwind.config.js`,
+  `src/pages/wish-list/wish-list.component.html`/`.ts`, `src/components/header/header.component.html`)
+  Follow-up the same day: `PageLoggedComponent`'s outlet wrapper dropped its `max-w-7xl` cap, which was
+  boxing in the wish-list hero and the dashboard's alternating background bands (they stopped short of
+  the viewport edges while header/footer were full-width) — pages that relied on that cap
+  (`steam`, `amazon`, `user`) now set `max-w-7xl mx-auto` themselves; the rest already used
+  `container mx-auto`, which now also aligns with the header/footer's own `container` on wide screens.
+  `CardComponent`: products without an image show the same `empty.webp` placeholder as broken image
+  URLs (previously a text-only card), the "Comprar" button is hidden when `principalUrl` is empty, and
+  prices go through a new `formattedPrice` getter — numeric values are formatted `es-ES`/EUR
+  (`9,50 €`), already-formatted strings (Steam/Amazon scrapers) pass through unchanged, and empty
+  prices hide the price row. (`src/components/page-logged/page-logged.component.html`,
+  `src/pages/{steam,amazon,user}/*.component.html`, `src/components/card/card.component.html`/`.ts`)
+- 2026-10-22 — Removed the "Beta" label from the header logo lockup (now just the serif "Lista de
+  Deseos" wordmark) and the "Beta" pill next to the footer copyright.
+  (`src/components/header/header.component.html`, `src/components/footer/footer.component.html`)
+- 2026-10-22 — Added a "Usuario activo" checkbox (`active` form control, same checkbox recipe as the
+  product form's "Producto visible") to the admin edit-user modal. It maps to the backend `user.active`
+  column (checked by `JwtAuth` at login). Note: as of this change the Laravel
+  `UserController@update` admin path does not persist `active` (nor `role`) — it only assigns
+  name/surname/username/email/measurements/password/main_wish_list_id — so the checkbox loads the
+  current value but saving it needs a matching backend change.
+  (`src/components/user-form/user-form.component.html`/`.ts`)

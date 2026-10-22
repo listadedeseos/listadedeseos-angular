@@ -1,8 +1,22 @@
 @if(loading){
 <app-loading></app-loading>
 }
-<app-custom-modal [customTitle]="(id?'Editar':'Nueva') + ' lista de deseos'" (closeFunction)="closeFormFunction()"
-    (acceptFunction)="acceptFormFunction()">
+<div class="rounded-xl bg-cream-alt overflow-hidden">
+    <!-- Modal header -->
+    <div class="flex items-center gap-3 justify-between border-b border-line-soft px-6 py-[18px] bg-white">
+        <h3 class="font-serif font-medium text-xl text-ink">
+            {{modalTitle}}
+        </h3>
+
+        <button type="button"
+            class="w-[30px] h-[30px] flex items-center justify-center border border-line rounded-lg bg-white text-muted hover:border-ink hover:text-ink transition-colors duration-200"
+            (click)="closeFormFunction()">
+            <fa-icon [icon]="['fas', 'xmark']" class="text-sm"></fa-icon>
+        </button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="p-6 min-h-[200px]">
     <form [formGroup]="saveForm" (ngSubmit)="saveEntity()" class="flex flex-col gap-4">
 
         <!-- Nombre de la lista -->
@@ -101,4 +115,20 @@
         </div>
 
     </form>
-</app-custom-modal>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="flex justify-end gap-2.5 border-t border-line-soft px-6 py-4 bg-white">
+        <button type="button"
+            class="px-4.5 py-2.5 border border-line-strong text-ink font-semibold rounded-lg hover:border-ink transition-colors duration-200 bg-transparent"
+            (click)="closeFormFunction()">
+            Cancelar
+        </button>
+
+        <button type="button"
+            class="px-4.5 py-2.5 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200"
+            (click)="acceptFormFunction()">
+            Aceptar
+        </button>
+    </div>
+</div>

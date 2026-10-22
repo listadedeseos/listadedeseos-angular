@@ -1,17 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
 import { ThemeConfig } from '../../enum/theme';
 import { LoadingComponent } from '../loading/loading.component';
-import { CustomModalComponent } from '../customModal/customModal.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ModalRef } from '@some-angular-utils/modal';
 
 @Component({
   selector: 'app-wishlist-form',
   imports: [
     LoadingComponent,
-    CustomModalComponent,
     ReactiveFormsModule,
     FontAwesomeModule,
   ],
@@ -20,8 +19,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 })
 export class WishlistFormComponent {
   @Input() id = 0;
-  @Output() closeFunction = new EventEmitter<any>();
-  @Output() acceptFunction = new EventEmitter<any>();
+
+  private modalRef = inject<ModalRef<WishlistFormComponent>>(ModalRef);
 
   public loading = false
   public saveForm: FormGroup = new FormGroup({});
@@ -42,12 +41,16 @@ export class WishlistFormComponent {
     }
   }
 
+  get modalTitle(): string {
+    return (this.id ? 'Editar' : 'Nueva') + ' lista de deseos';
+  }
+
   acceptFormFunction() {
     this.saveEntity()
   }
 
   closeFormFunction() {
-    this.closeFunction.emit();
+    this.modalRef.dismiss();
   }
 
   createForm() {
@@ -91,9 +94,7 @@ export class WishlistFormComponent {
 
       this.apiService.save(Utils.urls.wishlist, this.saveForm.value, this.id).subscribe({
         next: (response: any) => {
-          this.acceptFunction.emit(response);
-          this.closeFormFunction()
-          // Utils.showSuccessMessage('Producto guardado correctamente');
+          this.modalRef.close(response);
         },
         error: (error: any) => {
           // Utils.showErrorMessage('Error al guardar el producto');

@@ -9,12 +9,7 @@
     <div class="border border-line-card rounded-xl bg-white overflow-hidden">
         <sau-table #customTable [url]="url" [headers]="headers" contentList="list" contentTotal="total" pageParamName="page"
             limitParamName="limit" [sizeBetweenPages]="1" [limit]="10" [sizeInitialPage]="1"
-            (deleteEvent)="toogleDeleteForm($event)">
+            (deleteEvent)="openDeleteModal($event)">
         </sau-table>
     </div>
-
-    @if (deleteProduct) {
-    <app-custom-delete [url]="url" [id]="id" (closeFunction)="toogleDeleteForm()"
-        (acceptFunction)="customTable.getItems()"></app-custom-delete>
-    }
 </main>

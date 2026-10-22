@@ -2,15 +2,14 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-header',
   imports: [
     FontAwesomeModule,
-    CommonModule,
-    RouterModule,
-  ],
+    RouterModule
+],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

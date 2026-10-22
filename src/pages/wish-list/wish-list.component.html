@@ -71,7 +71,7 @@
             </div>
 
             @if(wishlist.date_end_counter && wishlist.date_end_counter !== 'Finalizado') {
-            <div class="w-px bg-line-soft"></div>
+            <div class="hidden sm:block w-px bg-line-soft"></div>
             <div class="flex items-center gap-2">
               <fa-icon [icon]="['fas', 'clock']" class="text-muted-light text-xs"></fa-icon>
               <div>
@@ -80,7 +80,7 @@
               </div>
             </div>
             } @else if(wishlist.date_end_counter === 'Finalizado') {
-            <div class="w-px bg-line-soft"></div>
+            <div class="hidden sm:block w-px bg-line-soft"></div>
             <div class="flex items-center gap-2">
               <fa-icon [icon]="['fas', 'flag-checkered']" class="text-muted-light text-xs"></fa-icon>
               <div>
@@ -115,7 +115,7 @@
         <h2 class="font-serif font-medium text-xl text-ink">Mis listas</h2>
         <button
           class="inline-flex items-center gap-2 px-4 py-2 border border-ink rounded-lg text-ink text-sm font-semibold hover:bg-ink hover:text-cream transition-colors duration-200"
-          (click)="toggleModalWishList()">
+          (click)="openWishlistModal()">
           <fa-icon [icon]="['fas', 'plus']" class="text-xs"></fa-icon>
           Nueva lista
         </button>
@@ -125,8 +125,8 @@
         @for(item of allWishList; track $index){
         <div
           [class]="(item.is_new?'animate-scaleadd':'') + ' relative bg-white border rounded-lg transition-colors duration-200' + (item.id === wishListId ? ' border-ink' : ' border-line-card hover:border-muted-placeholder')">
-          <a [routerLink]="['/list', item.uuid]" class="p-4 h-full flex flex-col items-center justify-center">
-            <span class="text-sm font-semibold text-ink block text-center">
+          <a [routerLink]="['/list', item.uuid]" class="px-8 py-4 h-full flex flex-col items-center justify-center">
+            <span class="text-sm font-semibold text-ink block text-center break-words max-w-full">
               @if(item.isMain) {
               <fa-icon title="Lista principal" [icon]="['fas', 'star']" class="text-primary-500"></fa-icon>
               }
@@ -171,7 +171,7 @@
 
         <div class="flex flex-wrap items-center gap-2">
           <!-- Share Button -->
-          <button [cdkCopyToClipboard]="getwishListUrl()" (click)="urlCopied()" title="Copiar enlace para compartir"
+          <button [cdkCopyToClipboard]="getwishListUrl()" (click)="urlCopied()" title="Copiar enlace para compartir" aria-label="Copiar enlace para compartir"
             class="px-3 py-2 border border-line rounded-lg text-muted-dark text-sm font-semibold hover:border-ink hover:text-ink transition-colors duration-200 flex items-center gap-2">
             <fa-icon [icon]="['fas', 'share-nodes']"></fa-icon>
             <span class="hidden md:inline">Compartir</span>
@@ -180,14 +180,14 @@
           @if(isMyWishList){
 
           <!-- Settings Button -->
-          <button (click)="toggleModalWishList(wishListId)" title="Configurar lista"
+          <button (click)="openWishlistModal(wishListId)" title="Configurar lista" aria-label="Configurar lista"
             class="px-3 py-2 border border-line rounded-lg text-muted-dark text-sm font-semibold hover:border-ink hover:text-ink transition-colors duration-200 flex items-center gap-2">
             <fa-icon [icon]="['fas', 'gear']"></fa-icon>
             <span class="hidden md:inline">Ajustes</span>
           </button>
 
           <!-- show/hide reserved products -->
-          <button (click)="toggleShowReserveButtons()"
+          <button (click)="toggleShowReserveButtons()" [attr.aria-label]="(showReserveButton ? 'Ocultar' : 'Mostrar') + ' reservas'"
             class="px-3 py-2 border border-line rounded-lg text-muted-dark text-sm font-semibold hover:border-ink hover:text-ink transition-colors duration-200 flex items-center gap-2">
             <fa-icon [icon]="['fas', ( showReserveButton ? 'eye': 'eye-slash' )]"></fa-icon>
             <span class="hidden md:inline">
@@ -197,7 +197,7 @@
           </button>
 
           <!-- Add Product Button -->
-          <button (click)="toggleModalProduct()"
+          <button (click)="openProductModal()" aria-label="Añadir producto"
             class="px-4 py-2 bg-primary-500 text-white font-semibold text-sm rounded-lg hover:bg-primary-600 transition-colors duration-200 flex items-center gap-2">
             <fa-icon [icon]="['fas', 'plus']"></fa-icon>
             <span class="hidden md:inline">Añadir producto</span>
@@ -228,7 +228,7 @@
         <app-card [principalUrl]="item.url_product" [img]="item.url_preview" [name]="item.name" [price]="item.price"
           [count]="item.count" principalLabelString="Comprar" [isReserved]="item.is_reserved" [isLogged]="isLogged"
           [isMyWishList]="isMyWishList" (toggleReserve)="reserveProduct(item.id)" (editProduct)="editProduct(item.id)"
-          (deleteProduct)="toggleModalDeleteProduct(item.id)">
+          (deleteProduct)="openDeleteProductModal(item.id)">
         </app-card>
         } @empty {
         <!-- Empty State -->
@@ -245,11 +245,11 @@
 
           @if(isMyWishList){
           <div class="flex flex-col sm:flex-row gap-3">
-            <button (click)="toggleModalProduct()"
+            <button (click)="openProductModal()" aria-label="Añadir producto"
               class="px-6 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200">
               Añadir producto
             </button>
-            <button (click)="toggleModalWishList(wishListId)"
+            <button (click)="openWishlistModal(wishListId)"
               class="px-6 py-3 bg-transparent text-ink font-semibold rounded-lg border border-line-strong hover:border-ink transition-colors duration-200">
               Configurar lista
             </button>
@@ -294,29 +294,9 @@
   </main>
 
   <!-- Floating Share Button -->
-  <button [cdkCopyToClipboard]="getwishListUrl()" (click)="urlCopied()" title="Copiar enlace para compartir"
-    class="fixed bottom-6 right-6 w-14 h-14 bg-ink text-cream rounded-full hover:bg-ink-hover transition-colors duration-200 flex items-center justify-center z-50">
+  <button [cdkCopyToClipboard]="getwishListUrl()" (click)="urlCopied()" title="Copiar enlace para compartir" aria-label="Copiar enlace para compartir"
+    class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 bg-ink text-cream rounded-full hover:bg-ink-hover transition-colors duration-200 flex items-center justify-center z-50">
     <fa-icon [icon]="['fas', 'share-nodes']" class="text-lg"></fa-icon>
   </button>
 
 </div>
-
-<!-- Modals -->
-@if(modalProductOpen && wishListId && editingProductId){
-<app-product-form [wishListId]="wishListId" [id]="editingProductId" (closeFunction)="toggleModalProduct()"
-  (acceptFunction)="productUpdate($event, editingProductId)"></app-product-form>
-
-} @else if(modalProductOpen && wishListId){
-<app-product-form [wishListId]="wishListId" (closeFunction)="toggleModalProduct()"
-  (acceptFunction)="productUpdate($event)"></app-product-form>
-}
-
-@if(modalWishListOpen){
-<app-wishlist-form [id]="wishListFormId" (closeFunction)="toggleModalWishList()"
-  (acceptFunction)="wishlistUpdate(wishListFormId, $event)"></app-wishlist-form>
-}
-
-@if(modalDeleteProductOpen && deletingProductId){
-<app-custom-delete [url]="deleteUrl" [id]="deletingProductId" (closeFunction)="toggleModalDeleteProduct()"
-  (acceptFunction)="deleteProduct(deletingProductId)"></app-custom-delete>
-}

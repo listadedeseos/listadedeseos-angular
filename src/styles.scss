@@ -68,6 +68,18 @@ body {
 
 /////////////////////////////////////////////////////
 
+sau-modal {
+  /* !important needed: the library's own SAUModalComponent style sets these same
+       variables on its own `sau-modal{...}` rule too, and (like the .sau-table
+       case above) that rule is injected into the page after this global stylesheet
+       loads, so it wins the cascade on load order despite equal selector specificity. */
+  --sau-color-primary: #9A4A28 !important;
+  --sau-color-background: #FBF9F6 !important;
+  --sau-color-text: #232019 !important;
+}
+
+/////////////////////////////////////////////////////
+
 
 input::placeholder,
 textarea::placeholder {
