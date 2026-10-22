@@ -515,3 +515,8 @@ which should run after each change to this repo and append an entry here.
   name/surname/username/email/measurements/password/main_wish_list_id — so the checkbox loads the
   current value but saving it needs a matching backend change.
   (`src/components/user-form/user-form.component.html`/`.ts`)
+- 2026-10-22 — Switched the CI deploy pipeline from npm to bun: `oven-sh/setup-bun@v2` (pinned to
+  `1.3.4`, matching local) + `bun install --frozen-lockfile` + `bun run build:prod`. The old `npm ci`
+  step could not work since the repo has no `package-lock.json` (`bun.lock` is the lockfile). Node is
+  still set up (bumped 20 → 22) because the Angular CLI runs on Node; bun is the package manager and
+  script runner. (`.github/workflows/pipeline.yml`)
