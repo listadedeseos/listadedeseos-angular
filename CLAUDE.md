@@ -629,3 +629,6 @@ which should run after each change to this repo and append an entry here.
   client-sent values are ignored. Anonymous visitors still see and must fill both fields. New test
   `test_logged_user_name_and_email_come_from_account`; suite 19/19.
   (`src/pages/contact/contact.component.html`/`.ts`)
+- 2026-10-22 — Renamed the `complaint` contact type's label from "Error o queja" to "Queja" in the
+  contact form's select and the admin inbox's type pill.
+  (`src/pages/contact/contact.component.html`, `src/pages/contact/contact-list/contact-list.component.ts`)
