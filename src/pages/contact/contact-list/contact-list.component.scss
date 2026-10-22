@@ -1,0 +1,9 @@
+// sau-table wraps each cell's custom template in a flex row (.sau-table-data-section) whose child
+// (.sau-table-data-type-section) doesn't shrink, so long message text overflowed the mobile card
+// instead of wrapping. Scoped to this page (ViewEncapsulation.None makes these rules global) and to
+// the mobile cards (in the desktop table it would also re-center the cells' content).
+.contact-page .sau-table-mobile .sau-table-data-type-section {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+}

@@ -597,3 +597,27 @@ which should run after each change to this repo and append an entry here.
   since the API validates usernames as `alpha_num`; wired into both forms. Also fixed the register
   form's `username` control being initialised to `[]` instead of `''`.
   (`src/pages/register/register.component.html`/`.ts`, `src/components/user-form/user-form.component.html`/`.ts`)
+- 2026-10-22 — **Reworked suggestions (contact messages) end to end.** Users send them from
+  `/contact`; admins triage them at `/contact/list`. Problems fixed: the admin inbox couldn't show the
+  message text or email, there was no way to mark anything (the backend's `mark-as-done` endpoint was
+  unused and one-way), it listed oldest first, messages over 255 chars broke on MySQL (`body` was
+  VARCHAR(255)), and the contact form's `reset()` nulled `type` so a second submission failed
+  validation (now `reset({ type: 'question' })`).
+  Backend (`C:\Users\ADMINISTRATOR\listadedeseos\listadedeseos-laravel`): new migration
+  `2026_10_22_000000_add_status_to_contact` adds `contact.status` (`pending` / `in_progress` / `done`
+  / `discarded`, default `pending`, backfilled `done` from `is_done`) and widens `body` to TEXT on MySQL
+  (raw `ALTER`, since the project has no doctrine/dbal for `->change()`); `Contact::STATUSES`;
+  `GET /contact` now sorts newest first, accepts `?status=`/`?type=` filters and returns per-status
+  `counts`; new admin-only `PUT /contact/{id}/status` (validated; keeps `is_done` in sync for older
+  clients; `mark-as-done` also sets `status`). New `tests/Feature/ContactTest.php` (6 tests) — suite is
+  18/18 green (run with `php -d "error_reporting=E_ALL & ~E_DEPRECATED" artisan test`, otherwise
+  PHP 8.4 floods the output with Laravel 9 deprecation notices). **Deploying needs
+  `php artisan migrate`.**
+  Frontend: `ContactListComponent` rebuilt — status tabs (Todas / Pendiente / En curso / Hecha /
+  Descartada, with counts; default Pendiente) that re-point the table's `[url]` to
+  `contact?status=…` and call `onPageChange(1)` (sau-table doesn't reload on `[url]` changes);
+  columns MENSAJE (type pill, title, full body with "Ver más" past 180 chars, sender, `mailto:` reply
+  link, date) and ESTADO (colour-coded `<select>` that PUTs the new status optimistically, reverting
+  on error, then refreshes counts and, under a status tab, the rows). Same mobile-card shrink fix as
+  the users table, scoped via `.contact-page`. (`src/pages/contact/contact-list/*`,
+  `src/pages/contact/contact.component.ts`)
