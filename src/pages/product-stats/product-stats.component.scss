@@ -1,0 +1,8 @@
+// Same mobile-card shrink fix as the users/contact tables: sau-table's cell wrapper
+// (.sau-table-data-type-section) doesn't shrink, so long names and list pills overflowed the card.
+// Scoped to this page (ViewEncapsulation.None makes these rules global) and to the mobile cards.
+.stats-page .sau-table-mobile .sau-table-data-type-section {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+}

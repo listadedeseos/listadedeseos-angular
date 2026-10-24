@@ -651,3 +651,18 @@ which should run after each change to this repo and append an entry here.
   user's total ("· N visitas", new `UserComponent.totalViews()` summing `wish_lists[].views`). No
   backend change was needed: `GET user/getAll` already returns `views` on each eager-loaded wish list.
   (`src/pages/user/user.component.html`/`.ts`)
+- 2026-10-24 — **Admin product stats pages** (`/stats/steam`, `/stats/amazon`, `/stats/products`;
+  `/stats` redirects to Steam): one `ProductStatsComponent` (`src/pages/product-stats/`) reused for the
+  3 sources via the `:source` route param, with tabs between them, 5 summary cards (distinct products,
+  times in lists, in 2+ lists, reserved, lists with products), a debounced name search and a sort
+  select (más repetidos / más reservados / recientes / nombre). Table via `<sau-table>` with
+  `[showOptions]="false"` and custom cells: PRODUCTO (image, name, price, store link), VECES (number of
+  lists + reserved pill), LISTAS (`@user lista` pills linking to `/list/:uuid`, first 4 + "+N más").
+  Added a "Productos en listas" entry to the header's admin dropdown and `Utils.urls.stats`.
+  Backend (Laravel): new admin-only `GET /stats/{steam|amazon|products}` (`StatsController`, params
+  `page`/`limit`/`search`/`sort`, returns `list`/`total`/`summary`). Only active rows count. Grouping is
+  done in PHP: Steam by `dynamic_product_id` (URL is canonical per appid), Amazon by ASIN parsed from
+  the URL (scraped links carry per-wishlist `coliid`/`colid` params, so the same product gets a
+  separate `dynamic_product` per list), manual products by normalized name. New
+  `tests/Feature/StatsTest.php`; suite 24/24. No migration needed. Verified with Playwright (mocked
+  API) at 1440/375px: tab switching, search, sort and "+N más" expand.
