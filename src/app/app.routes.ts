@@ -6,6 +6,7 @@ import { ContactListComponent } from '../pages/contact/contact-list/contact-list
 import { ContactComponent } from '../pages/contact/contact.component';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { LoginComponent } from '../pages/login/login.component';
+import { ProductStatsComponent } from '../pages/product-stats/product-stats.component';
 import { ProfileComponent } from '../pages/profile/profile.component';
 import { RegisterComponent } from '../pages/register/register.component';
 import { SocialNetworkGoogleCallbackComponent } from '../pages/social-network/google-callback/social-network.google-callback.component';
@@ -75,6 +76,8 @@ export const routes: Routes = [
         { path: 'user', component: UserComponent },
         { path: 'profile', component: ProfileComponent },
         { path: 'contact/list', component: ContactListComponent },
+        { path: 'stats', pathMatch: 'full', redirectTo: 'stats/steam' },
+        { path: 'stats/:source', component: ProductStatsComponent }, // steam | amazon | products
         { path: '**', redirectTo: 'dashboard' }
       ]
     },

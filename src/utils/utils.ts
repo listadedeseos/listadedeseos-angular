@@ -18,6 +18,7 @@ export namespace Utils {
         steam: Utils.base + 'steam',
         amazon: Utils.base + 'amazon',
         contact: Utils.base + 'contact',
+        stats: Utils.base + 'stats',
     }
 
     // Service registry for global access

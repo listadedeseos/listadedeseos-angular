@@ -38,6 +38,12 @@ export class HeaderComponent {
       title: 'Lista de sugerencias',
       subtitle: 'Ver sugerencias',
     },
+    {
+      url: '/stats/steam',
+      icon: 'chart-simple',
+      title: 'Productos en listas',
+      subtitle: 'Steam, Amazon y productos más repetidos',
+    },
   ]
 
   constructor(
