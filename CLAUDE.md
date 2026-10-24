@@ -666,3 +666,9 @@ which should run after each change to this repo and append an entry here.
   separate `dynamic_product` per list), manual products by normalized name. New
   `tests/Feature/StatsTest.php`; suite 24/24. No migration needed. Verified with Playwright (mocked
   API) at 1440/375px: tab switching, search, sort and "+N más" expand.
+- 2026-10-24 — Added a "Sugerencias" link (lightbulb icon) to the header, shown to everyone (logged
+  in or not, desktop nav and mobile menu), pointing to `/contact?type=suggestion`. `ContactComponent`
+  now reads an optional `?type=` query param (`question` / `suggestion` / `complaint`) to preselect
+  the form's type, and resets back to that same type after sending. The existing footer/dashboard
+  "Contáctanos" links (no param) still default to "Consulta". Verified with Playwright (mocked API).
+  (`src/components/header/header.component.html`, `src/pages/contact/contact.component.ts`)

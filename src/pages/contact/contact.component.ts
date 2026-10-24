@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { Utils } from '../../utils/utils';
@@ -18,16 +19,26 @@ export class ContactComponent {
   public loading = false;
   public saveForm: FormGroup = new FormGroup({});
 
+  // Contact types the form accepts; `?type=` in the URL preselects one (e.g. the header's
+  // "Sugerencias" link opens /contact?type=suggestion)
+  private static readonly TYPES = ['question', 'suggestion', 'complaint'];
+  private defaultType = 'question';
+
   constructor(
     private apiService: ApiService,
     public authenticationService: AuthenticationService,
+    route: ActivatedRoute,
   ) {
+    const type = route.snapshot.queryParamMap.get('type');
+    if (type && ContactComponent.TYPES.includes(type)) {
+      this.defaultType = type;
+    }
     this.createForm();
   }
 
   createForm() {
     this.saveForm = new FormGroup({
-      type: new FormControl('question', [Validators.required]),
+      type: new FormControl(this.defaultType, [Validators.required]),
       name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       title: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
@@ -49,7 +60,7 @@ export class ContactComponent {
         next: (data: any) => {
           // reset() alone nulls `type` (the select's only valid values are the 3 types),
           // which made the next submission fail validation
-          this.saveForm.reset({ type: 'question' });
+          this.saveForm.reset({ type: this.defaultType });
           Utils.ToastUtils.success('Mensaje enviado', 'Tu mensaje ha sido enviado correctamente');
           this.loading = false;
         },

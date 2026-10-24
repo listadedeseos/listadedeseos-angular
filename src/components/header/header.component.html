@@ -29,6 +29,13 @@
 
     <div class="hidden md:flex items-center gap-2 peer-checked:flex w-screen md:w-auto flex-col md:flex-row">
 
+      <!-- Sugerencias: visible para todos, abre el formulario de contacto con "Sugerencia" preseleccionado -->
+      <a routerLink="/contact" [queryParams]="{ type: 'suggestion' }" routerLinkActive="text-ink bg-cream-alt"
+        class="flex items-center gap-2 px-3 py-2 rounded-lg text-muted hover:text-ink hover:bg-cream-alt transition-colors duration-200 font-semibold text-sm">
+        <fa-icon [icon]="['fas', 'lightbulb']" [class]="['w-4 h-4']"></fa-icon>
+        <span class="w-max">Sugerencias</span>
+      </a>
+
       @if(isLogged){
         <!-- Enlaces generales -->
         <a routerLink="/list" routerLinkActive="text-ink bg-cream-alt"
