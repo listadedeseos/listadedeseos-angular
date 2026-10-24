@@ -59,6 +59,11 @@ export class UserComponent {
         return Array.isArray(user.role) ? user.role.includes('ROLE_ADMIN') : user.role === 'ROLE_ADMIN';
     }
 
+    // Sum of wish_list.views across all the user's lists (the backend returns `views` per list)
+    totalViews(user: any): number {
+        return (user.wish_lists ?? []).reduce((sum: number, list: any) => sum + (list.views ?? 0), 0);
+    }
+
     constructor(private apiService: ApiService) { }
 
     // sau-table's editEvent/deleteEvent emit the whole row object, not its id

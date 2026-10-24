@@ -49,6 +49,7 @@
             <div class="text-[11px] text-muted-light">
                 Actualizado {{ item.updated_at | date: 'dd/MM/yyyy HH:mm' }}
                 · Creado {{ item.created_at | date: 'dd/MM/yyyy' }}
+                · <fa-icon [icon]="['fas', 'eye']" title="Visitas totales a sus listas"></fa-icon> {{ totalViews(item) }} visitas
             </div>
         </div>
     </div>
@@ -113,5 +114,8 @@
         @if (list.amazon_wishlist_id) {
         <fa-icon [icon]="['fab', 'amazon']" class="text-muted-light" [title]="'Amazon: ' + list.amazon_wishlist_id"></fa-icon>
         }
+        <span class="inline-flex items-center gap-1 pl-1.5 border-l border-line font-normal text-muted-light" [title]="(list.views ?? 0) + ' visitas'">
+            <fa-icon [icon]="['fas', 'eye']" class="text-[10px]"></fa-icon>{{ list.views ?? 0 }}
+        </span>
     </a>
 </ng-template>

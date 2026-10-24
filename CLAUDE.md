@@ -646,3 +646,8 @@ which should run after each change to this repo and append an entry here.
   "Ver sugerencias". `HeaderComponent.loadContactCounts()` reads the `counts` field of
   `GET contact?page=1&limit=1`. It runs on load and again on `mouseenter` of the dropdown, since the
   header persists across navigations. Admins only. (`src/components/header/header.component.html`/`.ts`)
+- 2026-10-24 — Admin users table (`/user`) now shows wish-list visits: each list pill in the **Listas**
+  cell ends with an eye icon + that list's `views`, and the **Usuario** cell's dates line adds the
+  user's total ("· N visitas", new `UserComponent.totalViews()` summing `wish_lists[].views`). No
+  backend change was needed: `GET user/getAll` already returns `views` on each eager-loaded wish list.
+  (`src/pages/user/user.component.html`/`.ts`)
