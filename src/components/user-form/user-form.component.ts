@@ -58,7 +58,7 @@ export class UserFormComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       role: new FormControl(''),
       password: new FormControl(''),
-      main_wish_list_id: new FormControl('', [Validators.required]),
+      main_wish_list_id: new FormControl(''), // accounts have no list until they're verified
       active: new FormControl(false),
 
     })
@@ -74,9 +74,12 @@ export class UserFormComponent {
       },
       error: (error: any) => {
         console.error('ERROR obtener productos. ' + error);
+        this.loading = false;
+        this.cdr.markForCheck();
       },
       complete: () => {
         this.loading = false;
+        this.cdr.markForCheck();
       },
     });
   }
@@ -99,20 +102,24 @@ export class UserFormComponent {
     if (this.saveForm.valid) {
       this.loading = true;
 
-      this.apiService.save(Utils.urls.user, this.saveForm.value, this.id).subscribe({
+      const user = { ...this.saveForm.value };
+      if (!user.main_wish_list_id) {
+        delete user.main_wish_list_id; // the API rejects an empty value
+      }
+
+      this.apiService.save(Utils.urls.user, user, this.id).subscribe({
         next: (response: any) => {
           this.modalRef.close(response);
         },
         error: (error: any) => {
-          // Utils.showErrorMessage('Error al guardar el producto');
-        },
-        complete: () => {
+          Utils.ToastUtils.error('Error', 'No se ha podido guardar el usuario. Revisa que el usuario y el correo no estén en uso.');
           this.loading = false;
-        }
+          this.cdr.markForCheck();
+        },
       })
 
     } else {
-      // Utils.showErrorMessage('Debe completar todos los campos');
+      Utils.ToastUtils.error('Error', 'Debe completar todos los campos obligatorios.');
     }
   }
 

@@ -86,6 +86,8 @@ export class ProductFormComponent {
       },
       error: (error: any) => {
         console.error('ERROR obtener productos. ' + error);
+        this.loading = false;
+        this.cdr.markForCheck();
       },
       complete: () => {
         this.loading = false;
@@ -105,10 +107,9 @@ export class ProductFormComponent {
         error: (error: any) => {
           // Utils.showErrorMessage('Error al guardar el producto');
           Utils.ToastUtils.error('Error', 'No se ha podido guardar el producto.');
-        },
-        complete: () => {
           this.loading = false;
-        }
+          this.cdr.markForCheck();
+        },
       })
     } else {
       // Utils.showErrorMessage('Debe completar todos los campos');

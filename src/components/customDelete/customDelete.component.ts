@@ -2,6 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { ApiService } from '../../apiConnection/ApiService';
 import { ModalRef } from '@some-angular-utils/modal';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { Utils } from '../../utils/utils';
 
 @Component({
   selector: 'app-custom-delete',
@@ -28,6 +29,7 @@ export class CustomDeleteComponent {
       },
       error: (error: any) => {
         console.error('ERROR al eliminar producto. ' + error);
+        Utils.ToastUtils.error('Error', 'No se ha podido borrar.');
       },
     });
   }

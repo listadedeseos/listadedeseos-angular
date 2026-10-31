@@ -174,7 +174,10 @@ tailwind.config.js               Tailwind theme (primary/secondary/accent palett
 
 - `npm start` — `ng serve` (dev server)
 - `npm run build` / `npm run build:prod` — production build
-- `npm test` — Karma/Jasmine unit tests
+- `npm test` — Karma/Jasmine unit tests (`bun run test:ci` for a single headless run)
+- `bun run test:e2e` — Playwright E2E (`e2e/`) against the already running local stack (front on
+  `:4200`, API on `:8000`, admin@admin.com/admin; override with `E2E_*` env vars). It writes to the local
+  database and removes what it creates. Known bugs are marked with `test.fail()` and a `BUG:` comment.
 
 ## Conventions to follow
 
@@ -672,3 +675,43 @@ which should run after each change to this repo and append an entry here.
   the form's type, and resets back to that same type after sending. The existing footer/dashboard
   "Contáctanos" links (no param) still default to "Consulta". Verified with Playwright (mocked API).
   (`src/components/header/header.component.html`, `src/pages/contact/contact.component.ts`)
+- 2026-10-31 — Added a real-backend Playwright E2E suite (`e2e/`, `playwright.config.ts`, uses installed
+  Chrome; waits out the API's 60 req/min limit via `retry429`), new Karma specs (`Utils.stripUsernameAt`,
+  `CardComponent.formattedPrice`) and fixed the stale `app.spec.ts` title test. Backend (Laravel):
+  idempotent `DatabaseSeeder` (admin/admin, usuario/usuario, demo list, sample contacts), run from the new
+  migration `2026_10_31_000000_seed_initial_data` **only when `APP_ENV=local`**, so `admin/admin` can't
+  reach production; covered by `tests/Feature/SeedTest.php`.
+- 2026-10-31 — Google login tested (`e2e/google.spec.ts` fakes only the Google round trip;
+  `tests/Feature/GoogleLoginTest.php` mocks Socialite) and session state unified: new
+  `AuthenticationService.setSession()`/`consumeReturnUrl()`, now used by password login, the Google callback
+  and `/verify`. Previously `/verify` and the header's logout only touched `localStorage`, leaving the service
+  stale (anonymous header after verifying, logged-in header after logging out; admins hid it through an
+  accidental 401 reload), and `returnUrl` was never cleared, hijacking later logins in the tab. The Laravel
+  callback now returns the same user payload as password login (`fullName`, no `security_code`).
+  (`src/apiConnection/authentication.service.ts`, `src/components/header/header.component.ts`,
+  `src/pages/{login,verify}/*`, `src/pages/social-network/google-callback/*`)
+- 2026-10-31 — Registration and account linking. `POST user/verify` never returned a token, so verifying
+  left no usable session; it now returns the same `token`/`user` as the other logins. Google login links to
+  an existing account with the same email, verified or not. Linking an unverified account activates it and
+  **discards its password**, since it was set without proving ownership of the email and activation would
+  make it valid. Login, register and verify error handlers now call `markForCheck()` (the app is zoneless, so
+  errors never rendered and login hung on "Cargando..."), and a correct password on an unverified account
+  goes to `/verify/:id`. `e2e/registration.spec.ts` runs the real flow against its own backend copy on `:8123`
+  (temporary SQLite, `MAIL_MAILER=array`) because registering sends real email.
+  (`AuthController`, `UserController`, `src/pages/{login,register,verify}/*`)
+- 2026-10-31 — Backend authorization (Laravel only): any logged-in user could read, edit and delete other
+  users' wish lists and products. All wish-list and product endpoints now go through
+  `Controller::canManage` (owner or admin, otherwise 403), including both ends of a product move; `user_id`
+  is only honoured from admins, and a `PUT` no longer reassigns the list to the caller. Reserving stays
+  public by design. Also: `security_code` is hidden from all `User` JSON, setting the main list checks the
+  right owner (it read another row's), and missing lists/users/products answer 404 instead of 500. Note that
+  `ErrorInterceptor` logs the user out on 401/403, which only crafted requests can hit now.
+  (`tests/Feature/OwnershipTest.php`)
+- 2026-10-31 — Added `e2e/refresh.spec.ts`: every mutating action is checked on screen within one document
+  (no reload), against the shared throwaway backend now in `e2e/isolated-backend.ts`. It found, and these were
+  fixed: failed saves in the wish-list and user modals gave no feedback and left the busy overlay on (same
+  pattern fixed in the product form; the delete modal now warns too), the admin user form silently refused
+  unverified users (it required a main list they can't have yet), and the header's suggestion counts didn't
+  update on open. Reminder for new code: this app is zoneless, so every async handler that changes template
+  state must call `markForCheck()`; also `complete` doesn't run after `error`, so reset `loading` in both.
+  (`src/components/{wishlist,user,product}-form/*`, `src/components/customDelete/*`, `src/components/header/*`)

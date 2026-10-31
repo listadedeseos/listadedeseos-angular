@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
@@ -29,7 +29,8 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private cdr: ChangeDetectorRef
   ) {
     if (localStorage.getItem('currentUser')) {
       // return to home if user is logged
@@ -46,12 +47,19 @@ export class LoginComponent {
       this.authenticationService.login(email, password).subscribe({
         next: data => {
 
-          this.router.navigate([sessionStorage.getItem('returnUrl') ?? '/'])
+          this.router.navigate([this.authenticationService.consumeReturnUrl()])
 
         },
-        error: () => {
+        error: (error: any) => {
+          // right password but the email isn't verified yet: send them to enter the code
+          if (error?.user?.id) {
+            this.router.navigate(['/verify', error.user.id]);
+            return;
+          }
+
           this.error = true;
           this.loading = false;
+          this.cdr.markForCheck();
         }
       })
 

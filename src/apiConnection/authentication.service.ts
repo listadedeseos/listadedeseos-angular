@@ -38,6 +38,25 @@ export class AuthenticationService {
     this.isAdmin = this.currentUserSubject.value?.role?.includes('ROLE_ADMIN');
   }
 
+  // Every way of starting a session (password, Google, email verification) goes through here,
+  // so localStorage and this service's state can't drift apart
+  setSession(user: any, token: string) {
+    user.token = token
+
+    // store user details and jwt token in local storage to keep user logged in between page refreshes
+    localStorage.setItem('currentUser', JSON.stringify(user));
+
+    this.currentUserSubject.next(user);
+    this.setRoles();
+  }
+
+  // The url is single use: left in sessionStorage, it would hijack every later login in this tab
+  consumeReturnUrl() {
+    const returnUrl = sessionStorage.getItem('returnUrl');
+    sessionStorage.removeItem('returnUrl');
+    return returnUrl ?? '/';
+  }
+
   login(email: string | null | undefined, password: string | null | undefined) {
     // body to sent
     let entity = { email, password };
@@ -55,14 +74,7 @@ export class AuthenticationService {
       .pipe(
         map((response) => {
 
-          let user = response.user
-          user.token = response.token
-
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-
-          this.currentUserSubject.next(user);
-          this.setRoles();
+          this.setSession(response.user, response.token);
 
           // set return url
           let returnUrl = '/';

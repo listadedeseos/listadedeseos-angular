@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
 import { Utils } from '../../utils/utils';
@@ -23,6 +23,7 @@ export class RegisterComponent {
   constructor(
     private apiService: ApiService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -66,6 +67,7 @@ export class RegisterComponent {
         error: (error: any) => {
           this.errors = true;
           this.loading = false;
+          this.cdr.markForCheck();
 
           // Utils.showErrorMessage('Error al guardar el producto');
         }

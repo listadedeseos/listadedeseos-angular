@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../apiConnection/ApiService';
+import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { Utils } from '../../utils/utils';
 import { LoadingComponent } from '../../components/loading/loading.component';
 
@@ -27,6 +28,8 @@ export class VerifyComponent {
     private router: Router,
     private apiService: ApiService,
     private activateRoute: ActivatedRoute,
+    private authenticationService: AuthenticationService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.userId = this.activateRoute.snapshot.params['userId'] ?? null
   }
@@ -47,13 +50,13 @@ export class VerifyComponent {
       this.loading = true;
       this.apiService.save(Utils.urls.userVerify, this.form.value).subscribe({
         next: (data: any) => {
-          data.user.token = data.token;
-          localStorage.setItem('currentUser', JSON.stringify(data.user));
-          this.router.navigate([sessionStorage.getItem('returnUrl') ?? '/']);
+          this.authenticationService.setSession(data.user, data.token);
+          this.router.navigate([this.authenticationService.consumeReturnUrl()]);
         },
         error: () => {
           this.loading = false;
           this.error = true
+          this.cdr.markForCheck();
         }
       })
 
