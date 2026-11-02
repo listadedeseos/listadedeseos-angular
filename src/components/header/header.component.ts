@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ApiService } from '../../apiConnection/ApiService';
@@ -47,9 +47,9 @@ export class HeaderComponent {
   ]
 
   constructor(
-    private router: Router,
     private	authenticationService: AuthenticationService,
     private apiService: ApiService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.isLogged = this.authenticationService.isLogged
     this.isAdmin = this.authenticationService.isAdmin
@@ -74,6 +74,7 @@ export class HeaderComponent {
           pending: value.counts?.pending ?? 0,
           in_progress: value.counts?.in_progress ?? 0,
         }
+        this.cdr.markForCheck()
       },
     })
   }
@@ -88,7 +89,6 @@ export class HeaderComponent {
   }
 
   logout(){
-    localStorage.removeItem('currentUser')
-    this.router.navigate(['/login'])
+    this.authenticationService.logout()
   }
 }

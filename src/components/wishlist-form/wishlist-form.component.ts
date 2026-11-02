@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
@@ -32,6 +32,7 @@ export class WishlistFormComponent {
 
   constructor(
     private apiService: ApiService,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -79,9 +80,12 @@ export class WishlistFormComponent {
       },
       error: (error: any) => {
         console.error('ERROR obtener productos. ' + error);
+        this.loading = false;
+        this.cdr.markForCheck();
       },
       complete: () => {
         this.loading = false;
+        this.cdr.markForCheck();
       },
     });
   }
@@ -99,14 +103,13 @@ export class WishlistFormComponent {
           this.modalRef.close(response);
         },
         error: (error: any) => {
-          // Utils.showErrorMessage('Error al guardar el producto');
-        },
-        complete: () => {
+          Utils.ToastUtils.error('Error', 'No se ha podido guardar la lista. El nombre solo admite letras y números, sin espacios.');
           this.loading = false;
-        }
+          this.cdr.markForCheck();
+        },
       })
     } else {
-      // Utils.showErrorMessage('Debe completar todos los campos');
+      Utils.ToastUtils.error('Error', 'Debe completar todos los campos obligatorios.');
     }
   }
 
