@@ -132,7 +132,7 @@ export class WishListComponent {
 
     let url = this.uuid ?
       Utils.urls.wishlist + '/uuid/' + this.uuid :
-      Utils.urls.wishlist + '/' + this.username + (this.wishListName ? '/' + this.wishListName : '')
+      Utils.urls.wishlist + '/' + this.username + (this.wishListName ? '/' + encodeURIComponent(this.wishListName) : '')
 
     this.apiService.getPetition(url).subscribe({
       next: (value: any) => {
@@ -147,7 +147,7 @@ export class WishListComponent {
 
         this.isMainWishlist = value.isMain
         this.ownerUsername = value.username
-        this.urlToShare = '@' + value.username + (this.isMainWishlist ? '' : '/' + this.wishlist.name)
+        this.urlToShare = '@' + value.username + (this.isMainWishlist ? '' : '/' + encodeURIComponent(this.wishlist.name))
 
         if (this.isLogged && value.username == this.authenticationService.currentUserValue.username) {
           this.isMyWishList = true
@@ -303,7 +303,7 @@ export class WishListComponent {
       // doesn't include products, so they're kept from the current state
       if (id == this.wishListId) {
         this.wishlist = { ...this.wishlist, ...response.wishList }
-        this.urlToShare = '@' + this.ownerUsername + (this.isMainWishlist ? '' : '/' + this.wishlist.name)
+        this.urlToShare = '@' + this.ownerUsername + (this.isMainWishlist ? '' : '/' + encodeURIComponent(this.wishlist.name))
         this.dateCounter(this.wishlist.date_end)
       }
     }

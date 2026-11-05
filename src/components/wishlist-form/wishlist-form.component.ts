@@ -103,7 +103,7 @@ export class WishlistFormComponent {
           this.modalRef.close(response);
         },
         error: (error: any) => {
-          Utils.ToastUtils.error('Error', 'No se ha podido guardar la lista. El nombre solo admite letras y números, sin espacios.');
+          Utils.ToastUtils.error('Error', 'No se ha podido guardar la lista. El nombre solo admite letras, números y espacios.');
           this.loading = false;
           this.cdr.markForCheck();
         },
