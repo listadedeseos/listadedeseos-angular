@@ -275,8 +275,10 @@ export class WishListComponent {
           this.cdr.markForCheck()
           this.cdr.detectChanges()
         }
+        Utils.reserveFeedback(!!value.product?.is_reserved, this.isMyWishList)
 
-      }
+      },
+      error: () => Utils.reserveError(),
     })
   }
 

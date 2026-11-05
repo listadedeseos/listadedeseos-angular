@@ -57,7 +57,7 @@
     <app-card aspect="video" [principalUrl]="list[$index].steam_url" [img]="list[$index].img" [name]="list[$index].name"
         [price]="list[$index].price" [count]="list[$index].count" principalLabelString="Steam"
         secondaryLabelString="Instant gaming" [secondaryUrl]="list[$index].instant_gaming_url"
-        [isReserved]="list[$index].is_reserved" [isLogged]="isLogged" (toggleReserve)="reserveGame(list[$index].id)"
+        [isReserved]="list[$index].is_reserved" [isLogged]="isLogged" [isMyWishList]="isMyWishList" (toggleReserve)="reserveGame(list[$index].id)"
         [id]="list[$index].id"></app-card>
     }
 

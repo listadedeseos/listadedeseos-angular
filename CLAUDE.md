@@ -783,3 +783,27 @@ which should run after each change to this repo and append an entry here.
   uses `[overflow-wrap:anywhere]` + `line-clamp-2` (full name in `title`), since inside `<sau-table>` the cell
   grew to fit long names and `break-words` doesn't break space-less words there. Verified with Playwright
   (mocked API) at 1440/375px. (`src/pages/product-stats/product-stats.component.html`)
+- 2026-11-05 — **Reworked reserving a product to be clearer** (`CardComponent`, used by wish-list products and
+  the Steam/Amazon widgets). Before: a tiny heart icon in the card corner reserved on one click with no
+  confirmation or feedback, and logged-in guests never saw it at all (visibility was keyed on `isLogged`, and
+  only the owner has the "Mostrar reservas" toggle). Now: visibility is keyed on ownership —
+  `CardComponent.showReserveUi` = anyone who isn't the owner, or the owner with "Mostrar reservas" on.
+  Guests get a full-width terracotta "Lo regalo yo" button in the action row; clicking opens an inline
+  confirmation ("¿Lo vas a regalar tú? … Solo quien creó la lista puede deshacerlo." + "Sí, lo regalo"/"No")
+  because guests can't undo a reservation. Reserved products show a green "Reservado" label over a dimmed
+  image and a "Ya lo regala alguien" state instead of the button. The owner gets "Marcar reservado" /
+  "Quitar reserva". New `Utils.reserveFeedback()` / `Utils.reserveError()` toasts after the API answers
+  (previously errors were silent). Steam/Amazon widgets got an `isMyWishList` input (passed from the wish-list
+  page, and from the Steam/Amazon pages, which now compute it from the `uuid` response's `username`); those
+  pages' "Mostrar/Ocultar reservas" toggle is owner-only now. Verified with Playwright (mocked API, anonymous
+  guest, 1280/375px): opening the confirmation sends nothing, confirming sends one request and the card flips
+  to reserved with a toast. (`src/components/card/*`, `src/components/{steam,amazon}/*`,
+  `src/pages/{wish-list,steam,amazon}/*`, `src/utils/utils.ts`)
+- 2026-11-05 — The guest reservation confirmation moved from an inline panel inside the card to a modal:
+  new `ReserveConfirmComponent` (`src/components/reserve-confirm/`), opened by `CardComponent.askReserve()`
+  through `SAUModalService` (`size: 'md'`, same header/footer recipe as the other modals). It shows the
+  product (image, name, price) and three points — others will see it reserved, it's anonymous, only the list
+  owner can undo it — with "Cancelar" / "Sí, lo regalo yo". It doesn't call the API: `close()` makes the card
+  emit `toggleReserve` and the parent reserves as before; `dismiss()` (X, Cancelar, Escape, backdrop) does
+  nothing. The card's `confirming` state was removed. Verified with Playwright (mocked API, 1280/375px):
+  cancelling sends no request, confirming sends one and the card flips to reserved.

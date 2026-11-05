@@ -279,7 +279,7 @@
       @if(wishlist.steam_username){
       <div class="bg-white border border-line-card rounded-xl p-5 relative overflow-hidden">
         <div class="relative z-20 h-full">
-          <app-steam class="flex flex-col h-full" [size]="7" [itemsPerRow]="3" [showMore]="true" [username]="wishlist.steam_username"
+          <app-steam class="flex flex-col h-full" [isMyWishList]="isMyWishList" [size]="7" [itemsPerRow]="3" [showMore]="true" [username]="wishlist.steam_username"
             [wishlistId]="wishlist.id">
           </app-steam>
         </div>
@@ -290,7 +290,7 @@
       @if(wishlist.amazon_wishlist_id){
       <div class="bg-white border border-line-card rounded-xl p-5 relative overflow-hidden">
         <div class="relative z-20 h-full">
-          <app-amazon [size]="7" [itemsPerRow]="3" [showMore]="true" [amazonWishlistId]="wishlist.amazon_wishlist_id"
+          <app-amazon [isMyWishList]="isMyWishList" [size]="7" [itemsPerRow]="3" [showMore]="true" [amazonWishlistId]="wishlist.amazon_wishlist_id"
             [wishlistId]="wishlist.id">
           </app-amazon>
         </div>

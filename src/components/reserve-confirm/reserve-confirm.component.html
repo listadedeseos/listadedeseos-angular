@@ -1,0 +1,67 @@
+<div class="rounded-xl bg-cream-alt overflow-hidden">
+    <!-- Modal header -->
+    <div class="flex items-center gap-3 justify-between border-b border-line-soft px-6 py-[18px] bg-white">
+        <h3 class="font-serif font-medium text-xl text-ink">
+            ¿Lo vas a regalar tú?
+        </h3>
+
+        <button type="button" aria-label="Cerrar"
+            class="w-[30px] h-[30px] flex items-center justify-center border border-line rounded-lg bg-white text-muted hover:border-ink hover:text-ink transition-colors duration-200"
+            (click)="cancel()">
+            <fa-icon [icon]="['fas', 'xmark']" class="text-sm"></fa-icon>
+        </button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="p-6 flex flex-col gap-5">
+
+        <!-- Producto que se va a reservar -->
+        <div class="flex items-center gap-3.5 rounded-xl border border-line-card bg-white p-3">
+            <img [src]="img || '/assets/img/empty.webp'" (error)="onImageError($event)" alt=""
+                class="w-16 h-16 shrink-0 rounded-lg border border-line-card bg-swatch object-cover">
+            <div class="min-w-0">
+                <div class="font-semibold text-ink line-clamp-2 [overflow-wrap:anywhere]">{{ name }}</div>
+                @if (price) {
+                    <div class="font-serif text-lg text-ink">{{ price }}</div>
+                }
+            </div>
+        </div>
+
+        <ul class="flex flex-col gap-3 text-sm text-muted-dark">
+            <li class="flex gap-3">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-reserved-light text-reserved flex items-center justify-center">
+                    <fa-icon [icon]="['fas', 'check']" class="text-xs"></fa-icon>
+                </span>
+                <span>Los demás lo verán como <strong class="text-reserved">reservado</strong>, así nadie más lo comprará.</span>
+            </li>
+            <li class="flex gap-3">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-cream text-ink flex items-center justify-center">
+                    <fa-icon [icon]="['fas', 'user-secret']" class="text-xs"></fa-icon>
+                </span>
+                <span>Es anónimo: nadie sabrá que eres tú quien lo regala.</span>
+            </li>
+            <li class="flex gap-3">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-primary-50 text-primary-500 flex items-center justify-center">
+                    <fa-icon [icon]="['fas', 'lock']" class="text-xs"></fa-icon>
+                </span>
+                <span>Solo quien creó la lista puede deshacerlo, así que confírmalo solo si de verdad vas a regalarlo.</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="flex justify-end gap-2.5 border-t border-line-soft px-6 py-4 bg-white">
+        <button type="button"
+            class="px-4.5 py-2.5 border border-line-strong text-ink font-semibold rounded-lg hover:border-ink transition-colors duration-200 bg-transparent"
+            (click)="cancel()">
+            Cancelar
+        </button>
+
+        <button type="button"
+            class="px-4.5 py-2.5 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200 inline-flex items-center gap-2"
+            (click)="confirm()">
+            <fa-icon [icon]="['fas', 'gift']"></fa-icon>
+            Sí, lo regalo yo
+        </button>
+    </div>
+</div>

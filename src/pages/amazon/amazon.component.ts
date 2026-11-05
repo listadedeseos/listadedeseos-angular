@@ -22,6 +22,7 @@ export class AmazonPage {
   public loading = true
   public uuid = ''
   public isLogged = false;
+  public isMyWishList = false;
   public showReserveButton = CardComponent.showReserveButton;
   public wishlist: any = []
 
@@ -59,6 +60,7 @@ export class AmazonPage {
         
         if (value.wishlist) {
           this.wishlist = { ...value.wishlist }
+          this.isMyWishList = this.isLogged && value.username == this.authenticationService.currentUserValue?.username
           console.log('Wishlist updated:', this.wishlist)
         }
 

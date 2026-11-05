@@ -1,5 +1,7 @@
 
-import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
+import { SAUModalService } from '@some-angular-utils/modal';
+import { ReserveConfirmComponent } from '../reserve-confirm/reserve-confirm.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
@@ -83,6 +85,27 @@ export class CardComponent {
   // Setter para mantener compatibilidad con código existente  
   public static set showReserveButton(value: boolean) {
     CardComponent.setShowReserveButton(value);
+  }
+
+  // ---- Reservations ----
+  // Guests (anyone who isn't the owner, logged in or not) always see the reserve controls. The owner
+  // only sees them when they chose "Mostrar reservas", so the surprise isn't spoiled by default.
+  get showReserveUi(): boolean {
+    return this.isReserved !== undefined && (!this.isMyWishList || this.showReserveButton);
+  }
+
+  private sauModalService = inject(SAUModalService);
+
+  // A guest's reservation can't be undone by them (only the list owner can), so it asks first in a modal
+  askReserve() {
+    const modalRef = this.sauModalService.open(ReserveConfirmComponent, { size: 'md' });
+    modalRef.componentInstance.name = this.name;
+    modalRef.componentInstance.img = this.img;
+    modalRef.componentInstance.price = this.formattedPrice;
+    modalRef.result.then(
+      () => this.toggleReserve.emit(),
+      () => { } // cancelled
+    );
   }
 
   private static priceFormatter = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
