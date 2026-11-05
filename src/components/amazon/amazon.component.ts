@@ -24,6 +24,8 @@ export class AmazonComponent {
 
   @Input() amazonWishlistId: string = ''
   @Input() wishlistId: string = ''
+  // The owner only sees reserve controls when "Mostrar reservas" is on (see CardComponent.showReserveUi)
+  @Input() isMyWishList: boolean = false
   @Input() size: number = 0
   @Input() itemsPerRow: number = 6
   @Input() showMore: boolean = false
@@ -101,7 +103,9 @@ export class AmazonComponent {
           this.cdr.markForCheck()
           this.cdr.detectChanges()
         }
-      }
+        Utils.reserveFeedback(!!value.product?.is_reserved, this.isMyWishList)
+      },
+      error: () => Utils.reserveError(),
     })
   }
 

@@ -15,35 +15,19 @@
     </div>
   }
 
-  <!-- Botón de reserva en esquina superior derecha -->
-  @if(((isLogged && showReserveButton) || !isLogged) && isReserved !== undefined) {
-    <div class="absolute top-3 right-3 z-20">
-      @if(isReserved){
-        @if(isLogged){
-          <button (click)="toggleReserve.emit()"
-            class="bg-reserved hover:bg-reserved/90 text-white w-7 h-7 rounded-full transition-colors duration-200 flex items-center justify-center"
-            title="Eliminar reserva">
-            <fa-icon [icon]="['fas', 'check']" class="text-xs"></fa-icon>
-          </button>
-          }@else{
-          <div class="bg-reserved text-white w-7 h-7 rounded-full flex items-center justify-center"
-            title="Reservado">
-            <fa-icon [icon]="['fas', 'check']" class="text-xs"></fa-icon>
-          </div>
-        }
-        }@else{
-        <button (click)="toggleReserve.emit()"
-          class="bg-white/90 hover:bg-cream-alt border border-line hover:border-primary-500 text-muted hover:text-primary-500 w-7 h-7 rounded-full transition-colors duration-200 flex items-center justify-center"
-          title="Reservar producto">
-          <fa-icon [icon]="['fas', 'heart']" class="text-xs"></fa-icon>
-        </button>
-      }
+  <!-- Etiqueta "Reservado" sobre la imagen: se ve de un vistazo qué está cogido -->
+  @if(showReserveUi && isReserved) {
+    <div class="absolute top-3 right-3 z-20 animate-scaleadd">
+      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-reserved text-white text-[11px] font-bold">
+        <fa-icon [icon]="['fas', 'check']"></fa-icon>
+        Reservado
+      </span>
     </div>
   }
 
   <!-- Imagen del producto -->
   <!-- Sin imagen se muestra el mismo placeholder que cuando la URL falla -->
-  <div>
+  <div class="transition-opacity duration-300" [class.opacity-50]="showReserveUi && isReserved">
     @switch (aspect) {
 
       @case ('video') {
@@ -83,17 +67,40 @@
       </div>
     }
 
-    <!-- Pastilla de estado reservado -->
-    @if(((isLogged && showReserveButton) || !isLogged) && isReserved) {
-      <span
-        class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-semibold bg-reserved-light text-reserved border border-reserved-border rounded-full mr-auto">
-        <fa-icon [icon]="['fas', 'check-circle']"></fa-icon>
-        Reservado
-      </span>
-    }
-
     <!-- Botones de acción -->
     <div class="flex flex-col gap-1.5 mt-auto text-xs">
+
+      <!-- Reserva -->
+      @if(showReserveUi) {
+        @if(!isMyWishList) {
+          <!-- Invitado -->
+          @if(isReserved) {
+            <div class="flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-md bg-reserved-light border border-reserved-border text-reserved font-semibold text-center"
+              title="Alguien ya va a regalar esto">
+              <fa-icon [icon]="['fas', 'gift']"></fa-icon>
+              <span>Ya lo regala alguien</span>
+            </div>
+          } @else {
+            <button type="button" (click)="askReserve()" title="Reserva este regalo para que nadie más lo compre"
+              class="flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-md bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors duration-200">
+              <fa-icon [icon]="['fas', 'gift']"></fa-icon>
+              <span>Lo regalo yo</span>
+            </button>
+          }
+        } @else {
+          <!-- Dueño de la lista, con las reservas visibles -->
+          <button type="button" (click)="toggleReserve.emit()"
+            [title]="isReserved ? 'Quitar la reserva para que vuelva a estar libre' : 'Marcar como reservado'"
+            class="flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-md border font-semibold transition-colors duration-200"
+            [class]="isReserved
+              ? 'border-reserved-border bg-reserved-light text-reserved hover:border-danger hover:bg-danger-light hover:text-danger'
+              : 'border-line text-muted-dark hover:border-reserved hover:text-reserved'">
+            <fa-icon [icon]="['fas', isReserved ? 'rotate-left' : 'check']"></fa-icon>
+            <span>{{ isReserved ? 'Quitar reserva' : 'Marcar reservado' }}</span>
+          </button>
+        }
+      }
+
       @if(principalUrl){
         <a [href]="principalUrl" target="_blank" [title]="principalLabelString"
           class="flex-1 text-center py-1.5 px-2 border border-line rounded-md font-semibold text-muted-dark hover:border-ink hover:text-ink transition-colors duration-200 truncate">

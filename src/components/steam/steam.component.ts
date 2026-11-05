@@ -23,6 +23,8 @@ import { CardComponent } from '../card/card.component';
 export class SteamComponent {
 
   @Input() wishlistId: number = 0
+  // The owner only sees reserve controls when "Mostrar reservas" is on (see CardComponent.showReserveUi)
+  @Input() isMyWishList: boolean = false
   @Input() username: string = ''
   @Input() size: number = 0
   @Input() showMore: boolean = false
@@ -102,7 +104,9 @@ export class SteamComponent {
           this.cdr.markForCheck()
           this.cdr.detectChanges()
         }
-      }
+        Utils.reserveFeedback(!!value.product?.is_reserved, this.isMyWishList)
+      },
+      error: () => Utils.reserveError(),
     })
   }
 

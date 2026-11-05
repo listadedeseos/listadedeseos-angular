@@ -9,7 +9,7 @@
             <span>Volver a la lista</span>
         </a>
 
-        @if(isLogged){
+        @if(isMyWishList){
         <!-- show/hide reserved products -->
         <button (click)="toggleShowReserveButtons()"
             class="ml-auto inline-flex items-center gap-2 px-3 py-2 border border-line rounded-lg bg-white text-muted-dark text-sm font-semibold hover:border-ink hover:text-ink transition-colors duration-200">
@@ -23,6 +23,6 @@
 
     </header>
 
-    <app-amazon [amazonWishlistId]="wishlist.amazon_wishlist_id" [wishlistId]="wishlist.id"></app-amazon>
+    <app-amazon [isMyWishList]="isMyWishList" [amazonWishlistId]="wishlist.amazon_wishlist_id" [wishlistId]="wishlist.id"></app-amazon>
 
 </section>

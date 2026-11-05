@@ -38,6 +38,20 @@ export namespace Utils {
         });
     }
 
+    // Feedback after reserving / un-reserving a product (wish list, Steam and Amazon cards)
+    export function reserveFeedback(isReserved: boolean, isOwner: boolean): void {
+        if (isOwner) {
+            ToastUtils.success(isReserved ? 'Marcado como reservado' : 'Reserva quitada',
+                isReserved ? undefined : 'Vuelve a estar libre para tus invitados.');
+        } else if (isReserved) {
+            ToastUtils.success('¡Reservado!', 'Nadie más lo regalará. Ya puedes comprarlo.');
+        }
+    }
+
+    export function reserveError(): void {
+        ToastUtils.error('No se ha podido reservar', 'Inténtalo de nuevo en un momento.');
+    }
+
     // Toast utilities with proper service access
     export class ToastUtils {
         private static getToastService(): ToastService | null {

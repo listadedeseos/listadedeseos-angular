@@ -56,7 +56,7 @@
 
     <app-card [principalUrl]="list[$index].amazon_url" [img]="list[$index].img" [name]="list[$index].name"
         [price]="list[$index].price" [count]="list[$index].count" principalLabelString="Amazon"
-        [isReserved]="list[$index].is_reserved" [isLogged]="isLogged"
+        [isReserved]="list[$index].is_reserved" [isLogged]="isLogged" [isMyWishList]="isMyWishList"
         (toggleReserve)="reserveGame(list[$index].id)"></app-card>
     }
 
