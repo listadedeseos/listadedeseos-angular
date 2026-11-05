@@ -715,3 +715,18 @@ which should run after each change to this repo and append an entry here.
   update on open. Reminder for new code: this app is zoneless, so every async handler that changes template
   state must call `markForCheck()`; also `complete` doesn't run after `error`, so reset `loading` in both.
   (`src/components/{wishlist,user,product}-form/*`, `src/components/customDelete/*`, `src/components/header/*`)
+- 2026-11-05 — Fixed the "Fecha límite" field coming up empty when editing a wish list. Fixed in the
+  Laravel backend only: `WishList` now casts `date_end` as `date:Y-m-d`, so every endpoint returns it as
+  `yyyy-MM-dd` (the only format `<input type="date">` accepts), whatever was sent or stored. New
+  `tests/Feature/WishListDateEndTest.php`; suite 57/57. No migration needed.
+- 2026-11-05 — Wish-list names can now contain spaces (e.g. "Mi cumpleaños 2026"). Backend (Laravel):
+  `WishListController@update` trims the name and collapses runs of whitespace into one space, then
+  validates it with `regex:/^[\pL\pM\pN]+( [\pL\pM\pN]+)*$/u` (was `alpha_num`; still no symbols, so
+  names stay URL-safe). The public `GET wishlist/{username}/{wishlistName}` route's name pattern went from
+  `[a-zA-Z0-9]+` to `[^/]+` (which also lets accented names through, previously 404), and
+  `GET wishlist/uuid/{uuid}` was moved above it since the looser pattern would otherwise swallow it.
+  New `tests/Feature/WishListNameTest.php`; suite 59/59. Frontend: `WishListComponent` now
+  `encodeURIComponent`s the name in the API request and in the copied share link
+  (`listadedeseos.es/@user/Mi%20cumplea%C3%B1os`); the router already decodes it. Form placeholder and
+  error toast updated. (`src/pages/wish-list/wish-list.component.ts`,
+  `src/components/wishlist-form/wishlist-form.component.{html,ts}`)
