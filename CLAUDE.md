@@ -779,3 +779,7 @@ which should run after each change to this repo and append an entry here.
   OpenAPI block). It only fed the dashboard's "Los más deseados" section, removed above. There never was an
   Amazon equivalent. Note `GET /steam/find` (`SteamController::find`) is also not called by the frontend; it
   was left in place. Suite 68/68.
+- 2026-11-05 — Product stats table: the PRODUCTO cell's name block is capped (`max-w-[14rem] sm:max-w-xs`) and
+  uses `[overflow-wrap:anywhere]` + `line-clamp-2` (full name in `title`), since inside `<sau-table>` the cell
+  grew to fit long names and `break-words` doesn't break space-less words there. Verified with Playwright
+  (mocked API) at 1440/375px. (`src/pages/product-stats/product-stats.component.html`)

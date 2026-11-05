@@ -64,8 +64,10 @@
         <img [src]="item.img || '/assets/img/empty.webp'" (error)="onImageError($event)" alt="" loading="lazy"
             class="shrink-0 border border-line rounded-md bg-swatch object-contain"
             [class]="source === 'steam' ? 'w-24 h-11' : 'w-14 h-14'">
-        <div class="min-w-0">
-            <div class="font-semibold text-ink break-words line-clamp-2">{{ item.name }}</div>
+        <!-- Width cap: inside a table the cell would otherwise grow to fit the whole name -->
+        <div class="min-w-0 max-w-[14rem] sm:max-w-xs">
+            <!-- overflow-wrap:anywhere also breaks long words with no spaces (URLs, codes) -->
+            <div class="font-semibold text-ink [overflow-wrap:anywhere] line-clamp-2" [title]="item.name">{{ item.name }}</div>
             <div class="flex flex-wrap items-center gap-x-1.5 text-xs text-muted">
                 @if (item.price) {
                 <span class="font-serif text-sm text-ink">{{ item.price }}</span>
