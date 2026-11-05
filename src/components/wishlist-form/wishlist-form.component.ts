@@ -103,7 +103,11 @@ export class WishlistFormComponent {
           this.modalRef.close(response);
         },
         error: (error: any) => {
-          Utils.ToastUtils.error('Error', 'No se ha podido guardar la lista. El nombre solo admite letras, números y espacios.');
+          // ErrorInterceptor rethrows the API's `message`; the duplicate-name one is already in Spanish
+          const message = error === 'Ya tienes otra lista con ese nombre'
+            ? 'Ya tienes otra lista con ese nombre (o uno que genera el mismo enlace).'
+            : 'No se ha podido guardar la lista. El nombre solo admite letras, números, espacios y guiones.';
+          Utils.ToastUtils.error('Error', message);
           this.loading = false;
           this.cdr.markForCheck();
         },

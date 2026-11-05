@@ -746,3 +746,22 @@ which should run after each change to this repo and append an entry here.
   `src/pages/dashboard/headlines.ts` (`HEADLINES`, grouped by idea), and `DashboardComponent.headline` picks
   one at random per page load. The `accent` half renders as the terracotta italic `<em>`. Add or edit
   titles there. (`src/pages/dashboard/dashboard.component.{html,ts}`, `headlines.ts`)
+- 2026-11-05 — Backend (Laravel only): saving a wish list now re-imports its linked Steam / Amazon products
+  automatically. `WishListController@update` (create + edit) calls `refreshLinkedProducts()` after `save()`,
+  which runs `SteamController::refreshProducts` (now public) / `AmazonController::refreshProducts` when
+  `steam_username` / `amazon_wishlist_id` is set. It runs synchronously, so saving a list with Steam linked
+  takes as long as the import (one Steam request per game). A failed refresh is logged and never fails the
+  save. To make running it on every save safe, both refreshes now keep each product's `is_reserved` /
+  `is_active` (previously a refresh wiped all reservations), run delete + re-insert in a transaction that
+  rolls back on any `Throwable` (a Steam error halfway used to leave the list emptied), and Amazon treats a
+  non-2xx page as an error instead of "0 products". New `tests/Feature/WishListAutoRefreshTest.php`
+  (`Http::fake`); suite 65/65. No frontend change: the Steam/Amazon widgets don't re-fetch after the
+  settings modal closes unless the linked account changed, so fresh products show on the next page load.
+- 2026-11-05 — Share links use hyphens for spaces: "holi caracoli" → `listadedeseos.es/@admin/holi-caracoli`
+  (was `holi%20caracoli`); existing hyphens are kept. Names may now contain hyphens too (validation regex
+  `^[\pL\pM\pN]+([ -][\pL\pM\pN]+)*$`). Frontend: `WishListComponent.slug()` builds `urlToShare`. Backend
+  (Laravel): `WishList::slug()` / `slugSql()` (`REPLACE(name,' ','-')`); `getByUsernameAndName` resolves
+  either the exact name (old `%20` links keep working) or the slug, exact match first; `update` rejects a
+  name whose slug another list of the same user already has (400 "Ya tienes otra lista con ese nombre",
+  shown as a toast by the wish-list form). Tests in `WishListNameTest`; suite 68/68. No migration.
+  (`src/pages/wish-list/wish-list.component.ts`, `src/components/wishlist-form/wishlist-form.component.ts`)
