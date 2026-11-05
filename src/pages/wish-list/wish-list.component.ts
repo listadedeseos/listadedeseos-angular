@@ -31,6 +31,15 @@ import { SAUModalService } from '@some-angular-utils/modal';
 })
 export class WishListComponent {
 
+  /**
+   * How a list name appears in its share link: spaces become hyphens, existing hyphens are kept
+   * ("holi caracoli" -> "holi-caracoli"). Must match the backend's WishList::slug(), which resolves
+   * both this and the old raw-name links.
+   */
+  static slug(name: string): string {
+    return (name ?? '').replace(/ /g, '-');
+  }
+
   private sauModalService = inject(SAUModalService);
 
   public loading = true
@@ -147,7 +156,7 @@ export class WishListComponent {
 
         this.isMainWishlist = value.isMain
         this.ownerUsername = value.username
-        this.urlToShare = '@' + value.username + (this.isMainWishlist ? '' : '/' + encodeURIComponent(this.wishlist.name))
+        this.urlToShare = '@' + value.username + (this.isMainWishlist ? '' : '/' + encodeURIComponent(WishListComponent.slug(this.wishlist.name)))
 
         if (this.isLogged && value.username == this.authenticationService.currentUserValue.username) {
           this.isMyWishList = true
@@ -303,7 +312,7 @@ export class WishListComponent {
       // doesn't include products, so they're kept from the current state
       if (id == this.wishListId) {
         this.wishlist = { ...this.wishlist, ...response.wishList }
-        this.urlToShare = '@' + this.ownerUsername + (this.isMainWishlist ? '' : '/' + encodeURIComponent(this.wishlist.name))
+        this.urlToShare = '@' + this.ownerUsername + (this.isMainWishlist ? '' : '/' + encodeURIComponent(WishListComponent.slug(this.wishlist.name)))
         this.dateCounter(this.wishlist.date_end)
       }
     }

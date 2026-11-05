@@ -730,3 +730,56 @@ which should run after each change to this repo and append an entry here.
   (`listadedeseos.es/@user/Mi%20cumplea%C3%B1os`); the router already decodes it. Form placeholder and
   error toast updated. (`src/pages/wish-list/wish-list.component.ts`,
   `src/components/wishlist-form/wishlist-form.component.{html,ts}`)
+- 2026-11-05 — **Redesigned the dashboard landing page** to explain how the app works. New hero with
+  copy + an illustrative (static, not real data) wish-list preview showing a reserved item; a
+  "Cómo funciona" section with 4 numbered step cards (create list → add products/Steam/Amazon → share
+  `@usuario` link → guests reserve), each with a concrete detail strip, plus "Si creas la lista" /
+  "Si vas a regalar" benefit panels; the existing Steam "Los más deseados" grid; a FAQ built on native
+  `<details>`; and a dark `bg-ink` CTA with the logo star as watermark. Copy matches real behaviour
+  (guests reserve without an account, reservations are anonymous and only the owner can undo them,
+  owners can hide reservations; themes are admin-only so they're not advertised).
+  The Steam grid now distinguishes loading from empty via a new
+  `steamLoaded` flag and shows a "No hay productos" empty state when the API returns 0 items
+  (previously the spinner stayed forever). Verified with Playwright at 1440/375px (mocked API, no
+  horizontal overflow). (`src/pages/dashboard/dashboard.component.{html,ts}`)
+- 2026-11-05 — Dashboard hero `<h1>` now rotates: 100 `{ lead, accent }` titles live in their own file,
+  `src/pages/dashboard/headlines.ts` (`HEADLINES`, grouped by idea), and `DashboardComponent.headline` picks
+  one at random per page load. The `accent` half renders as the terracotta italic `<em>`. Add or edit
+  titles there. (`src/pages/dashboard/dashboard.component.{html,ts}`, `headlines.ts`)
+- 2026-11-05 — Backend (Laravel only): saving a wish list now re-imports its linked Steam / Amazon products
+  automatically. `WishListController@update` (create + edit) calls `refreshLinkedProducts()` after `save()`,
+  which runs `SteamController::refreshProducts` (now public) / `AmazonController::refreshProducts` when
+  `steam_username` / `amazon_wishlist_id` is set. It runs synchronously, so saving a list with Steam linked
+  takes as long as the import (one Steam request per game). A failed refresh is logged and never fails the
+  save. To make running it on every save safe, both refreshes now keep each product's `is_reserved` /
+  `is_active` (previously a refresh wiped all reservations), run delete + re-insert in a transaction that
+  rolls back on any `Throwable` (a Steam error halfway used to leave the list emptied), and Amazon treats a
+  non-2xx page as an error instead of "0 products". New `tests/Feature/WishListAutoRefreshTest.php`
+  (`Http::fake`); suite 65/65. No frontend change: the Steam/Amazon widgets don't re-fetch after the
+  settings modal closes unless the linked account changed, so fresh products show on the next page load.
+- 2026-11-05 — Share links use hyphens for spaces: "holi caracoli" → `listadedeseos.es/@admin/holi-caracoli`
+  (was `holi%20caracoli`); existing hyphens are kept. Names may now contain hyphens too (validation regex
+  `^[\pL\pM\pN]+([ -][\pL\pM\pN]+)*$`). Frontend: `WishListComponent.slug()` builds `urlToShare`. Backend
+  (Laravel): `WishList::slug()` / `slugSql()` (`REPLACE(name,' ','-')`); `getByUsernameAndName` resolves
+  either the exact name (old `%20` links keep working) or the slug, exact match first; `update` rejects a
+  name whose slug another list of the same user already has (400 "Ya tienes otra lista con ese nombre",
+  shown as a toast by the wish-list form). Tests in `WishListNameTest`; suite 68/68. No migration.
+  (`src/pages/wish-list/wish-list.component.ts`, `src/components/wishlist-form/wishlist-form.component.ts`)
+- 2026-11-05 — Wish-list form: the name field now validates client-side with the same rule as the backend
+  (`WishlistFormComponent.NAME_PATTERN`, `/^[\p{L}\p{M}\p{N}]+([ -][\p{L}\p{M}\p{N}]+)*$/u`, applied to the
+  trimmed/space-collapsed value like the API does). It shows a red border + Spanish error under the field once
+  touched, otherwise a hint with a live preview of the link segment (`…/holi-caracoli`). The value is
+  normalized on blur and before saving; an invalid submit marks all fields touched.
+  (`src/components/wishlist-form/wishlist-form.component.{html,ts}`)
+- 2026-11-05 — Removed the "Los más deseados" Steam section from the dashboard, along with its now-unused
+  code in `DashboardComponent` (`steamList`/`steamLoaded`/`getSteam`, the commented-out `getAmazon`,
+  `trackByIndex`, `ApiService`/`CardComponent` imports and debug `console.log`s). The dashboard no longer
+  calls the API at all; backend `GET steam/top` is untouched. (`src/pages/dashboard/dashboard.component.{html,ts}`)
+- 2026-11-05 — Backend (Laravel): removed `GET /steam/top` (`SteamController::getTopGames` + its route and
+  OpenAPI block). It only fed the dashboard's "Los más deseados" section, removed above. There never was an
+  Amazon equivalent. Note `GET /steam/find` (`SteamController::find`) is also not called by the frontend; it
+  was left in place. Suite 68/68.
+- 2026-11-05 — Product stats table: the PRODUCTO cell's name block is capped (`max-w-[14rem] sm:max-w-xs`) and
+  uses `[overflow-wrap:anywhere]` + `line-clamp-2` (full name in `title`), since inside `<sau-table>` the cell
+  grew to fit long names and `break-words` doesn't break space-less words there. Verified with Playwright
+  (mocked API) at 1440/375px. (`src/pages/product-stats/product-stats.component.html`)

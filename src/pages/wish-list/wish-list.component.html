@@ -159,6 +159,7 @@
     </section>
     }
 
+    @if(isMyWishList || wishlist.products?.length > 0){
     <!-- Main Content -->
     <section class="bg-white border border-line-card rounded-xl p-6 mb-8">
 
@@ -269,6 +270,7 @@
         }
       </div>
     </section>
+    }
 
     <!-- External Sources Section -->
     @if(wishlist.steam_username || wishlist.amazon_wishlist_id){

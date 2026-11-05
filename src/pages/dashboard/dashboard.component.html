@@ -1,130 +1,268 @@
 <div class="min-h-screen bg-cream">
 
-  <!-- Hero Section -->
-  <section class="relative py-20 px-4">
-    <div class="container mx-auto text-center">
-      <div class="relative z-10">
-        <div class="inline-flex items-center gap-2 mb-4">
-          <span class="w-2 h-2 rounded-sm bg-primary-500"></span>
-          <span class="text-sm font-bold uppercase tracking-wide text-primary-500">Bienvenido</span>
-        </div>
+  <!-- ============ HERO ============ -->
+  <section class="relative overflow-hidden px-4 pt-14 pb-20 md:pt-20 md:pb-28">
+    <div class="container mx-auto grid lg:grid-cols-2 gap-14 lg:gap-10 items-center">
 
-        <h1 class="text-5xl md:text-6xl font-serif font-normal text-ink tracking-tight mb-6">
-          Lista de Deseos
+      <!-- Copy -->
+      <div class="text-center lg:text-left">
+
+        <h1 class="text-5xl md:text-6xl xl:text-7xl font-serif font-normal text-ink tracking-tight leading-[1.05] mb-6">
+          {{ headline.lead }} <br class="hidden sm:block">
+          <em class="text-primary-500">{{ headline.accent }}</em>
         </h1>
 
-        <p class="text-xl md:text-2xl text-muted mb-8 max-w-3xl mx-auto leading-relaxed">
-          Descubre los productos más deseados y crea tus propias listas de deseos de forma sencilla y divertida
+        <p class="text-lg md:text-xl text-muted mb-9 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+          Crea tu lista de deseos, compártela con un enlace y deja que familia y amigos reserven lo que
+          van a regalarte. Tú aciertas con lo que pides; ellos, con lo que compran.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a routerLink="/list"
-            class="px-8 py-4 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200 flex items-center gap-3">
-            <fa-icon [icon]="['fas', 'list-ul']"></fa-icon>
-            <span>Crear Mi Lista</span>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+          <a [routerLink]="isLogged ? '/list' : '/register'"
+            class="px-7 py-3.5 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200 inline-flex items-center justify-center gap-3">
+            <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+            <span>{{ isLogged ? 'Ir a mi lista' : 'Crear mi lista gratis' }}</span>
           </a>
-
-          <a routerLink="/contact"
-            class="px-8 py-4 bg-transparent text-ink font-semibold rounded-lg border border-line-strong hover:border-ink transition-colors duration-200 flex items-center gap-3">
-            <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
-            <span>Contáctanos</span>
-          </a>
-
           <a routerLink="/@admin/demo"
-            class="px-8 py-4 bg-ink text-cream font-semibold rounded-lg hover:bg-ink-hover transition-colors duration-200 flex items-center gap-3">
-            <fa-icon [icon]="['fas', 'search']"></fa-icon>
-            <span>Demo</span>
+            class="px-7 py-3.5 bg-transparent text-ink font-semibold rounded-lg border border-line-strong hover:border-ink transition-colors duration-200 inline-flex items-center justify-center gap-3">
+            <fa-icon [icon]="['fas', 'eye']"></fa-icon>
+            <span>Ver una lista de ejemplo</span>
           </a>
+        </div>
 
+        <a href="./dashboard#como-funciona"
+          class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-muted hover:text-ink transition-colors">
+          Descubre cómo funciona
+          <fa-icon [icon]="['fas', 'arrow-down']" class="text-xs animate-bounce"></fa-icon>
+        </a>
+      </div>
+
+      <!-- Illustrative list preview (static markup, not real data) -->
+      <div class="relative max-w-md w-full min-w-0 mx-auto lg:mr-0 mb-6 sm:mb-10" aria-hidden="true">
+        <!-- back sheet, gives depth without shadows -->
+        <div class="absolute inset-0 translate-x-4 translate-y-4 rotate-2 rounded-2xl border border-line bg-cream-alt">
+        </div>
+
+        <div class="relative rounded-2xl border border-line-card bg-white overflow-hidden">
+          <!-- browser-ish bar -->
+          <div class="flex items-center gap-2 px-4 py-2.5 border-b border-line-soft bg-cream-alt">
+            <span class="w-2.5 h-2.5 rounded-full bg-line"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-line"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-line"></span>
+            <span
+              class="ml-2 min-w-0 flex-1 truncate rounded-md border border-line-soft bg-white px-2.5 py-1 text-xs text-muted">
+              listadedeseos.es/&#64;lucia/<span class="text-ink font-semibold">mi-cumple</span>
+            </span>
+          </div>
+
+          <!-- list header -->
+          <div class="px-5 pt-5 pb-4 border-b border-line-soft">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h3 class="mt-2 font-serif text-2xl text-ink leading-tight">Los 30 de Lucía</h3>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-[11px] font-bold uppercase tracking-wide text-muted">Faltan</div>
+                <div class="font-serif text-2xl text-primary-500 leading-tight">12 días</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- items -->
+          <ul class="divide-y divide-line-soft">
+            @for (item of previewItems; track item.name) {
+            <li class="flex items-center gap-3.5 px-5 py-3.5">
+              <div
+                class="w-12 h-12 shrink-0 rounded-lg bg-swatch flex items-center justify-center text-muted-dark text-lg">
+                <fa-icon [icon]="['fas', item.icon]"></fa-icon>
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="truncate font-semibold text-ink" [class.line-through]="item.reserved"
+                  [class.text-muted]="item.reserved">
+                  {{ item.name }}
+                </div>
+                <div class="font-serif text-muted">{{ item.price }}</div>
+              </div>
+              @if (item.reserved) {
+              <span
+                class="animate-scaleadd inline-flex items-center gap-1.5 rounded-full border border-reserved-border bg-reserved-light px-2.5 py-1 text-xs font-bold text-reserved">
+                <fa-icon [icon]="['fas', 'check']"></fa-icon> Reservado
+              </span>
+              } @else {
+              <span
+                class="inline-flex items-center gap-1.5 rounded-full border border-line px-2.5 py-1 text-xs font-semibold text-muted-dark">
+                <fa-icon [icon]="['far', 'heart']"></fa-icon> Reservar
+              </span>
+              }
+            </li>
+            }
+          </ul>
+        </div>
+
+        <!-- floating note -->
+        <div
+          class="hidden sm:block absolute -left-10 -bottom-20 rotate-[-4deg] rounded-xl border border-line-card bg-white px-4 py-3 max-w-[13rem]">
+          <div class="text-xs font-bold uppercase tracking-wide text-reserved mb-0.5">
+            <fa-icon [icon]="['fas', 'gift']" class="mr-1"></fa-icon> ¡Bien visto!
+          </div>
+          <p class="text-sm text-muted-dark leading-snug">Alguien ya regala el libro. Nadie más lo comprará.</p>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- Popular Products Section -->
-  <section class="py-16 px-4 bg-cream-alt">
+  <!-- ============ HOW IT WORKS ============ -->
+  <section id="como-funciona" class="scroll-mt-20 py-20 px-4 bg-cream-alt border-y border-line-soft">
     <div class="container mx-auto">
 
-      <!-- Section Header -->
-      <div class="text-center mb-12">
-        <div class="inline-flex items-center gap-2 mb-3">
-          <span class="w-2 h-2 rounded-sm bg-primary-500"></span>
-          <span class="text-sm font-bold uppercase tracking-wide text-primary-500">Tendencias</span>
-        </div>
-        <h2 class="text-4xl font-serif font-normal text-ink tracking-tight mb-4">
-          Los Más Deseados
+      <div class="text-center mb-14">
+        <h2 class="text-4xl md:text-5xl font-serif font-normal text-ink tracking-tight mb-4">
+          De la idea al regalo en cuatro pasos
         </h2>
         <p class="text-lg text-muted max-w-2xl mx-auto">
-          Descubre los productos que más personas han añadido a sus listas de deseos
+          Tú preparas la lista una vez. Tus invitados solo tienen que abrir un enlace.
         </p>
       </div>
 
-      <!-- Steam Products -->
-      <div class="mb-16">
-        <div class="flex items-center justify-center gap-3 mb-8">
-          <div class="w-12 h-12 bg-ink rounded-xl flex items-center justify-center text-cream text-xl">
-            <fa-icon [icon]="['fab', 'steam']"
-            [ngClass]="['h-7 w-7']" class="h-7"></fa-icon>
+      <ol class="relative grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        @for (step of steps; track step.number) {
+        <li
+          class="group relative flex flex-col rounded-2xl border border-line-card bg-white p-6 transition-colors duration-200 hover:border-ink">
+          <div class="flex items-center justify-between mb-5">
+            <span class="font-serif text-5xl leading-none text-primary-500">{{ step.number }}</span>
+            <span
+              class="w-11 h-11 rounded-xl bg-cream flex items-center justify-center text-ink text-lg transition-colors duration-200 group-hover:bg-ink group-hover:text-cream">
+              <fa-icon [icon]="['fas', step.icon]"></fa-icon>
+            </span>
+          </div>
+          <div class="text-xs font-bold uppercase tracking-wide text-muted mb-1">{{ step.who }}</div>
+          <h3 class="font-serif text-2xl text-ink mb-3">{{ step.title }}</h3>
+          <p class="text-muted leading-relaxed mb-5">{{ step.text }}</p>
 
+          <!-- concrete detail for each step -->
+          <div class="mt-auto rounded-xl border border-line-soft bg-cream-alt p-3.5 text-sm text-muted-dark">
+            @switch (step.number) {
+            @case ('01') {
+            <div class="flex items-center gap-2">
+              <fa-icon [icon]="['far', 'calendar']"></fa-icon>
+              <span>Fecha límite</span>
+              <span class="ml-auto font-serif text-base text-primary-500">Faltan 12 días</span>
+            </div>
+            }
+            @case ('02') {
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 whitespace-nowrap">
+              <span class="inline-flex items-center gap-1.5"><fa-icon [icon]="['fas', 'pen']"></fa-icon> A mano</span>
+              <span class="text-line-strong">·</span>
+              <span class="inline-flex items-center gap-1.5"><fa-icon [icon]="['fab', 'steam']"></fa-icon> Steam</span>
+              <span class="text-line-strong">·</span>
+              <span class="inline-flex items-center gap-1.5"><fa-icon [icon]="['fab', 'amazon']"></fa-icon>
+                Amazon</span>
+            </div>
+            }
+            @case ('03') {
+            <code class="block truncate font-mono text-xs text-ink">listadedeseos.es/&#64;tu-usuario</code>
+            }
+            @case ('04') {
+            <div class="flex items-center gap-2">
+              <span
+                class="inline-flex items-center gap-1.5 rounded-full border border-reserved-border bg-reserved-light px-2 py-0.5 text-xs font-bold text-reserved">
+                <fa-icon [icon]="['fas', 'check']"></fa-icon> Reservado
+              </span>
+              <span class="text-xs">visible para todos al momento</span>
+            </div>
+            }
+            }
           </div>
-          <h3 class="text-2xl font-serif font-normal text-ink">Steam Games</h3>
-          <div class="px-3 py-1 bg-primary-50 text-primary-500 rounded-full text-sm font-semibold border border-primary-100">
-            Videojuegos
+        </li>
+        }
+      </ol>
+
+      <!-- two sides of the same list -->
+      <div class="mt-14 grid gap-6 md:grid-cols-2">
+        <div class="rounded-2xl border border-line-card bg-white p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center"><fa-icon
+                [icon]="['fas', 'star']"></fa-icon></span>
+            <h3 class="font-serif text-2xl text-ink">Si creas la lista</h3>
           </div>
+          <ul class="space-y-3 text-muted-dark">
+            @for (b of ownerBenefits; track b) {
+            <li class="flex gap-3"><fa-icon [icon]="['fas', 'check']" class="mt-1 text-primary-500"></fa-icon><span>{{ b
+                }}</span></li>
+            }
+          </ul>
         </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
-          @for (item of steamList; track $index) {
-            <app-card
-              aspect="video"
-              [index]="$index+1"
-              [principalUrl]="item.steam_url"
-              [img]="item.img"
-              [name]="item.name"
-              [price]="item.price"
-              [count]="item.count"
-              principalLabelString="Steam"
-              [secondaryUrl]="item.instant_gaming_url"
-              secondaryLabelString="Instant Gaming">
-            </app-card>
-          }
+        <div class="rounded-2xl border border-line-card bg-white p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-10 h-10 rounded-full bg-ink text-cream flex items-center justify-center"><fa-icon
+                [icon]="['fas', 'gift']"></fa-icon></span>
+            <h3 class="font-serif text-2xl text-ink">Si vas a regalar</h3>
+          </div>
+          <ul class="space-y-3 text-muted-dark">
+            @for (b of guestBenefits; track b) {
+            <li class="flex gap-3"><fa-icon [icon]="['fas', 'check']" class="mt-1 text-ink"></fa-icon><span>{{ b
+                }}</span></li>
+            }
+          </ul>
         </div>
       </div>
-
-      <!-- Loading State -->
-      @if(steamList && steamList.length === 0){
-        <div class="text-center py-16">
-          <div class="w-16 h-16 rounded-full border-4 border-line border-t-primary-500 animate-spin mx-auto mb-4"></div>
-          <p class="text-muted text-lg">Cargando productos populares...</p>
-        </div>
-      }
-
 
     </div>
   </section>
 
-  <!-- Call to Action Section -->
-  <section class="py-16 px-4 bg-cream">
-    <div class="container mx-auto text-center">
-      <div class="max-w-3xl mx-auto">
-        <h2 class="text-3xl font-serif font-normal text-ink tracking-tight mb-6">
-          ¿Listo para empezar?
+  <!-- ============ FAQ ============ -->
+  <section class="py-20 px-4 bg-cream-alt border-y border-line-soft">
+    <div class="container mx-auto max-w-3xl">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl font-serif font-normal text-ink tracking-tight">Preguntas rápidas</h2>
+      </div>
+
+      <div class="rounded-2xl border border-line-card bg-white divide-y divide-line-soft">
+        @for (faq of faqs; track faq.q; let first = $first) {
+        <details class="group px-6" [open]="first">
+          <summary
+            class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 font-semibold text-ink [&::-webkit-details-marker]:hidden">
+            {{ faq.q }}
+            <span
+              class="w-7 h-7 shrink-0 rounded-full border border-line flex items-center justify-center text-xs text-muted transition-transform duration-200 group-open:rotate-45">
+              <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+            </span>
+          </summary>
+          <p class="pb-5 -mt-1 text-muted leading-relaxed">{{ faq.a }}</p>
+        </details>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="py-20 px-4 bg-cream">
+    <div class="container mx-auto">
+      <div class="relative overflow-hidden rounded-3xl bg-ink px-6 py-14 md:px-16 text-center">
+        <!-- logo mark as a large watermark -->
+        <svg class="absolute -right-10 -top-10 w-56 h-56 opacity-10" viewBox="0 0 100 100" aria-hidden="true">
+          <path class="fill-logo-spark animate-twinkle" style="transform-box: fill-box; transform-origin: center"
+            d="M50 14 C53 38 62 47 86 50 C62 53 53 62 50 86 C47 62 38 53 14 50 C38 47 47 38 50 14 Z" />
+        </svg>
+
+        <h2 class="relative text-4xl md:text-5xl font-serif font-normal text-cream tracking-tight mb-5">
+          Tu próxima celebración, <em class="text-primary-300">sin regalos repetidos</em>
         </h2>
-        <p class="text-lg text-muted mb-8">
-          Únete a miles de usuarios que ya están creando y compartiendo sus listas de deseos
+        <p class="relative text-lg text-line max-w-2xl mx-auto mb-9">
+          Crea tu lista en un par de minutos y compártela hoy mismo.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <div class="relative flex flex-col sm:flex-row gap-3 justify-center">
           @if (!isLogged) {
-            <a routerLink="/register"
-              class="px-8 py-4 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200">
-              Registrarse Gratis
-            </a>
+          <a routerLink="/register"
+            class="px-8 py-3.5 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors duration-200">
+            Registrarse gratis
+          </a>
           }
-
           <a routerLink="/list"
-            class="px-8 py-4 bg-transparent text-ink font-semibold rounded-lg border border-line-strong hover:border-ink transition-colors duration-200">
-            Ver Todas las Listas
+            class="px-8 py-3.5 bg-transparent text-cream font-semibold rounded-lg border border-muted hover:border-cream transition-colors duration-200">
+            {{ isLogged ? 'Ir a mis listas' : 'Ya tengo cuenta' }}
           </a>
         </div>
       </div>

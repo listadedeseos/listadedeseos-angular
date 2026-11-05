@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ApiService } from '../../apiConnection/ApiService';
 import { AuthenticationService } from '../../apiConnection/authentication.service';
 import { Utils } from '../../utils/utils';
@@ -44,6 +44,42 @@ export class WishlistFormComponent {
     }
   }
 
+  // Same rule as the backend (WishListController@update): letters (accents included) and numbers,
+  // words separated by a single space or hyphen
+  private static readonly NAME_PATTERN = /^[\p{L}\p{M}\p{N}]+([ -][\p{L}\p{M}\p{N}]+)*$/u;
+
+  // The backend trims the name and collapses runs of whitespace, so validate it the same way
+  // (a trailing space while typing isn't an error)
+  private static normalize(value: any): string {
+    return String(value ?? '').trim().replace(/\s+/g, ' ');
+  }
+
+  private static nameValidator(control: AbstractControl): ValidationErrors | null {
+    const value = WishlistFormComponent.normalize(control.value);
+    if (!value) return null; // `required` reports empty names
+    return WishlistFormComponent.NAME_PATTERN.test(value) ? null : { pattern: true };
+  }
+
+  get nameError(): string | null {
+    const control = this.saveForm.get('name');
+    if (!control || control.valid || !control.touched) return null;
+    if (control.hasError('required')) return 'Ponle un nombre a la lista.';
+    return 'Solo letras, números, espacios y guiones (sin guion al principio ni al final, ni varios seguidos).';
+  }
+
+  // How the name will appear in the share link (see WishListComponent.slug)
+  get nameSlug(): string {
+    return WishlistFormComponent.normalize(this.saveForm.get('name')?.value).replace(/ /g, '-');
+  }
+
+  normalizeName() {
+    const control = this.saveForm.get('name');
+    const normalized = WishlistFormComponent.normalize(control?.value);
+    if (control && control.value !== normalized) {
+      control.setValue(normalized);
+    }
+  }
+
   get modalTitle(): string {
     return (this.id ? 'Editar' : 'Nueva') + ' lista de deseos';
   }
@@ -59,7 +95,7 @@ export class WishlistFormComponent {
   createForm() {
     this.saveForm = new FormGroup({
 
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, WishlistFormComponent.nameValidator]),
       theme: new FormControl(null),
       date_end: new FormControl(null),
       steam_username: new FormControl(null),
@@ -91,6 +127,8 @@ export class WishlistFormComponent {
   }
 
   saveEntity() {
+    this.normalizeName();
+
     if (this.saveForm.valid) {
       this.loading = true;
 
@@ -103,13 +141,20 @@ export class WishlistFormComponent {
           this.modalRef.close(response);
         },
         error: (error: any) => {
-          Utils.ToastUtils.error('Error', 'No se ha podido guardar la lista. El nombre solo admite letras, números y espacios.');
+          // ErrorInterceptor rethrows the API's `message`; the duplicate-name one is already in Spanish
+          const message = error === 'Ya tienes otra lista con ese nombre'
+            ? 'Ya tienes otra lista con ese nombre (o uno que genera el mismo enlace).'
+            : 'No se ha podido guardar la lista. El nombre solo admite letras, números, espacios y guiones.';
+          Utils.ToastUtils.error('Error', message);
           this.loading = false;
           this.cdr.markForCheck();
         },
       })
     } else {
-      Utils.ToastUtils.error('Error', 'Debe completar todos los campos obligatorios.');
+      // Show the field messages (they only appear once a field is touched)
+      this.saveForm.markAllAsTouched();
+      this.cdr.markForCheck();
+      Utils.ToastUtils.error('Error', 'Revisa los campos marcados en rojo.');
     }
   }
 
