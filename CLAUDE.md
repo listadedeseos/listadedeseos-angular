@@ -771,3 +771,11 @@ which should run after each change to this repo and append an entry here.
   touched, otherwise a hint with a live preview of the link segment (`…/holi-caracoli`). The value is
   normalized on blur and before saving; an invalid submit marks all fields touched.
   (`src/components/wishlist-form/wishlist-form.component.{html,ts}`)
+- 2026-11-05 — Removed the "Los más deseados" Steam section from the dashboard, along with its now-unused
+  code in `DashboardComponent` (`steamList`/`steamLoaded`/`getSteam`, the commented-out `getAmazon`,
+  `trackByIndex`, `ApiService`/`CardComponent` imports and debug `console.log`s). The dashboard no longer
+  calls the API at all; backend `GET steam/top` is untouched. (`src/pages/dashboard/dashboard.component.{html,ts}`)
+- 2026-11-05 — Backend (Laravel): removed `GET /steam/top` (`SteamController::getTopGames` + its route and
+  OpenAPI block). It only fed the dashboard's "Los más deseados" section, removed above. There never was an
+  Amazon equivalent. Note `GET /steam/find` (`SteamController::find`) is also not called by the frontend; it
+  was left in place. Suite 68/68.

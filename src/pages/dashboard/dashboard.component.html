@@ -211,53 +211,6 @@
     </div>
   </section>
 
-  <!-- ============ POPULAR (Steam) ============ -->
-  <section class="py-20 px-4 bg-cream">
-    <div class="container mx-auto">
-
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-serif font-normal text-ink tracking-tight mb-4">
-          Los más deseados
-        </h2>
-        <p class="text-lg text-muted max-w-2xl mx-auto">
-          Los juegos de Steam que más personas han añadido a sus listas. ¿Sin ideas? Empieza por aquí.
-        </p>
-      </div>
-
-      <div class="flex items-center justify-center gap-3 mb-8">
-        <div class="w-12 h-12 bg-ink rounded-xl flex items-center justify-center text-cream text-xl">
-          <fa-icon [icon]="['fab', 'steam']" class="h-7"></fa-icon>
-        </div>
-        <h3 class="text-2xl font-serif font-normal text-ink">Steam</h3>
-      </div>
-
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
-        @for (item of steamList; track $index) {
-        <app-card aspect="video" [index]="$index+1" [principalUrl]="item.steam_url" [img]="item.img" [name]="item.name"
-          [price]="item.price" [count]="item.count" principalLabelString="Steam"
-          [secondaryUrl]="item.instant_gaming_url" secondaryLabelString="Instant Gaming">
-        </app-card>
-        }
-      </div>
-
-      @if (!steamLoaded) {
-      <div class="text-center py-16">
-        <div class="w-16 h-16 rounded-full border-4 border-line border-t-primary-500 animate-spin mx-auto mb-4"></div>
-        <p class="text-muted text-lg">Cargando productos populares...</p>
-      </div>
-      } @else if (steamList.length === 0) {
-      <div
-        class="mx-auto max-w-md rounded-2xl border border-dashed border-line-strong bg-cream-alt px-6 py-12 text-center">
-        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-swatch flex items-center justify-center text-muted text-xl">
-          <fa-icon [icon]="['fas', 'box-open']"></fa-icon>
-        </div>
-        <p class="font-serif text-2xl text-ink mb-1">No hay productos</p>
-        <p class="text-muted">Todavía nadie ha añadido juegos de Steam a sus listas.</p>
-      </div>
-      }
-    </div>
-  </section>
-
   <!-- ============ FAQ ============ -->
   <section class="py-20 px-4 bg-cream-alt border-y border-line-soft">
     <div class="container mx-auto max-w-3xl">
