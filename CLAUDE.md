@@ -765,3 +765,9 @@ which should run after each change to this repo and append an entry here.
   name whose slug another list of the same user already has (400 "Ya tienes otra lista con ese nombre",
   shown as a toast by the wish-list form). Tests in `WishListNameTest`; suite 68/68. No migration.
   (`src/pages/wish-list/wish-list.component.ts`, `src/components/wishlist-form/wishlist-form.component.ts`)
+- 2026-11-05 — Wish-list form: the name field now validates client-side with the same rule as the backend
+  (`WishlistFormComponent.NAME_PATTERN`, `/^[\p{L}\p{M}\p{N}]+([ -][\p{L}\p{M}\p{N}]+)*$/u`, applied to the
+  trimmed/space-collapsed value like the API does). It shows a red border + Spanish error under the field once
+  touched, otherwise a hint with a live preview of the link segment (`…/holi-caracoli`). The value is
+  normalized on blur and before saving; an invalid submit marks all fields touched.
+  (`src/components/wishlist-form/wishlist-form.component.{html,ts}`)
