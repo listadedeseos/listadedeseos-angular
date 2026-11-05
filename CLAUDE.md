@@ -730,3 +730,19 @@ which should run after each change to this repo and append an entry here.
   (`listadedeseos.es/@user/Mi%20cumplea%C3%B1os`); the router already decodes it. Form placeholder and
   error toast updated. (`src/pages/wish-list/wish-list.component.ts`,
   `src/components/wishlist-form/wishlist-form.component.{html,ts}`)
+- 2026-11-05 — **Redesigned the dashboard landing page** to explain how the app works. New hero with
+  copy + an illustrative (static, not real data) wish-list preview showing a reserved item; a
+  "Cómo funciona" section with 4 numbered step cards (create list → add products/Steam/Amazon → share
+  `@usuario` link → guests reserve), each with a concrete detail strip, plus "Si creas la lista" /
+  "Si vas a regalar" benefit panels; the existing Steam "Los más deseados" grid; a FAQ built on native
+  `<details>`; and a dark `bg-ink` CTA with the logo star as watermark. Copy matches real behaviour
+  (guests reserve without an account, reservations are anonymous and only the owner can undo them,
+  owners can hide reservations; themes are admin-only so they're not advertised).
+  The Steam grid now distinguishes loading from empty via a new
+  `steamLoaded` flag and shows a "No hay productos" empty state when the API returns 0 items
+  (previously the spinner stayed forever). Verified with Playwright at 1440/375px (mocked API, no
+  horizontal overflow). (`src/pages/dashboard/dashboard.component.{html,ts}`)
+- 2026-11-05 — Dashboard hero `<h1>` now rotates: 100 `{ lead, accent }` titles live in their own file,
+  `src/pages/dashboard/headlines.ts` (`HEADLINES`, grouped by idea), and `DashboardComponent.headline` picks
+  one at random per page load. The `accent` half renders as the terracotta italic `<em>`. Add or edit
+  titles there. (`src/pages/dashboard/dashboard.component.{html,ts}`, `headlines.ts`)
